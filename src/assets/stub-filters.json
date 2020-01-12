@@ -1,0 +1,10 @@
+[
+  { "id"       : 1,
+    "name"     : "Only Success",
+    "template" : "by_result",
+    "params"   : ["success"] },
+
+  { "id"       : 2,
+    "name"     : "Over 500 XRP",
+    "jsonpath" : "$..[?(parseInt(@.Amount) > 500000000)]" }
+]
