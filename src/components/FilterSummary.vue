@@ -4,17 +4,31 @@
       <h2><u>{{filter.name}}</u></h2>
 
       <div class="filter_controls">
-        <div class="filter_control edit_filter_control">
+        <div class="filter_control edit_filter_control" v-b-modal="'edit_filter' + filter.id">
           <img src="../assets/gear.png" width="22px" title="Edit" />
         </div>
 
-        <div class="filter_control rm_filter_control">
-          <img src="../assets/minus.png" width="22px" title="Remove" />
+        <b-modal :id="'edit_filter' + filter.id" title="Edit Filter">
+          Edit Filter: {{filter.name}}
+        </b-modal>
+
+        <div class="filter_control delete_filter_control" v-b-modal="'delete_filter' + filter.id">
+          <img src="../assets/minus.png" width="22px" title="Delete" />
         </div>
 
-        <div class="filter_control test_filter_control" title="Test">
+        <b-modal :id="'delete_filter' + filter.id" title="Delete Filter">
+          <h3>Are you sure you want to delete filter:</h3>
+          <h4><i>{{filter.name}}</i>?</h4>
+          <h5>This action cannot be undone</h5>
+        </b-modal>
+
+        <div class="filter_control test_filter_control" title="Test" v-b-modal="'test_filter' + filter.id">
           <u>Test</u>
         </div>
+
+        <b-modal :id="'test_filter' + filter.id" title="Test Filter" ok-only>
+          Test Filter: {{filter.name}}
+        </b-modal>
       </div>
     </div>
 
