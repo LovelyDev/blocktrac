@@ -1,7 +1,0 @@
-{
-  "by_result" : {
-    "name" : "By Result",
-    "jsonpath" : "$..[?(@.TransactionResult == 'PARAM_1')]",
-    "params" : ["Result"]
-  }
-}

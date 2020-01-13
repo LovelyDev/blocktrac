@@ -17,11 +17,15 @@
         </b-row>
 
         <b-row no-gutters>
-          <b-col>
+          <b-col v-if="!logged_in">
+            <router-link to="/login">Login</router-link>
+          </b-col>
+
+          <b-col v-if="logged_in">
             <router-link to="/filters">Filters</router-link>
           </b-col>
 
-          <b-col>
+          <b-col v-if="logged_in">
             <router-link to="/profile">Profile</router-link>
           </b-col>
 
@@ -55,6 +59,12 @@ export default {
   name: 'MainLayout',
   props : {
     section : String,
+  },
+
+  computed : {
+    logged_in : function(){
+      return this.$store.state.logged_in;
+    }
   }
 }
 </script>

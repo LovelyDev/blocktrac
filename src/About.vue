@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #about{
   border: 1px solid black;
   width: 50%;

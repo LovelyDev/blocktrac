@@ -2,9 +2,16 @@
   { "id"       : 1,
     "name"     : "Only Success",
     "template" : "by_result",
-    "params"   : ["success"] },
+    "params"   : ["success"],
+    "sinks"    : [1, 2] },
 
   { "id"       : 2,
     "name"     : "Over 500 XRP",
-    "jsonpath" : "$..[?(parseInt(@.Amount) > 500000000)]" }
+    "jsonpath" : "$..[?(parseInt(@.Amount) > 500000000)]",
+    "sinks"    : [3] },
+
+  { "id"       : 3,
+    "name"     : "No Offers",
+    "jsonpath" : "$..[?(@.TransactionType && @.TransactionType != 'OfferCreate')]",
+    "sinks"    : []}
 ]

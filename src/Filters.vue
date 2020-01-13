@@ -2,16 +2,16 @@
   <MainLayout section="Filters">
     <div id="filters_container">
       <div id="filters_header">
+        <h1>Filters</h1>
+
         <div id="create_filter_control" v-b-modal.create_filter>
           <img src="./assets/plus.png" width="22px" />
         </div>
 
         <b-modal id="create_filter" title="Create New Filter">
-          Create Filter
+          <CreateEditFilter />
         </b-modal>
       </div>
-
-      <h1>Filters</h1>
 
       <div>
         <FilterSummary v-for="filter in filters" :key="filter.id" :filter="filter" />
@@ -21,17 +21,21 @@
 </template>
 
 <script>
-import MainLayout    from './components/MainLayout.vue'
-import FilterSummary from './components/FilterSummary.vue'
+import MainLayout       from './components/MainLayout.vue'
+import FilterSummary    from './components/FilterSummary.vue'
+import CreateEditFilter from './components/CreateEditFilter.vue'
 
-// TODO remove once filters are retrieved from server
-import filters from './assets/stub-filters.json'
+var ServerLoader = require('./mixins/server_loader').default
 
 export default {
   name: 'Filters',
+
+  mixins : [ServerLoader],
+
   components: {
     MainLayout,
-    FilterSummary
+    FilterSummary,
+    CreateEditFilter
   },
 
   data : function(){
@@ -41,15 +45,16 @@ export default {
   },
 
   created : function(){
-    // TODO: actually get filters from server
-    filters.forEach(function(f){
-      this.filters.push(f);
-    }.bind(this))
+    this.load_filters(function(filters){
+      filters.forEach(function(f){
+        this.filters.push(f);
+      }.bind(this))
+    }.bind(this));
   }
 }
 </script>
 
-<style>
+<style scoped>
 #filters_container{
   min-height: 100%;
   width: 85%;
@@ -60,7 +65,7 @@ export default {
 
 #filters_header{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 #create_filter_control:hover{

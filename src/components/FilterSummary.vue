@@ -9,7 +9,7 @@
         </div>
 
         <b-modal :id="'edit_filter' + filter.id" title="Edit Filter">
-          Edit Filter: {{filter.name}}
+          <CreateEditFilter :filter="filter" />
         </b-modal>
 
         <div class="filter_control delete_filter_control" v-b-modal="'delete_filter' + filter.id">
@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div v-if="template_filter">
+    <div v-if="is_template_filter">
       <h3 :title="template.jsonpath">Template: {{template.name}}</h3>
       <h4>Parameters:</h4>
       <ul v-for="(param, index) in filter.params" :key="filter.id + index">
@@ -43,34 +43,74 @@
     <div v-else>
       <h3>Expression: {{filter.jsonpath}}</h3>
     </div>
+
+    <div v-if="has_sinks">
+      <h3>Sinks:</h3>
+      <ul>
+        <li v-for="sink in sinks" :key="sink.id">
+          {{sink.type}}: {{sink.target}}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import templates from '../assets/filter-templates.json'
+import CreateEditFilter from './CreateEditFilter.vue'
+
+var ServerLoader = require('../mixins/server_loader').default
 
 export default {
   name: 'Filters',
+
+  mixins : [ServerLoader],
+
+  components : {
+    CreateEditFilter
+  },
 
   props : {
     filter : Object
   },
 
+  data : function(){
+    return {
+      sinks : []
+    };
+  },
+
   computed : {
-    template_filter : function(){
+    is_template_filter : function(){
       return !!this.filter.template;
     },
 
     template : function(){
-      if(!this.template_filter) return null;
+      if(!this.is_template_filter) return null;
 
-      return templates[this.filter.template];
+      return this.templates[this.filter.template];
+    },
+
+    has_sinks : function(){
+      return this.sinks.length > 0;
     }
+  },
+
+  created : function(){
+    this.load_sinks(function(sinks){
+      this.filter.sinks.forEach(function(f){
+        var sink = sinks.filter(function(s){ return s.id == f })[0];
+        this.sinks.push(sink);
+      }.bind(this))
+    }.bind(this));
+
+    this.load_templates(function(templates){
+      this.templates = templates;
+    }.bind(this));
   }
 }
 </script>
 
-<style>
+<style scoped>
 .filter_container{
   border: 1px solid black;
   margin: 10px;
