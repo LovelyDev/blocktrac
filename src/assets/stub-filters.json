@@ -13,5 +13,11 @@
   { "id"       : 3,
     "name"     : "No Offers",
     "jsonpath" : "$..[?(@.TransactionType && @.TransactionType != 'OfferCreate')]",
+    "sinks"    : []},
+
+  { "id"       : 4,
+    "name"     : "> 1000 XRP and < 2000 XRP",
+    "template" : "payment_range",
+    "params"   : [1000000000, 2000000000],
     "sinks"    : []}
 ]

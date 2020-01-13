@@ -44,14 +44,21 @@
       <h3>Expression: {{filter.jsonpath}}</h3>
     </div>
 
-    <div v-if="has_sinks">
-      <h3>Sinks:</h3>
-      <ul>
-        <li v-for="sink in sinks" :key="sink.id">
-          {{sink.type}}: {{sink.target}}
-        </li>
-      </ul>
-    </div>
+    <template v-if="has_sinks">
+      <div v-if="multiple_sinks">
+        <h3>Sinks:</h3>
+        <ul>
+          <li v-for="sink in sinks" :key="sink.id">
+            {{sink.type}}: {{sink.target}}
+          </li>
+        </ul>
+      </div>
+
+      <div v-else>
+        <h3>Sink:</h3>
+        <h4 style="padding-left: 25px">{{sinks[0].type}}: {{sinks[0].target}}</h4>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -88,6 +95,10 @@ export default {
       if(!this.is_template_filter) return null;
 
       return this.templates[this.filter.template];
+    },
+
+    multiple_sinks : function(){
+      return this.$store.state.multiple_sinks;
     },
 
     has_sinks : function(){

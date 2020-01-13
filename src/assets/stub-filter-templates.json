@@ -12,9 +12,9 @@
   },
 
 
-  "min_payment" : {
-    "name" : "Minimum XRP Payment",
-    "jsonpath" : "$..[?(parseInt(@.Amount) > PARAM_1)]",
-    "params" : ["Amount"]
+  "payment_range" : {
+    "name" : "XRP Payment Range",
+    "jsonpath" : "$..[?(parseInt(@.Amount) > PARAM_1 && parseInt(@.Amount) < PARAM_2)]",
+    "params" : ["Min Amount", "Max Amount"]
   }
 }

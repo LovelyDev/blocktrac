@@ -11,17 +11,25 @@
       <tr>
         <td><h3>Sink{{multiple_sinks ? "s" : ""}}:</h3></td>
         <td>
-          <select class="sink_select">
-            <option v-for="sink in sinks" :key="sink.id" :value="sink.id">
+          <select v-if="multiple_sinks"
+                 class="sink_select"
+                 v-model="sinks" multiple>
+            <option v-for="sink in all_sinks"
+                     :key="'sink-' + sink.id"
+                   :value="sink.id">
               {{sink.type}}: {{sink.target}}
             </option>
           </select>
-        </td>
 
-        <td v-if="multiple_sinks">
-          <div id="new_sink_control">
-            <img src="../assets/plus.png" width="22px" />
-          </div>
+          <select v-else
+                 class="sink_select"
+                 v-model="sink">
+            <option v-for="sink in all_sinks"
+                     :key="'sink-' + sink.id"
+                   :value="sink.id">
+              {{sink.type}}: {{sink.target}}
+            </option>
+          </select>
         </td>
       </tr>
 
@@ -41,7 +49,7 @@
         <td>
           <select v-model="template">
             <option v-for="template_option in Object.keys(templates)"
-                    :key="template_option"
+                    :key="'template-' + template_option"
                     :value="template_option">
               {{templates[template_option].name}}
             </option>
@@ -69,13 +77,19 @@
 
       <template v-if="is_template_filter && template_has_params">
         <tr v-for="p in templates[template].params.length"
-            :key="'param' + p">
+            :key="'param-' + p">
           <td>
             <template v-if="p == 1">
               <h3>Params:</h3>
             </template>
           </td>
-          <td><input class="param_input" type="text" /></td>
+
+          <td>
+            <input class="param_input"
+                   type="text"
+                   :placeholder="templates[template].params[p-1]"
+                   :value="params[p-1]" />
+          </td>
         </tr>
       </template>
     </table>
@@ -102,15 +116,17 @@ export default {
 
   data : function(){
     return {
-      sinks : [],
-      is_template_filter : true,
+      all_sinks : [],
 
       ///
 
-      // set properties:
-          name : '',
+      name     : '',
+      sink     : '',
+      sinks    : [],
+      is_template_filter : true,
       jsonpath : '',
-      template : ''
+      template : '',
+      params   : []
     };
   },
 
@@ -138,7 +154,7 @@ export default {
   created : function(){
     this.load_sinks(function(sinks){
       sinks.forEach(function(sink){
-        this.sinks.push(sink);
+        this.all_sinks.push(sink);
       }.bind(this));
     }.bind(this));
 
@@ -153,6 +169,12 @@ export default {
     if(this.has_filter){
       this.name = this.filter.name;
 
+      this.filter.sinks.forEach(function(s){
+        this.sinks.push(s);
+      }.bind(this));
+
+      this.sink = this.sinks[0];
+
       if(this.filter.jsonpath){
         this.jsonpath = this.filter.jsonpath;
         this.is_template_filter = false;
@@ -161,7 +183,10 @@ export default {
       if(this.filter.template)
         this.template = this.filter.template;
 
-      // ...
+      if(this.filter.params)
+        this.filter.params.forEach(function(p){
+          this.params.push(p);
+        }.bind(this));
     }
   }
 }
