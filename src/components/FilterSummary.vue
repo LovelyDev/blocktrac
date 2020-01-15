@@ -26,8 +26,9 @@
           <u>Test</u>
         </div>
 
-        <b-modal :id="'test_filter' + filter.id" title="Test Filter" ok-only>
-          Test Filter: {{filter.name}}
+        <b-modal :id="'test_filter' + filter.id"
+              :title="'Test Filter: ' + filter.name" ok-only>
+          <FilterTester :filter="filter" />
         </b-modal>
       </div>
     </div>
@@ -64,6 +65,7 @@
 
 <script>
 import CreateEditFilter from './CreateEditFilter.vue'
+import FilterTester      from './FilterTester.vue'
 
 var ServerLoader = require('../mixins/server_loader').default
 
@@ -73,7 +75,8 @@ export default {
   mixins : [ServerLoader],
 
   components : {
-    CreateEditFilter
+    CreateEditFilter,
+    FilterTester
   },
 
   props : {
