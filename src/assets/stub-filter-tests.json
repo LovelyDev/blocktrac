@@ -1,7 +1,7 @@
 [
   { "id"   : 1,
     "name" : "Successful Large XRP Payment",
-    "json" : {
+    "json" : {"transaction" : {
       "Account": "rDsbeomae4FXwgQTJp9Rs64Qg9vDiTCdBv",
       "Amount": "80862799653",
       "Destination": "rLSn6Z3T8uCxbcd1oxwfGQN1Fdn5CyGujK",
@@ -63,7 +63,7 @@
       },
       "validated": true
     }
-  },
+  }},
 
   { "id"   : 2,
     "name" : "Successful Small XRP Payment",

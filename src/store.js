@@ -15,6 +15,8 @@ export const store = new Vuex.Store({
             logged_in : true,
        multiple_sinks : true,
     instant_supported : true,
+          sms_enabled : true,
+      webhook_enabled : true,
 
             txs : [],
     loading_txs : true,
