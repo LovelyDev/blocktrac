@@ -11,8 +11,10 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
-           logged_in : true, // TODO: default false
-      multiple_sinks : true, // TODO: default false
+    // TODO: these should be false by default
+            logged_in : true,
+       multiple_sinks : true,
+    instant_supported : true,
 
             txs : [],
     loading_txs : true,

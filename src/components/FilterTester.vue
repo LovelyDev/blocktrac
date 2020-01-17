@@ -13,7 +13,7 @@
         <td>{{test.name}}</td>
         <td class="test_glyph">
           <img width=15
-               :src="result_glyph(test)" />
+                :src="result_glyph(test)" />
         </td>
       </tr>
 
