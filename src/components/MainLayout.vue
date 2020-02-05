@@ -47,6 +47,12 @@
             <router-link to="/profile">Profile</router-link>
           </b-col>
 
+          <b-col v-if="logged_in">
+            <span id="logout_link" @click="logout">
+              Logout
+            </span>
+          </b-col>
+
           <b-col>
             <router-link to="/help">Help</router-link>
           </b-col>
@@ -76,6 +82,8 @@
 import LoginForm        from './LoginForm'
 import RegistrationForm from './RegistrationForm'
 
+import config from '../config'
+
 export default {
   name: 'MainLayout',
 
@@ -89,8 +97,25 @@ export default {
   },
 
   computed : {
+    auth_token : function(){
+      return this.$cookies.authToken;
+    },
+
     logged_in : function(){
-      return this.$store.state.logged_in;
+      return !!this.auth_token;
+    }
+  },
+
+  methods : {
+    logout : function(){
+      this.$http.delete(config.BACKEND_URL + "/logout",
+                {headers : {authorization : this.auth_token}})
+                .then(function(response){
+                  this.$removeCookie("authToken")
+
+                }.bind(this)).catch(function(err){
+                  this.$removeCookie("authToken")
+                }.bind(this))
     }
   }
 }
@@ -120,7 +145,8 @@ export default {
 }
 
 #login_link,
-#register_link{
+#register_link,
+#logout_link{
   color: blue;
   cursor: pointer;
 }

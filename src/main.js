@@ -1,8 +1,13 @@
-import Vue           from 'vue'
-import VueRouter     from 'vue-router'
-import VueResource   from 'vue-resource'
-import VueNativeSock from 'vue-native-websocket'
-import BootstrapVue  from 'bootstrap-vue'
+import Vue               from 'vue'
+import VueRouter         from 'vue-router'
+import VueResource       from 'vue-resource'
+import VueNativeSock     from 'vue-native-websocket'
+import VueReactiveCookie from 'vue-reactive-cookie'
+import BootstrapVue      from 'bootstrap-vue'
+
+///
+
+Vue.use(VueReactiveCookie)
 
 ///
 

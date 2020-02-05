@@ -37,11 +37,9 @@ export default {
                       {username : this.username,
                        password : this.password})
                 .then(function(response){
-                  // ... set cookie, update local login state
-                  console.log("registered")
-                  console.log(response)
-                }).catch(function(err){
-                  // TODO: better error handling
+                  this.$setCookie("authToken", response.body.authToken);
+
+                }.bind(this)).catch(function(err){
                   alert(err.body.error)
                 })
     }
