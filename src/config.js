@@ -1,4 +1,8 @@
 module.exports = {
+  // Backend URL to get/set data
+  BACKEND_URL : "http://localhost:3000",
+
+  // Used for account links and similar
   XRP1NTEL_URL : "https://xrp1ntel.com",
 
   // Ripple Websocket URI

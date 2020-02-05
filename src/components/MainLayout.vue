@@ -18,7 +18,25 @@
 
         <b-row no-gutters>
           <b-col v-if="!logged_in">
-            <router-link to="/login">Login</router-link>
+            <span id="login_link">Login</span>
+
+            <b-popover id="login_popup"
+                       target="login_link"
+                       triggers="hover"
+                       placement="bottom">
+              <LoginForm />
+            </b-popover>
+          </b-col>
+
+          <b-col v-if="!logged_in">
+            <span id="register_link">Register</span>
+
+            <b-popover id="register_popup"
+                       target="register_link"
+                       triggers="hover"
+                       placement="bottom">
+              <RegistrationForm />
+            </b-popover>
           </b-col>
 
           <b-col v-if="logged_in">
@@ -55,8 +73,17 @@
 </template>
 
 <script>
+import LoginForm        from './LoginForm'
+import RegistrationForm from './RegistrationForm'
+
 export default {
   name: 'MainLayout',
+
+  components : {
+    LoginForm,
+    RegistrationForm
+  },
+
   props : {
     section : String,
   },
@@ -90,5 +117,11 @@ export default {
 
 #main_footer{
   text-align: center;
+}
+
+#login_link,
+#register_link{
+  color: blue;
+  cursor: pointer;
 }
 </style>
