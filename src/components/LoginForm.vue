@@ -17,31 +17,11 @@
 </template>
 
 <script>
-import config from '../config'
+import Authentication from '../mixins/authentication'
 
 export default {
   name: 'LoginForm',
-
-  data : function(){
-    return {
-      username : '',
-      password : ''
-    };
-  },
-
-  methods : {
-    login : function(){
-      this.$http.post(config.BACKEND_URL + "/login",
-                      {username : this.username,
-                       password : this.password})
-                .then(function(response){
-                  this.$setCookie("authToken", response.body.authToken);
-
-                }.bind(this)).catch(function(err){
-                  alert(err.body.error)
-                })
-    }
-  }
+  mixins : [Authentication]
 }
 </script>
 

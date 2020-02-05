@@ -1,7 +1,7 @@
 <template>
   <b-modal id="create_sink"
         title="Create Sink"
-          @ok="create">
+          @ok="create_sink">
     <table>
       <tr>
         <td>Type:</td>
@@ -54,7 +54,7 @@ export default {
   },
 
   methods : {
-    create : function(){
+    create_sink : function(){
       // ...
     }
   }

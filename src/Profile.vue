@@ -62,12 +62,17 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
-import SinkForm   from './components/SinkForm.vue'
-import SinksList  from './components/SinksList.vue'
+import MainLayout     from './components/MainLayout.vue'
+import SinkForm       from './components/SinkForm.vue'
+import SinksList      from './components/SinksList.vue'
+import Authentication from './mixins/authentication'
+
+import config from './config'
 
 export default {
   name: 'Profile',
+
+  mixins : [Authentication],
 
   components: {
     MainLayout,
@@ -90,6 +95,17 @@ export default {
     multiple_sinks : function(){
       return this.$store.state.multiple_sinks;
     },
+  },
+
+  created : function(){
+    this.$http.get(config.BACKEND_URL + "/user",
+               {headers : {authorization : this.auth_token}})
+              .then(function(response){
+// ... set ui elements
+console.log(response)
+
+              }.bind(this)).catch(function(err){
+              }.bind(this))
   }
 }
 </script>

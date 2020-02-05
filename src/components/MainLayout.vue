@@ -82,10 +82,13 @@
 import LoginForm        from './LoginForm'
 import RegistrationForm from './RegistrationForm'
 
-import config from '../config'
+import Authentication   from '../mixins/authentication'
+console.log(Authentication)
 
 export default {
   name: 'MainLayout',
+
+  mixins : [Authentication],
 
   components : {
     LoginForm,
@@ -94,29 +97,6 @@ export default {
 
   props : {
     section : String,
-  },
-
-  computed : {
-    auth_token : function(){
-      return this.$cookies.authToken;
-    },
-
-    logged_in : function(){
-      return !!this.auth_token;
-    }
-  },
-
-  methods : {
-    logout : function(){
-      this.$http.delete(config.BACKEND_URL + "/logout",
-                {headers : {authorization : this.auth_token}})
-                .then(function(response){
-                  this.$removeCookie("authToken")
-
-                }.bind(this)).catch(function(err){
-                  this.$removeCookie("authToken")
-                }.bind(this))
-    }
   }
 }
 </script>
