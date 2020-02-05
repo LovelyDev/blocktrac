@@ -9,3 +9,14 @@ body{
 #app{
   height: 100%;
 }
+
+/*****/
+
+.align_end{
+  text-align: end;
+}
+
+.sink_control{
+  cursor: pointer;
+  margin-right: 5px;
+}

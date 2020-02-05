@@ -43,56 +43,13 @@
           <img src="./assets/plus.png" width="22px" />
         </b-col>
 
-        <b-modal id="create_sink" title="Create Sink">
-          <table>
-            <tr>
-              <td>Type:</td>
-              <td>
-                <select v-model="sink_type">
-                  <option value="email">
-                    Email
-                  </option>
-
-                  <option v-if="sms_enabled" value="sms">
-                    SMS
-                  </option>
-
-                  <option v-if="webhook_enabled" value="webhook">
-                    URL
-                  </option>
-                </select>
-              </td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td><b-form-input type="text" :placeholder="sink_type" /></td>
-            </tr>
-          </table>
-        </b-modal>
+        <SinkForm />
       </b-row>
 
-      <b-row v-for="sink in all_sinks" :key="sink.id">
-        <b-col cols="1" />
-
+      <b-row>
         <b-col>
-          {{sink.type}}:
+          <SinksList />
         </b-col>
-
-        <b-col>
-          {{sink.target}}
-        </b-col>
-
-        <b-col cols="1" class="align_end sink_control"
-               v-b-modal="'delete_sink' + sink.id">
-          <img src="./assets/minus.png" width="22px" />
-        </b-col>
-
-        <b-modal :id="'delete_sink' + sink.id" title="Delete Sink">
-          <h3>Are you sure you want to delete sink:</h3>
-          <h4><i>{{sink.target}}</i></h4>
-          <h5>This action cannot be undone</h5>
-        </b-modal>
       </b-row>
 
       <b-row>
@@ -106,25 +63,22 @@
 
 <script>
 import MainLayout from './components/MainLayout.vue'
-
-var ServerLoader = require('./mixins/server_loader').default
+import SinkForm   from './components/SinkForm.vue'
+import SinksList  from './components/SinksList.vue'
 
 export default {
   name: 'Profile',
 
-  mixins : [ServerLoader],
-
   components: {
-    MainLayout
+    MainLayout,
+    SinkForm,
+    SinksList
   },
 
   data : function(){
     return {
-       all_sinks : [],
-
       batch_size : 10,
-         instant : false,
-       sink_type : ''
+         instant : false
     }
   },
 
@@ -136,33 +90,6 @@ export default {
     multiple_sinks : function(){
       return this.$store.state.multiple_sinks;
     },
-
-    sms_enabled : function(){
-      return this.$store.state.sms_enabled;
-    },
-
-    webhook_enabled : function(){
-      return this.$store.state.webhook_enabled;
-    },
-  },
-
-  created : function(){
-    this.load_sinks(function(sinks){
-      sinks.forEach(function(sink){
-        this.all_sinks.push(sink);
-      }.bind(this));
-    }.bind(this));
   }
 }
 </script>
-
-<style scoped>
-.align_end{
-  text-align: end;
-}
-
-.sink_control{
-  cursor: pointer;
-  margin-right: 5px;
-}
-</style>
