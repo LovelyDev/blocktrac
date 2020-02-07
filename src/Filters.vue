@@ -8,13 +8,21 @@
           <img src="./assets/plus.png" width="22px" />
         </div>
 
-        <b-modal id="create_filter" title="Create New Filter">
-          <CreateEditFilter />
+        <b-modal id="create_filter"
+                 title="Create New Filter"
+                 @ok="create_filter">
+          <CreateEditFilter ref="new_filter_form"
+                            :templates="templates"
+                            :sinks="sinks" />
         </b-modal>
       </div>
 
       <div>
-        <FilterSummary v-for="filter in filters" :key="filter.id" :filter="filter" />
+        <FilterSummary v-for="filter in filters"
+                       :key="filter.id"
+                       :filter="filter"
+                       :templates="templates"
+                       :sinks="sinks" />
       </div>
     </div>
   </MainLayout>
@@ -25,12 +33,12 @@ import MainLayout       from './components/MainLayout.vue'
 import FilterSummary    from './components/FilterSummary.vue'
 import CreateEditFilter from './components/CreateEditFilter.vue'
 
-var ServerLoader = require('./mixins/server_loader').default
+import Authentication   from './mixins/authentication'
 
 export default {
   name: 'Filters',
 
-  mixins : [ServerLoader],
+  mixins : [Authentication],
 
   components: {
     MainLayout,
@@ -40,16 +48,75 @@ export default {
 
   data : function(){
     return {
-      filters : []
+        filters : [],
+      templates : [],
+          sinks : []
     };
   },
 
+  methods : {
+    load_filters : function(){
+      this.filters   = []
+      this.templates = [];
+      this.sinks     = [];
+
+      this.$http.get(this.backend_url + "/filters", this.auth_header)
+                .then(function(response){
+                    response.body.forEach(function(filter){
+                      this.filters.push(filter)
+                    }.bind(this));
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not load filters: " + err.body.error)
+                }.bind(this))
+    },
+
+    load_templates : function(){
+      this.$http.get(this.backend_url + "/templates")
+                .then(function(response){
+                    response.body.forEach(function(template){
+                      template.params = JSON.parse(template.params);
+                      this.templates.push(template)
+                    }.bind(this));
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not load templates: " + err.body.error)
+                }.bind(this))
+    },
+
+    load_sinks : function(){
+      this.$http.get(this.backend_url + "/sinks", this.auth_header)
+                .then(function(response){
+                    response.body.forEach(function(sink){
+                      this.sinks.push(sink)
+                    }.bind(this));
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not load sinks: " + err.body.error)
+                }.bind(this))
+    },
+
+    /////////
+
+    create_filter : function(){
+      const filter_params =
+        this.$refs.new_filter_form.server_params
+
+      this.$http.post(this.backend_url + "/filter",
+                      filter_params, this.auth_header)
+                .then(function(response){
+                  this.load_filters();
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not create filter: " + err.body.error)
+                }.bind(this))
+    }
+  },
+
   created : function(){
-    this.load_filters(function(filters){
-      filters.forEach(function(f){
-        this.filters.push(f);
-      }.bind(this))
-    }.bind(this));
+    this.load_filters();
+    this.load_templates();
+    this.load_sinks();
   }
 }
 </script>

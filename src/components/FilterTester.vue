@@ -30,15 +30,12 @@
 
 <script>
 import renderjson from '../vendor/renderjson/renderjson.vue'
-var ServerLoader = require('../mixins/server_loader').default
 
 var jsonpath = require('../vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export default {
   name: 'FilterTester',
-
-  mixins : [ServerLoader],
 
   components : {
     renderjson
