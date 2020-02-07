@@ -88,7 +88,7 @@
             <input class="param_input"
                    type="text"
                    :placeholder="template_params[p-1]"
-                   :value="params[p-1]" />
+                   v-model="params[p-1]" />
           </td>
         </tr>
       </template>
@@ -131,13 +131,13 @@ export default {
       }
 
       if(this.multiple_sinks)
-        params['Sinks'] = this.fsinks
+        params['sinks'] = this.fsinks
       else
-        params['Sinks'] = [this.sink]
+        params['sinks'] = [this.sink]
 
       if(this.is_template_filter){
-        params['Template'] = this.template
-        params['params']   = this.params
+        params['template'] = this.template.id
+        params['params']   = JSON.stringify(this.params)
 
       }else
         params['jsonpath'] = this.jsonpath
@@ -174,7 +174,7 @@ export default {
       this.name = this.filter.name;
 
       this.filter.Sinks.forEach(function(s){
-        this.sinks.push(s);
+        this.fsinks.push(s.id);
       }.bind(this));
 
       this.sink = this.sinks[0];

@@ -44,7 +44,7 @@
       <h3 :title="filter.Template.jsonpath">Template: {{filter.Template.name}}</h3>
       <h4>Parameters:</h4>
       <ul v-for="(param, index) in filter.params" :key="filter.id + index">
-        <li>{{filter.Template.params[index]}}: {{param}}</li>
+        <li>{{template_params[index]}}: {{param}}</li>
       </ul>
     </div>
 
@@ -96,12 +96,16 @@ export default {
       return !!this.filter.Template;
     },
 
+    template_params : function(){
+      return Object.keys(this.filter.Template.params)
+    },
+
     multiple_sinks : function(){
       return this.$store.state.multiple_sinks;
     },
 
     has_sinks : function(){
-      return this.sinks.length > 0;
+      return this.filter.Sinks.length > 0;
     }
   },
 

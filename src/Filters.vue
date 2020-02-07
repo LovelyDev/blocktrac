@@ -58,12 +58,13 @@ export default {
   methods : {
     load_filters : function(){
       this.filters   = []
-      this.templates = [];
-      this.sinks     = [];
 
       this.$http.get(this.backend_url + "/filters", this.auth_header)
                 .then(function(response){
                     response.body.forEach(function(filter){
+                      filter.params = JSON.parse(filter.params)
+                      if(filter.Template)
+                        filter.Template.params = JSON.parse(filter.Template.params)
                       this.filters.push(filter)
                     }.bind(this));
 
@@ -73,6 +74,8 @@ export default {
     },
 
     load_templates : function(){
+      this.templates = [];
+
       this.$http.get(this.backend_url + "/templates")
                 .then(function(response){
                     response.body.forEach(function(template){
@@ -86,6 +89,8 @@ export default {
     },
 
     load_sinks : function(){
+      this.sinks     = [];
+
       this.$http.get(this.backend_url + "/sinks", this.auth_header)
                 .then(function(response){
                     response.body.forEach(function(sink){
