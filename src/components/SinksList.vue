@@ -16,7 +16,9 @@
         <img src="../assets/minus.png" width="22px" />
       </b-col>
 
-      <b-modal :id="'delete_sink' + sink.id" title="Delete Sink">
+      <b-modal :id="'delete_sink' + sink.id"
+               title="Delete Sink"
+               @ok="delete_sink(sink.id)">
         <h3>Are you sure you want to delete sink:</h3>
         <h4><i>{{sink.target}}</i></h4>
         <h5>This action cannot be undone</h5>
@@ -26,12 +28,12 @@
 </template>
 
 <script>
-var ServerLoader = require('../mixins/server_loader').default
+import Authentication from '../mixins/authentication'
 
 export default {
   name: 'SinksList',
 
-  mixins : [ServerLoader],
+  mixins : [Authentication],
 
   data : function(){
     return {
@@ -39,15 +41,32 @@ export default {
     }
   },
 
+  methods : {
+    load_sinks : function(){
+      this.all_sinks = [];
+
+      this.$http.get(this.backend_url + "/sinks", this.auth_header)
+                .then(function(response){
+                    response.body.forEach(function(sink){
+                      this.all_sinks.push(sink)
+                    }.bind(this));
+                }.bind(this))
+    },
+
+    delete_sink : function(sink_id){
+      console.log(sink_id)
+      this.$http.delete(this.backend_url + "/sink/" + sink_id, this.auth_header)
+                .then(function(response){
+                  this.load_sinks();
+
+                }.bind(this)).catch(function(err){
+                  alert("Problem deleting sink: " + err.body.error)
+                })
+    }
+  },
+
   created : function(){
-    this.load_sinks(function(sinks){
-      sinks.forEach(function(sink){
-        this.all_sinks.push(sink);
-      }.bind(this));
-    }.bind(this));
+    this.load_sinks();
   }
 }
 </script>
-
-<style scoped>
-</style>

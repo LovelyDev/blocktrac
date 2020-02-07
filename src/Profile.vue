@@ -43,12 +43,12 @@
           <img src="./assets/plus.png" width="22px" />
         </b-col>
 
-        <SinkForm />
+        <SinkForm @created="$refs.sinks_list.load_sinks()" />
       </b-row>
 
       <b-row>
         <b-col>
-          <SinksList />
+          <SinksList ref="sinks_list" />
         </b-col>
       </b-row>
 
@@ -66,8 +66,6 @@ import MainLayout     from './components/MainLayout.vue'
 import SinkForm       from './components/SinkForm.vue'
 import SinksList      from './components/SinksList.vue'
 import Authentication from './mixins/authentication'
-
-import config from './config'
 
 export default {
   name: 'Profile',
@@ -98,11 +96,8 @@ export default {
   },
 
   created : function(){
-    this.$http.get(config.BACKEND_URL + "/user",
-               {headers : {authorization : this.auth_token}})
+    this.$http.get(this.backend_url + "/user", this.auth_header)
               .then(function(response){
-// ... set ui elements
-console.log(response)
 
               }.bind(this)).catch(function(err){
               }.bind(this))

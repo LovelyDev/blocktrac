@@ -9,8 +9,16 @@ export default {
   },
 
   computed : {
+    backend_url : function(){
+      return config.BACKEND_URL;
+    },
+
     auth_token : function(){
       return this.$cookies.authToken;
+    },
+
+    auth_header : function(){
+      return {headers : {authorization : this.auth_token}};
     },
 
     logged_in : function(){
@@ -20,7 +28,7 @@ export default {
 
   methods : {
     register : function(){
-      this.$http.post(config.BACKEND_URL + "/register",
+      this.$http.post(this.backend_url + "/register",
                       {username : this.username,
                        password : this.password})
                 .then(function(response){
@@ -32,7 +40,7 @@ export default {
     },
 
     login : function(){
-      this.$http.post(config.BACKEND_URL + "/login",
+      this.$http.post(this.backend_url + "/login",
                       {username : this.username,
                        password : this.password})
                 .then(function(response){
@@ -44,7 +52,7 @@ export default {
     },
 
     logout : function(){
-      this.$http.delete(config.BACKEND_URL + "/logout",
+      this.$http.delete(this.backend_url + "/logout",
                 {headers : {authorization : this.auth_token}})
                 .then(function(response){
                   this.$removeCookie("authToken")

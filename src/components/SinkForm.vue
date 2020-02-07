@@ -33,8 +33,12 @@
 </template>
 
 <script>
+import Authentication from '../mixins/authentication'
+
 export default {
   name: 'SinkForm',
+
+  mixins : [Authentication],
 
   data : function(){
     return {
@@ -55,7 +59,19 @@ export default {
 
   methods : {
     create_sink : function(){
-      // ...
+      var sink_params = {
+        type : this.sink_type,
+        target: this.target
+      };
+
+      this.$http.post(this.backend_url + "/sink",
+                      sink_params, this.auth_header)
+                .then(function(response){
+                  this.$emit('created')
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not create sink: " + err.body.error)
+                }.bind(this))
     }
   }
 }

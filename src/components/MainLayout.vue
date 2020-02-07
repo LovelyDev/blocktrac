@@ -83,7 +83,6 @@ import LoginForm        from './LoginForm'
 import RegistrationForm from './RegistrationForm'
 
 import Authentication   from '../mixins/authentication'
-console.log(Authentication)
 
 export default {
   name: 'MainLayout',
