@@ -36,7 +36,8 @@
 
         <b-modal :id="'test_filter' + filter.id"
               :title="'Test Filter: ' + filter.name" ok-only>
-          <FilterTester :filter="filter" />
+          <FilterTester :filter="filter"
+                        :tests="tests"/>
         </b-modal>
       </div>
     </div>
@@ -89,7 +90,8 @@ export default {
   props : {
        filter : Object,
     templates : Array,
-        sinks : Array
+        sinks : Array,
+        tests : Array
   },
 
   computed : {
@@ -114,6 +116,8 @@ export default {
     update_filter : function(){
       const filter_params =
         this.$refs.edit_filter_form.server_params
+
+      // TODO: validate jsonpath, template params
 
       this.$http.put(this.backend_url + "/filter/" + this.filter.id,
                       filter_params, this.auth_header)

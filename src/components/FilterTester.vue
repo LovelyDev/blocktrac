@@ -42,12 +42,12 @@ export default {
   },
 
   props : {
-    "filter" : Object
+    filter : Object,
+     tests : Array
   },
 
   data : function(){
     return {
-         tests : [],
        details : {},
        results : {},
       jsonpath : ''
@@ -72,29 +72,23 @@ export default {
   },
 
   created : function(){
-    if(this.filter.template)
-      this.load_templates(function(templates){
-        var template  = templates[this.filter.template]
-        var _jsonpath = template.jsonpath;
-        this.filter.params.forEach(function(param, p){
-          _jsonpath = _jsonpath.replace("PARAM_" + (p+1), param);
-        });
-        this.jsonpath = _jsonpath;
-      }.bind(this));
+    if(this.filter.Template){
+      var _jsonpath = this.filter.Template.jsonpath;
+      this.filter.params.forEach(function(param, p){
+        _jsonpath = _jsonpath.replace("PARAM_" + (p+1), param);
+      });
+      this.jsonpath = _jsonpath;
 
-    else
+    }else
       this.jsonpath = this.filter.jsonpath;
 
-    this.load_filter_tests(function(tests){
-      tests.forEach(function(test){
-        Object.freeze(test);
+    ///
 
-        this.tests.push(test);
-        this.$set(this.details, test.id, false);
+    this.tests.forEach(function(test){
+      this.$set(this.details, test.id, false);
 
-        var result = jsonpath.query(test.json, this.jsonpath).length != 0;
-        this.$set(this.results, test.id, result);
-      }.bind(this));
+      var result = jsonpath.query(test.json, this.jsonpath).length != 0;
+      this.$set(this.results, test.id, result);
     }.bind(this));
   }
 }

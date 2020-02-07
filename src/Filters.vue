@@ -21,8 +21,11 @@
         <FilterSummary v-for="filter in filters"
                        :key="filter.id"
                        :filter="filter"
+
                        :templates="templates"
                        :sinks="sinks"
+                       :tests="tests"
+
                        @updated="load_filters"
                        @deleted="load_filters" />
       </div>
@@ -52,7 +55,8 @@ export default {
     return {
         filters : [],
       templates : [],
-          sinks : []
+          sinks : [],
+          tests : []
     };
   },
 
@@ -103,11 +107,29 @@ export default {
                 }.bind(this))
     },
 
+    load_tests : function(){
+      this.tests = [];
+
+      this.$http.get(this.backend_url + "/tests")
+                .then(function(response){
+                    response.body.forEach(function(test){
+                      test.json = JSON.parse(test.json)
+                      Object.freeze(test);
+                      this.tests.push(test)
+                    }.bind(this));
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not load filter tests: " + err.body.error)
+                }.bind(this))
+    },
+
     /////////
 
     create_filter : function(){
       const filter_params =
         this.$refs.new_filter_form.server_params
+
+      // TODO: validate jsonpath, template params
 
       this.$http.post(this.backend_url + "/filter",
                       filter_params, this.auth_header)
@@ -124,6 +146,7 @@ export default {
     this.load_filters();
     this.load_templates();
     this.load_sinks();
+    this.load_tests();
   }
 }
 </script>
