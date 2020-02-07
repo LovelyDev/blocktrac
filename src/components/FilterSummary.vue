@@ -12,7 +12,8 @@
         <b-modal :id="'edit_filter' + filter.id"
                  title="Edit Filter"
                  @ok="update_filter">
-          <CreateEditFilter :filter="filter"
+          <CreateEditFilter ref="edit_filter_form"
+                            :filter="filter"
                             :templates="templates"
                             :sinks="sinks" />
         </b-modal>
@@ -23,7 +24,7 @@
 
         <b-modal :id="'delete_filter' + filter.id"
                  title="Delete Filter"
-                 @ok="delete_filter(filter.id)">
+                 @ok="delete_filter">
           <h3>Are you sure you want to delete filter:</h3>
           <h4><i>{{filter.name}}</i>?</h4>
           <h5>This action cannot be undone</h5>
@@ -111,11 +112,21 @@ export default {
 
   methods : {
     update_filter : function(){
-console.log("update...")
+      const filter_params =
+        this.$refs.edit_filter_form.server_params
+
+      this.$http.put(this.backend_url + "/filter/" + this.filter.id,
+                      filter_params, this.auth_header)
+                .then(function(response){
+                  this.$emit('updated')
+
+                }.bind(this)).catch(function(err){
+                  alert("Could not update filter: " + err.body.error)
+                }.bind(this))
     },
 
-    delete_filter : function(filter_id){
-      this.$http.delete(this.backend_url + "/filter/" + filter_id,
+    delete_filter : function(){
+      this.$http.delete(this.backend_url + "/filter/" + this.filter.id,
                         this.auth_header)
                 .then(function(response){
                   this.$emit('deleted')

@@ -23,6 +23,7 @@
                        :filter="filter"
                        :templates="templates"
                        :sinks="sinks"
+                       @updated="load_filters"
                        @deleted="load_filters" />
       </div>
     </div>
