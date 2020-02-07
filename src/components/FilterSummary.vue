@@ -73,9 +73,12 @@
 <script>
 import CreateEditFilter from './CreateEditFilter.vue'
 import FilterTester     from './FilterTester.vue'
+import Authentication   from '../mixins/authentication'
 
 export default {
   name: 'Filters',
+
+  mixins : [Authentication],
 
   components : {
     CreateEditFilter,
@@ -108,6 +111,14 @@ console.log("update...")
     },
 
     delete_filter : function(filter_id){
+      this.$http.delete(this.backend_url + "/filter/" + filter_id,
+                        this.auth_header)
+                .then(function(response){
+                  this.$emit('deleted')
+
+                }.bind(this)).catch(function(err){
+                  alert("Problem deleting filter: " + err.body.error)
+                })
     }
   }
 }

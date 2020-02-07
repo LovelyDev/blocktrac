@@ -22,7 +22,8 @@
                        :key="filter.id"
                        :filter="filter"
                        :templates="templates"
-                       :sinks="sinks" />
+                       :sinks="sinks"
+                       @deleted="load_filters" />
       </div>
     </div>
   </MainLayout>
