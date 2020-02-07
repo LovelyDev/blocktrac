@@ -54,7 +54,10 @@
 
       <b-row>
         <b-col>
-          <b-button type="submit">Submit</b-button>
+          <b-button type="submit"
+                   @click="update_profile">
+            Submit
+          </b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -95,12 +98,38 @@ export default {
     },
   },
 
-  created : function(){
-    this.$http.get(this.backend_url + "/user", this.auth_header)
-              .then(function(response){
+  methods : {
+    load_profile : function(){
+      this.$http.get(this.backend_url + "/user", this.auth_header)
+                .then(function(response){
+                  var profile = JSON.parse(response.body.profile);
+                  if(profile.batch_size)
+                    this.batch_size = profile.batch_size;
+                  if(profile.instant)
+                    this.instance = profile.instant;
 
-              }.bind(this)).catch(function(err){
-              }.bind(this))
+                }.bind(this)).catch(function(err){
+                  alert("Problem loading profile: " + err.body.error)
+                }.bind(this))
+    },
+
+    update_profile : function(){
+      const user_params = {batch_size : this.batch_size,
+                              instant : this.instant}
+
+      this.$http.put(this.backend_url + "/profile",
+                     user_params, this.auth_header)
+                .then(function(response){
+                  this.load_profile();
+
+                }.bind(this)).catch(function(err){
+                  alert("Problem updating profile: " + err.body.error)
+                }.bind(this))
+    }
+  },
+
+  created : function(){
+    this.load_profile()
   }
 }
 </script>

@@ -54,7 +54,6 @@ export default {
     },
 
     delete_sink : function(sink_id){
-      console.log(sink_id)
       this.$http.delete(this.backend_url + "/sink/" + sink_id, this.auth_header)
                 .then(function(response){
                   this.load_sinks();

@@ -59,7 +59,7 @@ export default {
 
   methods : {
     create_sink : function(){
-      var sink_params = {
+      const sink_params = {
         type : this.sink_type,
         target: this.target
       };
