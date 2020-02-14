@@ -1,4 +1,31 @@
 module.exports = {
+  // Rendered site name
+  SITE_NAME : "T0 XRPL",
+
+  // Balance needed to be considered a premium account (in USD)
+  MINUMUM_PREMIUM_BALANCE : 5,
+
+  // Membership tiers, rates, and payment plans
+  // TODO: edit these numbers
+  MEMBERSHIP_LEVELS : {
+    basic : {
+      num_filters : 5,
+      num_sinks_per_filter: 1,
+      min_tx_batch : 5,
+      max_tx_batch : 10,
+      min_alert_interval : 15 // in minutes
+    },
+
+    premium : {
+      monthly_filter_cost: 1,
+      monthly_sink_cost:   1,
+      monthly_sink_per_filter_cost : 0.5,
+      min_alert_interval : 1, // in minutes
+      monthly_alert_cost : 3,
+      instant_alert_cost : 10
+    },
+  },
+
   // Backend URL to get/set data
   BACKEND_URL : "http://localhost:3000",
 

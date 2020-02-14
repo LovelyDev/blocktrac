@@ -11,11 +11,15 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
-    // TODO: these should be false by default
+    // TODO: these should be set by membership level
        multiple_sinks : true,
     instant_supported : true,
           sms_enabled : true,
       webhook_enabled : true,
+
+    // TODO: should be determined by account balance
+    //       (0 = basic, minimum = premium)
+    membership_level : 'basic',
 
             txs : [],
     loading_txs : true,

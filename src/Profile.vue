@@ -70,6 +70,9 @@ import SinkForm       from './components/SinkForm.vue'
 import SinksList      from './components/SinksList.vue'
 import Authentication from './mixins/authentication'
 
+// TODO batch size (range above in template and default below in script)
+//      from payment plan / config
+
 export default {
   name: 'Profile',
 

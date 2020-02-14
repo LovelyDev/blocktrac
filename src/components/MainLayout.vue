@@ -6,7 +6,7 @@
       <b-col cols="3" id="main_header">
         <b-row no-gutters>
           <b-col>
-            <router-link to="/"><h1>To XRPL</h1></router-link>
+            <router-link to="/"><h1>{{ site_name }}</h1></router-link>
           </b-col>
         </b-row>
 
@@ -83,6 +83,7 @@ import LoginForm        from './LoginForm'
 import RegistrationForm from './RegistrationForm'
 
 import Authentication   from '../mixins/authentication'
+import config           from '../config'
 
 export default {
   name: 'MainLayout',
@@ -96,6 +97,12 @@ export default {
 
   props : {
     section : String,
+  },
+
+  computed : {
+    site_name : function(){
+      return config.SITE_NAME;
+    }
   }
 }
 </script>
