@@ -14,6 +14,8 @@ import VueFaqAccordion from 'vue-faq-accordion'
 import MainLayout from './components/MainLayout.vue'
 import config     from './config'
 
+// TODO finish flushing out FAQ answers
+
 export default {
   name: 'Help',
   components: {
@@ -27,25 +29,25 @@ export default {
       faq_data : [
         {
              title : "What is " + config.SITE_NAME + "?",
-             value : "Answer1",
+             value : config.SITE_NAME + " is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filter-based alerts to be notified via any number of mechanisms (known as 'sinks') upon XRP Ledger activity.",
           category : "General"
         },
 
         {
              title : "What is XRP?",
-             value : "Answer2",
+             value : "XRP is a popular Blockchain technology being adopted by banks and financial institutions worldwide for cross border remittances.",
           category : "General"
         },
 
         {
              title : "Why should I care about transactions?",
-             value : "Answer3",
+             value : "Transactions are a core component of the XRP Ledger, allowing users to send and receive currencies and tokens representing value over the Internet.",
           category : "General"
         },
 
         {
              title : "Where can I find out more?",
-             value : "Answer4",
+             value : "Many resources are avaiable online pertaining to XRP technologies. See the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple</a> Wikipedia article and the <a href='https://xrpl.org'>XRPL.org</a> dev portal.",
           category : "General"
         },
 
