@@ -8,7 +8,7 @@
       </p>
 
       <p>
-        You may set up transaction alerts in{{site_name}} to be notified of transactions via the following sinks:
+        You may set up transaction alerts in {{site_name}} to be notified of transactions via the following sinks:
       </p>
 
       <ul>
