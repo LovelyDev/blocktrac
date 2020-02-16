@@ -19,6 +19,8 @@
 <script>
 import Authentication from '../mixins/authentication'
 
+// TODO: hide password field, submit on enter
+
 export default {
   name: 'LoginForm',
   mixins : [Authentication]
