@@ -1,21 +1,41 @@
 <template>
-  <div id="registration_form">
-    <input id="username_input"
-           type="text"
-           placeholder="Username"
-           v-model="username" />
+  <b-modal id="register_modal"
+           ref="register_modal"
+           title="Register"
+           ok-title="Register"
+           ok-variant="secondary"
+           cancel-variant="light"
+           @ok="register"
+           no-stacking>
+    <table id="registration_form">
+      <tr>
+        <td>Email address:</td>
+        <td>
+          <input id="username_input"
+                 type="text"
+                 v-model="username" />
+        </td>
+      </tr>
 
-    <input id="password_input"
-           type="text"
-           placeholder="Password"
-           v-model="password" />
+      <tr>
+        <td>Password:</td>
+        <td>
+          <input id="password_input"
+                 type="text"
+                 placeholder="Password"
+                 v-model="password" />
+         </td>
+      </tr>
 
-    <!-- TODO: recaptcha -->
-
-    <button @click="register">
-      Submit
-    </button>
-  </div>
+      <tr>
+        <td></td>
+        <td id="existing_account"
+            v-b-modal.login_modal>
+          Already have an account?
+        </td>
+      </tr>
+    </table>
+  </b-modal>
 </template>
 
 <script>
@@ -31,12 +51,17 @@ export default {
 </script>
 
 <style scoped>
-#registration_form{
-  text-align: center;
+table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px;
 }
 
-#username_input,
-#password_input{
-  margin: 5px;
+input{
+  width: 100%;
+}
+
+#existing_account{
+  cursor: pointer;
 }
 </style>

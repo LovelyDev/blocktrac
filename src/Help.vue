@@ -12,7 +12,6 @@
 import VueFaqAccordion from 'vue-faq-accordion'
 
 import MainLayout from './components/MainLayout.vue'
-import config     from './config'
 
 // TODO finish flushing out FAQ answers
 
@@ -28,8 +27,8 @@ export default {
     return {
       faq_data : [
         {
-             title : "What is " + config.SITE_NAME + "?",
-             value : config.SITE_NAME + " is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filter-based alerts to be notified via any number of mechanisms (known as 'sinks') upon XRP Ledger activity.",
+             title : "What is Zerp Tracker?",
+             value : "Zerp Tracker is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filter-based alerts to be notified via any number of mechanisms (known as 'sinks') upon XRP Ledger activity.",
           category : "General"
         },
 

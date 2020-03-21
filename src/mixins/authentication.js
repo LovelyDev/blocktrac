@@ -60,6 +60,10 @@ export default {
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
                 }.bind(this))
+    },
+
+    reset_password : function(){
+      // TODO
     }
   }
 }

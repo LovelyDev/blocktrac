@@ -4,7 +4,7 @@
       <div class="section">
         <div id="first_section" class="subsection">
           <div style="text-align: center">
-          <h1>{{site_name}}</h1>
+          <h1>Zerp Tracker</h1>
           <h6>By <a href="https://devnull.network">Dev Null Productions</a></h6>
           </div>
 
@@ -81,16 +81,8 @@
 </template>
 
 <script>
-import config from './config'
-
 export default {
-  name: 'Landing',
-
-  computed : {
-    site_name : function(){
-      return config.SITE_NAME;
-    }
-  }
+  name: 'Landing'
 }
 </script>
 

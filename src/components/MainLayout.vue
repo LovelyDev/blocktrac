@@ -1,14 +1,12 @@
 <template>
   <b-container fluid class="p-0" id="main_layout">
-    <b-row no-gutters>
-      <b-col></b-col>
-
-      <MainHeader />
-    </b-row>
+    <MainHeader />
 
     <b-row no-gutters id="main_content">
       <b-col>
-        <slot></slot>
+        <div id="main_subcontent">
+          <slot></slot>
+        </div>
       </b-col>
     </b-row>
 
@@ -38,14 +36,19 @@ export default {
 #main_layout{
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100%;
 }
 
-#main_about{
-  margin-left: 5px;
+#main_content{
+  width: 100%;
+  flex-grow: 1;
+  background-color: #f8f8f9;
+  border-top: 1px solid #ececec;
 }
 
-#main_content{
-  flex-grow: 1;
+#main_subcontent{
+  width: 85%;
+  margin: auto;
 }
 </style>
