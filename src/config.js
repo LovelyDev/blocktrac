@@ -1,6 +1,6 @@
 module.exports = {
   // Rendered site name
-  SITE_NAME : "T0 XRPL",
+  SITE_NAME : "Zerp Tracker",
 
   // Balance needed to be considered a premium account (in USD)
   MINUMUM_PREMIUM_BALANCE : 5,
