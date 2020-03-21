@@ -1,19 +1,11 @@
 <template>
-  <MainLayout section="landing">
-    <TxsList />
-  </MainLayout>
+  <div>
+    Landing Page
+  </div>
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
-import TxsList    from './components/TxsList.vue'
-
 export default {
-  name: 'Landing',
-
-  components: {
-    MainLayout,
-    TxsList
-  }
+  name: 'Landing'
 }
 </script>

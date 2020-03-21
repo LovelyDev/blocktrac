@@ -19,6 +19,7 @@ Vue.use(VueMoment, {moment_tz});
 ///
 
 import Landing from './Landing.vue'
+import LiveTxs from './LiveTxs.vue'
 import About   from './About.vue'
 import Help    from './Help.vue'
 import Filters from './Filters.vue'
@@ -41,6 +42,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/',          component: Landing   },
+  { path: '/live',      component: LiveTxs   },
   { path: '/about',     component: About     },
   { path: '/help',      component: Help      },
   { path: '/filters',   component: Filters   },
