@@ -183,7 +183,7 @@ export default {
 }
 
 #nav2{
-  border: 3px solid gray;
+  border: 1px solid gray;
   align-self: center;
   background-color: white;
   color: black;
