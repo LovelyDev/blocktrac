@@ -14,6 +14,9 @@ export default {
 
 <style scoped>
 #main_footer{
+  width: 100%;
   text-align: center;
+  background-color: #f8f8f9;
+  padding-bottom: 10px;
 }
 </style>

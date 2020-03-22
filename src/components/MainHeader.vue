@@ -1,7 +1,7 @@
 <template>
   <b-row no-gutters id="main_header">
     <b-col cols="8">
-      <router-link to="/">
+      <router-link to="/live">
         <h1 style="margin-bottom: 0">
           <span style="font-weight: bold">Zerp</span>
           <span style="color: #b3bac2">Tracker</span>
