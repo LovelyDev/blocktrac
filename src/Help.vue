@@ -3,7 +3,9 @@
     <div id="help">
       <h1 style="text-align: center">Help</h1>
 
-      <VueFaqAccordion :items="faq_data" />
+      <div id="content">
+        <VueFaqAccordion :items="faq_data" />
+      </div>
     </div>
   </MainLayout>
 </template>
@@ -135,11 +137,14 @@ export default {
 
 <style scoped>
 #help{
-  border: 1px solid black;
-  width: 75%;
-  margin: auto;
   margin-bottom: 25px;
-  padding: 15px;
+  padding: 25px;
+}
+
+#content{
+  border: 1px solid #ededed;
+  background-color: white;
+  padding: 25px;
 }
 
 /deep/ .faq-wrapper{

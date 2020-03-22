@@ -69,7 +69,6 @@ export default {
 
 <style scoped>
 #tx_list_container{
-  margin-top: 25px;
   padding: 5px;
   border: 1px solid black;
 }

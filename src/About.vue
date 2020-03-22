@@ -98,9 +98,8 @@ export default {
 
 <style scoped>
 #about{
-  margin: auto;
   margin-bottom: 25px;
-  padding: 15px;
+  padding: 25px;
 }
 
 #content{
