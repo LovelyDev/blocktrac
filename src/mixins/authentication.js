@@ -3,8 +3,8 @@ import config from '../config'
 export default {
   data : function(){
     return {
-      username : '',
-      password : ''
+      _username : '',
+       password : ''
     };
   },
 
@@ -23,16 +23,39 @@ export default {
 
     logged_in : function(){
       return !!this.auth_token;
+    },
+
+    username : {
+      get : function(){
+        return this.$cookies.username || this._username;
+      },
+
+      set : function(u){
+        this._username = u;
+      }
+    },
+
+    profile : function(){
+      return this.$cookies.profile;
+    },
+
+    membership_level : function(){
+      return this.$store.state.membership_level;
+    },
+
+    is_premium_member : function(){
+      return this.membership_level == 'premium';
     }
   },
 
   methods : {
     register : function(){
       this.$http.post(this.backend_url + "/register",
-                      {username : this.username,
+                      {username : this._username,
                        password : this.password})
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
+                  this.load_user();
 
                 }.bind(this)).catch(function(err){
                   alert(err.body.error)
@@ -41,14 +64,23 @@ export default {
 
     login : function(){
       this.$http.post(this.backend_url + "/login",
-                      {username : this.username,
+                      {username : this._username,
                        password : this.password})
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
+                  this.load_user();
 
                 }.bind(this)).catch(function(err){
                   alert(err.body.error)
                 })
+    },
+
+    load_user : function(){
+      return this.$http.get(this.backend_url + "/user", this.auth_header)
+                       .then(function(response){
+                         this.$setCookie("username", response.body.username)
+                         this.$setCookie("profile",  response.body.profile)
+                       }.bind(this))
     },
 
     logout : function(){
@@ -56,10 +88,15 @@ export default {
                 {headers : {authorization : this.auth_token}})
                 .then(function(response){
                   this.$removeCookie("authToken")
+                  this.$removeCookie("username")
+                  this.$removeCookie("profile");
 
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
+                  this.$removeCookie("username")
+                  this.$removeCookie("profile");
                 }.bind(this))
+// ... redirect user to /live
     },
 
     reset_password : function(){

@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
           sms_enabled : true,
       webhook_enabled : true,
 
-    // TODO: should be determined by account balance
+    // TODO: pull from server
     //       (0 = basic, minimum = premium)
     membership_level : 'basic',
 

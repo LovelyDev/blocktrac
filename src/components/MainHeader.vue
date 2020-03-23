@@ -36,12 +36,32 @@
       <RegistrationForm />
     </b-col>
 
-    <b-col v-if="logged_in" class="nav_link">
-      Upgrade | Premium
+    <b-col v-if="logged_in"
+           id="membership_level_container"
+           class="nav_link">
+      <router-link to="/plans">
+        {{is_premium_member ? 'Premium' : 'Get a pro account'}}
+      </router-link>
     </b-col>
 
-    <b-col v-if="logged_in" class="nav_link">
-      (Initial) My Account
+    <b-col v-if="logged_in"
+           id="my_account_container"
+           class="nav_link">
+      <span id="user_initial">{{user_initial}}</span> My Account ▼
+
+      <b-popover id="my_account_popover"
+                 target="my_account_container"
+                 placement="bottom">
+        <div>
+          <span class="my_account_spacer">&nbsp;</span>
+          <router-link to="/profile">Profile</router-link>
+        </div>
+
+        <div id="logout_link" @click="logout">
+          <span class="my_account_spacer">&nbsp;</span>
+          <span>Log out</span>
+        </div>
+      </b-popover>
     </b-col>
   </b-row>
 </template>
@@ -62,6 +82,12 @@ export default {
     LoginForm,
     ForgotPasswordForm,
     RegistrationForm
+  },
+
+  computed : {
+    user_initial : function(){
+      return this.username[0].toUpperCase();
+    }
   }
 }
 </script>
@@ -87,7 +113,8 @@ a:hover{
 }
 
 #login_link,
-#register_link{
+#register_link,
+#logout_link{
   cursor: pointer;
 }
 
@@ -100,5 +127,51 @@ a:hover{
   padding: 5px;
   background-color: black;
   color: white;
+}
+
+#membership_level_container{
+  flex-grow: 3;
+  cursor: pointer;
+  background-color: #eff2f8;
+  border-radius: 15px;
+}
+
+#membership_level_container a{
+  color: #629ffb;
+}
+
+
+#my_account_container{
+  flex-grow: 3;
+  cursor: pointer;
+}
+
+#my_account_popover{
+  font-size: 1.2rem;
+  min-width: 125px;
+}
+
+#my_account_popover div{
+  margin-bottom: 10px;
+}
+
+.my_account_spacer{
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+
+  background-color: #d3dae3;
+  border-radius: 20px;
+  margin-right: 5px;
+}
+
+#user_initial{
+  display: inline-block;
+  height: 35px;
+  width: 35px;
+
+  background-color: #d3dae3;
+  padding: 7px;
+  border-radius: 20px;
 }
 </style>

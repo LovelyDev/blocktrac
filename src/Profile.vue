@@ -103,17 +103,11 @@ export default {
 
   methods : {
     load_profile : function(){
-      this.$http.get(this.backend_url + "/user", this.auth_header)
-                .then(function(response){
-                  var profile = JSON.parse(response.body.profile);
-                  if(profile.batch_size)
-                    this.batch_size = profile.batch_size;
-                  if(profile.instant)
-                    this.instance = profile.instant;
-
-                }.bind(this)).catch(function(err){
-                  alert("Problem loading profile: " + err.body.error)
-                }.bind(this))
+      var profile = JSON.parse(this.profile);
+      if(profile.batch_size)
+        this.batch_size = profile.batch_size;
+      if(profile.instant)
+        this.instance = profile.instant;
     },
 
     update_profile : function(){
@@ -123,7 +117,10 @@ export default {
       this.$http.put(this.backend_url + "/profile",
                      user_params, this.auth_header)
                 .then(function(response){
-                  this.load_profile();
+                  this.load_user()
+                      .then(function(){
+                        this.load_profile();
+                      }.bind(this));
 
                 }.bind(this)).catch(function(err){
                   alert("Problem updating profile: " + err.body.error)

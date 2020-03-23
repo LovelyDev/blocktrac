@@ -3,7 +3,7 @@ module.exports = {
   MINUMUM_PREMIUM_BALANCE : 5,
 
   // Membership tiers, rates, and payment plans
-  // TODO: edit these numbers
+  // TODO: pull from server
   MEMBERSHIP_LEVELS : {
     basic : {
       num_filters : 5,

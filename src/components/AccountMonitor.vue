@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'Account Monitor'
+  name: 'AccountMonitor'
 }
 </script>
 
