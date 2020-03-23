@@ -24,7 +24,6 @@ export default {
     VueFaqAccordion
   },
 
-
   data : function(){
     return {
       faq_data : [

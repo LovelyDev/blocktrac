@@ -7,7 +7,7 @@
         </b-col>
       </b-row>
 
-      <b-row class="mt-3">
+      <b-row class="mt-3 flex-nowrap">
         <b-col cols="2">
           <b-row>
             <b-col>

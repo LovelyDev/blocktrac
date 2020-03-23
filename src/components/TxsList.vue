@@ -1,29 +1,28 @@
 <template>
-  <div id="tx_list_container">
-    <div id="txs_header">
-      <div>
-        <b>Live Transactions</b>:
-        <TxsControl />
-      </div>
-      <TxsFilter  />
+  <div>
+    <TxsFilter />
+    <TxsControl />
+
+    <div id="txs_list">
+      <TxsCategories />
+
+      <b-list-group>
+        <b-list-group-item v-for="tx in txs"
+                           :key="tx.transaction.hash"
+                           class="tx_summary_container">
+
+          <TxSummary :tx="tx" />
+        </b-list-group-item>
+      </b-list-group>
     </div>
-
-    <b-list-group>
-      <b-list-group-item v-for="tx in txs"
-                         :key="tx.transaction.hash"
-                          class="tx_summary_container"
-                         :class="tx.meta.TransactionResult">
-
-        <TxSummary :tx="tx" />
-      </b-list-group-item>
-    </b-list-group>
   </div>
 </template>
 
 <script>
-import TxSummary  from './TxSummary.vue'
-import TxsFilter  from './TxsFilter.vue'
-import TxsControl from './TxsControl.vue'
+import TxsFilter     from './TxsFilter.vue'
+import TxsControl    from './TxsControl.vue'
+import TxsCategories from './TxsCategories.vue'
+import TxSummary     from './TxSummary.vue'
 
 var CommandDispatcher = require('../mixins/command_dispatcher')
 
@@ -33,9 +32,10 @@ export default {
   mixins : [CommandDispatcher],
 
   components : {
-    TxSummary,
     TxsFilter,
+    TxsCategories,
     TxsControl,
+    TxSummary,
   },
 
   computed : {
@@ -68,24 +68,14 @@ export default {
 </script>
 
 <style scoped>
-#tx_list_container{
+#txs_list{
+  border: 1px solid #f5f5f6;
   padding: 5px;
-  border: 1px solid black;
-}
-
-#txs_header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
+  background-color: white;
 }
 
 .tx_summary_container{
   margin: 1px;
-  background-color: red !important;
   color: white;
-}
-
-.tx_summary_container.tesSUCCESS{
-  background-color: green !important;
 }
 </style>

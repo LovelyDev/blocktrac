@@ -9,7 +9,7 @@
     </p>
 
     <div id="personalized">
-      Set Personalized Filter
+      <b>Set Personalized Filter</b>
     </div>
   </div>
 </template>
@@ -31,8 +31,8 @@ export default {
 #personalized{
   background-color: #425265;
   color: white;
-  border-radius: 20px;
-  padding: 5px;
+  border-radius: 15px;
+  padding: 7px;
   cursor: pointer;
 }
 </style>

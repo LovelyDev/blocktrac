@@ -1,10 +1,10 @@
 <template>
-  <span>
+  <div id="txs_controls">
     <span id="txs_play_pause" class="txs_icon" v-on:click="play_pause()">
       <img v-if="paused" src="../assets/play.svg" width="22px" />
       <img v-else        src="../assets/pause.svg" width="22px" />
     </span>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style scoped>
-#txs_settings{
-  vertical-align: middle;
+#txs_controls{
+  text-align: right;
 }
 
 .txs_icon {

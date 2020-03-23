@@ -1,8 +1,11 @@
 <template>
   <div id="txs_filter">
-    <span v-b-modal.filter_help><sup>Help</sup></span>
+    <span id="icon1">🔍</span>
+
     <b-form-input v-model="filter"
                   placeholder="JSONPath Expression..." />
+
+    <span id="icon2" v-b-modal.filter_help>(?)</span>
 
     <b-modal id="filter_help" title="JSONPath Help" ok-only>
       <FilterHelp @set="set_filter"/>
@@ -41,21 +44,27 @@ export default {
 </script>
 
 <style scoped>
-#txs_filter {
-  text-align: right;
-  margin-right: 5px;
-  color: blue;
-  cursor: pointer;
+#txs_filter{
+  position: relative;
 }
 
 input {
-  display: inline-block;
-  font-size: 0.75em;
-  width: 250px;
-  margin-left: 5px;
+  width: 100%;
+  padding-left: 50px;
 }
 
-input.sm{
-  font-size: 0.45em;
+#icon1{
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-size: 1.2rem;
+}
+
+#icon2{
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 </style>

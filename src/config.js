@@ -36,6 +36,17 @@ module.exports = {
   // Number of TXs to retain in history
   TX_HISTORY : 75,
 
+  // Categories TXs fall in to
+  TX_CATEGORIES : [
+    'ALL',
+    'PAYMENTS',
+    'OFFERS',
+    'ESCROWS',
+    'PAYMENT CHANNELS',
+    'ACCOUNT SETS',
+    'TRUST LINES'
+  ],
+
   // From the XRP Protocol
   DROPS_PER_XRP : 1000000,
 

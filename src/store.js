@@ -25,6 +25,7 @@ export const store = new Vuex.Store({
     loading_txs : true,
      paused_txs : false,
       tx_filter : '',
+    tx_category : config.TX_CATEGORIES[0],
 
     callbacks : {
       socket_open : [],
@@ -60,6 +61,8 @@ export const store = new Vuex.Store({
     add_tx(state, tx){
       if(state.paused_txs) return;
 
+// ... skip if not in enabled category
+
       if(state.tx_filter)
         if(jsonpath.query(tx, state.tx_filter).length == 0)
           return;
@@ -71,6 +74,12 @@ export const store = new Vuex.Store({
 
       state.txs.unshift(tx);
       state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
+    },
+
+    set_tx_category(state, category){
+      state.tx_category = category;
+
+// ... filter txs
     },
 
     ///
