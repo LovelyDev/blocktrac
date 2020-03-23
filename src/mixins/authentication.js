@@ -3,8 +3,8 @@ import config from '../config'
 export default {
   data : function(){
     return {
-      _username : '',
-       password : ''
+      auth_email : '',
+      auth_password : ''
     };
   },
 
@@ -25,14 +25,8 @@ export default {
       return !!this.auth_token;
     },
 
-    username : {
-      get : function(){
-        return this.$cookies.username || this._username;
-      },
-
-      set : function(u){
-        this._username = u;
-      }
+    email : function(){
+      return this.$cookies.email;
     },
 
     profile : function(){
@@ -40,7 +34,7 @@ export default {
     },
 
     membership_level : function(){
-      return this.$store.state.membership_level;
+      return this.$cookies.membership_level;
     },
 
     is_premium_member : function(){
@@ -51,8 +45,8 @@ export default {
   methods : {
     register : function(){
       this.$http.post(this.backend_url + "/register",
-                      {username : this._username,
-                       password : this.password})
+                      {email : this.auth_email,
+                       password : this.auth_password})
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();
@@ -64,8 +58,8 @@ export default {
 
     login : function(){
       this.$http.post(this.backend_url + "/login",
-                      {username : this._username,
-                       password : this.password})
+                      {email : this.auth_email,
+                       password : this.auth_password})
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();
@@ -78,7 +72,8 @@ export default {
     load_user : function(){
       return this.$http.get(this.backend_url + "/user", this.auth_header)
                        .then(function(response){
-                         this.$setCookie("username", response.body.username)
+                         this.$setCookie("email", response.body.email)
+                         this.$setCookie("membership_level", response.body.membership_level);
                          this.$setCookie("profile",  response.body.profile)
                        }.bind(this))
     },
@@ -88,12 +83,14 @@ export default {
                 {headers : {authorization : this.auth_token}})
                 .then(function(response){
                   this.$removeCookie("authToken")
-                  this.$removeCookie("username")
+                  this.$removeCookie("email")
+                  this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
 
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
-                  this.$removeCookie("username")
+                  this.$removeCookie("email")
+                  this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
                 }.bind(this))
 // ... redirect user to /live

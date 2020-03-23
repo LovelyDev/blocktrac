@@ -9,62 +9,7 @@
         </p>
 
         <p>
-          You may set up transaction alerts in Zerp Tracker to be notified of transactions via the following sinks:
-        </p>
-
-        <ul>
-          <li>Email</li>
-          <li>Text Message (SMS)</li>
-          <li>Webhooks</li>
-          <li>&amp; more</li>
-        </ul>
-
-        <p>
-          Upon creating an account and setting up your profile, you are given the ability to write custom expressions that will be matched against XRPL activity as it occurs. Additional Zerp Tracker provides may pre-built parameterized expression templates right out of the box so that you can quickly be notified of common ledger activity. Expressions and templates may be tested in real time against the live transaction stream, right in the web browser, as well as against a re-captured database of actual XRPL transactions. Once you have established the specific expression for the type of ledger activity you are looking for, you can then save it to our servers so as to be notified of corresponding transactions via you configured data sink, even when you close your browser.
-        </p>
-
-        <p>
-          Zerp Tracker membership levels comes in tiers, the basic (free) plan allows you to create {{membership_levels['basic']['num_filters']}} filters, each associated with {{membership_levels['basic']['num_sinks_per_filter']}} sink{{pluralizer(membership_levels['basic']['num_sinks_per_filter'])}} to output ledger activity. Matched transactions will be relayed at an interval of {{membership_levels['basic']['min_tx_batch']}} transactions or {{membership_levels['basic']['min_alert_interval']}} minutes, whichever comes later.
-        </p>
-
-        <p>
-          Premium plans allow you to create more filters and allow you to associated each with multiple sinks. Furthermore alerts can be configured to be invoked immediately upon match in the transaction stream.
-        </p>
-
-        <p>
-          Pricing:
-        </p>
-
-        <ul>
-          <li>Basic: Free</li>
-          <li>Premium:</li>
-          <li style="list-style-type: none">
-            <ul>
-              <li>
-                Additional Filters: ${{membership_levels['premium']['monthly_filter_cost']}} per filter per month
-              </li>
-
-              <li>
-                Additional Sinks: ${{membership_levels['premium']['monthly_sink_cost']}} per sink per month
-              </li>
-
-              <li>
-                Additional Sinks Per Filter: ${{membership_levels['premium']['monthly_sink_per_filter_cost']}} per filter-sink per month
-              </li>
-
-              <li>
-                Quicker Alert Time ({{membership_levels['premium']['min_alert_interval']}} minute{{pluralizer(membership_levels['premium']['min_alert_interval'])}}):  ${{membership_levels['premium']['monthly_alert_cost']}} per month
-              </li>
-
-              <li>
-                Instant Alerts: ${{membership_levels['premium']['instant_alert_cost']}} per month
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <p>
-          Be sure to check back regularly for updates and new features!
+          TODO
         </p>
       </div>
     </div>
@@ -85,12 +30,6 @@ export default {
   methods : {
     pluralizer : function(num){
       return num == 1 ? '' : 's';
-    }
-  },
-
-  computed : {
-    membership_levels : function(){
-      return config.MEMBERSHIP_LEVELS;
     }
   }
 }

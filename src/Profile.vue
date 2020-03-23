@@ -1,73 +1,81 @@
 <template>
   <MainLayout section="profile">
-    <b-container>
-      <b-row>
-        <b-col>
-          <h1>Profile:</h1>
-        </b-col>
-      </b-row>
+    <div id="profile">
+      <h1>Account:</h1>
 
-      <b-row>
-        <b-col>
-          <label for="batch_size">Batch: <b>{{batch_size}}</b></label>
-        </b-col>
+      <b-container id="profile_content">
+        <b-row class="header_row">
+          <b-col>
+            <b>My profile</b>
+          </b-col>
+        </b-row>
 
-        <b-col cols="10">
-          <b-form-input id="batch_size"
-                   v-model="batch_size"
-                      type="range"
-                      min="5"
-                      max="10" />
-        </b-col>
-      </b-row>
+        <b-row class="input_row">
+          <b-col>
+            Email address
+          </b-col>
 
-      <b-row v-if="instant_supported">
-        <b-col>
-          <label form="instant_notification">Instant</label>
-        </b-col>
+          <b-col>
+            {{email}}
+          </b-col>
 
-        <b-col class="align_end">
-          <b-form-checkbox id="instant_notification"
-                      v-model="instant" />
-        </b-col>
-      </b-row>
+          <b-col>
+            Update
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col>
-          <h2>Sinks:</h2>
-        </b-col>
+        <b-row class="input_row">
+          <b-col>
+            Password
+          </b-col>
 
-        <b-col v-if="multiple_sinks"
-              class="align_end sink_control"
-              v-b-modal.create_sink>
-          <img src="./assets/plus.png" width="22px" />
-        </b-col>
+          <b-col>
+           *****
+          </b-col>
 
-        <SinkForm @created="$refs.sinks_list.load_sinks()" />
-      </b-row>
+          <b-col>
+            Change Password
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col>
-          <SinksList ref="sinks_list" />
-        </b-col>
-      </b-row>
+        <b-row class="header_row">
+          <b-col>
+            <b>Plan details</b>
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <b-col>
-          <b-button type="submit"
-                   @click="update_profile">
-            Submit
-          </b-button>
-        </b-col>
-      </b-row>
-    </b-container>
+        <b-row class="input_row">
+          <b-col>
+            Plan details
+          </b-col>
+
+          <b-col>
+            {{membership_level}}
+          </b-col>
+
+          <b-col>
+            Change plan
+          </b-col>
+        </b-row>
+
+        <b-row class="header_row">
+          <b-col>
+            <b>Billing</b>
+          </b-col>
+        </b-row>
+
+        <b-row class="input_row">
+          <b-col>
+            TODO
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </MainLayout>
 </template>
 
 <script>
 import MainLayout     from './components/MainLayout.vue'
-import SinkForm       from './components/SinkForm.vue'
-import SinksList      from './components/SinksList.vue'
 import Authentication from './mixins/authentication'
 
 // TODO batch size (range above in template and default below in script)
@@ -79,57 +87,34 @@ export default {
   mixins : [Authentication],
 
   components: {
-    MainLayout,
-    SinkForm,
-    SinksList
-  },
-
-  data : function(){
-    return {
-      batch_size : 10,
-         instant : false
-    }
-  },
-
-  computed : {
-    instant_supported : function(){
-      return this.$store.state.instant_supported;
-    },
-
-    multiple_sinks : function(){
-      return this.$store.state.multiple_sinks;
-    },
-  },
-
-  methods : {
-    load_profile : function(){
-      var profile = JSON.parse(this.profile);
-      if(profile.batch_size)
-        this.batch_size = profile.batch_size;
-      if(profile.instant)
-        this.instance = profile.instant;
-    },
-
-    update_profile : function(){
-      const user_params = {batch_size : this.batch_size,
-                              instant : this.instant}
-
-      this.$http.put(this.backend_url + "/profile",
-                     user_params, this.auth_header)
-                .then(function(response){
-                  this.load_user()
-                      .then(function(){
-                        this.load_profile();
-                      }.bind(this));
-
-                }.bind(this)).catch(function(err){
-                  alert("Problem updating profile: " + err.body.error)
-                }.bind(this))
-    }
-  },
-
-  created : function(){
-    this.load_profile()
+    MainLayout
   }
 }
 </script>
+
+<style scoped>
+#profile{
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+#profile_content{
+  background-color: white;
+  border: 1px solid #ededed;
+  padding: 25px;
+}
+
+.header_row{
+  margin: 20px;
+  border-bottom: 1px solid #ededed;
+}
+
+.input_row{
+  margin: 20px;
+}
+
+.input_row .col{
+  padding: 10px;
+}
+</style>

@@ -17,10 +17,6 @@ export const store = new Vuex.Store({
           sms_enabled : true,
       webhook_enabled : true,
 
-    // TODO: pull from server
-    //       (0 = basic, minimum = premium)
-    membership_level : 'basic',
-
             txs : [],
     loading_txs : true,
      paused_txs : false,

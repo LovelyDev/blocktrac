@@ -10,9 +10,9 @@
       <tr>
         <td>Email address:</td>
         <td>
-          <input id="username_input"
+          <input id="email_input"
                  type="text"
-                 v-model="username" />
+                 v-model="auth_email" />
         </td>
       </tr>
     </table>

@@ -47,7 +47,7 @@
     <b-col v-if="logged_in"
            id="my_account_container"
            class="nav_link">
-      <span id="user_initial">{{user_initial}}</span> My Account ▼
+      <span id="initial">{{initial}}</span> My Account ▼
 
       <b-popover id="my_account_popover"
                  target="my_account_container"
@@ -85,8 +85,12 @@ export default {
   },
 
   computed : {
-    user_initial : function(){
-      return this.username[0].toUpperCase();
+    initial : function(){
+      // XXX: email isn't available until after user is loaded
+      if(!this.email)
+        return '';
+
+      return this.email[0].toUpperCase();
     }
   }
 }
@@ -140,7 +144,6 @@ a:hover{
   color: #629ffb;
 }
 
-
 #my_account_container{
   flex-grow: 3;
   cursor: pointer;
@@ -149,10 +152,6 @@ a:hover{
 #my_account_popover{
   font-size: 1.2rem;
   min-width: 125px;
-}
-
-#my_account_popover div{
-  margin-bottom: 10px;
 }
 
 .my_account_spacer{
@@ -165,7 +164,7 @@ a:hover{
   margin-right: 5px;
 }
 
-#user_initial{
+#initial{
   display: inline-block;
   height: 35px;
   width: 35px;
