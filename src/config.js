@@ -36,17 +36,6 @@ module.exports = {
   // Number of TXs to retain in history
   TX_HISTORY : 75,
 
-  // Categories TXs fall in to
-  TX_CATEGORIES : [
-    'ALL',
-    'PAYMENTS',
-    'OFFERS',
-    'ESCROWS',
-    'PAYMENT CHANNELS',
-    'ACCOUNT SETS',
-    'TRUST LINES'
-  ],
-
   // From the XRP Protocol
   DROPS_PER_XRP : 1000000,
 
@@ -58,5 +47,48 @@ module.exports = {
     'BTC' : '&#8383;',
     'GBP' : '&#163;',
     'EUR' : '&euro;'
+  },
+
+  // Categories TXs fall in to
+  TX_CATEGORIES : [
+    'ALL',
+    'PAYMENTS',
+    'OFFERS',
+    'ESCROWS',
+    'PAYMENT CHANNELS',
+    'ACCOUNT SETS',
+    'TRUST LINES'
+  ],
+
+  // General TX category for each ledger type
+  tx_category_for_type : function(t){
+    switch(t){
+      case "Payment":
+        return "PAYMENTS";
+  
+      case "OfferCreate":
+      case "OfferCancel":
+        return "OFFERS";
+  
+      case "EscrowCreate":
+      case "EscrowFinish":
+      case "EscrowCancel":
+        return "ESCROWS";
+  
+      case "PaymentChannelCreate":
+      case "PaymentChannelClaim":
+      case "PaymentChannelFund":
+        return "PAYMENT CHANNELS";
+  
+      case "AccountSet":
+      case "SignerListSet":
+        return "ACCOUNT SETS";
+  
+      case "TrustSet":
+        return "TRUST LINES";
+  
+      default:
+        return null;
+    }
   }
 }

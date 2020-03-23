@@ -4,6 +4,10 @@
       <img v-if="paused" src="../assets/play.svg" width="22px" />
       <img v-else        src="../assets/pause.svg" width="22px" />
     </span>
+
+    <span id="clear_txs" class="txs_icon" v-on:click="clear_txs">
+      <img src="../assets/trash.svg" width="22px" />
+    </span>
   </div>
 </template>
 
@@ -18,11 +22,12 @@ export default {
   },
 
   methods : {
-    launch_settings : function(){
-    },
-
     play_pause : function(){
       this.$store.commit('toggle_paused_txs');
+    },
+
+    clear_txs : function(){
+      this.$store.commit('clear_txs');
     }
   }
 }
@@ -31,13 +36,23 @@ export default {
 <style scoped>
 #txs_controls{
   text-align: right;
+  margin-top: 5px;
 }
 
 .txs_icon {
-  margin: 2px;
-  padding: 2px;
-  border-radius: 15px;
+  display: inline-block;
   cursor: pointer;
+
+  border-top: 1px solid #f5f5f6;
+  background-color: white;
+}
+
+.txs_icon:first-child {
+  border-left: 1px solid #f5f5f6;
+}
+
+.txs_icon:last-child {
+  border-right: 1px solid #f5f5f6;
 }
 
 img{

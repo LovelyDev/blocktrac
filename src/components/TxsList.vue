@@ -76,6 +76,5 @@ export default {
 
 .tx_summary_container{
   margin: 1px;
-  color: white;
 }
 </style>

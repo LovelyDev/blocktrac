@@ -61,11 +61,13 @@ export const store = new Vuex.Store({
     add_tx(state, tx){
       if(state.paused_txs) return;
 
-// ... skip if not in enabled category
-
       if(state.tx_filter)
         if(jsonpath.query(tx, state.tx_filter).length == 0)
           return;
+
+      var category = config.tx_category_for_type(tx["transaction"]["TransactionType"]);
+      if(state.tx_category != "ALL" && state.tx_category != category)
+        return;
 
       state.loading_txs = false;
 
@@ -79,7 +81,11 @@ export const store = new Vuex.Store({
     set_tx_category(state, category){
       state.tx_category = category;
 
-// ... filter txs
+      // TODO clear and/or filter txs by category ?
+    },
+
+    clear_txs(state, filter){
+      state.txs = [];
     },
 
     ///
