@@ -14,7 +14,7 @@
             Monitor XRP Blockchain transactions in real time and setup alerts to be notified via email, text, and more!
           </h2>
 
-          <a id="nav1" class="nav" href="/live">
+          <a id="nav1" class="nav" href="/txs">
             <h2>
               Start Now
             </h2>
@@ -69,7 +69,7 @@
             </ul>
           </h4>
 
-          <a id="nav2" class="nav" href="/live">
+          <a id="nav2" class="nav" href="/txs">
             <h2>
               Begin Today
             </h2>

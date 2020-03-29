@@ -19,7 +19,7 @@
             {{email}}
           </b-col>
 
-          <b-col>
+          <b-col class="action">
             Update
           </b-col>
         </b-row>
@@ -33,7 +33,7 @@
            *****
           </b-col>
 
-          <b-col>
+          <b-col class="action">
             Change Password
           </b-col>
         </b-row>
@@ -53,7 +53,7 @@
             {{membership_level}}
           </b-col>
 
-          <b-col>
+          <b-col class="action">
             Change plan
           </b-col>
         </b-row>
@@ -116,5 +116,10 @@ export default {
 
 .input_row .col{
   padding: 10px;
+}
+
+.action{
+  color: blue;
+  cursor: pointer;
 }
 </style>

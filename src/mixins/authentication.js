@@ -93,7 +93,7 @@ export default {
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
                 }.bind(this))
-// ... redirect user to /live
+// ... redirect user to /txs
     },
 
     reset_password : function(){

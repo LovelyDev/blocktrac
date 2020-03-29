@@ -24,7 +24,7 @@ Vue.use(VueFullPage);
 ///
 
 import Landing from './Landing.vue'
-import LiveTxs from './LiveTxs.vue'
+import Txs     from './Txs.vue'
 import About   from './About.vue'
 import Help    from './Help.vue'
 import Filters from './Filters.vue'
@@ -47,7 +47,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/',          component: Landing   },
-  { path: '/live',      component: LiveTxs   },
+  { path: '/txs',       component: Txs       },
   { path: '/about',     component: About     },
   { path: '/help',      component: Help      },
   { path: '/filters',   component: Filters   },
