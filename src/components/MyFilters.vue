@@ -21,9 +21,17 @@
         <div id="settings">Settings</div>
       </div>
 
-      <div id="add_new_filter">
+      <!-- TODO filters list -->
+
+      <div id="add_new_filter"
+           v-b-modal.create_filter>
         + Add New Filter
       </div>
+
+      <b-modal id="create_filter"
+               title="Create New Filter">
+        <CreateEditFilter />
+      </b-modal>
 
       <div>
         {{remaining}} are left.
@@ -34,16 +42,21 @@
 </template>
 
 <script>
-import Authentication from '../mixins/authentication'
+import Authentication   from '../mixins/authentication'
+import CreateEditFilter from './CreateEditFilter.vue'
 
 export default {
   name: 'MyFilters',
 
   mixins : [Authentication],
 
+  components : {
+    CreateEditFilter
+  },
+
   computed : {
     remaining : function(){
-      // ...
+      // TODO
       return "5 filters";
     }
   }

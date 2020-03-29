@@ -1,156 +1,125 @@
 <template>
-  <div>
-    <table id="create_edit_table">
-      <tr>
-        <td><h3>Name:</h3></td>
-        <td><input id="name_input"
-                   type="text"
-                   v-model="name" /></td>
-      </tr>
+  <table id="create_edit_table">
+    <tr>
+      <td colspan="2">
+        <div id="filter_type">
+          <span id="by_category"
+               :class="is_template_filter ? 'active' : ''"
+               @click="set_filter_type('template')">
+            <span>By Category</span>
+          </span>
 
-      <tr>
-        <td><h3>Sink{{multiple_sinks ? "s" : ""}}:</h3></td>
+          <span id="by_expression"
+               :class="is_expression_filter ? 'active' : ''"
+               @click="set_filter_type('expression')">
+            <span>By Expression</span>
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr v-if="is_template_filter">
+      <td class="label">Category</td>
+
+      <td>
+        <b-form-select v-model="template">
+          <b-form-select-option v-for="template in templates"
+                               :key="'template' + template.id"
+                               :value="template.id">
+            {{template.name}}
+          </b-form-select-option>
+        </b-form-select>
+      </td>
+    </tr>
+
+    <template v-if="is_template_filter && template_has_params">
+      <tr v-for="p in template_params.length"
+          :key="'param' + p">
         <td>
-          <select v-if="multiple_sinks"
-                 class="sink_select"
-                 v-model="fsinks" multiple>
-            <option v-for="sink in sinks"
-                     :key="'sink-' + sink.id"
-                   :value="sink.id">
-              {{sink.type}}: {{sink.target}}
-            </option>
-          </select>
-
-          <select v-else
-                 class="sink_select"
-                 v-model="sink">
-            <option v-for="sink in sinks"
-                     :key="'sink-' + sink.id"
-                   :value="sink.id">
-              {{sink.type}}: {{sink.target}}
-            </option>
-          </select>
+          <span class="label">{{template_params[p-1]}}</span>
         </td>
-      </tr>
 
-      <!-- TODO additional sinks -->
-
-      <tr>
-        <td><h3>Rule:</h3></td>
         <td>
-          <b-form-checkbox v-model="is_template_filter" switch>
-            {{is_template_filter ? "Template" : "Custom" }}
-          </b-form-checkbox>
-        </td>
-      </tr>
-
-      <tr v-if="is_template_filter">
-        <td><h3>Template:</h3></td>
-        <td>
-          <select v-model="template">
-            <option v-for="template_option in templates"
-                    :key="'template-' + template_option.id"
-                    :value="template_option">
-              {{template_option.name}}
-            </option>
-          </select>
-        </td>
-      </tr>
-
-      <tr v-else>
-        <td><h3>Expression:</h3></td>
-        <td id="jsonpath_container">
-          <span v-b-modal.filter_help><sup>Help</sup></span>
-          <input id="jsonpath_input"
+          <input class="filter_input"
                  type="text"
-                 title="expression"
-                 placeholder="JSONPath Expression"
-                 v-model="jsonpath" />
-
-          <b-modal id="filter_help"
-                   ref="filter_help"
-                   title="JSONPath Help" ok-only>
-            <FilterHelp @set="set_jsonpath" />
-          </b-modal>
+                 v-model="params[p-1]" />
         </td>
       </tr>
+    </template>
 
-      <template v-if="is_template_filter && template_has_params">
-        <tr v-for="p in template_params.length"
-            :key="'param-' + p">
-          <td>
-            <template v-if="p == 1">
-              <h3>Params:</h3>
-            </template>
-          </td>
+    <tr v-if="is_expression_filter">
+      <td class="label">Expression</td>
 
-          <td>
-            <input class="param_input"
-                   type="text"
-                   :placeholder="template_params[p-1]"
-                   v-model="params[p-1]" />
-          </td>
-        </tr>
-      </template>
-    </table>
-  </div>
+      <td>
+        <input class="filter_input"
+               type="text"
+               title="expression"
+               placeholder="JSONPath Expression..."
+               v-model="jsonpath" />
+      </td>
+    </tr>
+
+    <tr>
+      <td class="label">Filter Name</td>
+
+      <td>
+        <input class="filter_input"
+               type="text"
+               v-model="name" />
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan=2>
+        <div class="label">Send me notifications via:</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td></td>
+    </tr>
+
+    <tr>
+      <td></td>
+    </tr>
+  </table>
 </template>
 
 <script>
-import FilterHelp from './FilterHelp.vue'
+import ServerAPI from '../mixins/server_api'
 
 export default {
   name: 'CreateEditFilter',
 
-  components : {
-    FilterHelp
-  },
-
-  props : {
-       filter : Object,
-    templates : Array,
-        sinks : Array
-  },
+  mixins : [ServerAPI],
 
   data : function(){
     return {
-      name     : '',
-      sink     : '',
-      fsinks   : [],
-      is_template_filter : true,
-      jsonpath : '',
+      filter_type : 'template',
       template : null,
-      params   : []
+      params : [],
+      jsonpath : '',
+      name : ''
     };
   },
 
   computed : {
-    server_params : function(){
-      var params = {
-        name : this.name,
-      }
-
-      if(this.multiple_sinks)
-        params['sinks'] = this.fsinks
-      else
-        params['sinks'] = [this.sink]
-
-      if(this.is_template_filter){
-        params['template'] = this.template.id
-        params['params']   = JSON.stringify(this.params)
-
-      }else
-        params['jsonpath'] = this.jsonpath
-
-      return params;
+    is_template_filter : function(){
+      return this.filter_type == 'template';
     },
 
-    has_filter : function(){
-      return !!this.filter;
+    is_expression_filter : function(){
+      return this.filter_type == 'expression';
     },
 
-    multiple_sinks : function(){
-      return this.$store.state.multiple_sinks;
+    selected_template : function(){
+      return this.templates.find(function(t){
+               return t.id == this.template;
+             }.bind(this));
     },
 
     template_has_params : function(){
@@ -158,42 +127,28 @@ export default {
     },
 
     template_params : function(){
-      return Object.keys(this.template.params)
+      if(!this.selected_template) return[];
+
+      return Object.keys(this.selected_template.params)
+    }
+  },
+
+  watch : {
+    templates : function(){
+      // set initial template
+      if(this.template == null)
+        this.template = this.templates[0].id;
     }
   },
 
   methods : {
-    set_jsonpath : function(jsonpath){
-      this.jsonpath = jsonpath;
-      this.$refs["filter_help"].hide();
+    set_filter_type : function(type){
+      this.filter_type = type;
     }
   },
 
   created : function(){
-    if(this.has_filter){
-      this.name = this.filter.name;
-
-      this.filter.Sinks.forEach(function(s){
-        this.fsinks.push(s.id);
-      }.bind(this));
-
-      this.sink = this.sinks[0];
-
-      if(this.filter.jsonpath){
-        this.jsonpath = this.filter.jsonpath;
-        this.is_template_filter = false;
-      }
-
-      if(this.filter.Template)
-        this.template = this.filter.Template;
-
-      if(this.filter.params)
-        this.filter.params.forEach(function(p){
-          this.params.push(p);
-        }.bind(this));
-
-    }else
-      this.template = this.templates[0];
+    this.load_templates();
   }
 }
 </script>
@@ -201,31 +156,49 @@ export default {
 <style scoped>
 #create_edit_table{
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 }
 
-#name_input{
+#filter_type{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#filter_type span{
+  width: 50%;
+  padding: 5px;
+  background-color: #eeeeee;
+  text-align: center;
+  font-weight: bold;
+}
+
+#filter_type span span{
+  display: inline-block;
   width: 100%;
-}
-
-#jsonpath_container{
-  color: blue;
+  border-radius: 15px;
   cursor: pointer;
 }
 
-#jsonpath_input{
-  margin-left: 5px;
-  width: 89%;
+#filter_type span.active span{
+  background-color: white;
 }
 
-.sink_select{
-  width: 100%;
+#by_category{
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 
-#new_sink_control:hover{
-  cursor: pointer;
+#by_expression{
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
-.param_input{
+.label{
+  font-weight: bold;
+}
+
+.filter_input{
   width: 100%;
 }
 </style>
