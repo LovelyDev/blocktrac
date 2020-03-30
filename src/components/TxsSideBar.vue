@@ -46,7 +46,7 @@ export default {
 
   computed : {
     on_txs_page : function(){
-      return this.$router.currentRoute.path == "/txs";
+      return this.$route.path == "/txs";
     }
   }
 }

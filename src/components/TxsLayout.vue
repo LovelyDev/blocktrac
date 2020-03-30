@@ -1,6 +1,6 @@
 <template>
-  <MainLayout section="filter">
-    <b-container fluid id="filter">
+  <MainLayout :section="section">
+    <b-container fluid :id="section">
       <b-row class="mt-3">
         <b-col>
           <h1>Transactions</h1>
@@ -13,7 +13,7 @@
         </b-col>
 
         <b-col>
-          {{id}}
+          <slot></slot>
         </b-col>
       </b-row>
     </b-container>
@@ -21,25 +21,15 @@
 </template>
 
 <script>
-import MainLayout     from './components/MainLayout.vue'
-import Authentication from './mixins/authentication'
-import TxsSideBar     from './components/TxsSideBar.vue'
+import MainLayout from './MainLayout.vue'
+import TxsSideBar from './TxsSideBar.vue'
 
 export default {
-  name: 'Filter',
-
-  mixins : [Authentication],
+  name: 'Txs',
 
   components: {
     MainLayout,
-    TxsSideBar,
-  },
-
-  props : {
-    id : Number
-  },
+    TxsSideBar
+  }
 }
 </script>
-
-<style scoped>
-</style>

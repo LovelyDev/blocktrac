@@ -21,9 +21,9 @@
         <div id="settings">Settings</div>
       </div>
 
-      <!-- TODO filters list -->
+      <!-- XXX: include route path in key so filter nav changes update active class -->
       <div v-for="filter in filters"
-           :key="filter.id"
+           :key="$route.path + filter.id"
            class="filter_row"
            :class="is_active_filter(filter) ? 'active' : ''">
         <router-link :to="'/filter/' + filter.id">
@@ -88,7 +88,8 @@ export default {
 
   methods : {
     is_active_filter : function(filter){
-      return this.$router.currentRoute.path == "/filter/" + filter.id;
+      return this.$route.path == "/filter/" + filter.id ||
+             this.$route.path == "/test/"   + filter.id;
     }
   },
 
@@ -152,6 +153,7 @@ export default {
 
 .filter_row.active{
   background-color: #e9edf4;
+  border-radius: 3px;
 }
 
 .filter_row.active a{

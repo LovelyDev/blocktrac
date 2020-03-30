@@ -7,7 +7,8 @@ export default {
   data : function(){
     return {
       templates : [],
-      filters : []
+        filters : [],
+         filter : {}
     };
   },
 
@@ -49,6 +50,16 @@ export default {
                       this.filters.push(filter)
                     }.bind(this));
 
+                }.bind(this)).catch(function(err){
+                  // TODO
+                }.bind(this))
+    },
+
+    load_filter : function(id){
+      this.$http.get(this.backend_url + "/filter/" + id, this.auth_header)
+                .then(function(response){
+                  this.filter = response.body;
+                  this.filter.params = JSON.parse(this.filter.params);
                 }.bind(this)).catch(function(err){
                   // TODO
                 }.bind(this))
