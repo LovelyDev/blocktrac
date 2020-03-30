@@ -6,9 +6,10 @@ import config from '../config'
 export default {
   data : function(){
     return {
-      templates : [],
-        filters : [],
-         filter : {}
+        templates : [],
+          filters : [],
+           filter : {},
+      matched_txs : []
     };
   },
 
@@ -63,6 +64,10 @@ export default {
                 }.bind(this)).catch(function(err){
                   // TODO
                 }.bind(this))
+    },
+
+    load_matched_txs : function(id){
+      // TODO
     }
   }
 }

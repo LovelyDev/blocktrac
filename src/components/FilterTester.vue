@@ -34,6 +34,8 @@ import renderjson from '../vendor/renderjson/renderjson.vue'
 var jsonpath = require('../vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
+// TODO remove this (port to top level component)
+
 export default {
   name: 'FilterTester',
 

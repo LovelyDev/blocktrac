@@ -19,15 +19,15 @@
 
     <div>
       <span id="test_link" class="filter_action">
-        <router-link :to="'/test/' + filter.id">Test Filter</router-link>
+        <router-link :to="'/test/' + filter.id">⚙ Test Filter</router-link>
       </span>
 
       <span id="edit_link" class="filter_action">
-        Edit
+        🖉 Edit
       </span>
 
       <span id="duplicate_link" class="filter_action">
-        Duplicate
+        ⎘ Duplicate
       </span>
 
       <span id="delete_link" class="filter_action">

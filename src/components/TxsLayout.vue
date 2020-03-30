@@ -30,6 +30,10 @@ export default {
   components: {
     MainLayout,
     TxsSideBar
+  },
+
+  props : {
+    section : String
   }
 }
 </script>

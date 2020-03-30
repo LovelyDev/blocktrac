@@ -18,7 +18,10 @@
       <div id="header">
         <h4>My Filters</h4>
 
-        <div id="settings">Settings</div>
+        <div id="settings">
+          <img src="../assets/bell-small.png" width="25px"/>
+          <span>Settings</span>
+        </div>
       </div>
 
       <!-- XXX: include route path in key so filter nav changes update active class -->
