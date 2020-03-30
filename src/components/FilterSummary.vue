@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import CreateEditFilter from './CreateEditFilter.vue'
+import CreateEditFilter from './CreateEditFilterForm.vue'
 import FilterTester     from './FilterTester.vue'
 import Authentication   from '../mixins/authentication'
 

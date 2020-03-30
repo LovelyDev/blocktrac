@@ -1,13 +1,13 @@
 <template>
-  <b-modal id="register_modal"
-           ref="register_modal"
-           title="Register"
-           ok-title="Register"
+  <b-modal id="login_modal"
+           ref="login_modal"
+           title="Login"
+           ok-title="Login"
            ok-variant="secondary"
            cancel-variant="light"
-           @ok="register"
+           @ok="login"
            no-stacking>
-    <table id="registration_form">
+    <table id="login_form">
       <tr>
         <td>Email address:</td>
         <td>
@@ -22,16 +22,15 @@
         <td>
           <input id="password_input"
                  type="text"
-                 placeholder="Password"
                  v-model="auth_password" />
-         </td>
+        </td>
       </tr>
 
       <tr>
         <td></td>
-        <td id="existing_account"
-            v-b-modal.login_modal>
-          Already have an account?
+        <td id="forgot_password"
+            v-b-modal.forgot_password_modal>
+          Forgot Password?
         </td>
       </tr>
     </table>
@@ -39,13 +38,12 @@
 </template>
 
 <script>
-import Authentication from '../mixins/authentication'
+import Authentication from '../../mixins/authentication'
 
 // TODO: hide password field, submit on enter
 
 export default {
-  name: 'RegistrationForm',
-
+  name: 'LoginModal',
   mixins : [Authentication]
 }
 </script>
@@ -61,7 +59,7 @@ input{
   width: 100%;
 }
 
-#existing_account{
+#forgot_password{
   cursor: pointer;
 }
 </style>

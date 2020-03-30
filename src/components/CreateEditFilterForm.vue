@@ -131,7 +131,7 @@ import ServerAPI      from '../mixins/server_api'
 import Authentication from '../mixins/authentication'
 
 export default {
-  name: 'CreateEditFilter',
+  name: 'CreateEditFilterForm',
 
   mixins : [ServerAPI, Authentication],
 

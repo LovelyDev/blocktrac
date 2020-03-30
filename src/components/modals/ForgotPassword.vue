@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import Authentication from '../mixins/authentication'
+import Authentication from '../../mixins/authentication'
 
 export default {
-  name: 'ForgotPasswordForm',
+  name: 'ForgotPasswordModal',
   mixins : [Authentication]
 }
 </script>

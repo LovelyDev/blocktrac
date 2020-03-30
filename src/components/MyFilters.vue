@@ -28,22 +28,19 @@
         + Add New Filter
       </div>
 
-      <b-modal id="create_filter"
-               title="Create New Filter">
-        <CreateEditFilter />
-      </b-modal>
-
       <div>
         {{remaining}} are left.
         <router-link to="/plans">Get a pro account</router-link>
       </div>
     </div>
+
+    <CreateFilterModal />
   </div>
 </template>
 
 <script>
-import Authentication   from '../mixins/authentication'
-import CreateEditFilter from './CreateEditFilter.vue'
+import Authentication    from '../mixins/authentication'
+import CreateFilterModal from './modals/CreateFilter.vue'
 
 export default {
   name: 'MyFilters',
@@ -51,7 +48,7 @@ export default {
   mixins : [Authentication],
 
   components : {
-    CreateEditFilter
+    CreateFilterModal
   },
 
   computed : {

@@ -36,7 +36,7 @@
 <script>
 import MainLayout       from './components/MainLayout.vue'
 import FilterSummary    from './components/FilterSummary.vue'
-import CreateEditFilter from './components/CreateEditFilter.vue'
+import CreateEditFilter from './components/CreateEditFilterForm.vue'
 
 import Authentication   from './mixins/authentication'
 

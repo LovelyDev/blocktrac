@@ -22,8 +22,8 @@
         Login
       </span>
 
-      <LoginForm />
-      <ForgotPasswordForm />
+      <LoginModal />
+      <ForgotPasswordModal />
     </b-col>
 
     <b-col v-if="!logged_in"
@@ -33,7 +33,7 @@
         Register
       </span>
 
-      <RegistrationForm />
+      <RegistrationModal />
     </b-col>
 
     <b-col v-if="logged_in"
@@ -67,9 +67,9 @@
 </template>
 
 <script>
-import LoginForm          from './LoginForm'
-import ForgotPasswordForm from './ForgotPasswordForm'
-import RegistrationForm   from './RegistrationForm'
+import LoginModal          from './modals/Login'
+import ForgotPasswordModal from './modals/ForgotPassword'
+import RegistrationModal   from './modals/Registration'
 
 import Authentication   from '../mixins/authentication'
 
@@ -79,9 +79,9 @@ export default {
   mixins : [Authentication],
 
   components : {
-    LoginForm,
-    ForgotPasswordForm,
-    RegistrationForm
+    LoginModal,
+    ForgotPasswordModal,
+    RegistrationModal
   },
 
   computed : {
