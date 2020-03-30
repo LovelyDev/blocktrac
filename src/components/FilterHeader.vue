@@ -12,7 +12,7 @@
         </div>
 
         <div v-else>
-          {{filter.jsonpath}}
+          Expression: {{filter.jsonpath}}
         </div>
       </div>
     </div>

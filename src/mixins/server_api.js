@@ -61,6 +61,9 @@ export default {
                 .then(function(response){
                   this.filter = response.body;
                   this.filter.params = JSON.parse(this.filter.params);
+                  if(this.filter.Template)
+                    this.filter.Template.params = JSON.parse(this.filter.Template.params)
+
                 }.bind(this)).catch(function(err){
                   // TODO
                 }.bind(this))

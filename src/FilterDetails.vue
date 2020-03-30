@@ -57,7 +57,7 @@ export default {
 
   created : function(){
     this.load_filter(this.id)
-    this.load_match_txs(this.id)
+    this.load_matched_txs(this.id)
   }
 }
 </script>

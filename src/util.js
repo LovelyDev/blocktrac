@@ -22,5 +22,22 @@ export default {
 
   ledger_time_to_unix : function(t){
     return (t + 946684800)*1000;
+  },
+
+  // XXX: copied from fr0xrpl Filter#matcher and Template#applyParams
+  filter_matcher : function(filter){
+    if(filter.Template){
+      if(filter.Template.params.length != Object.keys(filter.params).length)
+        throw "params mismatch"
+
+      var jp = filter.Template.jsonpath;
+      for(var p = 0; p < filter.params.length; p++){
+        jp = jp.replace(new RegExp("PARAM_" + (p+1), "g"), filter.params[p])
+      }
+
+      return jp
+    }
+
+    return filter.jsonpath;
   }
 }

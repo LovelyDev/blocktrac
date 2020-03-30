@@ -19,7 +19,14 @@
       </div>
 
       <div v-else>
-        <!-- TODO render matched tests -->
+        <b-list-group>
+          <b-list-group-item v-for="tx in matched_tests"
+                             :key="tx.transaction.hash"
+                             class="tx_summary_container">
+
+            <TxSummary :tx="tx" />
+          </b-list-group-item>
+        </b-list-group>
       </div>
     </div>
   </TxsLayout>
@@ -31,6 +38,18 @@ import ServerAPI      from './mixins/server_api'
 
 import TxsLayout      from './components/TxsLayout.vue'
 import FilterHeader   from './components/FilterHeader.vue'
+import TxSummary      from './components/TxSummary.vue'
+
+import util           from './util'
+
+var jsonpath = require('./vendor/jsonpath')
+jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
+
+const captured_txs =
+  require("./assets/captured_txs.json").reduce(function(ct, ctx){
+    ct[ctx.replace(".json", "")] = Object.freeze(require("./assets/captured_txs/" + ctx))
+    return ct;
+  }, {});
 
 export default {
   name: 'FilterTester',
@@ -39,7 +58,8 @@ export default {
 
   components: {
     TxsLayout,
-    FilterHeader
+    FilterHeader,
+    TxSummary
   },
 
   props : {
@@ -54,7 +74,13 @@ export default {
 
   watch : {
     filter : function(){
-      // TODO run filter against tests
+      var jp = util.filter_matcher(this.filter);
+
+      Object.keys(captured_txs).forEach(function(ctx){
+        const json = captured_txs[ctx];
+        if(jsonpath.query(json, jp).length != 0)
+          this.matched_tests.push(json);
+      }.bind(this));
     }
   },
 
