@@ -75,6 +75,8 @@
       </td>
     </tr>
 
+    <!-- TODO advanced sinks controls -->
+
     <tr>
       <td>
         <b-form-checkbox v-model="enable_email" switch>
@@ -83,7 +85,10 @@
       </td>
 
       <td>
-        <input type="text" v-model="email_sinks" class="filter_input" />
+        <input type="text"
+               v-model="email_sinks"
+               :disabled="!enable_email"
+               class="filter_input" />
       </td>
     </tr>
 
@@ -105,8 +110,10 @@
       </td>
 
       <td>
-        <input type="text" v-model="sms_sinks"
-              :disabled="advanced_sinks_disabled" class="filter_input" />
+        <input type="text"
+               v-model="sms_sinks"
+               :disabled="advanced_sinks_disabled || !enable_sms"
+               class="filter_input" />
       </td>
     </tr>
 
@@ -119,8 +126,10 @@
       </td>
 
       <td>
-        <input type="text" v-model="webhook_sinks"
-               :disabled="advanced_sinks_disabled" class="filter_input" />
+        <input type="text"
+               v-model="webhook_sinks"
+               :disabled="advanced_sinks_disabled || !enable_webhook"
+               class="filter_input" />
       </td>
     </tr>
   </table>
@@ -179,9 +188,30 @@ export default {
       return Object.keys(this.selected_template.params)
     },
 
-    // TODO: more elegant solution, deduce from fr0xrpl MEMBERSHIP_LEVEL config
+    // TODO: more elegant solution,
+    //       deduce from fr0xrpl MEMBERSHIP_LEVEL config
     advanced_sinks_disabled : function(){
-      return this.is_basic_member;
+      return !this.logged_in || this.is_basic_member;
+    },
+
+    ///
+
+    server_params : function(){
+      var params = {
+        name : this.name,
+      }
+
+      if(this.is_template_filter){
+        params['template'] = this.template;
+        params['params']   = JSON.stringify(this.params)
+
+      }else
+        params['jsonpath'] = this.jsonpath
+
+      // TODO sinks param
+      //params['sinks'] = [this.sink]
+
+      return params;
     }
   },
 

@@ -9,7 +9,7 @@
         Get notified when interesting transactions go through the network
       </p>
 
-      <div id="personalized">
+      <div id="personalized" v-b-modal.create_filter>
         <b>Set Personalized Filter</b>
       </div>
     </div>
@@ -22,6 +22,33 @@
       </div>
 
       <!-- TODO filters list -->
+      <div v-for="filter in filters"
+           :key="filter.id"
+           class="filter_row"
+           :class="is_active_filter(filter) ? 'active' : ''">
+        <router-link :to="'/filter/' + filter.id">
+          <div>
+            <div class="filter_title">{{filter.name}}</div>
+
+            <div v-if="filter.Template">
+              <!-- TODO human friendly params -->
+              {{filter.Template.name}}: {{filter.params.join(", ")}}
+            </div>
+
+            <div v-else>
+              Expression: {{filter.jsonpath}}
+            </div>
+          </div>
+
+          <div>
+            <!-- TODO matches -->
+          </div>
+
+          <div>
+            &gt;
+          </div>
+        </router-link>
+      </div>
 
       <div id="add_new_filter"
            v-b-modal.create_filter>
@@ -34,18 +61,19 @@
       </div>
     </div>
 
-    <CreateFilterModal />
+    <CreateFilterModal @created="load_filters" />
   </div>
 </template>
 
 <script>
 import Authentication    from '../mixins/authentication'
+import ServerAPI         from '../mixins/server_api'
 import CreateFilterModal from './modals/CreateFilter.vue'
 
 export default {
   name: 'MyFilters',
 
-  mixins : [Authentication],
+  mixins : [Authentication, ServerAPI],
 
   components : {
     CreateFilterModal
@@ -56,6 +84,16 @@ export default {
       // TODO
       return "5 filters";
     }
+  },
+
+  methods : {
+    is_active_filter : function(filter){
+      return this.$router.currentRoute.path == "/filter/" + filter.id;
+    }
+  },
+
+  created : function(){
+    this.load_filters();
   }
 }
 </script>
@@ -90,11 +128,38 @@ export default {
 }
 
 #settings{
-  background-color: #a3b1c5;
+  background-color: #e9edf4;
+  color: #415166;
   border-radius: 10px;
   padding: 5px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.filter_row{
+  border-bottom: 1px solid #ececec;
+  padding: 10px;
+}
+
+.filter_row a {
+  color: #aeb5be;
+  text-decoration: none;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter_row.active{
+  background-color: #e9edf4;
+}
+
+.filter_row.active a{
+  color: #425265;
+}
+
+.filter_title{
+  font-weight: bold;
 }
 
 #add_new_filter{
@@ -105,5 +170,7 @@ export default {
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

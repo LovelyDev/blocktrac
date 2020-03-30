@@ -79,7 +79,8 @@ export default {
 }
 
 #live_nav.active{
-  background-color: #a3b1c5;
+  background-color: #e9edf4;
+  color: #415166;
 }
 
 #live_nav.active a{

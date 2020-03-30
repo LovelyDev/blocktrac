@@ -27,7 +27,7 @@ import Landing from './Landing.vue'
 import Txs     from './Txs.vue'
 import About   from './About.vue'
 import Help    from './Help.vue'
-import Filters from './Filters.vue'
+import Filter  from './Filter.vue'
 import Profile from './Profile.vue'
 
 import("../public/common.css")
@@ -46,12 +46,12 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/',          component: Landing   },
-  { path: '/txs',       component: Txs       },
-  { path: '/about',     component: About     },
-  { path: '/help',      component: Help      },
-  { path: '/filters',   component: Filters   },
-  { path: '/profile',   component: Profile   }
+  { path: '/',           component: Landing               },
+  { path: '/txs',        component: Txs                   },
+  { path: '/about',      component: About                 },
+  { path: '/help',       component: Help                  },
+  { path: '/filter/:id', component: Filter, props: true   },
+  { path: '/profile',    component: Profile               }
 ]
 
 const router = new VueRouter({
