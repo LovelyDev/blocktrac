@@ -3,9 +3,8 @@
            title="Create New Filter"
            @ok="on_ok">
     <CreateEditFilterForm ref="form" />
-</b-modal>
+  </b-modal>
 </template>
-
 
 <script>
 import Authentication       from '../../mixins/authentication'
@@ -47,6 +46,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

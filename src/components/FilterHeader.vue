@@ -30,16 +30,26 @@
         ⎘ Duplicate
       </span>
 
-      <span id="delete_link" class="filter_action">
+      <span id="delete_link"
+            class="filter_action"
+            v-b-modal.delete_filter>
         🗑
       </span>
     </div>
+
+    <DeleteFilterModal :filter="filter" @deleted="$router.push('/txs')" />
   </div>
 </template>
 
 <script>
+import DeleteFilterModal from './modals/DeleteFilter.vue'
+
 export default {
   name: 'FilterHeader',
+
+  components : {
+    DeleteFilterModal
+  },
 
   props : {
     filter : Object
