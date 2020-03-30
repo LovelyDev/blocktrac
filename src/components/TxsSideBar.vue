@@ -35,7 +35,7 @@ import AccountMonitor from './AccountMonitor.vue'
 import Authentication from '../mixins/authentication'
 
 export default {
-  name: 'Txs',
+  name: 'TxsSideBar',
 
   mixins : [Authentication],
 

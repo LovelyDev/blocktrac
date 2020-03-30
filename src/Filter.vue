@@ -26,7 +26,7 @@ import Authentication from './mixins/authentication'
 import TxsSideBar     from './components/TxsSideBar.vue'
 
 export default {
-  name: 'Filters',
+  name: 'Filter',
 
   mixins : [Authentication],
 
