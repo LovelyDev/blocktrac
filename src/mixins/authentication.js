@@ -37,6 +37,10 @@ export default {
       return this.$cookies.membership_level;
     },
 
+    is_basic_member : function(){
+      return this.membership_level == 'basic';
+    },
+
     is_premium_member : function(){
       return this.membership_level == 'premium';
     }

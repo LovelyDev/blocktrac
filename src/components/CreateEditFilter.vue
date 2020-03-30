@@ -76,34 +76,81 @@
     </tr>
 
     <tr>
-      <td></td>
+      <td>
+        <b-form-checkbox v-model="enable_email" switch>
+          Email
+        </b-form-checkbox>
+      </td>
+
+      <td>
+        <input type="text" v-model="email_sinks" class="filter_input" />
+      </td>
+    </tr>
+
+    <tr v-if="advanced_sinks_disabled">
+      <td>
+      </td>
+
+      <td>
+        Available with <span class="pro">pro</span> plans
+      </td>
     </tr>
 
     <tr>
-      <td></td>
+      <td>
+        <b-form-checkbox v-model="enable_sms" switch
+                        :disabled="advanced_sinks_disabled">
+          Text Message
+        </b-form-checkbox>
+      </td>
+
+      <td>
+        <input type="text" v-model="sms_sinks"
+              :disabled="advanced_sinks_disabled" class="filter_input" />
+      </td>
     </tr>
 
     <tr>
-      <td></td>
+      <td>
+        <b-form-checkbox v-model="enable_webhook" switch
+                        :disabled="advanced_sinks_disabled">
+          URL
+        </b-form-checkbox>
+      </td>
+
+      <td>
+        <input type="text" v-model="webhook_sinks"
+               :disabled="advanced_sinks_disabled" class="filter_input" />
+      </td>
     </tr>
   </table>
 </template>
 
 <script>
-import ServerAPI from '../mixins/server_api'
+import ServerAPI      from '../mixins/server_api'
+import Authentication from '../mixins/authentication'
 
 export default {
   name: 'CreateEditFilter',
 
-  mixins : [ServerAPI],
+  mixins : [ServerAPI, Authentication],
 
   data : function(){
     return {
       filter_type : 'template',
+
       template : null,
       params : [],
       jsonpath : '',
-      name : ''
+      name : '',
+
+      enable_email : false,
+      enable_sms : false,
+      enable_webhook : false,
+
+      email_sinks : '',
+      sms_sinks : '',
+      webhook_sinks : ''
     };
   },
 
@@ -130,6 +177,11 @@ export default {
       if(!this.selected_template) return[];
 
       return Object.keys(this.selected_template.params)
+    },
+
+    // TODO: more elegant solution, deduce from fr0xrpl MEMBERSHIP_LEVEL config
+    advanced_sinks_disabled : function(){
+      return this.is_basic_member;
     }
   },
 
@@ -200,5 +252,13 @@ export default {
 
 .filter_input{
   width: 100%;
+}
+
+.pro{
+  border-radius: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #eff2f8;
+  color: #629ffb;
 }
 </style>
