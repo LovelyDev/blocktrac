@@ -41,8 +41,10 @@
         🖉 Edit
       </span>
 
-      <span id="duplicate_link" class="filter_action">
-        ⎘ Duplicate
+      <span id="duplicate_link"
+            class="filter_action"
+            v-b-modal.duplicate_filter>
+        ⎘ Duplicate...
       </span>
 
       <span id="delete_link"
@@ -52,16 +54,18 @@
       </span>
     </div>
 
-    <EditFilterModal   :filter="filter" @edited="update_filter($event)" />
-    <DeleteFilterModal :filter="filter" @deleted="$router.push('/txs')" />
+    <EditFilterModal      :filter="filter" @edited="set_active_filter($event)" />
+    <DuplicateFilterModal :filter="filter" @duplicated="set_active_filter($event)" />
+    <DeleteFilterModal    :filter="filter" @deleted="$router.push('/txs')" />
   </div>
 </template>
 
 <script>
 import ServerAPI from '../mixins/server_api'
 
-import DeleteFilterModal from './modals/DeleteFilter.vue'
-import EditFilterModal   from './modals/EditFilter.vue'
+import DeleteFilterModal    from './modals/DeleteFilter.vue'
+import DuplicateFilterModal from './modals/DuplicateFilter.vue'
+import EditFilterModal      from './modals/EditFilter.vue'
 
 export default {
   name: 'FilterHeader',
@@ -70,6 +74,7 @@ export default {
 
   components : {
     DeleteFilterModal,
+    DuplicateFilterModal,
     EditFilterModal
   },
 

@@ -51,13 +51,21 @@ export default {
   },
 
   methods : {
-    update_filter : function(filter){
+    set_active_filter : function(filter){
       this.filter = filter;
 
       const replace = this.filters.find(function(f){
                         return f.id == filter.id;
                       });
-      this.filters.splice(this.filters.indexOf(replace), 1, this.filter);
+
+      if(replace)
+        this.filters.splice(this.filters.indexOf(replace),
+                            1, this.filter);
+      else
+        this.filters.push(filter);
+
+      if(this.$route.path != "/filter/" + filter.id)
+        this.$router.push("/filter/" + filter.id);
     },
 
     load_templates : function(){

@@ -146,7 +146,8 @@ export default {
   mixins : [ServerAPI, Authentication],
 
   props : {
-    edit_filter : Object
+    edit_filter : Object,
+    duplicate_filter : Object
   },
 
   data : function(){
@@ -249,12 +250,29 @@ export default {
         this.filter_type = 'expression';
         this.jsonpath = this.edit_filter.jsonpath;
       }
+    },
+
+    parse_duplicate_filter : function(){
+      this.name = this.duplicate_filter.name + " (copy)";
+
+      if(this.duplicate_filter.Template){
+        this.filter_type = 'template';
+        this.template = this.duplicate_filter.Template.id;
+        this.params = this.duplicate_filter.params;
+
+      }else{
+        this.filter_type = 'expression';
+        this.jsonpath = this.duplicate_filter.jsonpath;
+      }
     }
   },
 
   created : function(){
     if(this.edit_filter)
       this.parse_edit_filter();
+
+    if(this.duplicate_filter)
+      this.parse_duplicate_filter();
 
     this.load_templates();
   }
