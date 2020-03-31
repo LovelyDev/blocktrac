@@ -1,7 +1,7 @@
 <template>
   <TxsLayout section="filter">
     <div id="filter_details">
-      <FilterHeader :filter="filter" />
+      <FilterHeader />
 
       <div v-if="matched_txs.length == 0" id="no_matches">
         <img src="./assets/bell.png" width="75px"/>
@@ -14,9 +14,11 @@
           Check your filter for proper composition
         </div>
 
-        <router-link :to="'/test/' + id">
-          <div id="test_link">⚙ Test filter</div>
-        </router-link>
+        <div id="test_link">
+          <router-link :to="'/test/' + id">
+            ⚙ Test filter
+          </router-link>
+        </div>
       </div>
 
       <div v-else>
@@ -88,6 +90,10 @@ export default {
 
   border-radius: 15px;
   background-color: #415166;
+}
+
+#test_link a{
+  text-decoration: none;
   color: white;
 }
 </style>

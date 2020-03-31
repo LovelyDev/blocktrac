@@ -1,6 +1,6 @@
 <template>
   <table id="create_edit_table">
-    <tr>
+    <tr v-if="!editing_filter">
       <td colspan="2">
         <div id="filter_type">
           <span id="by_category"
@@ -22,7 +22,7 @@
       <td class="label">Category</td>
 
       <td>
-        <b-form-select v-model="template">
+        <b-form-select v-model="template" :disabled="editing_filter">
           <b-form-select-option v-for="template in templates"
                                :key="'template' + template.id"
                                :value="template.id">
@@ -42,7 +42,8 @@
         <td>
           <input class="filter_input"
                  type="text"
-                 v-model="params[p-1]" />
+                 v-model="params[p-1]"
+                 :disabled="editing_filter" />
         </td>
       </tr>
     </template>
@@ -144,6 +145,10 @@ export default {
 
   mixins : [ServerAPI, Authentication],
 
+  props : {
+    edit_filter : Object
+  },
+
   data : function(){
     return {
       filter_type : 'template',
@@ -164,6 +169,10 @@ export default {
   },
 
   computed : {
+    editing_filter : function(){
+      return !!this.edit_filter;
+    },
+
     is_template_filter : function(){
       return this.filter_type == 'template';
     },
@@ -226,10 +235,27 @@ export default {
   methods : {
     set_filter_type : function(type){
       this.filter_type = type;
+    },
+
+    parse_edit_filter : function(){
+      this.name = this.edit_filter.name;
+
+      if(this.edit_filter.Template){
+        this.filter_type = 'template';
+        this.template = this.edit_filter.Template.id;
+        this.params = this.edit_filter.params;
+
+      }else{
+        this.filter_type = 'expression';
+        this.jsonpath = this.edit_filter.jsonpath;
+      }
     }
   },
 
   created : function(){
+    if(this.edit_filter)
+      this.parse_edit_filter();
+
     this.load_templates();
   }
 }

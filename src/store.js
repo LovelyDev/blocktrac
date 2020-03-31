@@ -11,17 +11,17 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
-    // TODO: these should be set by membership level
-       multiple_sinks : true,
-    instant_supported : true,
-          sms_enabled : true,
-      webhook_enabled : true,
-
             txs : [],
     loading_txs : true,
      paused_txs : false,
       tx_filter : '',
     tx_category : config.TX_CATEGORIES[0],
+
+        templates : [],
+          filters : [],
+      matched_txs : [],
+
+    active_filter : {},
 
     callbacks : {
       socket_open : [],
@@ -82,6 +82,24 @@ export const store = new Vuex.Store({
 
     clear_txs(state, filter){
       state.txs = [];
+    },
+
+    ///
+
+    set_templates(state, templates){
+      state.templates = templates;
+    },
+
+    set_filters(state, filters){
+      state.filters = filters;
+    },
+
+    set_matched_txs(state, matched_txs){
+      state.matched_txs = matched_txs;
+    },
+
+    set_active_filter(state, filter){
+      state.active_filter = filter;
     },
 
     ///

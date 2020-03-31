@@ -22,7 +22,9 @@
         <router-link :to="'/test/' + filter.id">⚙ Test Filter</router-link>
       </span>
 
-      <span id="edit_link" class="filter_action">
+      <span id="edit_link"
+            class="filter_action"
+            v-b-modal.edit_filter>
         🖉 Edit
       </span>
 
@@ -37,23 +39,26 @@
       </span>
     </div>
 
+    <EditFilterModal   :filter="filter" @edited="update_filter($event)" />
     <DeleteFilterModal :filter="filter" @deleted="$router.push('/txs')" />
   </div>
 </template>
 
 <script>
+import ServerAPI from '../mixins/server_api'
+
 import DeleteFilterModal from './modals/DeleteFilter.vue'
+import EditFilterModal   from './modals/EditFilter.vue'
 
 export default {
   name: 'FilterHeader',
 
-  components : {
-    DeleteFilterModal
-  },
+  mixins : [ServerAPI],
 
-  props : {
-    filter : Object
-  },
+  components : {
+    DeleteFilterModal,
+    EditFilterModal
+  }
 }
 </script>
 
@@ -91,5 +96,6 @@ export default {
 
 .filter_action a{
   color: black;
+  text-decoration: none;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <TxsLayout section="filter_tester">
     <div id="filter_tester">
-      <FilterHeader :filter="filter" />
+      <FilterHeader />
 
       <div v-if="matched_tests.length == 0" id="no_matches">
         <!-- TODO report test results -->

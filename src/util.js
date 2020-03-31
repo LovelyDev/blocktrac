@@ -27,7 +27,7 @@ export default {
   // XXX: copied from fr0xrpl Filter#matcher and Template#applyParams
   filter_matcher : function(filter){
     if(filter.Template){
-      if(filter.Template.params.length != Object.keys(filter.params).length)
+      if(filter.params.length != Object.keys(filter.Template.params).length)
         throw "params mismatch"
 
       var jp = filter.Template.jsonpath;

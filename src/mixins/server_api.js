@@ -4,22 +4,62 @@ import config from '../config'
 //       provided by the 'authentication' mixin!
 
 export default {
-  data : function(){
-    return {
-        templates : [],
-          filters : [],
-           filter : {},
-      matched_txs : []
-    };
-  },
-
   computed : {
     backend_url : function(){
       return config.BACKEND_URL;
     },
+
+    templates : {
+      set : function(templates){
+        this.$store.commit('set_templates', templates);
+      },
+
+      get : function(){
+        return this.$store.state.templates;
+      }
+    },
+
+    filters : {
+      set : function(filters){
+        this.$store.commit('set_filters', filters);
+      },
+
+      get : function(){
+        return this.$store.state.filters;
+      }
+    },
+
+    matched_txs : {
+      set : function(matched_txs){
+        this.$store.commit('set_matched_txs', matched_txs);
+      },
+
+      get : function(){
+        return this.$store.state.matched_txs;
+      }
+    },
+
+    filter : {
+      set : function(filter){
+        this.$store.commit('set_active_filter', filter);
+      },
+
+      get : function(){
+        return this.$store.state.active_filter;
+      }
+    }
   },
 
   methods : {
+    update_filter : function(filter){
+      this.filter = filter;
+
+      const replace = this.filters.find(function(f){
+                        return f.id == filter.id;
+                      });
+      this.filters.splice(this.filters.indexOf(replace), 1, this.filter);
+    },
+
     load_templates : function(){
       this.$http.get(this.backend_url + "/templates")
                 .then(function(response){

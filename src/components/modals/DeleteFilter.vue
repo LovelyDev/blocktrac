@@ -21,6 +21,10 @@ export default {
 
   methods : {
     on_ok : function(){
+      this.delete_filter();
+    },
+
+    delete_filter : function(){
       this.$http.delete(this.backend_url + "/filter/" + this.filter.id,
                         this.auth_header)
                 .then(function(response){
@@ -29,8 +33,7 @@ export default {
                 }.bind(this)).catch(function(err){
                   // TODO
                 })
-
-    },
+    }
   }
 }
 </script>
