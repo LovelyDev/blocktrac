@@ -1,5 +1,7 @@
 import config from '../config'
 
+// TODO use store instead of cookies
+
 export default {
   data : function(){
     return {
@@ -97,7 +99,8 @@ export default {
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
                 }.bind(this))
-// ... redirect user to /txs
+
+      this.$router.push("/txs");
     },
 
     reset_password : function(){

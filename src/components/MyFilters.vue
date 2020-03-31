@@ -18,7 +18,7 @@
       <div id="header">
         <h4>My Filters</h4>
 
-        <div id="settings">
+        <div id="settings" v-b-modal.settings_modal>
           <img src="../assets/bell-small.png" width="25px"/>
           <span>Settings</span>
         </div>
@@ -59,12 +59,13 @@
       </div>
 
       <div>
-        {{remaining}} are left.
+        {{remaining_filters}} are left.
         <router-link to="/plans">Get a pro account</router-link>
       </div>
     </div>
 
     <CreateFilterModal @created="load_filters" />
+    <SettingsModal />
   </div>
 </template>
 
@@ -72,6 +73,7 @@
 import Authentication    from '../mixins/authentication'
 import ServerAPI         from '../mixins/server_api'
 import CreateFilterModal from './modals/CreateFilter.vue'
+import SettingsModal     from './modals/Settings.vue'
 
 export default {
   name: 'MyFilters',
@@ -79,11 +81,12 @@ export default {
   mixins : [Authentication, ServerAPI],
 
   components : {
-    CreateFilterModal
+    CreateFilterModal,
+    SettingsModal
   },
 
   computed : {
-    remaining : function(){
+    remaining_filters : function(){
       // TODO
       return "5 filters";
     }

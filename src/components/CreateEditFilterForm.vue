@@ -94,11 +94,10 @@
     </tr>
 
     <tr v-if="advanced_sinks_disabled">
-      <td>
-      </td>
+      <td></td>
 
       <td>
-        Available with <span class="pro">pro</span> plans
+        Available with <span class="pro">Pro</span> plans
       </td>
     </tr>
 

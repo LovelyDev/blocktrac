@@ -53,7 +53,7 @@ export default {
     // XXX: need to watch route incase switching between filters
     $route : function(){
       this.load_filter(this.id)
-      this.load_match_txs(this.id)
+      this.load_matched_txs(this.id)
     }
   },
 
