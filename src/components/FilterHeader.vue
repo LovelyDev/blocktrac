@@ -18,8 +18,21 @@
     </div>
 
     <div>
-      <span id="test_link" class="filter_action">
-        <router-link :to="'/test/' + filter.id">⚙ Test Filter</router-link>
+      <span id="live_link"
+            class="filter_action"
+            v-if="!is_filter_page">
+        <router-link :to="'/filter/' + filter.id">
+          <img src="../assets/filters-back.png" width="25px" />
+          Back to Live Filtering
+        </router-link>
+      </span>
+
+      <span id="test_link"
+            class="filter_action"
+            v-if="!is_test_page">
+        <router-link :to="'/test/' + filter.id">
+          ⚙ Test Filter
+        </router-link>
       </span>
 
       <span id="edit_link"
@@ -58,6 +71,16 @@ export default {
   components : {
     DeleteFilterModal,
     EditFilterModal
+  },
+
+  computed : {
+    is_filter_page : function(){
+      return this.$route.path.split("/")[1] == "filter";
+    },
+
+    is_test_page : function(){
+      return this.$route.path.split("/")[1] == "test";
+    }
   }
 }
 </script>
@@ -97,5 +120,13 @@ export default {
 .filter_action a{
   color: black;
   text-decoration: none;
+}
+
+#live_link{
+  background-color: #425265;
+}
+
+#live_link a{
+  color: white;
 }
 </style>
