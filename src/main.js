@@ -30,6 +30,8 @@ import Help          from './Help.vue'
 import FilterDetails from './FilterDetails.vue'
 import FilterTester  from './FilterTester.vue'
 import Profile       from './Profile.vue'
+import Plans         from './Plans.vue'
+import Purchase      from './Purchase.vue'
 
 import("../public/common.css")
 import("./filters")
@@ -47,11 +49,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/',           component: Landing },
-  { path: '/txs',        component: Txs     },
-  { path: '/about',      component: About   },
-  { path: '/help',       component: Help    },
-  { path: '/profile',    component: Profile },
+  { path: '/',         component: Landing  },
+  { path: '/txs',      component: Txs      },
+  { path: '/about',    component: About    },
+  { path: '/help',     component: Help     },
+  { path: '/profile',  component: Profile  },
+  { path: '/plans',    component: Plans    },
+  { path: '/purchase', component: Purchase },
 
   { path: '/filter/:id', component: FilterDetails,
     props: function(route){
