@@ -64,9 +64,15 @@
               </tr>
             </table>
 
-            <b-button class="upgrade" v-if="upgrade_enabled[name]">
-              Upgrade ${{total_cost[name]}}
-            </b-button>
+            <router-link :to="{name: 'plan',
+                               params: {plan : name,
+                                     filters : additional_filters[name],
+                                       sinks : additional_sinks[name]}}"
+                         v-if="upgrade_enabled[name]">
+              <b-button class="upgrade">
+                Upgrade ${{total_cost[name]}}
+              </b-button>
+            </router-link>
 
             <b-button class="upgrade" v-else disabled>
               <span v-if="is_current_plan(name)">Current Plan</span>

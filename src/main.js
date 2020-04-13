@@ -31,6 +31,7 @@ import FilterDetails from './FilterDetails.vue'
 import FilterTester  from './FilterTester.vue'
 import Profile       from './Profile.vue'
 import Plans         from './Plans.vue'
+import Plan          from './Plan.vue'
 import Purchase      from './Purchase.vue'
 
 import("../public/common.css")
@@ -55,6 +56,9 @@ const routes = [
   { path: '/help',     component: Help     },
   { path: '/profile',  component: Profile  },
   { path: '/plans',    component: Plans    },
+  { path: '/plan',     component: Plan,
+                           name : 'plan',
+                          props : true     },
   { path: '/purchase', component: Purchase },
 
   { path: '/filter/:id', component: FilterDetails,
