@@ -59,8 +59,8 @@
 
             <div id="plan_periods">
               <div class="plan_period"
-                   :class="!selected_period || selected_period == 1 ? 'selected' : ''"
-                   @click="set_selected_period(1)">
+                   :class="!period || period == 1 ? 'selected' : ''"
+                   @click="set_period(1)">
                 <div><b>1 month</b></div>
                 <div><b>${{details.cost}}</b></div>
               </div>
@@ -68,8 +68,8 @@
               <div v-for="(cost, month) in details.monthly_costs"
                    :key="'month' + month"
                    class="plan_period"
-                   :class="selected_period == month ? 'selected' : ''"
-                   @click="set_selected_period(month)">
+                   :class="period == month ? 'selected' : ''"
+                   @click="set_period(month)">
                 <div><b>{{month}} months</b></div>
                 <div><span class="orig_cost">${{month * details.cost}}</span> <b>${{cost}}</b></div>
               </div>
@@ -113,9 +113,15 @@
               <span class="order_detail_value">${{total_cost}}</span>
             </div>
 
-            <b-button id="checkout_button" variant="light">
-              Checkout
-            </b-button>
+            <router-link :to="{name : 'checkout',
+                               params : {plan : plan,
+                                         filters : additional_filters,
+                                         sinks : additional_sinks,
+                                         period : period}}">
+              <b-button id="checkout_button" variant="light">
+                Checkout
+              </b-button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -150,7 +156,7 @@ export default {
       additional_filters : 0,
       additional_sinks : 0,
       max_additions : fr0xrpl.MAX_ADDITIONS,
-      selected_period : null
+      period : null
     }
   },
 
@@ -180,11 +186,11 @@ export default {
     },
 
     total_cost : function(){
-      var cost = this.selected_period ?
-                 this.details.monthly_costs[this.selected_period] :
+      var cost = this.period ?
+                 this.details.monthly_costs[this.period] :
                  this.details.cost;
 
-      var period = this.selected_period ? this.selected_period : 1;
+      var period = this.period ? this.period : 1;
 
       if(this.enable_additional && this.additional_filters)
         cost += this.additional_filters * fr0xrpl.ADDITIONS_COST.filters * period;
@@ -206,8 +212,8 @@ export default {
   },
 
   methods : {
-    set_selected_period : function(month){
-      this.selected_period = month;
+    set_period : function(month){
+      this.period = month;
     },
   },
 
@@ -218,6 +224,12 @@ export default {
 
     if(this.filters || this.sinks)
       this.enable_additional = true;
+
+    if(this.filters)
+      this.additional_filters = this.filters;
+
+    if(this.sinks)
+      this.additional_sinks = this.sinks;
   }
 }
 </script>
