@@ -1,183 +1,249 @@
 <template>
-  <div>
-    <full-page>
-      <div class="section">
-        <div id="first_section" class="subsection">
-          <div style="text-align: center">
-          <h1>Zerp Tracker</h1>
-          <h6>By <a href="https://devnull.network">Dev Null Productions</a></h6>
-          </div>
+  <MainLayout section="landing">
+    <div id="landing_container">
+      <div id="section1" class="section">
+        <div id="section1_subsection1">
+          <div id="main_title">Zerp Tracker</div>
 
-          <img src="./assets/filter.jpg" />
+          <ul id="main_features">
+            <li>Monitor your account</li>
+            <li>Look for money flow/volume patterns</li>
+            <li>Watch order book updates &amp; status</li>
+            <li>Much more!</li>
+          </ul>
 
-          <h2 id="description1">
-            Monitor XRP Blockchain transactions in real time and setup alerts to be notified via email, text, and more!
-          </h2>
+          <b-button id="begin_today" variant="primary">
+            <b>Begin today</b>
+          </b-button>
+        </div>
 
-          <a id="nav1" class="nav" href="/txs">
-            <h2>
-              Start Now
-            </h2>
-          </a>
+        <div id="section1_subsection2">
+          <img id="section1_img" src="./assets/landing/section1.png" />
         </div>
       </div>
 
-      <div class="section">
-        <div id="second_section" class="subsection">
-          <div>
-            <h2 id="description2">
-              With Zerp tracker you can setup powerful filtering expressions to hone in on exactly the type of activity that you are interested in...
-            </h2>
+      <div id="section2" class="section">
+        <div class="sub_title">Alert Notifications</div>
 
-            <h3 id="description3">
-              $..[?(parseInt(@.Amount) > 500000000)]
-            </h3>
-          </div>
+        <div id="section2_subsection">
+          <img id="section2_img" src="./assets/landing/section2.png" />
 
-          <div>
-            <h3 id="description4">
-              Or use pre-existing templates to setup alerts for many types of common patterns...
-            </h3>
+          <div id="section2_content">
+            <p>Monitor XRP Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
 
-            <h3>
-              <table id="description5">
-                <tr>
-                  <td class="label">Transaction Type:</td>
-                  <td class="spacing">▼</td>
-                  <td class="value">OfferCreate</td>
-                </tr>
-
-                <tr>
-                  <td class="label">Transaction Result:</td>
-                  <td class="spacing">▼</td>
-                  <td class="value">Success</td>
-                </tr>
-              </table>
-            </h3>
+            <b-button id="setup_notifications" variant="primary">
+              <b>Setup Notifications</b>
+            </b-button>
           </div>
         </div>
       </div>
 
-      <div class="section">
-        <div id="third_section" class="subsection">
-          <h4 id="description6">
-            <ul>
-              <li>Monitor your account</li>
-              <li>Look for money flow/volume patterns</li>
-              <li>Watch order book updates & status</li>
-              <li>Much more!</li>
-            </ul>
-          </h4>
+      <div id="section3" class="section">
+        <div class="sub_title">Filtering</div>
 
-          <a id="nav2" class="nav" href="/txs">
-            <h2>
-              Begin Today
-            </h2>
-          </a>
+        <div id="section3_content">
+          With Zerp Tracker you can setup powerful filtering expressions to hone in on exactly the type of activity that you are interested in...
+        </div>
+
+        <img id="section3_img" src="./assets/landing/section3.png" />
+      </div>
+
+      <div id="section4" class="section">
+        <div class="sub_title">Pre-existing templates</div>
+
+        <div id="section4_content1">
+          Use pre-existing templates to setup alerts for many types of common patterns
+        </div>
+
+        <img id="section4_img1" src="./assets/landing/section4a.png" />
+
+        <div id="section4_subsection">
+          <img id="section4_img2" src="./assets/landing/section4b.png" />
+
+          <div id="section4_content2">
+            <div class="sub_sub_title">Create your first filter</div>
+
+            <p>Get notified when an interesting offer appears</p>
+
+            <b-button id="create_personalized_filter" variant="primary">
+              <b>Create your personalized filter</b>
+            </b-button>
+          </div>
         </div>
       </div>
-    </full-page>
-  </div>
+    </div>
+  </MainLayout>
 </template>
 
 <script>
+import MainLayout from './components/MainLayout.vue'
+
 export default {
-  name: 'Landing'
+  name: 'Landing',
+
+  components: {
+    MainLayout
+  }
 }
 </script>
 
 <style scoped>
-.subsection{
+#landing_container{
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
-  background-size: 100% 100%;
+  margin: auto;
+  margin-top: 50px;
 }
 
-.nav{
-  border-radius: 5px;
-  padding: 5px;
-  text-decoration: none;
+.section{
+  padding-left: 250px;
 }
 
-.nav h2{
-  margin-bottom: 0;
+.sub_title{
+  font-size: 2.9rem;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
+.sub_sub_title{
+  font-size: 2.2rem;
+  font-weight: bold;
+}
 
 /****/
 
-#first_section{
-  align-items: center;
-  background-image: url('./assets/landing-bg1.png');
+#section1{
+  display: flex;
+  font-size: 1.5rem;
+  padding-bottom: 50px;
 }
 
-#description1{
-  color: white;
-  width: 50%;
+#section1_subsection1{
+  flex-basis: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+#section1_subsection2{
+  flex-basis: 55%;
+}
+
+#main_title{
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+#main_features {
+  list-style: none;
+}
+
+#main_features li::before{
+  content: "\2022";
+  color: #0091FF;
+  font-weight: bold;
+  display: inline-block; 
+  width: 1em; 
+  margin-left: -1em;
+}
+
+#begin_today{
+  align-self: center;
+  margin-top: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 25px;
+  font-size: 2rem;
+}
+
+#section1_img{
+  max-width: 100%;
+}
+
+/****/
+
+#section2{
+  padding-top: 50px;
+  padding-bottom: 75px;
+  background-color: white;
   text-align: center;
 }
 
-#nav1{
-  border: 3px solid white;
-  color: white;
+#section2_subsection{
+  display: flex;
+  align-items: center;
 }
 
-/****/
-
-#second_section{
-  background-image: url('./assets/landing-bg2.png');
-  padding-left: 50px;
-  padding-right: 50px;
+#section2_img{
+  flex-basis: 60%;
+  max-width: 50%;
 }
 
-#description2{
-  width: 75%;
-  color: white;
+#section2_content{
+  flex-basis: 40%;
+  font-size: 1.5rem;
+  padding-top: 50px;
+  padding-left: 45px;
 }
 
-#description3{
-  text-align: right;
-  color: white;
-}
-
-#description5{
-  float: right;
-  margin-top: 25px;
-  border: 1px solid black;
-}
-
-#description5 tr{
-  border-bottom: 2px solid black;
-}
-
-#description5 .label{
-  padding: 25px;
-  background-color: #bfbfff;
-}
-
-#description5 .spacing{
-  border-left: 1px solid black;
-  padding: 25px;
-  background-color: yellow;
-}
-
-#description5 .value{
-  padding: 25px;
-  background-color: yellow;
-}
-
-/****/
-
-#third_section{
-  background-image: url('./assets/landing-bg3.png');
-}
-
-#nav2{
-  border: 1px solid gray;
+#setup_notifications{
   align-self: center;
-  background-color: white;
-  color: black;
+  border-radius: 25px;
+  font-size: 1.5rem;
 }
+
+/****/
+
+#section3{
+  padding-top: 50px;
+  padding-left: 350px;
+  padding-right: 250px;
+}
+
+#section3_img{
+  flex-basis: 60%;
+  max-width: 100%;
+}
+
+#section3_content{
+  margin: 20px;
+  margin-bottom: 50px;
+  font-size: 1.5rem;
+}
+
+/****/
+
+#section4{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 350px;
+  padding-right: 250px;
+  margin-bottom: 15px;
+  background-color: white;
+  border-bottom: 1px solid #ECECEC;
+}
+
+#section4_img1{
+  max-width: 100%;
+}
+
+#section4_subsection{
+  margin-top: 50px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f9;
+}
+
+#section4_content2{
+  font-size: 1.4rem;
+  padding-left: 50px;
+}
+
+#create_personalized_filter{
+  border-radius: 25px;
+  font-size: 1.2rem;
+}
+
 </style>

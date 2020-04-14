@@ -17,11 +17,6 @@ import moment_tz     from 'moment-timezone'
 Vue.use(VueMoment, {moment_tz});
 
 ///
-import VueFullPage from 'vue-fullpage.js'
-
-Vue.use(VueFullPage);
-
-///
 
 import Landing       from './Landing.vue'
 import Txs           from './Txs.vue'

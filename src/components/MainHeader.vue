@@ -3,8 +3,8 @@
     <b-col cols="8">
       <router-link to="/txs">
         <h1 style="margin-bottom: 0">
-          <span style="font-weight: bold">Zerp</span>
-          <span style="color: #b3bac2">Tracker</span>
+          <span style="color: #395267; font-weight: bold">Zerp</span>
+          <span style="color: #0091FF; margin-left: 1px">XRP Transaction Tracker</span>
         </h1>
       </router-link>
     </b-col>

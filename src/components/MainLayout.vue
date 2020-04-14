@@ -4,7 +4,7 @@
 
     <b-row no-gutters id="main_content">
       <b-col>
-        <div id="main_subcontent">
+        <div id="main_subcontent" :class="section">
           <slot></slot>
         </div>
       </b-col>
@@ -50,5 +50,10 @@ export default {
 #main_subcontent{
   width: 85%;
   margin: auto;
+}
+
+/* XXX: hack for landing page */
+#main_subcontent.landing{
+  width: unset;
 }
 </style>
