@@ -46,7 +46,7 @@
 
           <tr>
             <td>Card Number:</td>
-            <td><input type="text" v-model="card_numbers" /></td>
+            <td><input type="text" v-model="card_number" /></td>
           </tr>
 
           <tr>
@@ -103,6 +103,8 @@ export default {
 
   computed : {
     details : function(){
+      if(!this.plan) return {};
+
       return fr0xrpl.MEMBERSHIP_FEATURES[this.plan];
     },
 

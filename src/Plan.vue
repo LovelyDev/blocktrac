@@ -162,6 +162,8 @@ export default {
 
   computed : {
     details : function(){
+      if(!this.plan) return {};
+
       return fr0xrpl.MEMBERSHIP_FEATURES[this.plan];
     },
 
