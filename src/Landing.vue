@@ -12,9 +12,11 @@
             <li>Much more!</li>
           </ul>
 
-          <b-button id="begin_today" variant="primary">
-            <b>Begin today</b>
-          </b-button>
+          <router-link to="/txs">
+            <b-button id="begin_today" variant="primary">
+              <b>Begin today</b>
+            </b-button>
+          </router-link>
         </div>
 
         <div id="section1_subsection2">
@@ -31,9 +33,11 @@
           <div id="section2_content">
             <p>Monitor XRP Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
 
-            <b-button id="setup_notifications" variant="primary">
-              <b>Setup Notifications</b>
-            </b-button>
+            <router-link to="/txs">
+              <b-button id="setup_notifications" variant="primary">
+                <b>Setup Notifications</b>
+              </b-button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -65,9 +69,11 @@
 
             <p>Get notified when an interesting offer appears</p>
 
-            <b-button id="create_personalized_filter" variant="primary">
-              <b>Create your personalized filter</b>
-            </b-button>
+            <router-link to="/txs">
+              <b-button id="create_personalized_filter" variant="primary">
+                <b>Create your personalized filter</b>
+              </b-button>
+            </router-link>
           </div>
         </div>
       </div>
