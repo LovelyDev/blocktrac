@@ -73,7 +73,12 @@ const routes = [
 
 const router = new VueRouter({
   mode : "history",
-  routes : routes
+  routes : routes,
+
+  // always scroll to top on nav
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 ///
