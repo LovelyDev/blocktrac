@@ -87,7 +87,6 @@ export default {
 }
 
 .tx_summary_container{
-  margin: 1px;
-  padding: 10px;
+  padding: 0px;
 }
 </style>

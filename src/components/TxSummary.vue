@@ -1,5 +1,7 @@
 <template>
-  <div class="tx_summary" :title="title">
+  <div class="tx_summary"
+      :class="success ? 'success' : 'failed'"
+      :title="title">
     <PaymentTx              :tx="tx"      v-if="tx_type == 'Payment'"              />
     <OfferCreateTx          :tx="tx" v-else-if="tx_type == 'OfferCreate'"          />
     <OfferCancelTx          :tx="tx" v-else-if="tx_type == 'OfferCancel'"          />
@@ -58,3 +60,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.tx_summary{
+  padding: 10px;
+}
+
+.tx_summary.failed{
+  background-color: #faf2f1;
+}
+</style>

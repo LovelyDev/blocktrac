@@ -61,7 +61,7 @@ export default {
 <style scoped>
 .from_account,
 .to_account{
-  flex-basis: 33%;
+  flex-basis: 32%;
   font-size: 0.8rem;
 }
 

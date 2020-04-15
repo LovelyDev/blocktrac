@@ -48,7 +48,7 @@ export default {
 }
 
 .tx_icon{
-  flex-basis: 4%;
+  flex-basis: 6%;
   display: flex;
   align-items: center;
   justify-content: center;
