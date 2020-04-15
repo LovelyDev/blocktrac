@@ -10,7 +10,7 @@
 <script>
 import PaymentChannel from '../PaymentChannel.vue'
 
-var HasTx = require('../../mixins/has_tx')
+var HasTx = require('../../mixins/has_tx').default
 
 export default {
   name   : 'PaymentChannelClaimTx',

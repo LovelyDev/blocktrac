@@ -18,7 +18,9 @@
         {{amount["currency"]}}
       </span>
 
-      <sup><AccountLink v-bind:account="amount['issuer']" shorten/></sup>
+      <sup>
+        <AccountLink :account="amount['issuer']" shorten/>
+      </sup>
     </span>
   </span>
 </template>

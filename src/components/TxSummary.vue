@@ -29,9 +29,7 @@ import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim.vue'
 import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate.vue'
 import PaymentChannelFundTx   from './tx_types/PaymentChannelFund.vue'
 
-import util from '../util'
-
-var HasTx = require('../mixins/has_tx')
+var HasTx = require('../mixins/has_tx').default;
 
 export default {
   name: 'TxSummary',
@@ -54,26 +52,6 @@ export default {
   },
 
   computed : {
-    tx_type : function(){
-      return this.tx_obj["TransactionType"];
-    },
-
-    result : function(){
-      return this.tx_meta["TransactionResult"];
-    },
-
-    success : function(){
-      return this.result == "tesSUCCESS" ;
-    },
-
-    unix_date : function(){
-      return util.ledger_time_to_unix(this.tx_obj["date"]);
-    },
-
-    formatted_date : function(){
-      return this.$options.filters.moment(this.unix_date, "YYYY-MM-DD HH:mm:ss");
-    },
-
     title : function(){
       return this.tx_type + " @ " + this.formatted_date;
     }
