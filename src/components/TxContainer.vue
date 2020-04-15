@@ -8,7 +8,7 @@
     </div>
 
     <div class="tx_timestamp_type">
-      <div class="tx_timestamp">
+      <div class="tx_timestamp tx_detail_label">
         {{formatted_date}}
       </div>
 
@@ -33,10 +33,12 @@ export default {
     tx_icon : function(){
       // TODO: failed = white
       const color = this.success ? 'blue' : 'gray';
+      const asset = this.tx_category
+                         .replace(" ", "-")
+                         .toLowerCase() +
+                    '-' + color + '.png';
 
-      return require('../assets/txs/' +
-                     this.tx_category.toLowerCase() +
-                     '-' + color + '.png');
+      return require('../assets/txs/' + asset);
     }
   }
 }

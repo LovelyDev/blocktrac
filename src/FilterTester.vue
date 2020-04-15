@@ -23,7 +23,6 @@
           <b-list-group-item v-for="tx in matched_tests"
                              :key="tx.transaction.hash"
                              class="tx_summary_container">
-
             <TxSummary :tx="tx" />
           </b-list-group-item>
         </b-list-group>
@@ -45,6 +44,8 @@ import util           from './util'
 var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
+// TODO: capture more transactions:
+//       AccountSet, PaymentChannel*, EscrowFinish, EscrowCancel, SignerListSet
 const captured_txs =
   require("./assets/captured_txs.json").reduce(function(ct, ctx){
     ct[ctx.replace(".json", "")] = Object.freeze(require("./assets/captured_txs/" + ctx))
@@ -119,5 +120,9 @@ export default {
   color: white;
 
   cursor: pointer;
+}
+
+.tx_summary_container{
+  padding: 0px;
 }
 </style>

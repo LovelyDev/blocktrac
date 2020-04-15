@@ -32,6 +32,9 @@ export default {
     },
 
     unix_date : function(){
+      if(typeof(this.tx_obj["date"]) == "string")
+        return Date.parse(this.tx_obj["date"]);
+
       return util.ledger_time_to_unix(this.tx_obj["date"]);
     },
 

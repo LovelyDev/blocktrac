@@ -18,7 +18,7 @@
         {{amount["currency"]}}
       </span>
 
-      <sup>
+      <sup v-if="!no_issuer">
         <AccountLink :account="amount['issuer']" shorten/>
       </sup>
     </span>
@@ -34,7 +34,8 @@ export default {
   name: 'CurrencyAmount',
 
   props : {
-    amount : [String, Number, Object]
+    amount : [String, Number, Object],
+    no_issuer : Boolean
   },
 
   components : {

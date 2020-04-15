@@ -13,7 +13,7 @@ export default {
   name: 'AccountLink',
 
   props : {
-    account    : String,
+    account : String,
     shorten : Boolean,
   },
 

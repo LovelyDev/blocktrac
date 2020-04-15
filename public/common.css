@@ -12,11 +12,7 @@ body{
 
 /*****/
 
-.align_end{
-  text-align: end;
-}
-
-.sink_control{
-  cursor: pointer;
-  margin-right: 5px;
+.tx_detail_label{
+  color: #395366;
+  opacity: 0.6;
 }

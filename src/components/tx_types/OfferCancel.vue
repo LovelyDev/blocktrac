@@ -1,26 +1,28 @@
 <template>
   <TxContainer :tx="tx">
     <div class="account">
-      <div>Account</div>
+      <div class="tx_detail_label">Account</div>
       <AccountLink :account="account" />
     </div>
 
     <template v-if="has_deleted_node">
       <div class="buy_amount">
-        <div>Buying</div>
-        <CurrencyAmount :amount="pays" />,
+        <div class="tx_detail_label">Buying</div>
+        <CurrencyAmount :amount="pays" no_issuer />,
       </div>
 
       <div class="sell_amount">
-        <div>Selling</div>
+        <div class="tx_detail_label">Selling</div>
 
-        <CurrencyAmount :amount="gets" />
+        <CurrencyAmount :amount="gets" no_issuer />
       </div>
     </template>
 
     <template v-else>
+      <div class="sequence_pad"></div>
+
       <div class="sequence">
-        <div>Sequence</div>
+        <div class="tx_detail_label">Sequence</div>
         <div>{{sequence}}</div>
       </div>
     </template>
@@ -92,7 +94,12 @@ export default {
   font-size: 0.8rem;
 }
 
+.sequence_pad{
+  flex-basis: 16%;
+}
+
 .sequence{
-  flex-basis: 93%;
+  flex-basis: 16%;
+  font-size: 0.8rem;
 }
 </style>

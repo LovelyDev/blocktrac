@@ -1,7 +1,7 @@
 <template>
   <TxContainer :tx="tx">
     <div class="from_account">
-      <div>
+      <div class="tx_detail_label">
         <img src="../../assets/person-icon.png" />&nbsp;
         <span>from account</span>
       </div>
@@ -10,7 +10,7 @@
     </div>
 
     <div class="to_account">
-      <div>
+      <div class="tx_detail_label">
         <img src="../../assets/person-icon.png" />&nbsp;
         <span>to account</span>
       </div>
@@ -18,9 +18,11 @@
       <AccountLink :account="dst" />
     </div>
 
-    <div class="amount_currency">
-      <CurrencyAmount :amount="amount" />
+    <div class="currency_amount">
+      <CurrencyAmount :amount="amount" no_issuer />
     </div>
+
+    <div class="currency_amount_pad"></div>
   </TxContainer>
 </template>
 
@@ -65,10 +67,15 @@ export default {
   font-size: 0.8rem;
 }
 
-.amount_currency{
-  flex-basis: 13%;
-  font-size: 0.7rem;
+.currency_amount{
+  flex-basis: 10%;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+}
+
+.currency_amount_pad{
+  flex-basis: 3%;
 }
 </style>
