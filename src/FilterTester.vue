@@ -45,7 +45,8 @@ var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 // TODO: capture more transactions:
-//       AccountSet, PaymentChannel*, EscrowFinish, EscrowCancel, SignerListSet
+//       AccountSet (flags, email, transfer rate),
+//       PaymentChannel*, EscrowFinish, EscrowCancel, SignerListSet
 const captured_txs =
   require("./assets/captured_txs.json").reduce(function(ct, ctx){
     ct[ctx.replace(".json", "")] = Object.freeze(require("./assets/captured_txs/" + ctx))

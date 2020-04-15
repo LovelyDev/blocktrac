@@ -9,6 +9,8 @@
   "Failed XRP Payment 1.json",
   "Failed XRP Payment 2.json",
   "Failed XRPREP OfferCreate 1.json",
+  "Successful Account Set 1.json",
+  "Successful Account Set 2.json",
   "Successful BTC Payment 1.json",
   "Successful CNYCNY OfferCreate 1.json",
   "Successful CNYUSD OfferCreate 1.json",
@@ -25,5 +27,6 @@
   "Successful XRP Payment 2.json",
   "Successful XRP Payment 3.json",
   "Successful XRPCNY OfferCreate 1.json",
-  "Successful XRPCNY OfferCreate 2.json"
+  "Successful XRPCNY OfferCreate 2.json",
+  "Successful Payment Channel Claim 1.json"
 ]

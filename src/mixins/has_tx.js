@@ -19,6 +19,14 @@ export default {
       return this.tx_obj["TransactionType"];
     },
 
+    tx_short_type : function(){
+      return this.tx_obj["TransactionType"].replace("PaymentChannel", "PayChan");
+    },
+
+    account : function(){
+      return this.tx_obj["Account"];
+    },
+
     tx_category : function(){
       return config.tx_category_for_type(this.tx_type);
     },

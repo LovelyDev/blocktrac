@@ -13,7 +13,7 @@
       </div>
 
       <div class="tx_type">
-        {{tx_type}}
+        {{tx_short_type}}
       </div>
     </div>
 

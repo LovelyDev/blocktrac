@@ -37,10 +37,6 @@ export default {
   computed : {
     amount : function(){
       return this.tx_obj["Amount"];
-    },
-
-    account : function(){
-      return this.tx_obj["Account"];
     }
   }
 }

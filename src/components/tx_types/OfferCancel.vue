@@ -53,10 +53,6 @@ export default {
   },
 
   computed : {
-    account : function(){
-      return this.tx_obj["Account"];
-    },
-
     sequence : function(){
       return this.tx_obj["OfferSequence"];
     },

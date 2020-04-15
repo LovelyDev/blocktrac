@@ -43,10 +43,6 @@ export default {
   },
 
   computed : {
-    account : function(){
-      return this.tx_obj["Account"];
-    },
-
     gets : function(){
       return this.tx_obj["TakerGets"];
     },

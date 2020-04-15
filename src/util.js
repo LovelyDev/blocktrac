@@ -24,6 +24,15 @@ export default {
     return (t + 946684800)*1000;
   },
 
+  hex_to_ascii : function(hex){
+    var hex = hex.toString();
+    var str = '';
+    for (var n = 0; n < hex.length; n += 2) {
+      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+    }
+    return str;
+  },
+
   // XXX: copied from fr0xrpl Filter#matcher and Template#applyParams
   filter_matcher : function(filter){
     if(filter.Template){

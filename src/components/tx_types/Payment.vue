@@ -6,7 +6,7 @@
         <span>From Account</span>
       </div>
 
-      <AccountLink :account="src" />
+      <AccountLink :account="account" />
     </div>
 
     <div class="to_account">
@@ -45,10 +45,6 @@ export default {
   },
 
   computed : {
-    src : function(){
-      return this.tx_obj["Account"];
-    },
-
     dst : function(){
       return this.tx_obj["Destination"];
     },

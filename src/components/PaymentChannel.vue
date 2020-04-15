@@ -9,6 +9,8 @@
 <script>
 import AccountLink from './AccountLink.vue'
 
+// TODO remove
+
 export default {
   name   : 'PaymentChannel',
 
