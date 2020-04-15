@@ -10,7 +10,6 @@
         <b-list-group-item v-for="tx in txs"
                            :key="tx.transaction.hash"
                            class="tx_summary_container">
-
           <TxSummary :tx="tx" />
         </b-list-group-item>
       </b-list-group>
@@ -48,12 +47,14 @@ export default {
     }
   },
 
-  created : function(){
-    this.msg_cb = function(message){
-                    if(!message["transaction"]) return;
-                    this.$store.commit('add_tx', message);
-                  }.bind(this);
+  methods : {
+    msg_cb : function(message){
+      if(!message["transaction"]) return;
+      this.$store.commit('add_tx', message);
+    }
+  },
 
+  created : function(){
     this.$store.commit('on_socket_message', this.msg_cb);
     this.$store.commit('on_open_socket', function(){
       var cmd = {
@@ -63,7 +64,18 @@ export default {
 
       this.sendCmd(cmd);
     }.bind(this));
-  }
+  },
+
+  destroyed : function(){
+    this.$store.commit('rm_socket_message_cb', this.msg_cb);
+
+    var cmd = {
+      'command' : 'unsubscribe',
+      'streams' : ['transactions']
+    };
+
+    this.sendCmd(cmd);
+  },
 }
 </script>
 

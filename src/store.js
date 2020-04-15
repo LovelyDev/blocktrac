@@ -117,6 +117,13 @@ export const store = new Vuex.Store({
       state.callbacks.socket_msg.push(cb);
     },
 
+    rm_socket_message_cb(state, cb){
+      const index = state.callbacks.socket_msg.indexOf(cb);
+      if(index == -1) return;
+
+      state.callbacks.socket_msg.splice(index, 1);
+    },
+
     SOCKET_ONOPEN (state) {
       state.socket.isConnected = true
       state.callbacks.socket_open.forEach(function(cb){
