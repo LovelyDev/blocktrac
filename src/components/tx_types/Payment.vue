@@ -3,7 +3,7 @@
     <div class="from_account">
       <div class="tx_detail_label">
         <img src="../../assets/person-icon.png" />&nbsp;
-        <span>from account</span>
+        <span>From Account</span>
       </div>
 
       <AccountLink :account="src" />
@@ -12,7 +12,7 @@
     <div class="to_account">
       <div class="tx_detail_label">
         <img src="../../assets/person-icon.png" />&nbsp;
-        <span>to account</span>
+        <span>To Account</span>
       </div>
 
       <AccountLink :account="dst" />
@@ -22,7 +22,7 @@
       <CurrencyAmount :amount="amount" no_issuer />
     </div>
 
-    <div class="currency_amount_pad"></div>
+    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
@@ -68,14 +68,10 @@ export default {
 }
 
 .currency_amount{
-  flex-basis: 10%;
+  flex-basis: 14%;
   font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.currency_amount_pad{
-  flex-basis: 3%;
 }
 </style>

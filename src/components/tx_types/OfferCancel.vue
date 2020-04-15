@@ -1,7 +1,11 @@
 <template>
   <TxContainer :tx="tx">
     <div class="account">
-      <div class="tx_detail_label">Account</div>
+      <div class="tx_detail_label">
+        <img src="../../assets/person-icon.png" />&nbsp;
+        <span>Account</span>
+      </div>
+
       <AccountLink :account="account" />
     </div>
 
@@ -26,6 +30,8 @@
         <div>{{sequence}}</div>
       </div>
     </template>
+
+    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
@@ -84,22 +90,30 @@ export default {
 
 <style scoped>
 .account{
-  flex-basis: 45%;
+  flex-basis: 42%;
   font-size: 0.8rem;
 }
 
 .buy_amount,
 .sell_amount{
-  flex-basis: 16%;
+  flex-basis: 18%;
   font-size: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .sequence_pad{
-  flex-basis: 16%;
+  flex-basis: 15%;
 }
 
 .sequence{
-  flex-basis: 16%;
+  flex-basis: 21%;
   font-size: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 </style>

@@ -30,6 +30,8 @@ import AccountLink from './AccountLink.vue'
 
 import config      from '../config.js'
 
+// TODO: shorten large values (1000 -> 1K, 1000000 -> 1M, 1250000 -> 1.25M, etc)
+
 export default {
   name: 'CurrencyAmount',
 

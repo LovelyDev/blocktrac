@@ -74,7 +74,7 @@ export default {
 }
 
 .tx_timestamp_type{
-  flex-basis: 17%;
+  flex-basis: 13%;
 
   display: flex;
   flex-direction: column;
