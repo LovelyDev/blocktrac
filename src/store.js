@@ -15,7 +15,13 @@ export const store = new Vuex.Store({
     loading_txs : true,
      paused_txs : false,
       tx_filter : '',
-    tx_category : config.TX_CATEGORIES[0],
+
+          tx_categories : [],
+    tx_category_tallies : config.TX_CATEGORIES
+                                .reduce(function(tallies, category, i){
+                            tallies[category] = 0;
+                            return tallies;
+                          }, {}),
 
         templates : [],
           filters : [],
@@ -62,7 +68,8 @@ export const store = new Vuex.Store({
           return;
 
       var category = config.tx_category_for_type(tx["transaction"]["TransactionType"]);
-      if(state.tx_category != "ALL" && state.tx_category != category)
+      if(state.tx_categories.length != 0 &&
+        !state.tx_categories.includes(category))
         return;
 
       state.loading_txs = false;
@@ -70,12 +77,27 @@ export const store = new Vuex.Store({
       // making message reactive slows down perf
       Object.freeze(tx);
 
+      // Add to txs list and cap number
       state.txs.unshift(tx);
       state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
+
+      // Update tallies
+
+      state.tx_category_tallies['ALL']    += 1;
+      state.tx_category_tallies[category] += 1;
     },
 
-    set_tx_category(state, category){
-      state.tx_category = category;
+    clear_tx_categories(state, category){
+      state.tx_categories = [];
+    },
+
+    toggle_tx_category(state, category){
+      if(state.tx_categories.includes(category)){
+        const index = state.tx_categories.indexOf(category);
+        state.tx_categories.splice(index, 1);
+
+      }else
+        state.tx_categories.push(category);
 
       // TODO clear and/or filter txs by category ?
     },

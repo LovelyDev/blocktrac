@@ -82,11 +82,16 @@ export default {
 <style scoped>
 #txs_list{
   border: 1px solid #f5f5f6;
-  padding: 5px;
   background-color: white;
 }
 
 .tx_summary_container{
   padding: 0px;
 }
+
+.tx_summary_container:first-child{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
 </style>

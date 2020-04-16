@@ -33,11 +33,15 @@ module.exports = {
     'ALL',
     'PAYMENTS',
     'OFFERS',
-    'ESCROWS',
-    'PAYMENT CHANNELS',
+    'TRUST LINES',
     'ACCOUNT SETS',
-    'TRUST LINES'
+    'ESCROWS',
+    'PAYMENT CHANNELS'
   ],
+
+  // After this index categories are
+  // displayed in a consise manner
+  SECONDARY_TX_CATEGORIES_INDEX : 4,
 
   // General TX category for each ledger type
   tx_category_for_type : function(t){
@@ -48,6 +52,13 @@ module.exports = {
       case "OfferCreate":
       case "OfferCancel":
         return "OFFERS";
+
+      case "TrustSet":
+        return "TRUST LINES";
+
+      case "AccountSet":
+      case "SignerListSet":
+        return "ACCOUNT SETS";
   
       case "EscrowCreate":
       case "EscrowFinish":
@@ -58,13 +69,6 @@ module.exports = {
       case "PaymentChannelClaim":
       case "PaymentChannelFund":
         return "PAYMENT CHANNELS";
-  
-      case "AccountSet":
-      case "SignerListSet":
-        return "ACCOUNT SETS";
-  
-      case "TrustSet":
-        return "TRUST LINES";
   
       default:
         return null;

@@ -1,11 +1,38 @@
 <template>
   <b-list-group horizontal id="tx_categories">
-    <b-list-group-item v-for="category in categories"
+    <b-list-group-item v-for="category in primary_categories"
                         :key="category"
-                       class="tx_category"
+                       class="tx_category primary_category"
                       :class="is_enabled(category) ? 'enabled' : ''"
-                      @click="set_category(category)">
-      {{category}}
+                      @click="toggle_category(category)">
+      <img :src="category_icon(category)" />
+
+      <span class="category_name"
+           :class="is_enabled(category) ? 'enabled' : ''">
+        {{category.toLowerCase()}}
+      </span>
+
+      <span class="category_tally"
+           :class="is_enabled(category) ? 'enabled' : ''"
+            v-if="category_tallies[category] != 0">
+        ({{category_tallies[category] | delim}})
+      </span>
+    </b-list-group-item>
+
+    <b-list-group-item id="primary_secondary_separator">
+      Other:
+    </b-list-group-item>
+
+    <b-list-group-item v-for="category in secondary_categories"
+                        :key="category"
+                       class="tx_category secondary_category"
+                      :class="is_enabled(category) ? 'enabled' : ''"
+                      @click="toggle_category(category)">
+      <img :src="category_icon(category)" />
+
+      <span class="category_tally" v-if="category_tallies[category] != 0">
+        ({{category_tallies[category] | delim}})
+      </span>
     </b-list-group-item>
   </b-list-group>
 </template>
@@ -17,22 +44,52 @@ export default {
   name: 'TxsCategories',
 
   data : function(){
-    return {categories : config.TX_CATEGORIES};
+    return {
+      all_categories : config.TX_CATEGORIES
+    };
   },
 
   computed : {
-    enabled_category : function(){
-      return this.$store.state.tx_category;
+    enabled_categories : function(){
+      return this.$store.state.tx_categories;
+    },
+
+    primary_categories : function(){
+      return this.all_categories.slice(0,
+        config.SECONDARY_TX_CATEGORIES_INDEX);
+    },
+
+    secondary_categories : function(){
+      return this.all_categories.slice(config.SECONDARY_TX_CATEGORIES_INDEX,
+        this.all_categories.length);
+    },
+
+    category_tallies : function(){
+      return this.$store.state.tx_category_tallies;
     }
   },
 
   methods : {
     is_enabled : function(category){
-      return category == this.enabled_category;
+      const all = category == 'ALL';
+      return ( all && this.enabled_categories.length == 0) ||
+             (!all && this.enabled_categories.includes(category))
     },
 
-    set_category : function(category){
-      this.$store.commit('set_tx_category', category)
+    toggle_category : function(category){
+      if(category == 'ALL')
+        this.$store.commit('clear_tx_categories');
+
+      else
+        this.$store.commit('toggle_tx_category', category)
+    },
+
+    category_icon : function(category){
+      const color = this.is_enabled(category) ? 'blue' : 'gray';
+      const asset = category.replace(" ", "-")
+                            .toLowerCase() +
+                       "-" + color + '.svg';
+      return require("../assets/txs/" + asset);
     }
   }
 }
@@ -40,25 +97,51 @@ export default {
 
 <style scoped>
 #tx_categories{
-  justify-content: center;
+  padding: 10px;
+  padding-left: 30px;
+}
+
+#tx_categories .list-group-item{
+  padding: 0;
+  border: none;
 }
 
 .tx_category{
-  text-align: center;
-  border: none;
   cursor: pointer;
 }
 
-.tx_category.list-group-item:first-child{
-  border-bottom-left-radius: 0;
+.primary_category{
+  flex-basis: 17%;
 }
 
-.tx_category.list-group-item:last-child{
-  border-bottom-right-radius: 0;
+.secondary_category{
+  flex-basis: 5%;
 }
 
-.tx_category.enabled{
-  border-bottom: 3px solid black;
-  cursor: default;
+#primary_secondary_separator{
+  flex-grow: 1;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.category_name{
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+.category_name:not(.enabled){
+  color: #395366;
+  opacity: 0.4;
+}
+
+.category_tally{
+  font-size: 0.9rem;
+  margin-left: 1px;
+}
+
+.category_tally:not(.enabled){
+  color: #395366;
+  opacity: 0.4;
 }
 </style>
