@@ -7,8 +7,6 @@
 <script>
 import config from '../config'
 
-// TODO: tags
-
 export default {
   name: 'AccountLink',
 

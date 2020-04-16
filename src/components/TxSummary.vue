@@ -33,6 +33,8 @@ import PaymentChannelFundTx   from './tx_types/PaymentChannelFund.vue'
 
 var HasTx = require('../mixins/has_tx').default;
 
+// TODO: extract common logic from specific tx type components into their own components (accounts, padding, etc)
+
 export default {
   name: 'TxSummary',
 

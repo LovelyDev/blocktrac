@@ -15,6 +15,10 @@ export default {
       return this.tx["meta"];
     },
 
+    affected_nodes : function(){
+      return this.tx_meta["AffectedNodes"];
+    },
+
     tx_type : function(){
       return this.tx_obj["TransactionType"];
     },
@@ -48,6 +52,28 @@ export default {
 
     formatted_date : function(){
       return this.$options.filters.moment(this.unix_date, "YYYY-MM-DD HH:mm:ss");
+    }
+  },
+
+  methods : {
+    deleted_nodes : function(type){
+      return this.affected_nodes.filter(function(node){
+               return node['DeletedNode'] &&
+                      node['DeletedNode']['LedgerEntryType'] == type;
+             });
+    },
+
+    deleted_node : function(type){
+      const node = this.deleted_nodes(type)[0];
+      if(!node) return null;
+      return node['DeletedNode']
+    },
+
+    deleted_fields : function(type){
+      const node = this.deleted_node(type);
+      if(!node) return null;
+
+      return node['FinalFields'];
     }
   }
 }

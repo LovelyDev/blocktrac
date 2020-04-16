@@ -9,7 +9,7 @@
       <AccountLink :account="account" />
     </div>
 
-    <template v-if="has_deleted_node">
+    <template v-if="has_offer">
       <div class="buy_amount">
         <div class="tx_detail_label">Buying</div>
         <CurrencyAmount :amount="pays" no_issuer />,
@@ -57,28 +57,20 @@ export default {
       return this.tx_obj["OfferSequence"];
     },
 
-    deleted_node : function(){
-      if(!this.tx_meta)
-        return null;
-
-      for(var n = 0; n < this.tx_meta["AffectedNodes"].length; n += 1)
-        if(this.tx_meta["AffectedNodes"][n]["DeletedNode"] &&
-           this.tx_meta["AffectedNodes"][n]["DeletedNode"]["LedgerEntryType"] == "Offer")
-          return this.tx_meta["AffectedNodes"][n]["DeletedNode"]["FinalFields"];
-
-      return null;
+    offer : function(){
+      return this.deleted_fields('Offer');
     },
  
-    has_deleted_node : function(){
-      return !!this.deleted_node;
+    has_offer : function(){
+      return !!this.offer;
     },
 
     gets : function(){
-      return this.deleted_node["TakerGets"];
+      return this.offer["TakerGets"];
     },
 
     pays : function(){
-      return this.deleted_node["TakerPays"];
+      return this.offer["TakerPays"];
     }
   }
 }

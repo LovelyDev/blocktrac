@@ -2,7 +2,7 @@
   <span>
     <span v-if="is_drops">
       {{xrp_amount | round | delim}}
-      <img src="@/assets/XRP.svg" style="height: 15px; width: 15px; margin-bottom: 2px" />
+      <CurrencyIcon currency="XRP" />
     </span>
 
     <!-- TODO render icons for all currencies -->
@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import AccountLink from './AccountLink.vue'
+import AccountLink  from './AccountLink.vue'
+import CurrencyIcon from './CurrencyIcon.vue'
 
 import config      from '../config.js'
 
@@ -41,7 +42,8 @@ export default {
   },
 
   components : {
-    AccountLink
+    AccountLink,
+    CurrencyIcon
   },
 
   computed : {
@@ -70,6 +72,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

@@ -46,7 +46,7 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 // TODO: capture more transactions:
 //       AccountSet (flags, email, transfer rate),
-//       PaymentChannel*, EscrowFinish, EscrowCancel, SignerListSet
+//       PaymentChannel*, SignerListSet
 const captured_txs =
   require("./assets/captured_txs.json").reduce(function(ct, ctx){
     ct[ctx.replace(".json", "")] = Object.freeze(require("./assets/captured_txs/" + ctx))
