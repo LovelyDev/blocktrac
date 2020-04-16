@@ -1,14 +1,5 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-
-      <AccountLink :account="account" />
-    </div>
-
     <div class="domain" v-if="domain">
       <div class="tx_detail_label">Domain</div>
       <div>{{domain}}</div>
@@ -18,7 +9,6 @@
 
 <script>
 import TxContainer from '../TxContainer.vue'
-import AccountLink from '../AccountLink.vue'
 
 import util from '../../util'
 
@@ -32,8 +22,7 @@ export default {
   mixins : [HasTx],
 
   components : {
-    TxContainer,
-    AccountLink
+    TxContainer
   },
 
   computed : {
@@ -50,11 +39,6 @@ export default {
 </script>
 
 <style scoped>
-.account{
-  flex-basis: 32%;
-  font-size: 0.8rem;
-}
-
 .domain{
   flex-basis: 12%;
   font-size: 0.8rem;

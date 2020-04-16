@@ -1,14 +1,5 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-
-      <AccountLink :account="account" />
-    </div>
-
     <div class="buy_amount">
       <div class="tx_detail_label">Buying</div>
       <CurrencyAmount :amount="pays" no_issuer />
@@ -19,15 +10,12 @@
 
       <CurrencyAmount :amount="gets" no_issuer />
     </div>
-
-    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
 <script>
 import TxContainer    from '../TxContainer.vue'
 import CurrencyAmount from '../CurrencyAmount.vue'
-import AccountLink    from '../AccountLink.vue'
 
 var HasTx = require('../../mixins/has_tx').default
 
@@ -38,31 +26,30 @@ export default {
 
   components : {
     TxContainer,
-    CurrencyAmount,
-    AccountLink
+    CurrencyAmount
   },
 
   computed : {
+    offer : function(){
+      // need to pull fields from tx_obj for failed OfferCreates
+      return this.created_fields('Offer') || this.tx_obj;
+    },
+
     gets : function(){
-      return this.tx_obj["TakerGets"];
+      return this.offer["TakerGets"];
     },
 
     pays : function(){
-      return this.tx_obj["TakerPays"];
+      return this.offer["TakerPays"];
     }
   }
 }
 </script>
 
 <style scoped>
-.account{
-  flex-basis: 42%;
-  font-size: 0.8rem;
-}
-
 .buy_amount,
 .sell_amount{
-  flex-basis: 18%;
+  flex-basis: 23%;
   font-size: 0.8rem;
 
   display: flex;

@@ -1,16 +1,5 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-
-      <AccountLink :account="account" />
-    </div>
-
-    <div class="amount_sequence_pad"></div>
-
     <div class="amount" v-if="amount">
       <span>
         {{amount}}
@@ -27,7 +16,6 @@
 
 <script>
 import TxContainer  from '../TxContainer.vue'
-import AccountLink  from '../AccountLink.vue'
 import CurrencyIcon from '../CurrencyIcon.vue'
 
 import config        from '../../config'
@@ -41,7 +29,6 @@ export default {
 
   components : {
     TxContainer,
-    AccountLink,
     CurrencyIcon
   },
 
@@ -63,25 +50,17 @@ export default {
 </script>
 
 <style scoped>
-.account{
-  flex-basis: 42%;
-  font-size: 0.8rem;
-}
-
-.amount_sequence_pad{
-  flex-basis: 15%;
-}
-
 .amount{
-  flex-basis: 21%;
+  flex-basis: 46%;
   font-size: 0.8rem;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
 .sequence{
-  flex-basis: 21%;
+  flex-basis: 46%;
   font-size: 0.8rem;
 
   display: flex;

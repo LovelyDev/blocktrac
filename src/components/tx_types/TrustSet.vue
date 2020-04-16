@@ -1,13 +1,5 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-      <AccountLink :account="account" />
-    </div>
-
     <div class="issuer">
       <div class="tx_detail_label">
         <img src="../../assets/person-icon.png" />&nbsp;
@@ -20,8 +12,6 @@
       <CurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
       <span style="color: red" v-else>Revoked</span>
     </div>
-
-    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
@@ -44,10 +34,6 @@ export default {
   },
 
   computed : {
-    account : function(){
-      return this.tx_obj["Account"];
-    },
-
     limit_amount : function(){
       return this.tx_obj["LimitAmount"];
     },
@@ -72,17 +58,17 @@ export default {
 </script>
 
 <style scoped>
-.account,
 .issuer{
-  font-size: 0.8rem;
   flex-basis: 32%;
+  font-size: 0.8rem;
 }
 
 .currency_amount{
   flex-basis: 14%;
+  font-size: 0.8rem;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-size: 0.8rem;
 }
 </style>

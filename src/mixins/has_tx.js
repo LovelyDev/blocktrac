@@ -56,6 +56,52 @@ export default {
   },
 
   methods : {
+    created_nodes : function(type){
+      return this.affected_nodes.filter(function(node){
+               return node['CreatedNode'] &&
+                      node['CreatedNode']['LedgerEntryType'] == type;
+             });
+    },
+
+    created_node : function(type){
+      const node = this.created_nodes(type)[0];
+      if(!node) return null;
+
+      return node['CreatedNode']
+    },
+
+    created_fields : function(type){
+      const node = this.created_node(type);
+      if(!node) return null;
+
+      return node['NewFields'];
+    },
+
+    ///
+
+    modified_nodes : function(type){
+      return this.affected_nodes.filter(function(node){
+               return node['ModifiedNode'] &&
+                      node['ModifiedNode']['LedgerEntryType'] == type;
+             });
+    },
+
+    modified_node : function(type){
+      const node = this.modified_nodes(type)[0];
+      if(!node) return null;
+
+      return node['ModifiedNode']
+    },
+
+    modified_fields : function(type){
+      const node = this.modified_node(type);
+      if(!node) return null;
+
+      return node['FinalFields'];
+    },
+
+    ///
+
     deleted_nodes : function(type){
       return this.affected_nodes.filter(function(node){
                return node['DeletedNode'] &&
@@ -66,6 +112,7 @@ export default {
     deleted_node : function(type){
       const node = this.deleted_nodes(type)[0];
       if(!node) return null;
+
       return node['DeletedNode']
     },
 

@@ -1,14 +1,5 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-
-      <AccountLink :account="account" />
-    </div>
-
     <div class="balance_amount">
       <div class="tx_detail_label">
         <span v-if="has_amount">Amount</span>
@@ -25,14 +16,11 @@
       <span v-if="renewed"     style="color: green">Renewed</span>
       <span v-else-if="closed" style="color: red">Closed</span>
     </div>
-
-    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
 <script>
 import TxContainer from '../TxContainer.vue'
-import AccountLink from '../AccountLink.vue'
 
 var HasTx = require('../../mixins/has_tx').default
 
@@ -43,14 +31,9 @@ export default {
 
   components : {
     TxContainer,
-    AccountLink
   },
 
   computed : {
-    account : function(){
-      return this.tx_obj["Account"];
-    },
-
     amount : function(){
       return this.tx_obj["Amount"];
     },
@@ -83,11 +66,6 @@ export default {
 </script>
 
 <style scoped>
-.account{
-  flex-basis: 32%;
-  font-size: 0.8rem;
-}
-
 .balance_amount{
   flex-basis: 39%;
 }

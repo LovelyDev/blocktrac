@@ -17,17 +17,32 @@
       </div>
     </div>
 
+    <div class="account">
+      <div class="tx_detail_label">
+        <img src="../assets/person-icon.png" />&nbsp;
+        <span>Account</span>
+      </div>
+
+      <AccountLink :account="account" />
+    </div>
+
     <slot></slot>
   </div>
 </template>
 
 <script>
+import AccountLink from './AccountLink.vue'
+
 var HasTx = require('../mixins/has_tx').default
 
 export default {
   name: 'TxContainer',
 
   mixins : [HasTx],
+
+  components : {
+    AccountLink
+  },
 
   computed : {
     tx_icon : function(){
@@ -74,7 +89,7 @@ export default {
 }
 
 .tx_timestamp_type{
-  flex-basis: 13%;
+  flex-basis: 14%;
 
   display: flex;
   flex-direction: column;
@@ -82,5 +97,10 @@ export default {
 
 .tx_timestamp{
   font-size: 0.7rem;
+}
+
+.account{
+  flex-basis: 32%;
+  font-size: 0.8rem;
 }
 </style>

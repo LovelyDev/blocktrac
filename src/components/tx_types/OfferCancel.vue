@@ -1,18 +1,9 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="account">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Account</span>
-      </div>
-
-      <AccountLink :account="account" />
-    </div>
-
     <template v-if="has_offer">
       <div class="buy_amount">
         <div class="tx_detail_label">Buying</div>
-        <CurrencyAmount :amount="pays" no_issuer />,
+        <CurrencyAmount :amount="pays" no_issuer />
       </div>
 
       <div class="sell_amount">
@@ -23,22 +14,17 @@
     </template>
 
     <template v-else>
-      <div class="sequence_pad"></div>
-
       <div class="sequence">
         <div class="tx_detail_label">Sequence</div>
         <div>{{sequence}}</div>
       </div>
     </template>
-
-    <div class="tx_pad"></div>
   </TxContainer>
 </template>
 
 <script>
 import TxContainer    from '../TxContainer.vue'
 import CurrencyAmount from '../CurrencyAmount.vue'
-import AccountLink    from '../AccountLink.vue'
 
 var HasTx = require('../../mixins/has_tx').default
 export default {
@@ -48,8 +34,7 @@ export default {
 
   components : {
     TxContainer,
-    CurrencyAmount,
-    AccountLink
+    CurrencyAmount
   },
 
   computed : {
@@ -77,14 +62,9 @@ export default {
 </script>
 
 <style scoped>
-.account{
-  flex-basis: 42%;
-  font-size: 0.8rem;
-}
-
 .buy_amount,
 .sell_amount{
-  flex-basis: 18%;
+  flex-basis: 23%;
   font-size: 0.8rem;
 
   display: flex;
@@ -92,12 +72,8 @@ export default {
   align-items: flex-end;
 }
 
-.sequence_pad{
-  flex-basis: 15%;
-}
-
 .sequence{
-  flex-basis: 21%;
+  flex-basis: 46%;
   font-size: 0.8rem;
 
   display: flex;
