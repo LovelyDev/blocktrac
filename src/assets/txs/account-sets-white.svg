@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="19px"
-   height="14px"
-   viewBox="0 0 19 14"
+   width="19"
+   height="18"
+   viewBox="0 0 19 18"
    version="1.1"
    id="svg9"
    sodipodi:docname="account-sets-white.svg"
@@ -37,15 +37,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1348"
-     inkscape:window-height="928"
+     inkscape:window-width="1397"
+     inkscape:window-height="712"
      id="namedview11"
      showgrid="false"
      inkscape:zoom="16.857143"
-     inkscape:cx="9.8559322"
+     inkscape:cx="9.7372881"
      inkscape:cy="7"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-x="2524"
+     inkscape:window-y="231"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg9" />
   <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
@@ -55,7 +55,7 @@
      id="desc4">Created with Sketch.</desc>
   <g
      style="fill:#ffffff;fill-rule:nonzero;stroke:none;stroke-width:1;fill-opacity:1"
-     transform="translate(-1332,-255)"
+     transform="matrix(1,0,0,1.1701146,-1332.0593,-297.08274)"
      id="01---live-transactions">
     <path
        inkscape:connector-curvature="0"
