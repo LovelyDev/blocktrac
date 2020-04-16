@@ -73,6 +73,7 @@ export default {
 .status{
   flex-basis: 7%;
   font-size: 0.8rem;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;

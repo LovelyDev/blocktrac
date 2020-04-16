@@ -1,12 +1,6 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="issuer">
-      <div class="tx_detail_label">
-        <img src="../../assets/person-icon.png" />&nbsp;
-        <span>Issuer</span>
-      </div>
-      <AccountLink :account="issuer" />
-    </div>
+    <AccountDetail :account="issuer" text="Issuer" />
 
     <div class="currency_amount">
       <CurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
@@ -17,7 +11,7 @@
 
 <script>
 import TxContainer    from '../TxContainer.vue'
-import AccountLink    from '../AccountLink.vue'
+import AccountDetail  from '../AccountDetail.vue'
 import CurrencyAmount from '../CurrencyAmount.vue'
 
 var HasTx = require('../../mixins/has_tx').default
@@ -29,7 +23,7 @@ export default {
 
   components : {
     TxContainer,
-    AccountLink,
+    AccountDetail,
     CurrencyAmount
   },
 
@@ -58,11 +52,6 @@ export default {
 </script>
 
 <style scoped>
-.issuer{
-  flex-basis: 32%;
-  font-size: 0.8rem;
-}
-
 .currency_amount{
   flex-basis: 14%;
   font-size: 0.8rem;
