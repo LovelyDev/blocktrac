@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="14px" viewBox="0 0 19 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>book@1.5x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="wireframes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01---live-transactions" transform="translate(-1332.000000, -255.000000)" fill="#B0BAC2" fill-rule="nonzero">
+            <path d="M1348.8,255.2 L1334.4,255.2 C1333.52,255.2 1332.8,255.92 1332.8,256.8 L1332.8,267.2 C1332.8,268.08 1333.52,268.8 1334.4,268.8 L1348.8,268.8 C1349.68,268.8 1350.4,268.08 1350.4,267.2 L1350.4,256.8 C1350.4,255.92 1349.68,255.2 1348.8,255.2 Z M1334.4,267.2 L1334.4,256.8 L1340.8,256.8 L1340.8,267.2 L1334.4,267.2 Z M1348.8,267.2 L1342.4,267.2 L1342.4,256.8 L1348.8,256.8 L1348.8,267.2 Z M1343.2,259.6 L1348,259.6 L1348,260.8 L1343.2,260.8 L1343.2,259.6 Z M1343.2,261.6 L1348,261.6 L1348,262.8 L1343.2,262.8 L1343.2,261.6 Z M1343.2,263.6 L1348,263.6 L1348,264.8 L1343.2,264.8 L1343.2,263.6 Z" id="book"></path>
+        </g>
+    </g>
+</svg>

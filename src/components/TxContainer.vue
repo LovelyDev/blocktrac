@@ -39,12 +39,11 @@ export default {
 
   computed : {
     tx_icon : function(){
-      // TODO: failed = white
-      const color = this.success ? 'blue' : 'gray';
+      const color = this.success ? 'blue' : 'white';
       const asset = this.tx_category
                          .replace(" ", "-")
                          .toLowerCase() +
-                    '-' + color + '.png';
+                    '-' + color + '.svg';
 
       return require('../assets/txs/' + asset);
     }
@@ -68,8 +67,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
 }
 
