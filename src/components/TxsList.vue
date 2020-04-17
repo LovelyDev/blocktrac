@@ -6,13 +6,17 @@
     <div id="txs_list">
       <TxsCategories />
 
-      <b-list-group>
+      <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
                            :key="tx.transaction.hash"
                            class="tx_summary_container">
           <TxSummary :tx="tx" />
         </b-list-group-item>
       </b-list-group>
+
+      <div class="text-center m-3" v-else>
+        <b-spinner />
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +48,10 @@ export default {
 
     txs : function(){
       return this.$store.state.txs;
+    },
+
+    have_txs : function(){
+      return this.txs.length != 0;
     }
   },
 
