@@ -1,6 +1,6 @@
 <template>
   <div id="txs_filter">
-    <span id="txs_filter_icon1">
+    <span id="txs_filter_icon">
       <span class="text">{</span>
       <img src="../assets/search.svg" />
       <span class="text">}</span>
@@ -9,23 +9,17 @@
     <input v-model="filter"
            placeholder="JSONPath Expression..." />
 
-    <span id="txs_filter_icon2" v-b-modal.filter_help>(?)</span>
 
-    <b-modal id="filter_help" title="JSONPath Help" ok-only>
-      <FilterHelp @set="set_filter"/>
-    </b-modal>
+    <b-button id="txs_filter_save">
+      <img src="../assets/down-triangle-lines-plus.svg" />
+      <span>Save to filter</span>
+    </b-button>
   </div>
 </template>
 
 <script>
-import FilterHelp from './FilterHelp.vue'
-
 export default {
   name: 'TxFilter',
-
-  components : {
-    FilterHelp
-  },
 
   computed : {
     filter : {
@@ -37,13 +31,7 @@ export default {
         this.$store.commit('update_tx_filter', v);
       }
     }
-  },
-
-  methods : {
-    set_filter : function(filter){
-      this.filter = filter;
-    }
-  },
+  }
 }
 </script>
 
@@ -60,28 +48,34 @@ input {
   color: var(--theme-color4);
 }
 
-#txs_filter_icon1{
+#txs_filter_icon{
   position: absolute;
   left: 10px;
   top: 5px;
   font-size: 1.2rem;
 }
 
-#txs_filter_icon1 img{
+#txs_filter_icon img{
   padding-left: 3px;
   padding-right: 3px;
 }
 
-#txs_filter_icon1 .text{
+#txs_filter_icon .text{
   color: var(--theme-color4);
   opacity: 0.3;
 }
 
-#txs_filter_icon2{
+#txs_filter_save{
   position: absolute;
-  top: 3px;
-  right: 10px;
-  font-size: 1.2rem;
-  cursor: pointer;
+  top: 5px;
+  right: 5px;
+  height: 75%;
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#txs_filter_save img{
+  margin-right: 5px;
 }
 </style>

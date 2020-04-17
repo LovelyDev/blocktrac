@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="filter_help">
     <p>
       <a href="https://www.toolsqa.com/rest-assured/jsonpath-and-query-json-using-jsonpath/">JSONPath</a> is a powerful path expression language that can be used to match and filter live transactions.
     </p>
 
     <p>
-      With JSONPath it is possible to <b>deep inspect</b> each and every live transaction to look for and match any criteria!
+      With JSONPath it is possible to <b>deep inspect</b> each and every transaction to look for and match any criteria!
     </p>
 
     <p>
@@ -23,8 +23,8 @@
     For example the following are valid JSONPath expressions:
     </p>
 
-    <ul style="font-size: 0.85em">
-      <li style="margin-bottom: 5px;">
+    <ul id="filter_help_examples">
+      <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
           $..[?(parseInt(@.Amount) > 500000000)]
         </b>
@@ -32,7 +32,7 @@
         Filter out payments &lt; 500M Drops (500 XRP)
       </li>
 
-      <li style="margin-bottom: 5px;">
+      <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
           $..[?(@.TransactionType && @.TransactionType != 'OfferCreate')]
         </b>
@@ -40,7 +40,7 @@
         Filter out OfferCreate Transactions
       </li>
 
-      <li style="margin-bottom: 5px;">
+      <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
           $..[?(@.TransactionResult == 'tesSUCCESS')]
         </b>
@@ -48,7 +48,7 @@
         Filter Transactions by specific result type
       </li>
 
-      <li style="margin-bottom: 5px;">
+      <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
           $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
         </b>
@@ -72,8 +72,21 @@ export default {
 </script>
 
 <style>
+#filter_help{
+  color: var(--theme-color2);
+}
+
+#filter_help_examples{
+  padding-left: 15px;
+  list-style-type: none;
+}
+
+.filter_help_example{
+ margin-bottom: 5px;
+}
+
 .json_example{
-  color: blue;
+  color: var(--theme-color1);
   cursor: pointer;
 }
 </style>
