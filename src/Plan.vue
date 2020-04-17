@@ -33,7 +33,7 @@
             <div id="enable_additional">
               <b-form-checkbox v-model="enable_additional" switch>
                 <span id="enable_additional_label"
-                     :class="enable_additional ? 'active' : ''">Buy additional</span>
+                     :class="{active : enable_additional}">Buy additional</span>
               </b-form-checkbox>
             </div>
 
@@ -59,7 +59,7 @@
 
             <div id="plan_periods">
               <div class="plan_period"
-                   :class="!period || period == 1 ? 'selected' : ''"
+                   :class="{selected : (!period || period == 1)}"
                    @click="set_period(1)">
                 <div><b>1 month</b></div>
                 <div><b>${{details.cost}}</b></div>
@@ -68,7 +68,7 @@
               <div v-for="(cost, month) in details.monthly_costs"
                    :key="'month' + month"
                    class="plan_period"
-                   :class="period == month ? 'selected' : ''"
+                   :class="{selected : (period == month)}"
                    @click="set_period(month)">
                 <div><b>{{month}} months</b></div>
                 <div><span class="orig_cost">${{month * details.cost}}</span> <b>${{cost}}</b></div>

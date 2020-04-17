@@ -32,7 +32,7 @@
       <div v-for="filter in filters"
            :key="$route.path + filter.id"
            class="filter_row"
-           :class="is_active_filter(filter) ? 'active' : ''">
+           :class="{active : is_active_filter(filter)}">
         <router-link :to="'/filter/' + filter.id">
           <div>
             <div class="filter_title">{{filter.name}}</div>

@@ -4,17 +4,17 @@
                         :key="category"
                          :id="'category-' + category"
                        class="tx_category primary_category"
-                      :class="is_enabled(category) ? 'enabled' : ''"
+                      :class="{enabled : is_enabled(category)}"
                       @click="toggle_category(category)">
       <img :src="category_icon(category)" class="category_icon" />
 
       <span class="category_name"
-           :class="is_enabled(category) ? 'enabled' : ''">
+           :class="{enabled : is_enabled(category)}">
         {{category.toLowerCase()}}
       </span>
 
       <span class="category_tally"
-           :class="is_enabled(category) ? 'enabled' : ''"
+           :class="{enabled : is_enabled(category)}"
             v-if="category_tallies[category] != 0">
         ({{category_tallies[category] | delim}})
       </span>
@@ -28,17 +28,22 @@
                         :key="category"
                          :id="'category-' + category"
                        class="tx_category secondary_category"
-                      :class="is_enabled(category) ? 'enabled' : ''"
+                      :class="{enabled : is_enabled(category)}"
                       @click="toggle_category(category)">
-      <img :src="category_icon(category)" class="category_icon" />
+      <img :src="category_icon(category)"
+            :id="'category-icon-' + category"
+          class="category_icon" />
 
       <span class="category_tally"
             v-if="category_tallies[category] != 0">
         ({{category_tallies[category] | delim}})
       </span>
 
-      <b-tooltip :target="'category-' + category" variant="light" placement="bottom">
-        <span  class="category_tooltip">{{category.toLowerCase()}}</span>
+      <b-tooltip :target="'category-icon-' + category"
+                 variant="light" placement="bottom">
+        <span class="category_tooltip">
+          {{category.toLowerCase()}}
+        </span>
       </b-tooltip>
     </b-list-group-item>
   </b-list-group>
@@ -163,5 +168,6 @@ export default {
 
 .category_tooltip{
   text-transform: capitalize;
+  font-family: "Inter Regular";
 }
 </style>

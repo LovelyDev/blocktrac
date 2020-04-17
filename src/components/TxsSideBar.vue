@@ -2,7 +2,7 @@
   <b-container>
     <b-row v-if="logged_in"
            id="live_nav"
-           :class="on_txs_page ? 'active' : ''">
+           :class="{active : on_txs_page}">
       <b-col class="p-0">
         <router-link to="/txs">
           <div>

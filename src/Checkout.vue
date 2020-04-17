@@ -22,7 +22,7 @@
 
       <div id="checkout_subcontainer">
         <h4 id="enjoy">
-          Enjoy your {{period ? (period) + ' month' : ''}} <span class="plan_name">{{plan}}</span> Plan
+          Enjoy your {{period ? (period + ' month') : ''}} <span class="plan_name">{{plan}}</span> Plan
         </h4>
 
         <h5>

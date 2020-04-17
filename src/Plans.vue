@@ -7,7 +7,7 @@
         <div v-for="(plan, name) in plans"
              :key="name"
              class="plan"
-             :class="is_suggested_plan(name) ? 'suggested' : ''">
+             :class="{suggested : is_suggested_plan(name)}">
           <div class="plan_header">
             <h4 class="plan_name">
               {{name}}
@@ -42,7 +42,7 @@
             <div>
               <b-form-checkbox v-model="enable_additional[name]" switch>
                 <span class="enable_additional"
-                     :class="enable_additional[name] ? 'active' : ''">Buy additional</span>
+                     :class="{active : enable_additional[name]}">Buy additional</span>
               </b-form-checkbox>
             </div>
 

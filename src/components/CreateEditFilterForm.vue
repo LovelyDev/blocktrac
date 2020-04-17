@@ -4,13 +4,13 @@
       <td colspan="2">
         <div id="filter_type">
           <span id="by_category"
-               :class="is_template_filter ? 'active' : ''"
+               :class="{active : is_template_filter}"
                @click="set_filter_type('template')">
             <span>By Category</span>
           </span>
 
           <span id="by_expression"
-               :class="is_expression_filter ? 'active' : ''"
+               :class="{active : is_expression_filter}"
                @click="set_filter_type('expression')">
             <span>By Expression</span>
           </span>

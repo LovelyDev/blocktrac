@@ -1,21 +1,24 @@
 <template>
   <span>
     <span v-if="is_drops">
-      {{xrp_amount | round | delim}}
-      <CurrencyIcon currency="XRP" />
+      <b>{{xrp_amount | round | delim}}</b>
+      <span class="currency">
+        <CurrencyIcon currency="XRP" />
+      </span>
     </span>
 
     <!-- TODO render icons for all currencies -->
     <span v-else>
-      {{amount["value"] | round | delim}}
+      <b>{{amount["value"] | round | delim}}</b>
 
-      <span v-if="have_currency_unicode(amount['currency'])">
+      <span v-if="have_currency_unicode(amount['currency'])"
+            class="currency">
         <span v-html="currency_unicode(amount['currency'])"
               style="font-weight: bold;"/>
       </span>
 
-      <span v-else>
-        {{amount["currency"]}}
+      <span v-else class="currency">
+        <b>{{amount["currency"]}}</b>
       </span>
 
       <sup v-if="!no_issuer">
@@ -72,3 +75,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.currency{
+  margin-left: 3px;
+}
+</style>
