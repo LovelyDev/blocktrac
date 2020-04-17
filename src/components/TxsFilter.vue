@@ -1,11 +1,15 @@
 <template>
   <div id="txs_filter">
-    <span id="icon1">🔍</span>
+    <span id="txs_filter_icon1">
+      <span class="text">{</span>
+      <img src="../assets/search.svg" />
+      <span class="text">}</span>
+    </span>
 
-    <b-form-input v-model="filter"
-                  placeholder="JSONPath Expression..." />
+    <input v-model="filter"
+           placeholder="JSONPath Expression..." />
 
-    <span id="icon2" v-b-modal.filter_help>(?)</span>
+    <span id="txs_filter_icon2" v-b-modal.filter_help>(?)</span>
 
     <b-modal id="filter_help" title="JSONPath Help" ok-only>
       <FilterHelp @set="set_filter"/>
@@ -50,17 +54,30 @@ export default {
 
 input {
   width: 100%;
-  padding-left: 50px;
+  padding-left: 55px;
+  padding-top: 10px;
+  padding-bottom: 7px;
+  color: var(--theme-color4);
 }
 
-#icon1{
+#txs_filter_icon1{
   position: absolute;
   left: 10px;
   top: 5px;
   font-size: 1.2rem;
 }
 
-#icon2{
+#txs_filter_icon1 img{
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#txs_filter_icon1 .text{
+  color: var(--theme-color4);
+  opacity: 0.3;
+}
+
+#txs_filter_icon2{
   position: absolute;
   top: 3px;
   right: 10px;

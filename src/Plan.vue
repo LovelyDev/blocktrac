@@ -250,7 +250,7 @@ export default {
 #plan_details{
   flex-basis: 80%;
   background-color: white;
-  border: 1px solid #ECECEC;
+  border: 1px solid var(--theme-color3);
   border-radius: 4px;
   padding: 20px;
   margin-right: 20px;

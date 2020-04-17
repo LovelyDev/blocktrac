@@ -115,7 +115,7 @@ export default {
 
 <style scoped>
 #batch_settings{
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1px solid var(--theme-color3);
 }
 
 #batch_size{

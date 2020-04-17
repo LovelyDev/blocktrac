@@ -1,11 +1,15 @@
 <template>
   <div>
     <div v-if="!logged_in" id="my_filters_anon">
-      <h3>My filters</h3>
+      <div id="header">
+        <h4>My filters</h4>
+      </div>
 
-      <img src="../assets/my-filters-anon.png" class="mt-3"/>
+      <img src="../assets/my-filters-anon.svg"
+           style="width: 150px; height: 150px;"
+           class="mt-3" />
 
-      <p class="mt-3" style="color: #556475">
+      <p id="get_notified">
         Get notified when interesting transactions go through the network
       </p>
 
@@ -107,14 +111,25 @@ export default {
 
 <style scoped>
 #my_filters_anon{
-  border: 1px solid #ececec;
+  border: 1px solid var(--theme-color3);
+  border-radius: 4px;
   text-align: center;
-  padding: 10px;
+  padding: 30px;
   background-color: white;
 }
 
+#my_filters_anon #header h4{
+  font-family: "Helvetica Bold";
+  font-weight: bold;
+}
+
+#get_notified{
+ color: #556475;
+ font-size: 14px;
+}
+
 #personalized{
-  background-color: #425265;
+  background-color: var(--theme-color1);
   color: white;
   border-radius: 15px;
   padding: 7px;
@@ -132,11 +147,13 @@ export default {
 
 #my_filters_logged_in #header h4{
   margin-bottom: 0;
+  font-family: "Helvetica Regular";
 }
 
 #settings{
   background-color: #e9edf4;
   color: #415166;
+  font-family: "Helvetica Bold";
   border-radius: 10px;
   padding: 5px;
   font-weight: bold;
@@ -144,7 +161,7 @@ export default {
 }
 
 .filter_row{
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1px solid var(--theme-color3);
   padding: 10px;
 }
 

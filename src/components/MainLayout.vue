@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
 
-    <b-row no-gutters id="main_content">
+    <b-row no-gutters id="main_content" :class="section">
       <b-col>
         <div id="main_subcontent" :class="section">
           <slot></slot>
@@ -51,8 +51,9 @@ export default {
 #main_content{
   width: 100%;
   flex-grow: 1;
+  padding-bottom: 10px;
   background-color: #f8f8f9;
-  border-top: 1px solid #ececec;
+  border-top: 1px solid var(--theme-color3);
 }
 
 #main_subcontent{
@@ -60,7 +61,13 @@ export default {
   margin: auto;
 }
 
-/* XXX: hack for landing page */
+/* XXX: hacks for landing page */
+
+#main_content.landing{
+  padding-bottom: 0;
+  margin-bottom: 10px;
+}
+
 #main_subcontent.landing{
   width: unset;
 }

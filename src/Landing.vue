@@ -225,9 +225,7 @@ export default {
   padding-bottom: 50px;
   padding-left: 350px;
   padding-right: 250px;
-  margin-bottom: 15px;
   background-color: white;
-  border-bottom: 1px solid #ECECEC;
 }
 
 #section4_img1{

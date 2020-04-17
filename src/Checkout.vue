@@ -151,7 +151,7 @@ export default {
   margin-top: 20px;
   padding: 100px;
   background-color: white;
-  border: 1px solid #ECECEC;
+  border: 1px solid var(--theme-color3);
   border-radius: 4px;
   text-align: center;
 }

@@ -96,7 +96,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1px solid var(--theme-color3);
 }
 
 #filter_subheader{

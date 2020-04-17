@@ -18,7 +18,7 @@ Vue.use(VueMoment, {moment_tz});
 
 ///
 
-// TODO: remove old / unused components
+// TODO: remove old / unused components & assets
 
 import Landing       from './Landing.vue'
 import Txs           from './Txs.vue'

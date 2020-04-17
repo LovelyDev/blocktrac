@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 #main_header{
-  width: 90%;
+  width: 92%;
   margin: auto;
   margin-top: 10px;
   display: flex;
@@ -150,6 +150,10 @@ export default {
 
 #main_title2{
   color: var(--theme-color1);
+}
+
+a:hover{
+  text-decoration: none;
 }
 
 #about_link,
@@ -203,8 +207,8 @@ export default {
 }
 
 #membership_level_link_container{
-  flex-basis: 17%;
-  text-align: center;
+  flex-basis: 14%;
+  text-align: right;
 }
 
 #membership_level_link_container a{
@@ -219,6 +223,7 @@ export default {
 #my_account_container{
   flex-basis: 10%;
   cursor: pointer;
+  text-align: right;
 }
 
 .my_account_arrow{

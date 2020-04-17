@@ -1,5 +1,5 @@
 <template>
-  <b-container class="p-0">
+  <b-container>
     <b-row v-if="logged_in"
            id="live_nav"
            :class="on_txs_page ? 'active' : ''">

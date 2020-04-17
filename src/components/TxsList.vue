@@ -1,7 +1,6 @@
 <template>
   <div>
     <TxsFilter />
-    <TxsControl />
 
     <div id="txs_list">
       <TxsCategories />
@@ -19,7 +18,6 @@
 
 <script>
 import TxsFilter     from './TxsFilter.vue'
-import TxsControl    from './TxsControl.vue'
 import TxsCategories from './TxsCategories.vue'
 import TxSummary     from './TxSummary.vue'
 
@@ -33,7 +31,6 @@ export default {
   components : {
     TxsFilter,
     TxsCategories,
-    TxsControl,
     TxSummary,
   },
 
