@@ -2,13 +2,18 @@
   <TxContainer :tx="tx">
     <div class="buy_amount">
       <div class="tx_detail_label">Buying</div>
-      <CurrencyAmount :amount="pays" no_issuer />
+
+      <span class="currency_amount">
+        <CurrencyAmount :amount="pays" no_issuer />
+      </span>
     </div>
 
     <div class="sell_amount">
       <div class="tx_detail_label">Selling</div>
 
-      <CurrencyAmount :amount="gets" no_issuer />
+      <span class="currency_amount">
+        <CurrencyAmount :amount="gets" no_issuer />
+      </span>
     </div>
   </TxContainer>
 </template>

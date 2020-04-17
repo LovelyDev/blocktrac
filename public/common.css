@@ -19,6 +19,10 @@ body{
 
 /*****/
 
+.failed .currency_amount{
+  opacity: 0.4;
+}
+
 .tx_detail_label{
   color: #395366;
   opacity: 0.6;

@@ -2,7 +2,7 @@
   <TxContainer :tx="tx">
     <AccountDetail :account="dst" text="Destination" />
 
-    <div class="amount">
+    <div class="currency_amount">
       <CurrencyAmount :amount="amount" />
     </div>
   </TxContainer>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-.amount{
+.currency_amount{
   flex-basis: 14%;
   font-size: 0.8rem;
 
