@@ -1,6 +1,6 @@
 <template>
   <table id="create_edit_table">
-    <tr v-if="!editing_filter">
+    <tr v-if="!editing_filter && !saving_filter">
       <td colspan="2">
         <div id="filter_type">
           <span id="by_category"
@@ -146,7 +146,8 @@ export default {
 
   props : {
     edit_filter : Object,
-    duplicate_filter : Object
+    duplicate_filter : Object,
+    save_filter : Object
   },
 
   data : function(){
@@ -171,6 +172,10 @@ export default {
   computed : {
     editing_filter : function(){
       return !!this.edit_filter;
+    },
+
+    saving_filter : function(){
+      return !!this.save_filter;
     },
 
     is_template_filter : function(){
@@ -263,6 +268,13 @@ export default {
         this.filter_type = 'expression';
         this.jsonpath = this.duplicate_filter.jsonpath;
       }
+    },
+
+    parse_save_filter : function(){
+      if(this.save_filter.jsonpath){
+        this.filter_type = 'expression';
+        this.jsonpath = this.save_filter.jsonpath;
+      }
     }
   },
 
@@ -272,6 +284,9 @@ export default {
 
     if(this.duplicate_filter)
       this.parse_duplicate_filter();
+
+    if(this.save_filter)
+      this.parse_save_filter();
 
     this.load_templates();
   }

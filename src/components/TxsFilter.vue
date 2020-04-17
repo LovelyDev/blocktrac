@@ -9,17 +9,31 @@
     <input v-model="filter"
            placeholder="JSONPath Expression..." />
 
-
-    <b-button id="txs_filter_save">
+    <b-button id="txs_filter_save"
+              :disabled="!filter"
+              v-b-modal.save_filter>
       <img src="../assets/down-triangle-lines-plus.svg" />
       <span>Save to filter</span>
     </b-button>
+
+    <SaveFilterModal @created="load_filters"
+                      :filter="save_filter" />
   </div>
 </template>
 
 <script>
+import Authentication  from '../mixins/authentication'
+import ServerAPI       from '../mixins/server_api'
+import SaveFilterModal from './modals/SaveFilter.vue'
+
 export default {
   name: 'TxFilter',
+
+  mixins : [Authentication, ServerAPI],
+
+  components : {
+    SaveFilterModal
+  },
 
   computed : {
     filter : {
@@ -30,6 +44,10 @@ export default {
       set : function(v){
         this.$store.commit('update_tx_filter', v);
       }
+    },
+
+    save_filter : function(){
+      return {jsonpath : this.filter};
     }
   }
 }

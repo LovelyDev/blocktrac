@@ -8,41 +8,20 @@
 
 <script>
 import Authentication       from '../../mixins/authentication'
+import CreatesFilter        from './creates_filter'
 import CreateEditFilterForm from '../CreateEditFilterForm.vue'
 
 export default {
   name: 'CreateFilterModal',
 
-  mixins : [Authentication],
+  mixins : [Authentication, CreatesFilter],
 
   components : {
     CreateEditFilterForm
   },
 
-  methods : {
-    on_ok : function(){
-      // TODO validate form
-
-      if(!this.logged_in)
-        ; // TODO open register dialog,
-          // store filter details to be created on register
-
-      else
-        this.create_filter(); // TODO create request
-    },
-
-    create_filter : function(){
-      var params = this.$refs.form.server_params;
-
-      this.$http.post(this.backend_url + "/filter",
-                      params, this.auth_header)
-                .then(function(response){
-                  this.$emit('created');
-
-                }.bind(this)).catch(function(err){
-                  // TODO
-                }.bind(this))
-    }
+  props : {
+    filter : Object
   }
 }
 </script>

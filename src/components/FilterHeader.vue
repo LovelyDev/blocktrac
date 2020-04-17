@@ -55,7 +55,7 @@
     </div>
 
     <EditFilterModal      :filter="filter" @edited="set_active_filter($event)" />
-    <DuplicateFilterModal :filter="filter" @duplicated="set_active_filter($event)" />
+    <DuplicateFilterModal :filter="filter" @created="set_active_filter($event)" />
     <DeleteFilterModal    :filter="filter" @deleted="$router.push('/txs')" />
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
-  <b-modal id="duplicate_filter"
-           title="Duplicate Filter"
+  <b-modal id="save_filter"
+           title="Save Filter"
            @ok="on_ok">
     <CreateEditFilterForm ref="form"
-            :duplicate_filter="filter" />
+                 :save_filter="filter"/>
   </b-modal>
 </template>
 
@@ -13,7 +13,7 @@ import CreatesFilter        from './creates_filter'
 import CreateEditFilterForm from '../CreateEditFilterForm.vue'
 
 export default {
-  name: 'DuplicateFilterModal',
+  name: 'CreateFilterModal',
 
   mixins : [Authentication, CreatesFilter],
 

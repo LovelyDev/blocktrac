@@ -2,7 +2,8 @@
   <b-modal id="edit_filter"
            title="Edit Filter"
            @ok="on_ok">
-    <CreateEditFilterForm ref="form" :edit_filter="filter" />
+    <CreateEditFilterForm ref="form"
+                 :edit_filter="filter" />
   </b-modal>
 </template>
 
