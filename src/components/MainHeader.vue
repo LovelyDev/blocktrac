@@ -55,18 +55,32 @@
 
     <div v-if="logged_in"
            id="my_account_container">
-      <span id="my_account_link">My Account ▼</span>
+      <span id="my_account_link">
+        <span>My Account</span>
+
+        <span v-if="!my_account_visible">
+          <img class="my_account_arrow"
+                 src="../assets/arrow-down-gray.png" />
+        </span>
+
+        <span v-else>
+          <img class="my_account_arrow"
+                 src="../assets/arrow-up-blue.png" />
+        </span>
+      </span>
 
       <b-popover id="my_account_popover"
                  target="my_account_container"
-                 placement="bottom">
+                 placement="bottomleft"
+                 @show="my_account_show"
+                 @hide="my_account_hide">
         <div id="profile_link">
-          <span class="my_account_spacer">&nbsp;</span>
+          <img src="../assets/person.svg" />
           <router-link to="/profile">Profile</router-link>
         </div>
 
         <div id="logout_link" @click="logout">
-          <span class="my_account_spacer">&nbsp;</span>
+          <img src="../assets/logout.svg" />
           <span>Log out</span>
         </div>
       </b-popover>
@@ -90,6 +104,22 @@ export default {
     LoginModal,
     ForgotPasswordModal,
     RegistrationModal
+  },
+
+  data : function(){
+    return {
+      my_account_visible : false
+    };
+  },
+
+  methods : {
+    my_account_show : function(){
+      this.my_account_visible = true;
+    },
+
+    my_account_hide : function(){
+      this.my_account_visible = false;
+    }
   }
 }
 </script>
@@ -171,33 +201,46 @@ a:hover{
 }
 
 #membership_level_link_container{
-  flex-grow: 3;
-  cursor: pointer;
-  background-color: #eff2f8;
-  border-radius: 15px;
+  flex-basis: 20%;
+  text-align: center;
 }
 
 #membership_level_link_container a{
-  color: #629ffb;
+  background-color: var(--theme-color1);
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #my_account_container{
-  flex-grow: 3;
+  flex-basis: 10%;
   cursor: pointer;
+}
+
+.my_account_arrow{
+  width: 10px;
+  height: 5px;
+  margin-left: 7px;
 }
 
 #my_account_popover{
   font-size: 1.2rem;
   min-width: 125px;
+  left: 50px !important;
 }
 
-.my_account_spacer{
-  display: inline-block;
-  height: 15px;
-  width: 15px;
-
-  background-color: #d3dae3;
-  border-radius: 20px;
+#my_account_popover img{
   margin-right: 5px;
+}
+
+#profile_link,
+#logout_link{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 50px;
+  display: flex;
+  align-items: center;
 }
 </style>
