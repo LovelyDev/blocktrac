@@ -188,7 +188,7 @@ export default {
   padding: 20px;
   margin-bottom: 20px;
   text-align: center;
-  background-color: #0091FF;
+  background-color: var(--theme-color1);
   color: white;
   border-radius: 6px;
 }

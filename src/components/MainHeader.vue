@@ -1,58 +1,66 @@
 <template>
-  <b-row no-gutters id="main_header">
-    <b-col cols="8">
+  <div id="main_header">
+    <div id="main_title_container">
       <router-link to="/txs">
-        <h1 style="margin-bottom: 0">
-          <span style="color: #395267; font-weight: bold">Zerp</span>
-          <span style="color: #0091FF; margin-left: 1px">XRP Transaction Tracker</span>
-        </h1>
+        <h2 id="main_title">
+          <span id="main_title1">
+            Zerp
+          </span>
+
+          <span id="main_title2">
+            XRP Transaction Tracker
+          </span>
+        </h2>
       </router-link>
-    </b-col>
+    </div>
 
-    <b-col class="nav_link">
-      <router-link to="/about">About</router-link>
-    </b-col>
+    <div id="about_link_container">
+      <router-link to="/about">
+        <span id="about_link">About</span>
+      </router-link>
+    </div>
 
-    <b-col class="nav_link">
-      <router-link to="/help">Help</router-link>
-    </b-col>
+    <div id="help_link_container">
+      <router-link to="/help">
+        <span id="help_link">Help</span>
+      </router-link>
+    </div>
 
-    <b-col v-if="!logged_in" class="nav_link">
+    <div id="login_link_container" v-if="!logged_in">
       <span id="login_link" v-b-modal.login_modal>
         Login
       </span>
 
       <LoginModal />
       <ForgotPasswordModal />
-    </b-col>
+    </div>
 
-    <b-col v-if="!logged_in"
-           id="register_wrapper"
-           class="nav_link">
+    <div v-if="!logged_in"
+           id="register_link_container">
       <span id="register_link" v-b-modal.register_modal>
         Register
       </span>
 
       <RegistrationModal />
-    </b-col>
+    </div>
 
-    <b-col v-if="logged_in"
-           id="membership_level_container"
-           class="nav_link">
+    <div v-if="logged_in"
+           id="membership_level_link_container">
       <router-link to="/plans">
-        {{is_premium_member ? 'Premium' : 'Get a pro account'}}
+        <span id="membership_level_link">
+          {{is_premium_member ? 'Premium' : 'Get a pro account'}}
+        </span>
       </router-link>
-    </b-col>
+    </div>
 
-    <b-col v-if="logged_in"
-           id="my_account_container"
-           class="nav_link">
-      <span id="initial">{{initial}}</span> My Account ▼
+    <div v-if="logged_in"
+           id="my_account_container">
+      <span id="my_account_link">My Account ▼</span>
 
       <b-popover id="my_account_popover"
                  target="my_account_container"
                  placement="bottom">
-        <div>
+        <div id="profile_link">
           <span class="my_account_spacer">&nbsp;</span>
           <router-link to="/profile">Profile</router-link>
         </div>
@@ -62,8 +70,8 @@
           <span>Log out</span>
         </div>
       </b-popover>
-    </b-col>
-  </b-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -82,29 +90,34 @@ export default {
     LoginModal,
     ForgotPasswordModal,
     RegistrationModal
-  },
-
-  computed : {
-    initial : function(){
-      // XXX: email isn't available until after user is loaded
-      if(!this.email)
-        return '';
-
-      return this.email[0].toUpperCase();
-    }
   }
 }
 </script>
 
 <style scoped>
 #main_header{
-  width: 85%;
+  width: 90%;
+  margin: auto;
   margin-top: 10px;
+  display: flex;
   align-items: center;
 }
 
-.nav_link{
-  text-align: center;
+#main_title_container{
+  flex-grow: 1;
+}
+
+#main_title{
+  font-family: "Gilroy ExtraBold";
+}
+
+#main_title1{
+ color: #395267;
+ font-weight: bold;
+}
+
+#main_title2{
+  color: var(--theme-color1);
 }
 
 a{
@@ -116,31 +129,55 @@ a:hover{
   color: black;
 }
 
+#about_link,
+#help_link,
+#login_link,
+#register_link,
+#profile_link,
+#logout_link{
+  font-family: "Inter Regular";
+}
+
+#membership_level_link,
+#my_account_link{
+  font-family: "Inter Bold";
+}
+
 #login_link,
 #register_link,
 #logout_link{
   cursor: pointer;
 }
 
-#login_link{
-  margin-right: 10px;
+#about_link_container,
+#help_link_container,
+#login_link_container{
+  flex-basis: 6%;
+  text-align: right;
 }
 
-#register_wrapper{
-  border-radius: 5px;
+#register_link_container{
+  flex-basis: 10%;
+  text-align: right;
+}
+
+#register_link{
+  border-radius: 15px;
   padding: 5px;
-  background-color: black;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: var(--theme-color1);
   color: white;
 }
 
-#membership_level_container{
+#membership_level_link_container{
   flex-grow: 3;
   cursor: pointer;
   background-color: #eff2f8;
   border-radius: 15px;
 }
 
-#membership_level_container a{
+#membership_level_link_container a{
   color: #629ffb;
 }
 
@@ -162,15 +199,5 @@ a:hover{
   background-color: #d3dae3;
   border-radius: 20px;
   margin-right: 5px;
-}
-
-#initial{
-  display: inline-block;
-  height: 35px;
-  width: 35px;
-
-  background-color: #d3dae3;
-  padding: 7px;
-  border-radius: 20px;
 }
 </style>

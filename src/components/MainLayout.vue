@@ -1,6 +1,10 @@
 <template>
   <b-container fluid class="p-0" id="main_layout">
-    <MainHeader />
+    <b-row id="main_header_container">
+      <b-col>
+        <MainHeader />
+      </b-col>
+    </b-row>
 
     <b-row no-gutters id="main_content">
       <b-col>
@@ -40,6 +44,10 @@ export default {
   min-height: 100%;
 }
 
+#main_header_container{
+  width: 100%;
+}
+
 #main_content{
   width: 100%;
   flex-grow: 1;
@@ -48,7 +56,7 @@ export default {
 }
 
 #main_subcontent{
-  width: 85%;
+  width: 90%;
   margin: auto;
 }
 

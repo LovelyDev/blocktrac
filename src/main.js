@@ -32,6 +32,7 @@ import Plan          from './Plan.vue'
 import Checkout      from './Checkout.vue'
 
 import("../public/common.css")
+import("../public/fonts.css")
 import("./filters")
 
 Vue.config.productionTip = false

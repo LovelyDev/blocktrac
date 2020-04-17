@@ -147,7 +147,7 @@ export default {
 
 #main_features li::before{
   content: "\2022";
-  color: #0091FF;
+  color: var(--theme-color1);
   font-weight: bold;
   display: inline-block; 
   width: 1em; 

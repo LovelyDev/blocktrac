@@ -258,7 +258,7 @@ export default {
 
 #order_container{
   flex-basis: 20%;
-  background-color: #0091FF;
+  background-color: var(--theme-color1);
   border-radius: 4px;
   padding: 20px;
 }
@@ -330,13 +330,13 @@ export default {
 
 .plan_period{
   padding: 20px;
-  border: 1px solid #0091FF;
+  border: 1px solid var(--theme-color1);
   border-radius: 4px;
   cursor: pointer;
 }
 
 .plan_period.selected{
-  background-color: #0091FF;
+  background-color: var(--theme-color1);
   color: white;
 }
 
