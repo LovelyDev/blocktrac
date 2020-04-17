@@ -70,16 +70,18 @@
       </span>
 
       <b-popover id="my_account_popover"
+                 ref="my_account_popover"
                  target="my_account_container"
                  placement="bottomleft"
                  @show="my_account_show"
                  @hide="my_account_hide">
         <div id="profile_link">
-          <img src="../assets/person.svg" />
+          <img src="../assets/profile.svg" />
           <router-link to="/profile">Profile</router-link>
         </div>
 
-        <div id="logout_link" @click="logout">
+        <div id="logout_link"
+             @click="$refs.my_account_popover.$emit('close'); logout()">
           <img src="../assets/logout.svg" />
           <span>Log out</span>
         </div>
@@ -150,15 +152,6 @@ export default {
   color: var(--theme-color1);
 }
 
-a{
-  color: black;
-}
-
-a:hover{
-  text-decoration: none;
-  color: black;
-}
-
 #about_link,
 #help_link,
 #login_link,
@@ -177,6 +170,15 @@ a:hover{
 #register_link,
 #logout_link{
   cursor: pointer;
+}
+
+#about_link,
+#help_link,
+#login_link,
+#my_account_link,
+#profile_link a,
+#logout_link{
+  color: var(--theme-color2);
 }
 
 #about_link_container,
@@ -201,7 +203,7 @@ a:hover{
 }
 
 #membership_level_link_container{
-  flex-basis: 20%;
+  flex-basis: 17%;
   text-align: center;
 }
 
@@ -237,9 +239,10 @@ a:hover{
 
 #profile_link,
 #logout_link{
-  margin-top: 5px;
-  margin-bottom: 5px;
-  margin-right: 50px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-right: 65px;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
 }

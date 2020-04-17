@@ -147,7 +147,7 @@ export default {
 }
 
 .category_name:not(.enabled){
-  color: #395366;
+  color: var(--theme-color2);
   opacity: 0.4;
 }
 
@@ -157,7 +157,7 @@ export default {
 }
 
 .category_tally:not(.enabled){
-  color: #395366;
+  color: var(--theme-color2);
   opacity: 0.4;
 }
 

@@ -198,7 +198,7 @@ export default {
 }
 
 #next_payment{
-  color: #395366;
+  color: var(--theme-color2);
 }
 
 #payment_details{
