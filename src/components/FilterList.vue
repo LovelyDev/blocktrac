@@ -6,18 +6,7 @@
          class="filter_row"
          :class="{active : is_active_filter(filter)}">
       <router-link :to="'/filter/' + filter.id">
-        <div>
-          <div class="filter_title">{{filter.name}}</div>
-
-          <div v-if="filter.Template">
-            <!-- TODO human friendly params -->
-            {{filter.Template.name}}: {{filter.params.join(", ")}}
-          </div>
-
-          <div v-else>
-            Expression: {{filter.jsonpath}}
-          </div>
-        </div>
+        <FilterSummary :filter="filter" />
 
         <div>
           <!-- TODO matches -->
@@ -34,11 +23,16 @@
 <script>
 import Authentication from '../mixins/authentication'
 import ServerAPI      from '../mixins/server_api'
+import FilterSummary  from './FilterSummary.vue'
 
 export default {
   name: 'FilterList',
 
   mixins : [Authentication, ServerAPI],
+
+  components : {
+    FilterSummary
+  },
 
   methods : {
     is_active_filter : function(filter){
@@ -75,9 +69,5 @@ export default {
 
 .filter_row.active a{
   color: #425265;
-}
-
-.filter_title{
-  font-weight: bold;
 }
 </style>
