@@ -98,6 +98,13 @@ Vue.use(VueNativeSock, config.RIPPLE_WS,
 
 ///
 
+const RippleAPI = require('ripple-lib').RippleAPI;
+Vue.prototype.$rippleAPI = new RippleAPI({
+  server: config.RIPPLE_WS
+});
+
+///
+
 new Vue({
   router : router,
   store  : store
