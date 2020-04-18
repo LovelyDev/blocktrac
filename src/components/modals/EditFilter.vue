@@ -10,7 +10,7 @@
 
 <script>
 import Authentication       from '../../mixins/authentication'
-import CreateEditFilterForm from '../CreateEditFilterForm.vue'
+import CreateEditFilterForm from '../forms/CreateEditFilter.vue'
 
 export default {
   name: 'EditFilterModal',

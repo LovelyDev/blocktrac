@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import RegistrationForm from '../RegistrationForm.vue'
+import RegistrationForm from '../forms/Registration.vue'
 
 // TODO: submit on enter
 

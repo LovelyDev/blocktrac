@@ -11,7 +11,7 @@
 <script>
 import Authentication       from '../../mixins/authentication'
 import CreatesFilter        from './creates_filter'
-import CreateEditFilterForm from '../CreateEditFilterForm.vue'
+import CreateEditFilterForm from '../forms/CreateEditFilter.vue'
 
 export default {
   name: 'DuplicateFilterModal',

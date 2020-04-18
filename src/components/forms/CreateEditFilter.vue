@@ -136,8 +136,8 @@
 </template>
 
 <script>
-import ServerAPI      from '../mixins/server_api'
-import Authentication from '../mixins/authentication'
+import ServerAPI      from '../../mixins/server_api'
+import Authentication from '../../mixins/authentication'
 
 export default {
   name: 'CreateEditFilterForm',
