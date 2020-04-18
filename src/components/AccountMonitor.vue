@@ -9,14 +9,47 @@
         </span>
 
         <input type="text"
-               placeholder="Account ID" /> </div>
+               placeholder="Account ID"
+               v-model="account" /> </div>
+
+        <div id="account_monitor_error"
+             v-if="have_account && !is_valid_account">
+          Invalid Account
+        </div>
     </div>
   </div>
 </template>
 
 <script>
+const EXPRESSION = "$..[?(@.Account == 'ACCOUNT')]";
+
 export default {
-  name: 'AccountMonitor'
+  name: 'AccountMonitor',
+
+  data : function(){
+    return {
+      account : null
+    }
+  },
+
+  computed : {
+    have_account : function(){
+      return !!this.account;
+    },
+
+    is_valid_account : function(){
+      return this.$rippleAPI.isValidAddress(this.account);
+    }
+  },
+
+  watch : {
+    is_valid_account : function(){
+      const jsonpath = EXPRESSION.replace("ACCOUNT", this.account);
+
+      if(this.is_valid_account)
+        this.$store.commit('update_tx_filter', jsonpath);
+    }
+  }
 }
 </script>
 
@@ -53,5 +86,10 @@ input{
   padding-top: 10px;
   padding-bottom: 7px;
   color: var(--theme-color4);
+}
+
+#account_monitor_error{
+  color: red;
+  font-size: 0.9rem;
 }
 </style>

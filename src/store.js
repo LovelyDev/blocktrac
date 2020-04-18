@@ -48,6 +48,8 @@ export const store = new Vuex.Store({
     },
 
     update_tx_filter(state, filter){
+      // TODO if filter not valid jsonpath, return
+
       state.tx_filter = filter;
 
       if(!filter) return;
