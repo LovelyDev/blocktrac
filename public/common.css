@@ -19,6 +19,10 @@ body{
 
 /*****/
 
+.currency_amount{
+  font-family: ".SF NS Display Regular";
+}
+
 .failed .currency_amount{
   opacity: 0.4;
 }

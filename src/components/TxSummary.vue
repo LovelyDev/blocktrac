@@ -66,6 +66,7 @@ export default {
 <style scoped>
 .tx_summary{
   padding: 10px;
+  font-family: "Inter Regular";
 }
 
 .tx_summary.failed{
