@@ -76,17 +76,10 @@ export default {
             (this.auth_password != this.auth_password_confirm);
     },
 
-    invalid_password : function(){
+    invalid_passwords : function(){
       return this.have_passwords &&
             (this.weak_password  ||
              this.password_mismatch);
-    },
-
-    auth_valid : function(){
-      return this.have_email     &&
-            !this.invalid_email  &&
-             this.have_passwords &&
-            !this.invalid_password;
     }
   },
 

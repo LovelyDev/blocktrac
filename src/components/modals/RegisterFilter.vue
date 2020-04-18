@@ -40,8 +40,6 @@ export default {
 
   data : function(){
     return {
-      // XXX: $refs not available to
-      //      tie to ok-disabled directly
       ok_disabled : true
     }
   },

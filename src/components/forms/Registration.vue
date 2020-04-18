@@ -75,6 +75,15 @@ export default {
 
   mixins : [Authentication],
 
+  computed : {
+    auth_valid : function(){
+      return this.have_email     &&
+            !this.invalid_email  &&
+             this.have_passwords &&
+            !this.invalid_passwords;
+    }
+  },
+
   watch : {
     auth_valid : function(){
       this.auth_valid ? this.$emit('valid') :
@@ -93,11 +102,6 @@ table{
 
 input{
   width: 100%;
-}
-
-.registration_form_error{
-  color: red;
-  font-size: 0.9rem;
 }
 
 #existing_account{

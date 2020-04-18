@@ -30,6 +30,7 @@ export default {
     return {
       // XXX: $refs not available to
       //      tie to ok-disabled directly
+      //      (and in other modals)
       ok_disabled : true
     }
   },

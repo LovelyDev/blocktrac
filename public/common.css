@@ -23,6 +23,11 @@ body{
   font-weight: bold;
 }
 
+.form_error{
+  color: red;
+  font-size: 0.9rem;
+}
+
 .currency_amount{
   font-family: ".SF NS Display Regular";
 }

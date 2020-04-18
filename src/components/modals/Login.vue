@@ -6,60 +6,34 @@
            header-class="modal_header"
            centered
            @ok="login"
+           :ok-disabled="ok_disabled"
            no-stacking>
-    <table id="login_form">
-      <tr>
-        <td>Email address:</td>
-        <td>
-          <input id="email_input"
-                 type="text"
-                 v-model="auth_email" />
-        </td>
-      </tr>
-
-      <tr>
-        <td>Password:</td>
-        <td>
-          <input id="password_input"
-                 type="text"
-                 v-model="auth_password" />
-        </td>
-      </tr>
-
-      <tr>
-        <td></td>
-        <td id="forgot_password"
-            v-b-modal.forgot_password_modal>
-          Forgot Password?
-        </td>
-      </tr>
-    </table>
+    <LoginForm ref="login_form"
+            @valid="ok_disabled = false"
+          @invalid="ok_disabled = true" />
   </b-modal>
 </template>
 
 <script>
-import Authentication from '../../mixins/authentication'
-
-// TODO: hide password field, submit on enter
+import LoginForm from '../forms/Login.vue'
 
 export default {
   name: 'LoginModal',
-  mixins : [Authentication]
+
+  components : {
+    LoginForm
+  },
+
+  data : function(){
+    return {
+      ok_disabled : true
+    }
+  },
+
+  methods : {
+    login : function(){
+      this.$refs.login_form.login();
+    }
+  }
 }
 </script>
-
-<style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-input{
-  width: 100%;
-}
-
-#forgot_password{
-  cursor: pointer;
-}
-</style>
