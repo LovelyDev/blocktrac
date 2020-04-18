@@ -7,64 +7,43 @@
            header-class="register_modal_header"
            centered
            @ok="register"
+           :ok-disabled="ok_disabled"
            no-stacking>
-    <table id="registration_form">
-      <tr>
-        <td>Email address:</td>
-        <td>
-          <input id="email_input"
-                 type="text"
-                 v-model="auth_email" />
-        </td>
-      </tr>
-
-      <tr>
-        <td>Password:</td>
-        <td>
-          <input id="password_input"
-                 type="text"
-                 placeholder="Password"
-                 v-model="auth_password" />
-         </td>
-      </tr>
-
-      <tr>
-        <td></td>
-        <td id="existing_account"
-            v-b-modal.login_modal>
-          Already have an account?
-        </td>
-      </tr>
-    </table>
+    <RegistrationForm ref="registration_form"
+                   @valid="ok_disabled = false"
+                 @invalid="ok_disabled = true"/>
   </b-modal>
 </template>
 
 <script>
-import Authentication from '../../mixins/authentication'
+import RegistrationForm from '../RegistrationForm.vue'
 
-// TODO: hidden password field, confirm password field, submit on enter
+// TODO: submit on enter
 
 export default {
   name: 'RegistrationModal',
 
-  mixins : [Authentication]
+  components : {
+    RegistrationForm
+  },
+
+  data : function(){
+    return {
+      // XXX: $refs not available to
+      //      tie to ok-disabled directly
+      ok_disabled : true
+    }
+  },
+
+  methods : {
+    register : function(){
+      this.$refs.registration_form.register();
+    }
+  }
 }
 </script>
 
 <style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-input{
-  width: 100%;
-}
-
-#existing_account{
-  cursor: pointer;
-}
 </style>
 
 <style>

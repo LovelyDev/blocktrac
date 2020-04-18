@@ -1,12 +1,11 @@
 import config from '../config'
 
-// TODO use store instead of cookies
-
 export default {
   data : function(){
     return {
       auth_email : '',
-      auth_password : ''
+      auth_password : '',
+      auth_password_confirm : ''
     };
   },
 
@@ -45,6 +44,49 @@ export default {
 
     is_premium_member : function(){
       return this.membership_level == 'premium';
+    },
+
+    ///
+
+    have_email : function(){
+      return !!this.auth_email;
+    },
+
+    invalid_email : function(){
+      return this.have_email &&
+             !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.auth_email));
+    },
+
+    have_password : function(){
+      return !!this.auth_password;
+    },
+
+    have_passwords : function(){
+      return !!this.auth_password &&
+             !!this.auth_password_confirm;
+    },
+
+    weak_password : function(){
+      // TODO
+      return this.have_password && false;
+    },
+
+    password_mismatch : function(){
+      return this.have_passwords &&
+            (this.auth_password != this.auth_password_confirm);
+    },
+
+    invalid_password : function(){
+      return this.have_passwords &&
+            (this.weak_password  ||
+             this.password_mismatch);
+    },
+
+    auth_valid : function(){
+      return this.have_email     &&
+            !this.invalid_email  &&
+             this.have_passwords &&
+            !this.invalid_password;
     }
   },
 
