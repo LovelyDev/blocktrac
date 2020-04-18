@@ -1,7 +1,7 @@
 <template>
   <table id="login_form">
     <tr>
-      <td>Email address:</td>
+      <td class="form_text">Email address:</td>
       <td>
         <input id="email_input"
                type="text"
@@ -10,7 +10,7 @@
     </tr>
 
     <tr>
-      <td>Password:</td>
+      <td class="form_text">Password:</td>
       <td>
         <input id="password_input"
                type="password"
@@ -21,6 +21,7 @@
     <tr>
       <td></td>
       <td id="forgot_password"
+          class="form_text"
           v-b-modal.forgot_password_modal>
         Forgot Password?
       </td>

@@ -23,6 +23,10 @@ body{
   font-weight: bold;
 }
 
+.form_text{
+  font-family: ".SF NS Display Regular";
+}
+
 .form_error{
   color: red;
   font-size: 0.9rem;
