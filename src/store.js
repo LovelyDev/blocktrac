@@ -28,6 +28,7 @@ export const store = new Vuex.Store({
       matched_txs : [],
 
     active_filter : {},
+    in_progress_filter : {},
 
     callbacks : {
       socket_open : [],
@@ -124,6 +125,10 @@ export const store = new Vuex.Store({
 
     set_active_filter(state, filter){
       state.active_filter = filter;
+    },
+
+    set_in_progress_filter(state, filter){
+      state.in_progress_filter = filter;
     },
 
     ///

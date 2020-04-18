@@ -222,8 +222,23 @@ export default {
       }else
         params['jsonpath'] = this.jsonpath
 
-      // TODO sinks param
+      // TODO sinks param (and in client_params below)
       //params['sinks'] = [this.sink]
+
+      return params;
+    },
+
+    client_params : function(){
+      var params = {
+        name : this.name,
+      }
+
+      if(this.is_template_filter){
+        params['Template'] = this.selected_template;
+        params['params']   = this.params;
+
+      }else
+        params['jsonpath'] = this.jsonpath
 
       return params;
     }

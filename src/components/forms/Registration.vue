@@ -1,7 +1,7 @@
 <template>
   <table id="registration_form">
     <tr>
-      <td>Email address:</td>
+      <td class="form_text">Email address:</td>
       <td>
         <input id="email_input"
                type="text"

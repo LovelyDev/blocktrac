@@ -3,11 +3,15 @@ export default {
     on_ok : function(){
       // TODO validate form
 
-      if(!this.logged_in)
-        ; // TODO open register dialog,
-          // store filter details to be created on register
+      if(!this.logged_in){
+        const client = this.$refs.form.client_params;
+        const server = this.$refs.form.server_params;
+        const filter = {client, server};
 
-      else
+        this.$store.commit('set_in_progress_filter', filter);
+        this.$bvModal.show("register_filter_modal");
+
+      }else
         this.create_filter();
     },
 

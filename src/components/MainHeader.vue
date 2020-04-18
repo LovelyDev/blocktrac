@@ -42,6 +42,7 @@
       </span>
 
       <RegistrationModal />
+      <RegisterFilterModal />
     </div>
 
     <div v-if="logged_in"
@@ -94,6 +95,7 @@
 import LoginModal          from './modals/Login'
 import ForgotPasswordModal from './modals/ForgotPassword'
 import RegistrationModal   from './modals/Registration'
+import RegisterFilterModal from './modals/RegisterFilter'
 
 import Authentication   from '../mixins/authentication'
 
@@ -105,7 +107,8 @@ export default {
   components : {
     LoginModal,
     ForgotPasswordModal,
-    RegistrationModal
+    RegistrationModal,
+    RegisterFilterModal
   },
 
   data : function(){

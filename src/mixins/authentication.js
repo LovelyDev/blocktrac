@@ -98,6 +98,8 @@ export default {
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();
+                  // TODO if in_progress_filter is set,
+                  //      create new filter, reset (& in login below)
 
                 }.bind(this)).catch(function(err){
                   alert(err.body.error)
