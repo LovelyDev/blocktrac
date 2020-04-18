@@ -3,7 +3,7 @@
            title="Reset Password"
            ok-title="Reset"
            cancel-variant="light"
-           header-class="forgot_password_modal_header"
+           header-class="modal_header"
            centered
            @ok="reset_password"
            no-stacking>
@@ -38,11 +38,5 @@ table{
 
 input{
   width: 100%;
-}
-</style>
-
-<style>
-.forgot_password_modal_header h5{
-  font-weight: bold;
 }
 </style>

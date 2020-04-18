@@ -1,6 +1,7 @@
 <template>
   <b-modal id="create_filter"
            title="Create New Filter"
+           header-class="modal_header"
            centered
            @ok="on_ok">
     <CreateEditFilterForm ref="form" />

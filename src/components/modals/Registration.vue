@@ -1,10 +1,9 @@
 <template>
   <b-modal id="register_modal"
-           ref="register_modal"
            title="Register"
            ok-title="Register"
            cancel-variant="light"
-           header-class="register_modal_header"
+           header-class="modal_header"
            centered
            @ok="register"
            :ok-disabled="ok_disabled"
@@ -18,7 +17,7 @@
 <script>
 import RegistrationForm from '../forms/Registration.vue'
 
-// TODO: submit on enter
+// TODO: submit on enter (and other modals)
 
 export default {
   name: 'RegistrationModal',
@@ -42,12 +41,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>
-
-<style>
-.register_modal_header h5{
-  font-weight: bold;
-}
-</style>

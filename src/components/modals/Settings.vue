@@ -2,7 +2,8 @@
   <b-modal id="settings_modal"
            title="Filter Settings"
            ok-title="Save"
-           ok-only>
+           ok-only
+           header-class="modal_header">
     <div id="batch_settings">
       <div v-if="batch_size == 'instant'">
       Sent me notifications instantly

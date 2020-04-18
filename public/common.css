@@ -19,6 +19,10 @@ body{
 
 /*****/
 
+.modal_header h5{
+  font-weight: bold;
+}
+
 .currency_amount{
   font-family: ".SF NS Display Regular";
 }

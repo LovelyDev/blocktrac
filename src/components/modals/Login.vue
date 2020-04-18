@@ -1,10 +1,9 @@
 <template>
   <b-modal id="login_modal"
-           ref="login_modal"
            title="Login"
            ok-title="Login"
            cancel-variant="light"
-           header-class="login_modal_header"
+           header-class="modal_header"
            centered
            @ok="login"
            no-stacking>
@@ -62,11 +61,5 @@ input{
 
 #forgot_password{
   cursor: pointer;
-}
-</style>
-
-<style>
-.login_modal_header h5{
-  font-weight: bold;
 }
 </style>

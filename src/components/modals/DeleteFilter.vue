@@ -1,6 +1,7 @@
 <template>
   <b-modal id="delete_filter"
            title="Delete Filter"
+           header-class="modal_header"
            @ok="on_ok">
     <h3>Are you sure?</h3>
     <h5><i>This cannot be undone</i></h5>
