@@ -2,8 +2,9 @@
   <b-modal id="forgot_password_modal"
            title="Reset Password"
            ok-title="Reset"
-           ok-variant="secondary"
            cancel-variant="light"
+           header-class="forgot_password_modal_header"
+           centered
            @ok="reset_password"
            no-stacking>
     <table id="forgot_password_form">
@@ -37,5 +38,11 @@ table{
 
 input{
   width: 100%;
+}
+</style>
+
+<style>
+.forgot_password_modal_header h5{
+  font-weight: bold;
 }
 </style>

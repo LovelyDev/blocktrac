@@ -3,8 +3,9 @@
            ref="register_modal"
            title="Register"
            ok-title="Register"
-           ok-variant="secondary"
            cancel-variant="light"
+           header-class="register_modal_header"
+           centered
            @ok="register"
            no-stacking>
     <table id="registration_form">
@@ -41,7 +42,7 @@
 <script>
 import Authentication from '../../mixins/authentication'
 
-// TODO: hide password field, submit on enter
+// TODO: hidden password field, confirm password field, submit on enter
 
 export default {
   name: 'RegistrationModal',
@@ -63,5 +64,11 @@ input{
 
 #existing_account{
   cursor: pointer;
+}
+</style>
+
+<style>
+.register_modal_header h5{
+  font-weight: bold;
 }
 </style>

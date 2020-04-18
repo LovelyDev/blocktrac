@@ -1,6 +1,7 @@
 <template>
   <b-modal id="edit_filter"
            title="Edit Filter"
+           centered
            @ok="on_ok">
     <CreateEditFilterForm ref="form"
                  :edit_filter="filter" />
@@ -26,6 +27,7 @@ export default {
 
   methods : {
     on_ok : function(){
+      // TODO: validate form
       this.edit_filter();
     },
 

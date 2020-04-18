@@ -1,6 +1,7 @@
 <template>
   <b-modal id="save_filter"
            title="Save Filter"
+           centered
            @ok="on_ok">
     <CreateEditFilterForm ref="form"
                  :save_filter="filter"/>

@@ -27,6 +27,7 @@ export default {
 
 p{
   margin-bottom: 5px;
+  font-family: "Inter Medium";
 }
 
 #account_monitor_input_container{

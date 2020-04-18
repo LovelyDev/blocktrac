@@ -1,6 +1,7 @@
 <template>
   <b-modal id="duplicate_filter"
            title="Duplicate Filter"
+           centered
            @ok="on_ok">
     <CreateEditFilterForm ref="form"
             :duplicate_filter="filter" />
