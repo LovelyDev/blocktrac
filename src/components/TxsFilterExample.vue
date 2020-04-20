@@ -45,7 +45,7 @@ export default {
 #txs_filter_example{
   margin-top: 15px;
   margin-bottom: 15px;
-  font-family: "Inter Regular";
+  font-family: var(--theme-font1);
   display: flex;
   align-items: center;
 }

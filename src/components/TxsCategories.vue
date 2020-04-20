@@ -168,6 +168,6 @@ export default {
 
 .category_tooltip{
   text-transform: capitalize;
-  font-family: "Inter Regular";
+  font-family: var(--theme-font1);
 }
 </style>

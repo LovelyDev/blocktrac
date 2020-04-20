@@ -60,7 +60,7 @@ export default {
   background-color: #97d59d;
   color: white;
   border-radius: 5px;
-  font-family: "Inter Regular";
+  font-family: var(--theme-font1);
   font-size: 1.2rem;
 
   display: flex;
@@ -74,13 +74,12 @@ export default {
   padding-right: 15px;
   background-color: #90cf9d;
   border-radius: 5px;
-  font-family: "Helvetica Regular";
 }
 
 #register_filter_info{
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
-  font-family: "Helvetica Regular";
+  font-family: var(--theme-font2);
 }
 </style>

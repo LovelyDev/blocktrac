@@ -17,3 +17,8 @@
   font-family: "Inter Bold";
   src: url("~@/assets/fonts/Inter-Bold.woff2") format("woff2");
 }
+
+@font-face {
+  font-family: "Inter Semi Bold";
+  src: url("~@/assets/fonts/Inter-SemiBold.woff2") format("woff2");
+}

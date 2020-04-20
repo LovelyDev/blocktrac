@@ -15,6 +15,10 @@ body{
   --theme-color2: #395366;
   --theme-color3: #ECECEC;
   --theme-color4: #707070;
+
+  --theme-font1:  "Inter Regular";
+  --theme-font2:  "Helvetica Regular";
+  --theme-font3:  "Helvetica Bold";
 }
 
 /*****/

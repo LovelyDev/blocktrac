@@ -1,6 +1,7 @@
 <template>
   <b-modal id="txs_filter_help"
            title="JSONPath Help"
+           header-class="modal_header"
            size="lg"
            ok-only>
     <FilterHelp @set="set_filter"/>

@@ -82,7 +82,7 @@ export default {
 }
 
 #my_filters_anon #header h4{
-  font-family: "Helvetica Bold";
+  font-family: var(--theme-font3);
   font-weight: bold;
 }
 
@@ -110,13 +110,13 @@ export default {
 
 #my_filters_logged_in #header h4{
   margin-bottom: 0;
-  font-family: "Helvetica Regular";
+  font-family: var(--theme-font2);
 }
 
 #settings{
   background-color: #e9edf4;
   color: #415166;
-  font-family: "Helvetica Bold";
+  font-family: var(--theme-font3);
   border-radius: 10px;
   padding: 5px;
   font-weight: bold;

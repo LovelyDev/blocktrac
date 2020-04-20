@@ -165,7 +165,7 @@ a:hover{
 #register_link,
 #profile_link,
 #logout_link{
-  font-family: "Inter Regular";
+  font-family: var(--theme-font1);
 }
 
 #membership_level_link,
