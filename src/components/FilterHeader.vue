@@ -7,16 +7,7 @@
       </div>
 
       <div>
-        <div id="filter_title">{{filter.name}}</div>
-
-        <div v-if="filter.Template">
-          {{filter.Template.name}}:
-          {{filter.params ? filter.params.join(", ") : ''}}
-        </div>
-
-        <div v-else>
-          Expression: {{filter.jsonpath}}
-        </div>
+        <FilterSummary :filter="filter" />
       </div>
     </div>
 
@@ -73,6 +64,8 @@ import DeleteFilterModal    from './modals/DeleteFilter.vue'
 import DuplicateFilterModal from './modals/DuplicateFilter.vue'
 import EditFilterModal      from './modals/EditFilter.vue'
 
+import FilterSummary        from './FilterSummary.vue'
+
 export default {
   name: 'FilterHeader',
 
@@ -81,7 +74,8 @@ export default {
   components : {
     DeleteFilterModal,
     DuplicateFilterModal,
-    EditFilterModal
+    EditFilterModal,
+    FilterSummary
   },
 
   computed : {
@@ -115,10 +109,6 @@ export default {
   margin-right: 10px;
   padding: 10px 13px;
   border-radius: 50%;
-}
-
-#filter_title{
-  font-weight: bold;
 }
 
 #filter_actions{
