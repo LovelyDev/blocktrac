@@ -6,37 +6,30 @@
            header-class="modal_header"
            centered
            @ok="reset_password"
+           :ok-disabled="!is_valid"
            no-stacking>
-    <table id="forgot_password_form">
-      <tr>
-        <td>Email address:</td>
-        <td>
-          <input id="email_input"
-                 type="text"
-                 v-model="auth_email" />
-        </td>
-      </tr>
-    </table>
+    <ForgotPasswordForm ref="forgot_password_form"
+                 @validated="validate($event)" />
   </b-modal>
 </template>
 
 <script>
-import Authentication from '../../mixins/authentication'
+import ForgotPasswordForm from '../forms/ForgotPassword.vue'
+import Validatable        from '../../mixins/validatable'
 
 export default {
   name: 'ForgotPasswordModal',
-  mixins : [Authentication]
+
+  mixins : [Validatable],
+
+  components : {
+    ForgotPasswordForm
+  },
+
+  methods : {
+    reset_password : function(){
+      this.$refs.forgot_password_form.reset_password();
+    }
+  }
 }
 </script>
-
-<style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-input{
-  width: 100%;
-}
-</style>
