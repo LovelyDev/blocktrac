@@ -8,7 +8,7 @@
            @ok="reset_password"
            :ok-disabled="!is_valid"
            no-stacking>
-    <ForgotPasswordForm ref="forgot_password_form"
+    <ForgotPasswordForm ref="form"
                  @validated="validate($event)" />
   </b-modal>
 </template>
@@ -28,7 +28,7 @@ export default {
 
   methods : {
     reset_password : function(){
-      this.$refs.forgot_password_form.reset_password();
+      this.$refs.form.reset_password();
     }
   }
 }

@@ -20,7 +20,7 @@
       In order to save your filter, please create an account
     </div>
 
-    <RegistrationForm ref="registration_form"
+    <RegistrationForm ref="form"
                @validated="validate($event)" />
   </b-modal>
 </template>
@@ -48,7 +48,7 @@ export default {
 
   methods : {
     register : function(){
-      this.$refs.registration_form.register();
+      this.$refs.form.register();
     }
   }
 }

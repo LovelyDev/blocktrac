@@ -8,7 +8,7 @@
            @ok="login"
            :ok-disabled="!is_valid"
            no-stacking>
-    <LoginForm ref="login_form"
+    <LoginForm ref="form"
         @validated="validate($event)" />
   </b-modal>
 </template>
@@ -28,7 +28,7 @@ export default {
 
   methods : {
     login : function(){
-      this.$refs.login_form.login();
+      this.$refs.form.login();
     }
   }
 }
