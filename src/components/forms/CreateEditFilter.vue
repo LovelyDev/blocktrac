@@ -80,7 +80,9 @@
 
     <tr>
       <td>
-        <b-form-checkbox v-model="enable_email" switch>
+        <b-form-checkbox v-model="enable_email"
+                         class="form_switch"
+                         switch>
           Email
         </b-form-checkbox>
       </td>
@@ -103,8 +105,10 @@
 
     <tr>
       <td>
-        <b-form-checkbox v-model="enable_sms" switch
-                        :disabled="advanced_sinks_disabled">
+        <b-form-checkbox v-model="enable_sms"
+                         class="form_switch"
+                         switch
+                         :disabled="advanced_sinks_disabled">
           Text Message
         </b-form-checkbox>
       </td>
@@ -119,8 +123,10 @@
 
     <tr>
       <td>
-        <b-form-checkbox v-model="enable_webhook" switch
-                        :disabled="advanced_sinks_disabled">
+        <b-form-checkbox v-model="enable_webhook"
+                         class="form_switch"
+                         switch
+                         :disabled="advanced_sinks_disabled">
           URL
         </b-form-checkbox>
       </td>
@@ -312,14 +318,14 @@ export default {
 #filter_type{
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 10px;
 }
 
 #filter_type span{
   width: 50%;
   padding: 5px;
-  background-color: #eeeeee;
+  background-color: #E8F5FF;
   text-align: center;
-  font-weight: bold;
 }
 
 #filter_type span span{
@@ -327,10 +333,17 @@ export default {
   width: 100%;
   border-radius: 15px;
   cursor: pointer;
+  font-family: var(--theme-font1);
+  font-size: 0.9rem;
+  color: var(--theme-color2);
+  opacity: 0.8;
 }
 
 #filter_type span.active span{
   background-color: white;
+  font-family: "Inter Semi Bold";
+  color: var(--theme-color1);
+  opacity: unset;
 }
 
 #by_category{
@@ -349,9 +362,9 @@ export default {
 
 .pro{
   border-radius: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #eff2f8;
-  color: #629ffb;
+  padding: 3px 10px;
+  background-color: #16BE59;
+  color: white;
+  opacity: 0.6;
 }
 </style>

@@ -47,6 +47,28 @@ body{
   font-size: 0.9rem;
 }
 
+.form_switch .custom-control-label::before{
+  border: none;
+  background-color: #E2EAF3;
+}
+
+.form_switch.custom-switch .custom-control-label::after{
+  background-color: var(--theme-color1);
+}
+
+.form_switch.custom-switch .custom-control-input:checked ~ .custom-control-label::before{
+  background-color: #B9F4D0;
+  border-color: none;
+}
+
+.form_switch.custom-switch .custom-control-input:checked ~ .custom-control-label::after{
+  background-color: #73D89B;
+}
+
+.form_switch.custom-switch .custom-control-input[disabled] ~ .custom-control-label::after{
+  background-color: #6a6b6c;
+}
+
 .currency_amount{
   font-family: ".SF NS Display Regular";
 }
