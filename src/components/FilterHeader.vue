@@ -135,7 +135,7 @@ export default {
 }
 
 #live_link{
-  background-color: #16BE59;
+  background-color: var(--theme-color5);
 }
 
 #live_link a{

@@ -13,7 +13,7 @@
         </div>
 
         <div>
-          &gt;
+          <img src="../assets/right-arrow.svg" />
         </div>
       </router-link>
     </div>
@@ -63,7 +63,9 @@ export default {
 }
 
 .filter_row.active{
-  background-color: #e9edf4;
+  background-color: var(--theme-color6);
+  border: 1px solid var(--theme-color1);
+  border-radius: 5px;
   border-radius: 3px;
 }
 

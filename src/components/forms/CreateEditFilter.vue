@@ -372,7 +372,7 @@ export default {
 .pro{
   border-radius: 15px;
   padding: 3px 10px;
-  background-color: #16BE59;
+  background-color: var(--theme-color5);
   color: white;
   opacity: 0.6;
   font-family: var(--theme-font2);

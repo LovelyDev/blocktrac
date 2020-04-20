@@ -51,10 +51,12 @@ export default {
 .expression_title{
   font-style: italic;
   font-family: var(--theme-font4);
+  font-size: 0.9rem;
 }
 
 .template_param,
 .filter_expression{
   font-family: var(--theme-font2);
+  font-size: 0.8rem;
 }
 </style>

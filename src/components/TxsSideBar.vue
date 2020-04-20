@@ -9,13 +9,16 @@
             <span id="live_leader">Live</span>
             <span>All Transactions</span>
           </div>
-          <div>&gt;</div>
+
+          <div>
+            <img src="../assets/right-arrow.svg" />
+          </div>
         </router-link>
       </b-col>
     </b-row>
 
     <b-row>
-      <b-col>
+      <b-col class="p-0">
         <MyFilters />
       </b-col>
     </b-row>
@@ -60,34 +63,31 @@ export default {
 
   text-align: center;
   font-weight: bold;
+  font-family: var(--theme-font1);
+  font-size: 0.8rem;
   border-radius: 3px;
 }
 
 #live_nav a{
-  color: #a3b1c5;
+  color: black;
   text-decoration: none;
   display: flex;
   justify-content: space-between;
 }
 
 #live_nav #live_leader{
-  background-color: #a3b1c5;
+  background-color: var(--theme-color5);
   color: white;
-  padding: 5px;
+  font-family: var(--theme-font3);
+  padding: 3px 5px;
   margin-right: 10px;
   border-radius: 10px;
 }
 
 #live_nav.active{
-  background-color: #e9edf4;
+  background-color: var(--theme-color6);
+  border: 1px solid var(--theme-color1);
+  border-radius: 5px;
   color: #415166;
-}
-
-#live_nav.active a{
-  color: black;
-}
-
-#live_nav.active #live_leader{
-  background-color: black;
 }
 </style>

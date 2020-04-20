@@ -20,7 +20,7 @@
 
     <div v-else id="my_filters_logged_in">
       <div id="header">
-        <h4>My Filters</h4>
+        <h5>My Filters</h5>
 
         <div id="settings" v-b-modal.settings_modal>
           <img src="../assets/bell.svg" width="15px"/>
@@ -108,7 +108,7 @@ export default {
   align-items: center;
 }
 
-#my_filters_logged_in #header h4{
+#my_filters_logged_in #header h5{
   margin-bottom: 0;
   font-family: var(--theme-font2);
 }
