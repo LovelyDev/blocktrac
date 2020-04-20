@@ -8,7 +8,10 @@
       <tr>
         <td>Email</td>
 
-        <td><input type="text" /></td>
+        <td>
+          <input type="text"
+                class="form_input" />
+        </td>
       </tr>
 
       <tr v-if="advanced_sinks_disabled">
@@ -24,7 +27,8 @@
 
         <td>
           <input type="text"
-                 :disabled="advanced_sinks_disabled" />
+                class="form_input"
+            :disabled="advanced_sinks_disabled" />
         </td>
       </tr>
 
@@ -33,7 +37,8 @@
 
         <td>
           <input type="text"
-                 :disabled="advanced_sinks_disabled" />
+                class="form_input"
+            :disabled="advanced_sinks_disabled" />
         </td>
       </tr>
     </table>
@@ -84,10 +89,6 @@ export default {
 
   border-collapse:separate;
   border-spacing: 0 15px;
-}
-
-#sinks input{
-  width: 100%;
 }
 
 #sinks_footer{

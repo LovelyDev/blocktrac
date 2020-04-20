@@ -1,9 +1,9 @@
 <template>
-  <table id="registration_form">
+  <table class="form_table">
     <tr>
       <td class="form_text">Email address:</td>
       <td>
-        <input id="email_input"
+        <input class="form_input"
                type="text"
                v-model="auth_email" />
       </td>
@@ -22,7 +22,7 @@
     <tr>
       <td class="form_text">Password:</td>
       <td>
-        <input id="password_input"
+        <input class="form_input"
                type="password"
                v-model="auth_password" />
        </td>
@@ -41,7 +41,7 @@
     <tr>
       <td class="form_text">Confirm Password:</td>
       <td>
-        <input id="confirm_password_input"
+        <input class="form_input"
                type="password"
                v-model="auth_password_confirm" />
        </td>
@@ -89,16 +89,6 @@ export default {
 </script>
 
 <style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-input{
-  width: 100%;
-}
-
 #existing_account{
   cursor: pointer;
 }

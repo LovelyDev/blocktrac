@@ -1,5 +1,5 @@
 <template>
-  <table id="create_edit_table">
+  <table class="form_table">
     <tr v-if="!editing_filter && !saving_filter">
       <td colspan="2">
         <div id="filter_type">
@@ -40,7 +40,7 @@
         </td>
 
         <td>
-          <input class="filter_input"
+          <input class="form_input"
                  type="text"
                  v-model="params[p-1]"
                  :disabled="editing_filter" />
@@ -52,7 +52,7 @@
       <td class="label">Expression</td>
 
       <td>
-        <input class="filter_input"
+        <input class="form_input"
                type="text"
                title="expression"
                placeholder="JSONPath Expression..."
@@ -64,7 +64,7 @@
       <td class="label">Filter Name</td>
 
       <td>
-        <input class="filter_input"
+        <input class="form_input"
                type="text"
                v-model="name" />
       </td>
@@ -89,7 +89,7 @@
         <input type="text"
                v-model="email_sinks"
                :disabled="!enable_email"
-               class="filter_input" />
+               class="form_input" />
       </td>
     </tr>
 
@@ -113,7 +113,7 @@
         <input type="text"
                v-model="sms_sinks"
                :disabled="advanced_sinks_disabled || !enable_sms"
-               class="filter_input" />
+               class="form_input" />
       </td>
     </tr>
 
@@ -129,7 +129,7 @@
         <input type="text"
                v-model="webhook_sinks"
                :disabled="advanced_sinks_disabled || !enable_webhook"
-               class="filter_input" />
+               class="form_input" />
       </td>
     </tr>
   </table>
@@ -309,12 +309,6 @@ export default {
 </script>
 
 <style scoped>
-#create_edit_table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
 #filter_type{
   display: flex;
   justify-content: space-evenly;
@@ -351,10 +345,6 @@ export default {
 
 .label{
   font-weight: bold;
-}
-
-.filter_input{
-  width: 100%;
 }
 
 .pro{

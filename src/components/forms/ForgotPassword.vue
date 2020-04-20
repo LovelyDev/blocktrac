@@ -1,11 +1,11 @@
 <template>
-  <table id="forgot_password_form">
+  <table class="form_table">
     <tr>
       <td>Email address:</td>
       <td>
-        <input id="email_input"
-               type="text"
-               v-model="auth_email" />
+        <input class="form_input"
+                type="text"
+             v-model="auth_email" />
       </td>
     </tr>
   </table>
@@ -30,12 +30,6 @@ export default {
 
 
 <style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
 input{
   width: 100%;
 }

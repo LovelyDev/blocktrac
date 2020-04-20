@@ -21,10 +21,21 @@ body{
 
 .modal_header h5{
   font-weight: bold;
+  font-family: "Helvetica Bold";
+}
+
+.form_table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
 }
 
 .form_text{
   font-family: ".SF NS Display Regular";
+}
+
+.form_input{
+  width: 100%;
 }
 
 .form_error{

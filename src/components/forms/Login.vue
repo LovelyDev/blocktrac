@@ -1,9 +1,9 @@
 <template>
-  <table id="login_form">
+  <table class="form_table">
     <tr>
       <td class="form_text">Email address:</td>
       <td>
-        <input id="email_input"
+        <input class="form_input"
                type="text"
                v-model="auth_email" />
       </td>
@@ -12,7 +12,7 @@
     <tr>
       <td class="form_text">Password:</td>
       <td>
-        <input id="password_input"
+        <input class="form_input"
                type="password"
                v-model="auth_password" />
       </td>
@@ -48,16 +48,6 @@ export default {
 </script>
 
 <style scoped>
-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-input{
-  width: 100%;
-}
-
 #forgot_password{
   cursor: pointer;
 }
