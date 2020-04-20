@@ -13,23 +13,18 @@
       <img src="../assets/question.svg" />
     </div>
 
-    <b-modal id="txs_filter_help"
-             title="JSONPath Help"
-             size="lg"
-             ok-only>
-      <FilterHelp @set="set_filter"/>
-    </b-modal>
+    <FilterHelpModal />
   </div>
 </template>
 
 <script>
-import FilterHelp from './FilterHelp.vue'
+import FilterHelpModal from './modals/TxsFilterHelp.vue'
 
 export default {
   name: 'TxFilterExample',
 
   components : {
-    FilterHelp
+    FilterHelpModal
   },
 
   data : function(){
