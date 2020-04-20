@@ -6,33 +6,26 @@
            header-class="modal_header"
            centered
            @ok="register"
-           :ok-disabled="ok_disabled"
+           :ok-disabled="!is_valid"
            no-stacking>
     <RegistrationForm ref="registration_form"
-                   @valid="ok_disabled = false"
-                 @invalid="ok_disabled = true"/>
+               @validated="validate($event)" />
   </b-modal>
 </template>
 
 <script>
 import RegistrationForm from '../forms/Registration.vue'
+import Validatable      from '../../mixins/validatable'
 
 // TODO: submit on enter (and other modals)
 
 export default {
   name: 'RegistrationModal',
 
+  mixins : [Validatable],
+
   components : {
     RegistrationForm
-  },
-
-  data : function(){
-    return {
-      // XXX: $refs not available to
-      //      tie to ok-disabled directly
-      //      (and in other modals)
-      ok_disabled : true
-    }
   },
 
   methods : {

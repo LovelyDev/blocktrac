@@ -70,25 +70,19 @@
 
 <script>
 import Authentication from '../../mixins/authentication'
+import Validator      from '../../mixins/validator'
 
 export default {
   name: 'RegistrationForm',
 
-  mixins : [Authentication],
+  mixins : [Authentication, Validator],
 
   computed : {
-    auth_valid : function(){
+    is_valid : function(){
       return this.have_email     &&
             !this.invalid_email  &&
              this.have_passwords &&
             !this.invalid_passwords;
-    }
-  },
-
-  watch : {
-    auth_valid : function(){
-      this.auth_valid ? this.$emit('valid') :
-                        this.$emit('invalid');
     }
   }
 }

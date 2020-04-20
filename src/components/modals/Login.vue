@@ -6,28 +6,24 @@
            header-class="modal_header"
            centered
            @ok="login"
-           :ok-disabled="ok_disabled"
+           :ok-disabled="!is_valid"
            no-stacking>
     <LoginForm ref="login_form"
-            @valid="ok_disabled = false"
-          @invalid="ok_disabled = true" />
+        @validated="validate($event)" />
   </b-modal>
 </template>
 
 <script>
-import LoginForm from '../forms/Login.vue'
+import LoginForm   from '../forms/Login.vue'
+import Validatable from '../../mixins/validatable'
 
 export default {
   name: 'LoginModal',
 
+  mixins : [Validatable],
+
   components : {
     LoginForm
-  },
-
-  data : function(){
-    return {
-      ok_disabled : true
-    }
   },
 
   methods : {

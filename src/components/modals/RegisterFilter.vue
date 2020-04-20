@@ -6,7 +6,7 @@
            header-class="modal_header"
            centered
            @ok="register"
-           :ok-disabled="ok_disabled"
+           :ok-disabled="!is_valid"
            no-stacking>
     <div id="register_filter_details">
       <div id="register_filter_details_icon">
@@ -21,27 +21,23 @@
     </div>
 
     <RegistrationForm ref="registration_form"
-                   @valid="ok_disabled = false"
-                 @invalid="ok_disabled = true" />
+               @validated="validate($event)" />
   </b-modal>
 </template>
 
 <script>
 import FilterSummary    from '../FilterSummary.vue'
 import RegistrationForm from '../forms/Registration.vue'
+import Validatable      from '../../mixins/validatable'
 
 export default {
   name: 'RegistrationModal',
 
+  mixins : [Validatable],
+
   components : {
     FilterSummary,
     RegistrationForm
-  },
-
-  data : function(){
-    return {
-      ok_disabled : true
-    }
   },
 
   computed : {
