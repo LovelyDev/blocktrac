@@ -6,7 +6,7 @@
     </span>
 
     <span id="clear_txs" class="txs_icon" v-on:click="clear_txs">
-      <img src="../assets/trash.svg" />
+      <img src="../assets/trash-red.svg" />
     </span>
   </span>
 </template>

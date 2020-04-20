@@ -1,7 +1,10 @@
 <template>
   <div id="filter_header">
     <div id="filter_subheader">
-      <img src="../assets/filter-header.png" />
+      <div id="filter_subheader_icon">
+        <img v-if="is_filter_page" src="../assets/down-triangle-lines-white.svg" />
+        <img v-if="is_test_page"   src="../assets/repeat.svg" />
+      </div>
 
       <div>
         <div id="filter_title">{{filter.name}}</div>
@@ -17,41 +20,44 @@
       </div>
     </div>
 
-    <div>
-      <span id="live_link"
-            class="filter_action"
-            v-if="!is_filter_page">
-        <router-link :to="'/filter/' + filter.id">
-          <img src="../assets/filters-back.png" width="25px" />
-          Back to Live Filtering
-        </router-link>
-      </span>
+    <div id="filter_actions">
+      <router-link :to="'/filter/' + filter.id">
+        <span id="live_link"
+              class="filter_action"
+              v-if="!is_filter_page">
+            <img src="../assets/filters-back.png" width="25px" />
+            <span>Back to Live Filtering</span>
+        </span>
+      </router-link>
 
-      <span id="test_link"
-            class="filter_action"
-            v-if="!is_test_page">
-        <router-link :to="'/test/' + filter.id">
-          ⚙ Test Filter
-        </router-link>
-      </span>
+      <router-link :to="'/test/' + filter.id">
+        <div id="test_link"
+              class="filter_action"
+              v-if="!is_test_page">
+            <img src="../assets/gear.svg" />
+            <span>Test Filter</span>
+        </div>
+      </router-link>
 
-      <span id="edit_link"
+      <div id="edit_link"
             class="filter_action"
             v-b-modal.edit_filter>
-        🖉 Edit
-      </span>
+        <img src="../assets/pencil.svg">
+        <span>Edit</span>
+      </div>
 
-      <span id="duplicate_link"
+      <div id="duplicate_link"
             class="filter_action"
             v-b-modal.duplicate_filter>
-        ⎘ Duplicate...
-      </span>
+        <img src="../assets/duplicate.svg">
+        <span>Duplicate...</span>
+      </div>
 
-      <span id="delete_link"
+      <div id="delete_link"
             class="filter_action"
             v-b-modal.delete_filter>
-        🗑
-      </span>
+        <img src="../assets/trash-white.svg">
+      </div>
     </div>
 
     <EditFilterModal      :filter="filter" @edited="set_active_filter($event)" />
@@ -104,34 +110,53 @@ export default {
   align-items: center;
 }
 
-#filter_subheader img{
-  width: 25px;
-  height: 25px;
+#filter_subheader_icon{
+  background-color: var(--theme-color1);
   margin-right: 10px;
+  padding: 10px 13px;
+  border-radius: 50%;
 }
 
 #filter_title{
   font-weight: bold;
 }
 
-.filter_action{
-  background-color: #e9edf4;
-  margin-right: 10px;
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
+#filter_actions{
+  display: flex;
 }
 
-.filter_action a{
-  color: black;
+#filter_actions a{
   text-decoration: none;
 }
 
+.filter_action{
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+
+  background-color: var(--theme-color1);
+  color: white;
+}
+
+.filter_action img{
+  margin-right: 5px;
+}
+
 #live_link{
-  background-color: #425265;
+  background-color: #16BE59;
 }
 
 #live_link a{
   color: white;
+}
+
+#delete_link{
+  padding: 5px 20px;
+}
+
+#delete_link img{
+  margin-right: 0;
 }
 </style>

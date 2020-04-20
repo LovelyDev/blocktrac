@@ -23,7 +23,7 @@
         <h4>My Filters</h4>
 
         <div id="settings" v-b-modal.settings_modal>
-          <img src="../assets/bell-small.png" width="25px"/>
+          <img src="../assets/bell.svg" width="15px"/>
           <span>Settings</span>
         </div>
       </div>
@@ -114,13 +114,18 @@ export default {
 }
 
 #settings{
-  background-color: #e9edf4;
-  color: #415166;
+  background-color: var(--theme-color1);
+  color: white;
   font-family: var(--theme-font3);
   border-radius: 10px;
-  padding: 5px;
+  padding: 5px 10px;
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+}
+
+#settings img{
+  margin-right: 10px;
 }
 
 #add_new_filter{

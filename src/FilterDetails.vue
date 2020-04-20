@@ -4,19 +4,27 @@
       <FilterHeader />
 
       <div v-if="matched_txs.length == 0" id="no_matches">
-        <img src="./assets/bell.png" width="75px"/>
+        <img id="no_matches_icon"
+             src="./assets/bell-green-border.svg" />
 
-        <div>No matches at the moment</div>
+        <div id="no_matches_text">
+          No matches at the moment
+        </div>
 
-        <div>You will get notifications <!-- TODO sinks --></div>
+        <div id="notifications_text">
+          <span id="get_notifications">You will get notifications via</span>
+          ... <!-- TODO sinks -->
+        </div>
 
-        <div style="font-size:0.7rem; margin-top: 10px;">
+        <div id="check_filter">
           Check your filter for proper composition
         </div>
 
         <div id="test_link">
           <router-link :to="'/test/' + id">
-            ⚙ Test filter
+            <img id="test_link_icon"
+                 src="./assets/gear.svg" />
+            <span>Test filter</span>
           </router-link>
         </div>
       </div>
@@ -67,33 +75,60 @@ export default {
 <style scoped>
 #filter_details{
   background-color: white;
-  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #no_matches{
   padding: 25px;
 
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-#no_matches img{
+#no_matches_text,
+#notifications_text{
+  font-family: var(--theme-font1);
+}
+
+#get_notifications{
+  color: #ABB5BF;
+}
+
+#no_matches_icon{
   margin-bottom: 25px;
 }
 
+#check_filter{
+  font-size:0.8rem;
+  margin-top: 30px;
+  font-family: var(--theme-font4);
+  color: var(--theme-color2);
+  opacity: 0.6;
+}
+
 #test_link{
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 65px;
   margin-top: 5px;
 
   border-radius: 15px;
-  background-color: #415166;
+  background-color: var(--theme-color1);
 }
 
 #test_link a{
   text-decoration: none;
+  font-family: var(--theme-font3);
+  font-weight: bold;
+
   color: white;
+  display: flex;
+}
+
+#test_link_icon{
+  margin-right: 10px;
 }
 </style>

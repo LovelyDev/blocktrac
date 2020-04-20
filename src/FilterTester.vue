@@ -5,17 +5,23 @@
 
       <div v-if="matched_tests.length == 0" id="no_matches">
         <!-- TODO report test results -->
-        <img src="./assets/warn.png" width="75px"/>
+        <img id="no_matches_icon"
+             src="./assets/yellow-alert.svg" />
 
         <div>No test transactions match</div>
 
         <div>It might be incorrect filter composition</div>
 
-        <div style="font-size:0.7rem; margin-top: 10px;">
+        <div id="change_parameters">
           Change the filter parameters to get results
         </div>
 
-        <div id="duplicate_link">⎘ Duplicate and edit</div>
+        <div id="duplicate_link"
+             v-b-modal.duplicate_filter>
+          <img id="duplicate_link_icon"
+               src="./assets/duplicate.svg">
+          <span>Duplicate and edit</span>
+        </div>
       </div>
 
       <div v-else>
@@ -92,32 +98,46 @@ export default {
 <style scoped>
 #filter_tester{
   background-color: white;
-  min-height: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
 }
 
 #no_matches{
   padding: 25px;
 
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-#no_matches img{
+#no_matches_icon{
   margin-bottom: 25px;
 }
 
+#change_parameters{
+  font-size:0.8rem;
+  margin-top: 30px;
+  font-family: var(--theme-font4);
+}
+
 #duplicate_link{
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 65px;
   margin-top: 5px;
 
   border-radius: 15px;
-  background-color: #415166;
   color: white;
+  background-color: var(--theme-color1);
 
+  display: flex;
   cursor: pointer;
+}
+
+#duplicate_link_icon{
+  margin-right: 10px;
 }
 
 .tx_summary_container{
