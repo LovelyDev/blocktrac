@@ -2,7 +2,7 @@
   <b-modal id="delete_filter"
            title="Delete Filter"
            header-class="modal_header"
-           @ok="on_ok">
+           @ok="delete_filter">
     <h3>Are you sure?</h3>
     <h5><i>This cannot be undone</i></h5>
   </b-modal>
@@ -21,10 +21,6 @@ export default {
   },
 
   methods : {
-    on_ok : function(){
-      this.delete_filter();
-    },
-
     delete_filter : function(){
       this.$http.delete(this.backend_url + "/filter/" + this.filter.id,
                         this.auth_header)
