@@ -19,6 +19,7 @@ body{
   --theme-font1:  "Inter Regular";
   --theme-font2:  "Helvetica Regular";
   --theme-font3:  "Helvetica Bold";
+  --theme-font4:  ".SF NS Display Regular";
 }
 
 /*****/
@@ -35,16 +36,21 @@ body{
 }
 
 .form_text{
-  font-family: ".SF NS Display Regular";
+  font-family: var(--theme-font4);
 }
 
 .form_input{
   width: 100%;
+  font-family: var(--theme-font4);
 }
 
 .form_error{
   color: red;
   font-size: 0.9rem;
+}
+
+.form_switch{
+  font-family: var(--theme-font4);
 }
 
 .form_switch .custom-control-label::before{
@@ -70,7 +76,7 @@ body{
 }
 
 .currency_amount{
-  font-family: ".SF NS Display Regular";
+  font-family: var(--theme-font4);
 }
 
 .failed .currency_amount{

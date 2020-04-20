@@ -19,10 +19,12 @@
     </tr>
 
     <tr v-if="is_template_filter">
-      <td class="label">Category</td>
+      <td class="form_text">Category:</td>
 
       <td>
-        <b-form-select v-model="template" :disabled="editing_filter">
+        <b-form-select v-model="template"
+                       :disabled="editing_filter"
+                       class="form_text">
           <b-form-select-option v-for="template in templates"
                                :key="'template' + template.id"
                                :value="template.id">
@@ -36,7 +38,7 @@
       <tr v-for="p in template_params.length"
           :key="'param' + p">
         <td>
-          <span class="label">{{template_params[p-1]}}</span>
+          <span class="form_text">{{template_params[p-1]}}:</span>
         </td>
 
         <td>
@@ -49,7 +51,7 @@
     </template>
 
     <tr v-if="is_expression_filter">
-      <td class="label">Expression</td>
+      <td class="form_text">Expression:</td>
 
       <td>
         <input class="form_input"
@@ -61,7 +63,7 @@
     </tr>
 
     <tr>
-      <td class="label">Filter Name</td>
+      <td class="form_text">Filter Name:</td>
 
       <td>
         <input class="form_input"
@@ -72,7 +74,9 @@
 
     <tr>
       <td colspan=2>
-        <div class="label">Send me notifications via:</div>
+        <div id="send_me" class="form_text">
+          Send Me Notifications Via:
+        </div>
       </td>
     </tr>
 
@@ -98,7 +102,7 @@
     <tr v-if="advanced_sinks_disabled">
       <td></td>
 
-      <td>
+      <td id="available_with_pro">
         Available with <span class="pro">Pro</span> plans
       </td>
     </tr>
@@ -356,8 +360,13 @@ export default {
   border-bottom-right-radius: 20px;
 }
 
-.label{
-  font-weight: bold;
+#send_me{
+  font-family: "Inter Bold";
+  margin-top: 20px;
+}
+
+#available_with_pro{
+  font-family: var(--theme-font4);
 }
 
 .pro{
@@ -366,5 +375,7 @@ export default {
   background-color: #16BE59;
   color: white;
   opacity: 0.6;
+  font-family: var(--theme-font2);
+  font-size: 0.8rem;
 }
 </style>
