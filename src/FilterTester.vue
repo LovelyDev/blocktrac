@@ -26,6 +26,12 @@
 
       <div v-else>
         <b-list-group>
+          <b-list-group-item id="filter_test_explanation">
+            <img src="./assets/info.svg" />
+            <span>The following are pre-captured transactions that your filter matches.
+            If this is not what you expect, edit your filter.</span>
+          </b-list-group-item>
+
           <b-list-group-item v-for="tx in matched_tests"
                              :key="tx.transaction.hash"
                              class="tx_summary_container">
@@ -138,6 +144,22 @@ export default {
 
 #duplicate_link_icon{
   margin-right: 10px;
+}
+
+#filter_test_explanation{
+  display: flex;
+  align-items: center;
+}
+
+#filter_test_explanation span{
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-family: var(--theme-font4);
+  color: var(--theme-color2);
+}
+
+#filter_test_explanation img{
+  margin-right: 5px;
 }
 
 .tx_summary_container{
