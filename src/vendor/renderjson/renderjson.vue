@@ -12,7 +12,8 @@ export default {
   name: 'renderjson',
 
   props : {
-    data : {}
+    data : {},
+    level : null
   },
 
   computed : {
@@ -32,6 +33,9 @@ export default {
   },
 
   mounted : function(){
+    if(this.level)
+      renderjson.set_show_to_level(this.level);
+
     var div = document.getElementById(this.id);
     var rendered = renderjson(this.data);
     div.appendChild(rendered)
@@ -41,3 +45,6 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+</style>
