@@ -1,16 +1,76 @@
 <template>
   <MainLayout section="about">
     <div id="about">
-      <h1>About</h1>
+      <div id="about_content">
+        <div id="about_section1" class="about_section">
+          <h2>A Transaction Tracker for XRP</h2>
 
-      <div id="content">
-        <p>
-          Zerp Tracker is a persistent transaction tracker for the XRP Blockchain. It allows you to monitor XRPL transactions in real time and setup alerts to be notified of ledger activity via any number of mechanisms (known as “sinks”). By leveraging filters using a rich and powerful pattern matching system, Zerp Tracker facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in!
-        </p>
+          <p>
+            <span class="zt">Zerp Tracker</span> allows you to monitor XRP transactions in real time and setup alerts to be notified of ledger activity via email, text message, and more. By leveraging a rich and powerful pattern matching system, Zerp Tracker facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
+          </p>
+        </div>
 
-        <p>
-          TODO
-        </p>
+        <div id="about_section2" class="about_section">
+          <h4>Filtering On Your Terms</h4>
+
+          <p>
+            Let's say you are a XRP account holder or you are responsible for managing the XRP account for your institution. It is pertinent that you are aware of all activity pertaining to your account, whether it is transactions originating from it or funds being sent to it by others. With <span class="zt">Zerp Tracker</span> you can receive notifications immediately when this type of activity is detected and more.
+          </p>
+
+          <p>
+            <span class="zt">Zerp Tracker</span> not only allows you to filter transactions by type, but also to <b>deep inspect</b> every single transaction to only match certain criteria. Lets say you want to only be notified about payments in a particular currency and/or above a certain threshold. Or be notified when an offer is created for a rare or unique currency pair. <span class="zt">Zerp Tracker</span> will notify you immediately via your preferred communication channel!
+          </p>
+        </div>
+
+        <div id="about_section3" class="about_section">
+          <h4>JSONPath Expressions</h4>
+
+          <p>
+            Transactions that are propagated across the XRP network are expressed in JSON, a structured technical lanugage that allows users to specify the exact intent of the action they intend to execute. <span class="zt">Zerp Tracker</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
+          </p>
+
+          <p>
+          For example to only inspect 'OfferCreate' transactions, the following expression can be used:
+          </p>
+
+          <div class="expression_example">
+            $..[?(@.TransactionType == 'OfferCreate')]
+          </div>
+
+          <p>
+            To specify payments which transfer more than 500 XRP (aka 500 Million drops), you can use:
+          </p>
+
+          <div class="expression_example">
+            $..[?(@.TransactionType == 'Payment' && parseInt(@.Amount) > 500000000)]
+          </div>
+
+          <p>
+          Or to only inspect transactions that create new accounts:
+          </p>
+
+          <div class="expression_example">
+            $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
+          </div>
+
+          <p>
+            But if you do not want to build these expressions, fear not! <span class="zt">Zerp Tracker</span> bundles a <b>pre-built library of expressions</b>, allowing you to quickly setup the filters you are interested in. Each of these pre-built expressions are fully parameterized allowing you to plugin the transaction type, currencies, payment ranges that you are interested in and much more!
+          </p>
+
+          <img src="./assets/landing/section4a.png" />
+        </div>
+
+        <div id="about_section4" class="about_section">
+          <h4>Programatic Integration</h4>
+
+          <p>
+          With <span class="zt">Zerp Tracker</span> you can receive alerts via email or text message, whichever you prefer. Advanced users can setup <b>webhooks</b> to be invoked on transaction activity. This means you can integrate the <span class="zt">Zerp Tracker</span> notification system into any programatic environment including trading systems, auditing/forensics technologies, and much more!
+          </p>
+
+          <p>
+          But this is just the tip of the iceberg, <router-link to="/txs">setup your first filter today!</router-link>
+          </p>
+        </div>
       </div>
     </div>
   </MainLayout>
@@ -41,10 +101,60 @@ export default {
   padding: 25px;
 }
 
-#content{
+#about_content{
   border: 1px solid #ededed;
   border-radius: 5px;
-  padding: 50px;
   background-color: white;
+  font-family: var(--theme-font1);
+  text-align: justify;
+}
+
+#about_content h2,
+#about_content h4{
+  margin: 20px 0;
+  text-align: center;
+  font-family: var(--theme-font4);
+}
+
+.about_section{
+  padding: 50px;
+  color: var(--theme-color4);
+}
+
+#about_section1 h2{
+  color: var(--theme-color1);
+}
+
+#about_section2 h4,
+#about_section3 h4,
+#about_section4 h4{
+  color: black;
+}
+
+#about_section2,
+#about_section3,
+#about_section4{
+  border-top: 1px solid #ededed;
+}
+
+#about_section2 ul{
+  list-style-type: square;
+}
+
+#about_section3 img{
+  display: block;
+  width: 75%;
+  margin: auto;
+}
+
+.zt{
+  font-weight: bold;
+  color: var(--theme-color2);
+}
+
+.expression_example{
+  color: var(--theme-color1);
+  margin: 25px;
+  text-align: center;
 }
 </style>
