@@ -123,10 +123,17 @@ export default {
 
 #tx_details{
   border: 1px solid var(--theme-color3);
+  background-color: white;
 }
 
 #rendered_tx{
   border-top: 1px solid var(--theme-color3);
   padding: 15px;
+}
+</style>
+
+<style>
+#rendered_tx pre{
+  margin-bottom: 0;
 }
 </style>
