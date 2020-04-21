@@ -170,7 +170,7 @@ a:hover{
 
 #membership_level_link,
 #my_account_link{
-  font-family: "Inter Bold";
+  font-family: var(--theme-font5);
 }
 
 #login_link,

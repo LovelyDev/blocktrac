@@ -361,7 +361,7 @@ export default {
 }
 
 #send_me{
-  font-family: "Inter Bold";
+  font-family: var(--theme-font5);
   margin-top: 20px;
 }
 
