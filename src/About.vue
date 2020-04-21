@@ -26,30 +26,34 @@
           <h4>JSONPath Expressions</h4>
 
           <p>
-            Transactions that are propagated across the XRP network are expressed in JSON, a structured technical lanugage that allows users to specify the exact intent of the action they intend to execute. <span class="zt">Zerp Tracker</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
+            Transactions that are propagated across the XRP network are expressed in JSON, a structured lanugage that allows users to specify the exact intent of the action they are executing. <span class="zt">Zerp Tracker</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
           </p>
 
           <p>
-          For example to only inspect 'OfferCreate' transactions, the following expression can be used:
+          For example to only inspect <i>OfferCreate</i> transactions, the following expression can be used:
           </p>
 
-          <div class="expression_example">
+          <div id="expression_example1" class="expression_example">
             $..[?(@.TransactionType == 'OfferCreate')]
           </div>
 
           <p>
-            To specify payments which transfer more than 500 XRP (aka 500 Million drops), you can use:
+            To specify <i>Payments</i> which transfer more than <i>500 XRP</i>, you can use:
           </p>
 
-          <div class="expression_example">
+          <div id="expression_example2" class="expression_example">
             $..[?(@.TransactionType == 'Payment' && parseInt(@.Amount) > 500000000)]
           </div>
+
+          <p id="xrp_drops">
+            On the ledger XRP is expressed in drops, units equal to 1-millionth of an XRP, hence 500 XRP = 500Million drops, which we see above
+          </p>
 
           <p>
           Or to only inspect transactions that create new accounts:
           </p>
 
-          <div class="expression_example">
+          <div id="expression_example3" class="expression_example">
             $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
           </div>
 
@@ -61,7 +65,7 @@
         </div>
 
         <div id="about_section4" class="about_section">
-          <h4>Programatic Integration</h4>
+          <h4>Programmatic Integration</h4>
 
           <p>
           With <span class="zt">Zerp Tracker</span> you can receive alerts via email or text message, whichever you prefer. Advanced users can setup <b>webhooks</b> to be invoked on transaction activity. This means you can integrate the <span class="zt">Zerp Tracker</span> notification system into any programatic environment including trading systems, auditing/forensics technologies, and much more!
@@ -145,6 +149,16 @@ export default {
   display: block;
   width: 75%;
   margin: auto;
+}
+
+#expression_example2{
+  margin-bottom: 3px;
+}
+
+#xrp_drops{
+  text-align: center;
+  font-size: 0.8rem;
+  margin-bottom: 25px;
 }
 
 .zt{
