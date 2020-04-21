@@ -3,7 +3,8 @@
            title="Filter Settings"
            ok-title="Save"
            ok-only
-           header-class="modal_header">
+           header-class="modal_header"
+           size="lg">
     <BatchSettingsForm />
     <SinksSettingsForm />
   </b-modal>

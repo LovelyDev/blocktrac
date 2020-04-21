@@ -1,5 +1,7 @@
 <template>
   <div id="sinks">
+    <h4 id="sinks_title">Notifications:</h4>
+
     <div>
     Send me notifications via
     </div>
@@ -14,7 +16,7 @@
         </td>
       </tr>
 
-      <tr v-if="advanced_sinks_disabled">
+      <tr id="sinks_pro" v-if="advanced_sinks_disabled">
         <td></td>
 
         <td>
@@ -82,6 +84,11 @@ export default {
 <style scoped>
 #sinks{
   margin-top: 10px;
+  font-family: var(--theme-font1);
+}
+
+#sinks_title{
+  font-family: var(--theme-font5);
 }
 
 #sinks table{
@@ -91,15 +98,20 @@ export default {
   border-spacing: 0 15px;
 }
 
+#sinks_pro{
+  font-family: var(--theme-font4);
+  font-size: 0.9rem;
+}
+
 #sinks_footer{
   font-size: 0.75rem;
+  font-family: var(--theme-font4);
 }
 
 .pro{
   border-radius: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #eff2f8;
-  color: #629ffb;
+  padding: 3px 10px;
+  background-color: var(--theme-color5);
+  color: white;
 }
 </style>
