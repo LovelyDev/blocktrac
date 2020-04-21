@@ -7,7 +7,10 @@ export default {
   name: 'CurrencyIcon',
 
   props : {
-    currency: String
+    currency: {
+      type : String,
+      required : true
+    },
   },
 
   computed : {

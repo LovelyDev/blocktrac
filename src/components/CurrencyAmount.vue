@@ -40,7 +40,11 @@ export default {
   name: 'CurrencyAmount',
 
   props : {
-    amount : [String, Number, Object],
+    amount : {
+      type : [String, Number, Object],
+      required : true
+    },
+
     no_issuer : Boolean
   },
 

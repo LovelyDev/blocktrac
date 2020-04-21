@@ -3,7 +3,10 @@ import config from '../config'
 
 export default {
   props : {
-    tx : Object
+    tx : {
+      type : Object,
+      required : true
+    }
   },
 
   computed : {

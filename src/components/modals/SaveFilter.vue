@@ -15,7 +15,7 @@ import CreatesFilter        from './creates_filter'
 import CreateEditFilterForm from '../forms/CreateEditFilter.vue'
 
 export default {
-  name: 'CreateFilterModal',
+  name: 'SaveFilterModal',
 
   mixins : [Authentication, CreatesFilter],
 
@@ -24,7 +24,10 @@ export default {
   },
 
   props : {
-    filter : Object
+    filter : {
+      type : Object,
+      required : true
+    }
   }
 }
 </script>

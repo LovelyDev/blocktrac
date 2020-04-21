@@ -21,10 +21,6 @@ export default {
 
   components : {
     CreateEditFilterForm
-  },
-
-  props : {
-    filter : Object
   }
 }
 </script>

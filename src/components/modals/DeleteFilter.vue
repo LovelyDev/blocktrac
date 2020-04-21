@@ -17,7 +17,10 @@ export default {
   mixins : [Authentication],
 
   props : {
-    filter : Object
+    filter : {
+      type : Object,
+      required : true
+    }
   },
 
   methods : {

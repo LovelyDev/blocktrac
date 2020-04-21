@@ -39,7 +39,10 @@ export default {
   },
 
   props : {
-    section : String
+    section : {
+      type : String,
+      required : true
+    }
   },
 
   computed : {

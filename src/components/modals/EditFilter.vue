@@ -23,7 +23,10 @@ export default {
   },
 
   props : {
-    filter : Object
+    filter : {
+      type : Object,
+      required : true
+    }
   },
 
   methods : {
