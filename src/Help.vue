@@ -1,7 +1,7 @@
 <template>
   <MainLayout section="help">
     <div id="help">
-      <h1 style="text-align: center">Help</h1>
+      <h1 id="help_title">Help</h1>
 
       <div id="help_content">
         <div id="help_categories">
@@ -38,6 +38,8 @@
 <script>
 import MainLayout from './components/MainLayout.vue'
 
+import fr0xrpl from './fr0xrpl'
+
 // TODO finish flushing out FAQ answers
 
 export default {
@@ -56,7 +58,7 @@ export default {
           topics : [
             {
               title : "What is Zerp Tracker?",
-              value : "Zerp Tracker is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filter-based alerts to be notified via any number of mechanisms (known as 'sinks') upon XRP Ledger activity."
+              value : "Zerp Tracker is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
             },
 
             {
@@ -71,7 +73,7 @@ export default {
 
             {
                title : "Where can I find out more?",
-               value : "Many resources are avaiable online pertaining to XRP technologies. See the <a href='https://en.wikipedia.org/wiki/Ripple_(payment_protocol)'>Ripple</a> Wikipedia article and the <a href='https://xrpl.org'>XRPL.org</a> dev portal."
+               value : "Many resources are avaiable online pertaining to XRP technologies. See the <a href='https://xrpl.org'>XRPL.org</a> portal for example."
             }
           ]
         },
@@ -81,27 +83,22 @@ export default {
           topics : [
             {
               title : "How do I sign up?",
-              value : "Answer5"
+              value : "You may sign up for a new Zerp Tracker account by clicking <b>Register</b> in the upper right corner. You will be prompted to supply a valid email and password. We will send you an email containing a confirmation link, one confirmed you are good to go!"
             },
 
             {
               title : "What if I forgot my password?",
-              value : "Answer6"
+              value : "Passwords may be reset by clicking <b>Login</b> and then <b>Forgot Password?</b>. You will be prompted for the email you supplied when you signed up. The password reset link will be sent to that."
             },
 
             {
               title : "How do I modify my profile?",
-              value : "Answer7"
+              value : "Once logged in, click <b>My Account</b> in the upper right and then click <b>Profile</b> in the menu. You can then change your email, password, billing info and more from there."
             },
 
             {
-              title : "How do I create new transaction sinks?",
-              value : "Answer8"
-            },
-
-            {
-              title : "What kind of sinks are available for me?",
-              value : "Answer9"
+              title : "How am I notified of new transactions?",
+              value : "You can setup endpoints to be notified of transactions via email, text message, and webhooks. These can all be configured via the <b>Filter Settings</b> on the left-hand sidebar once logged in. Note certain endpoint types are only available to users signed up for premium plans."
             }
           ]
         },
@@ -111,22 +108,27 @@ export default {
           topics : [
             {
               title : "How do I create new filters?",
-              value : "Answer10"
+              value : "Filters may be created by clicking <b>Add New Filter</b> on the left hand sidebar. Note you will only be able to create a certain amount of filters depending on your subscription level."
             },
 
             {
               title : "What is this JSONPath buisiness?",
-              value : "Answer11"
+              value : "JSONPath is a powerful expression matching language that is used when inspecting each and every transaction in the live transaction stream. There are many online resources with JSONPath documentation and examples, we encourage all users to explore the powerful deep-inspection capabilities that this syntax supports."
+            },
+
+            {
+              title : "What if I am a non-technical person?",
+              value : "Zerp Tracker also provides an extensive library of pre-built expressions for you to use in lieu of writing your own JSONPath filters. Each expression is parameterized with placeholders allowing you to customize them to match exactly the type of transactions you are looking for. Create a new filter and select the <b>Category</b> option to see all the ones that are available!"
             },
 
             {
               title : "How often am I notified of matched filters?",
-              value : "Answer12"
+              value : "Depending on your subscription level, you will be notified of transactions once a certain number of them have been matched and/or a minimum amount of time has gone by. See the different <a href='/plans'>Plans</a> for more info"
             },
 
             {
               title : "How can I be altered more frequently / instantaneously?",
-              value : "Answer13"
+              value : "Sign up for a higher subscription level to access more features."
             }
           ]
         },
@@ -136,22 +138,22 @@ export default {
           topics : [
             {
                 title : "What are the different membership levels?",
-                value : "Answer14"
+                value : "Currently " + fr0xrpl.MEMBERSHIP_LEVELS.join(", ") + " plans are available"
             },
 
             {
-              title : "What is a premium account?",
-              value : "Answer15"
+              title : "What is a pro account?",
+              value : "Everything above the first (free) membership tier is considered a <b>pro</b> account. These provide advanced features and quicker notification times."
             },
 
             {
               title : "What payment options are available to me?",
-              value : "Answer16"
+              value : "We currently accept only accept credit card payments but are exploring additional payment options (available in the near future)."
             },
 
             {
               title : "What happs when my account becomes unfunded?",
-              value : "Answer17"
+              value : "Credit card details are stored on-file with our payment provided and you will automatically be billed for your new subscription period when your current one ends. If you are unable to send a payment we will contact you via email before downgrading you account to the free tier. If you update your information at any point we will restore your account along with all the filters you created."
             }
           ]
         },
@@ -189,6 +191,11 @@ export default {
 #help{
   margin-bottom: 25px;
   padding: 25px;
+}
+
+#help_title{
+  font-family: var(--theme-font3);
+  font-weight: bold;
 }
 
 #help_content{

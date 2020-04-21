@@ -75,6 +75,16 @@
           But this is just the tip of the iceberg, <router-link to="/txs">setup your first filter today!</router-link>
           </p>
         </div>
+
+        <div id="about_section5" class="about_section">
+          <h4>Contact Us</h4>
+
+          <p>
+            Questions, feedback, and technical support can be obtained by contacting Dev Null Productions via the following form:
+          </p>
+
+          <!-- TODO contact form -->
+        </div>
       </div>
     </div>
   </MainLayout>
@@ -131,13 +141,15 @@ export default {
 
 #about_section2 h4,
 #about_section3 h4,
-#about_section4 h4{
+#about_section4 h4,
+#about_section5 h4{
   color: black;
 }
 
 #about_section2,
 #about_section3,
-#about_section4{
+#about_section4,
+#about_section5{
   border-top: 1px solid #ededed;
 }
 
