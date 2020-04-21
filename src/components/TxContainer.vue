@@ -1,6 +1,7 @@
 <template>
   <div class="tx_container">
-    <div class="tx_icon">
+    <div class="tx_icon"
+         @click="nav_to_tx">
       <div class="tx_icon_wrapper"
           :class="success ? 'success' : 'failed'">
         <img :src="tx_icon" />
@@ -47,6 +48,12 @@ export default {
 
       return require('../assets/txs/' + asset);
     }
+  },
+
+  methods : {
+    nav_to_tx : function(){
+      this.$router.push("/tx/" + this.hash);
+    }
   }
 }
 </script>
@@ -61,6 +68,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .tx_icon_wrapper{

@@ -1,0 +1,132 @@
+<template>
+  <TxsLayout section="tx">
+    <div id="tx">
+      <div id="tx_header">
+        <div id="back_icon" @click="$router.back()">
+          <img src="./assets/left-arrow-blue.svg" />
+        </div>
+
+        <div id="tx_subheader">
+          <div id="tx_title">Transaction</div>
+          <div id="tx_hash"><h5>{{hash}}</h5></div>
+        </div>
+      </div>
+
+      <div v-if="has_tx" id="tx_details">
+        <div>
+          <TxSummary :tx="tx" />
+        </div>
+
+        <div id="rendered_tx">
+          <renderjson :data="tx" level="2" />
+        </div>
+      </div>
+    </div>
+  </TxsLayout>
+</template>
+
+<script>
+import TxsLayout from './components/TxsLayout.vue'
+import TxSummary from './components/TxSummary.vue'
+
+import renderjson from './vendor/renderjson/renderjson.vue'
+
+var CommandDispatcher = require('./mixins/command_dispatcher')
+
+export default {
+  name: 'Tx',
+
+  mixins : [CommandDispatcher],
+
+  components: {
+    TxsLayout,
+    TxSummary,
+    renderjson
+  },
+
+  props : {
+    hash : String
+  },
+
+  data : function(){
+    return {
+      tx : null
+    };
+  },
+
+  computed : {
+    has_tx : function(){
+      return !!this.tx;
+    }
+  },
+
+  methods : {
+    msg_cb : function(message){
+      if(!message["result"] || !message["result"]["meta"]) return;
+
+      // XXX: transaction returned by tx command is in different
+      //       format than that in transaction stream, convert
+      this.tx = {transaction : message["result"]};
+      this.tx.meta = this.tx.transaction.meta;
+      delete this.tx.transaction.meta;
+    }
+  },
+
+  created : function(){
+    this.$store.commit('on_socket_message', this.msg_cb);
+    this.$store.commit('on_open_socket', function(){
+      var cmd = {
+        'command' : 'tx',
+        'transaction' : this.hash
+      };
+
+      this.sendCmd(cmd);
+    }.bind(this));
+  },
+
+  destroyed : function(){
+    this.$store.commit('rm_socket_message_cb', this.msg_cb);
+  }
+}
+</script>
+
+<style scoped>
+#tx_header{
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#back_icon{
+  flex-basis: 7%;
+  cursor: pointer;
+}
+
+#tx_header img{
+  width: 55px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 35px;
+}
+
+#tx_title{
+  color: var(--theme-color2);
+  opacity: 0.6;
+  font-family: var(--theme-font2);
+}
+
+#tx_hash{
+  font-family: var(--theme-font3);
+  color: var(--theme-color2);
+  font-weight: bold;
+}
+
+#tx_details{
+  border: 1px solid var(--theme-color3);
+}
+
+#rendered_tx{
+  border-top: 1px solid var(--theme-color3);
+  padding: 15px;
+}
+</style>

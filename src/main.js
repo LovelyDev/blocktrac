@@ -22,6 +22,7 @@ Vue.use(VueMoment, {moment_tz});
 
 import Landing       from './Landing.vue'
 import Txs           from './Txs.vue'
+import Tx            from './Tx.vue'
 import About         from './About.vue'
 import Help          from './Help.vue'
 import FilterDetails from './FilterDetails.vue'
@@ -50,6 +51,8 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/',         component: Landing  },
   { path: '/txs',      component: Txs      },
+  { path: '/tx/:hash', component: Tx,
+                           props: true     },
   { path: '/about',    component: About    },
   { path: '/help',     component: Help     },
   { path: '/profile',  component: Profile  },

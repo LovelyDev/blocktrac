@@ -30,6 +30,10 @@ export default {
       return this.tx_obj["TransactionType"].replace("PaymentChannel", "PayChan");
     },
 
+    hash : function(){
+      return this.tx_obj["hash"];
+    },
+
     account : function(){
       return this.tx_obj["Account"];
     },
