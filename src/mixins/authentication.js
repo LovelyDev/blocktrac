@@ -1,4 +1,5 @@
-import config from '../config'
+import config  from '../config'
+import fr0xrpl from '../fr0xrpl'
 
 export default {
   data : function(){
@@ -44,6 +45,11 @@ export default {
 
     is_premium_member : function(){
       return this.membership_level == 'premium';
+    },
+
+    authorized_filters : function(){
+      // TODO: add additional filters associated with account
+      return fr0xrpl.MEMBERSHIP_FEATURES[this.membership_level].filters;
     },
 
     ///

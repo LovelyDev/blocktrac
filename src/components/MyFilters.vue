@@ -31,12 +31,13 @@
       <FilterList ref="filter_list"/>
 
       <div id="add_new_filter"
+           v-if="remaining_filters > 0"
            v-b-modal.create_filter>
         + Add New Filter
       </div>
 
-      <div>
-        {{remaining_filters}} are left.
+      <div id="remaining_filters">
+        <span>{{remaining_filters_msg}}</span>
         <router-link to="/plans">Get a pro account</router-link>
       </div>
     </div>
@@ -64,9 +65,21 @@ export default {
   },
 
   computed : {
+    filters : function(){
+      return this.$store.state.filters;
+    },
+
     remaining_filters : function(){
-      // TODO
-      return "5 filters";
+      return this.authorized_filters - this.filters.length;
+    },
+
+    remaining_filters_msg : function(){
+      const remaining = this.remaining_filters;
+
+      if(remaining == 1)
+        return "1 filter is left. ";
+
+      return remaining + " filters are left. ";
     }
   }
 }
@@ -117,7 +130,7 @@ export default {
   background-color: var(--theme-color1);
   color: white;
   font-family: var(--theme-font3);
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 5px 10px;
   font-weight: bold;
   cursor: pointer;
@@ -135,8 +148,19 @@ export default {
   border-radius: 50px;
   padding: 10px;
   font-weight: bold;
+  font-family: var(--theme-font3);
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+#remaining_filters{
+  font-family: var(--theme-font4);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+#remaining_filters span{
+  color: var(--theme-color2);
 }
 </style>
