@@ -6,7 +6,7 @@
       </div>
 
       <h4>
-        You have been successfully updated to the<br/>
+        You have been successfully updated to the
         <b><span class="plan_name">{{plan}}</span></b>
         plan
       </h4>
@@ -35,34 +35,62 @@
 
         <table id="payment_details">
           <tr>
-            <td>First Name:</td>
-            <td><input type="text" v-model="first_name" /></td>
+            <td class="form_text">First Name:</td>
+
+            <td>
+              <input type="text"
+                     class="form_input"
+                     v-model="first_name" />
+            </td>
           </tr>
 
           <tr>
-            <td>Last Name:</td>
-            <td><input type="text" v-model="last_name" /></td>
+            <td class="form_text">Last Name:</td>
+
+            <td>
+              <input type="text"
+                     class="form_input"
+                     v-model="last_name" />
+            </td>
           </tr>
 
           <tr>
-            <td>Card Number:</td>
-            <td><input type="text" v-model="card_number" /></td>
+            <td class="form_text">Card Number:</td>
+
+            <td>
+              <input type="text"
+                     class="form_input"
+                     v-model="card_number" />
+            </td>
           </tr>
 
           <tr>
-            <td>Expiration Date:</td>
-            <td><input type="text" v-model="expiration_date" /></td>
+            <td class="form_text">Expiration Date:</td>
+
+            <td>
+              <input type="text"
+                     class="form_input"
+                     v-model="expiration_date" />
+            </td>
           </tr>
 
           <tr>
-            <td>Security Code:</td>
-            <td><input type="text" v-model="security_code" /></td>
+            <td class="form_text">Security Code:</td>
+
+            <td>
+              <input type="text"
+                     class="form_input"
+                     v-model="security_code" />
+            </td>
           </tr>
 
           <tr>
             <td></td>
             <td style="text-align: right">
-              <b-button @click="submit">Place Order</b-button>
+              <b-button id="place_order"
+                        @click="submit">
+                Place Order
+              </b-button>
             </td>
           </tr>
         </table>
@@ -146,14 +174,20 @@ export default {
 
 <style scoped>
 #success_checkout{
-  width: 60%;
+  width: 50%;
   margin: auto;
-  margin-top: 20px;
+  margin-top: 50px;
   padding: 100px;
   background-color: white;
   border: 1px solid var(--theme-color3);
   border-radius: 4px;
   text-align: center;
+  font-family: var(--theme-font2);
+}
+
+#success_checkout h4{
+  font-family: var(--theme-font3);
+  margin-bottom: 20px;
 }
 
 #success_img_container{
@@ -173,9 +207,13 @@ export default {
 }
 
 #checkout_container{
-  width: 60%;
+  width: 50%;
   margin: auto;
   margin-top: 20px;
+}
+
+#checkout_container h3{
+  font-family: var(--theme-font3);
 }
 
 #checkout_subcontainer{
@@ -184,12 +222,17 @@ export default {
   border-radius: 4px;
 }
 
+#checkout_subcontainer h5{
+  font-family: var(--theme-font3);
+}
+
 #enjoy{
   padding: 20px;
   margin-bottom: 20px;
   text-align: center;
   background-color: var(--theme-color1);
   color: white;
+  font-family: var(--theme-font2);
   border-radius: 6px;
 }
 
@@ -199,6 +242,8 @@ export default {
 
 #next_payment{
   color: var(--theme-color2);
+  font-family: var(--theme-font1);
+  opacity: 0.6;
 }
 
 #payment_details{
@@ -209,5 +254,14 @@ export default {
 
 #payment_details input{
   width: 100%;
+}
+
+#place_order{
+  background-color: var(--theme-color1);
+  border: none;
+  border-radius: 25px;
+  padding: 6px 25px;
+  font-family: var(--theme-font3);
+  font-weight: bold;
 }
 </style>

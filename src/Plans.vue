@@ -178,6 +178,21 @@ export default {
     }
   },
 
+  watch : {
+    enable_additional : {
+      handler : function(){
+        Object.keys(this.plans).forEach(function(plan){
+          if(!this.enable_additional[plan]){
+            delete this.additional_filters[plan];
+            delete this.additional_sinks[plan];
+          }
+        }.bind(this))
+      },
+
+      deep : true
+    }
+  },
+
   methods : {
     is_current_plan : function(plan){
       return this.membership_level == plan;
@@ -199,6 +214,10 @@ export default {
   width: 80%;
   margin: auto;
   margin-top: 20px;
+}
+
+#plans h3{
+  font-family: var(--theme-font3);
 }
 
 #plans_container{
@@ -293,12 +312,15 @@ export default {
 }
 
 .additional_items{
-  width: 75%;
+  width: 85%;
   margin: auto;
+  font-family: var(--theme-font1);
 }
 
 .additional_item{
   border: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .upgrade{

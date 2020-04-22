@@ -8,7 +8,7 @@
           <div id="plan_details_subcontainer">
             <div id="plan_overview">
               <h4 id="plan_name">{{plan}}</h4>
-              ${{details.cost}} /month
+              ${{details.cost}} <span>/month</span>
             </div>
 
             <div id="plan_specifics">
@@ -82,34 +82,34 @@
 
           <div id="order_details">
             <div class="order_detail">
-              <span>Filters:</span>
+              <span class="order_detail_label">Filters:</span>
               <span class="order_detail_value">{{total_filters}}</span>
             </div>
 
             <div class="order_detail">
-              <span>Sinks:</span>
+              <span class="order_detail_label">Sinks:</span>
               <span class="order_detail_value">{{total_sinks}}</span>
             </div>
 
             <div class="order_detail">
-              <span>Sinks per filter:</span>
+              <span class="order_detail_label">Sinks per filter:</span>
               <span class="order_detail_value">{{details.sinks_per_filter}}</span>
             </div>
 
             <div class="order_detail">
-              <span>Alert Time:</span>
+              <span class="order_detail_label">Alert Time:</span>
               <span class="order_detail_value">{{alert_time_text}}</span>
             </div>
 
             <div class="order_detail">
-              <span>Instant Alerts:</span>
+              <span class="order_detail_label">Instant Alerts:</span>
               <span class="order_detail_value">{{instant_alerts ? 'Yes' : 'No'}}</span>
             </div>
           </div>
 
           <div id="order_overview">
             <div class="order_detail">
-              <span>Total:</span>
+              <span class="order_detail_label">Total:</span>
               <span class="order_detail_value">${{total_cost}}</span>
             </div>
 
@@ -153,8 +153,8 @@ export default {
   data : function(){
     return {
       enable_additional : false,
-      additional_filters : 0,
-      additional_sinks : 0,
+      additional_filters : null,
+      additional_sinks : null,
       max_additions : fr0xrpl.MAX_ADDITIONS,
       period : null
     }
@@ -207,8 +207,8 @@ export default {
   watch : {
     enable_additional : function(){
       if(!this.enable_additional){
-        this.additional_filters = 0;
-        this.additional_sinks = 0;
+        this.additional_filters = null;
+        this.additional_sinks = null;
       }
     },
   },
@@ -243,6 +243,10 @@ export default {
   margin-top: 20px;
 }
 
+#plan h3{
+  font-family: var(--theme-font3);
+}
+
 #plan_container{
   display: flex;
 }
@@ -265,30 +269,44 @@ export default {
 
 #plan_details_subcontainer{
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
 }
 
 #plan_overview{
   flex-basis: 20%;
+  font-family: var(--theme-font5);
+}
+
+#plan_overview span{
+  font-family: var(--theme-font1);
 }
 
 #plan_specifics{
   flex-basis: 50%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  font-size: 1.1rem;
 }
 
 #plan_specifics > div{
-  padding: 10px;
-  border-right: 1px solid #9F9F9F;
+  flex-basis: 30%;
+  padding: 0 10px;
+  border-right: 1px solid var(--theme-color3);
 }
 
 #plan_specifics > div:last-child{
   border-right: none;
 }
 
+.specifics_label{
+  font-family: var(--theme-font1);
+}
+
 .specifics_value{
   font-weight: bold;
+  font-family: var(--theme-font4);
 }
 
 #plan_name{
@@ -301,13 +319,14 @@ export default {
 }
 
 #enable_additional{
-  flex-basis: 20%;
+  flex-basis: 25%;
   display: flex;
   align-items: center;
 }
 
 #enable_additional_label{
   color: gray;
+  font-family: var(--theme-font3);
 }
 
 #enable_additional_label.active{
@@ -317,10 +336,16 @@ export default {
 #additional_filters,
 #additional_sinks{
   flex-basis: 25%;
+  font-family: var(--theme-font1);
 }
 
 #period_selector{
   margin-top: 50px;
+  font-family: var(--theme-font5);
+}
+
+#period_selector h4{
+  font-family: var(--theme-font4);
 }
 
 #plan_periods{
@@ -342,6 +367,7 @@ export default {
 
 .orig_cost{
   text-decoration: line-through;
+  font-family: var(--theme-font1);
 }
 
 #order_container{
@@ -360,7 +386,16 @@ export default {
   justify-content: space-between;
 }
 
+.order_detail h4{
+  font-family: var(--theme-font5);
+}
+
+.order_detail_label{
+  font-family: var(--theme-font1);
+}
+
 .order_detail_value{
+  font-family: var(--theme-font5);
   font-weight: bold;
 }
 
@@ -370,6 +405,9 @@ export default {
 }
 
 #checkout_button{
-  margin-top: 10px;
+  margin-top: 25px;
+  border-radius: 25px;
+  font-family: var(--theme-font3);
+  font-weight: bold;
 }
 </style>
