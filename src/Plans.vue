@@ -7,40 +7,49 @@
         <div v-for="(plan, name) in plans"
              :key="name"
              class="plan"
-             :class="{suggested : is_suggested_plan(name)}">
+             :class="{suggested : is_suggested_plan(name),
+                      top_level : is_top_plan(name)}">
           <div class="plan_header">
             <h4 class="plan_name">
               {{name}}
               <span v-if="is_current_plan(name)">(Current Plan)</span>
             </h4>
 
-            <div class="plan_cost">
+            <h5 class="plan_cost">
               <b>{{plan.cost == 0 ? "Free" : "$" + plan.cost}}</b>
               <span v-if="plan.cost != 0"> /month</span>
-            </div>
+            </h5>
 
             <div class="plan_details">
               <div class="plan_detail">
-                <div>Filters:</div>
-                <b>{{plan.filters}}</b>
+                <div class="label">Filters:</div>
+                <span class="value">
+                  <b>{{plan.filters}}</b>
+                </span>
               </div>
 
               <div class="plan_detail">
-                <div>Sinks:</div>
-                <b>{{plan.sinks}}</b>
+                <div class="label">Sinks:</div>
+                <span class="value">
+                  <b>{{plan.sinks}}</b>
+                </span>
               </div>
 
               <div class="plan_detail">
-                <div>Alert time:</div>
-                <b>{{plan.alert_time == 0 ? 'Instant' : plan.alert_time}}</b>
-                <span v-if="plan.alert_time != 0"> min</span>
+                <div class="label">Alert time:</div>
+
+                <span class="value">
+                  <b>{{plan.alert_time == 0 ? 'Instant' : plan.alert_time}}</b>
+                  <span v-if="plan.alert_time != 0"> min</span>
+                </span>
               </div>
             </div>
           </div>
 
           <div class="plan_additions">
-            <div>
-              <b-form-checkbox v-model="enable_additional[name]" switch>
+            <div class="buy_additional">
+              <b-form-checkbox v-model="enable_additional[name]"
+                               class="form_switch" switch>
                 <span class="enable_additional"
                      :class="{active : enable_additional[name]}">Buy additional</span>
               </b-form-checkbox>
@@ -113,12 +122,17 @@ export default {
   },
 
   computed : {
+    top_plan : function(){
+      return this.levels[this.levels.length-1];
+    },
+
     suggested_plan : function(){
-      if(this.membership_level == this.levels[this.levels.length-1])
+      if(this.membership_level == this.top_plan)
         return null;
 
       return this.levels[this.levels.indexOf(this.membership_level)+1];
     },
+
 
     total_cost : function(){
       return this.levels.reduce(function(cost, level){
@@ -171,6 +185,10 @@ export default {
 
     is_suggested_plan : function(plan){
       return this.suggested_plan == plan;
+    },
+
+    is_top_plan : function(plan){
+      return this.top_plan == plan;
     }
   }
 }
@@ -189,33 +207,47 @@ export default {
 }
 
 .plan{
+  border: 3px solid var(--theme-color3);
   background-color: white;
   border-radius: 5px;
 }
 
 .plan.suggested{
-  border: 3px solid black;
+  border: 3px solid var(--theme-color1);
+}
+
+.plan.top_level{
+  border: 3px solid #FCD16D;
 }
 
 .plan_header{
-  background-color: #ecf0f6;
+  background-color: var(--theme-color1);
+  color: white;
   padding: 20px;
   border-radius: 5px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  text-align: center;
 }
 
-/* XXX: offset border */
 .plan.suggested .plan_header{
-  padding-top: 17px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.plan.top_level .plan_header{
+  background-color: #FCD16D;
+  color: #8e8e8e;
 }
 
 .plan_name{
   text-transform: capitalize;
+  font-family: var(--theme-font5);
 }
 
 .plan_cost{
   margin-bottom: 10px;
+  font-family: var(--theme-font5);
 }
 
 .plan_details{
@@ -228,7 +260,14 @@ export default {
   padding: 15px;
   padding-top: 0;
   padding-bottom: 0;
-  text-align: right
+}
+
+.plan_detail .label{
+  font-family: var(--theme-font1);
+}
+
+.plan_detail .value{
+  font-family: var(--theme-font2);
 }
 
 .plan_detail:last-child{
@@ -238,6 +277,11 @@ export default {
 .plan_additions{
   margin-top: 5px;
   text-align: center;
+}
+
+.buy_additional{
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .enable_additional{
@@ -258,7 +302,32 @@ export default {
 }
 
 .upgrade{
-  margin-top: 10px;
+  background-color: var(--theme-color1);
+  border: none;
+  border-radius: 25px;
+  margin-top: 20px;
   margin-bottom: 10px;
+}
+
+.top_level .upgrade{
+  background-color: #FCD16D;
+  color: #8e8e8e;
+}
+</style>
+
+<style>
+.top_level .form_switch.custom-switch .custom-control-label::after{
+  background-color: #FCD16D;
+  opacity: 0.8;
+}
+
+.top_level .form_switch.custom-switch .custom-control-input:checked ~ .custom-control-label::before{
+  background-color: var(--theme-color1);
+  border-color: none;
+}
+
+.top_level .form_switch.custom-switch .custom-control-input:checked ~ .custom-control-label::after{
+  background-color: #FCD16D;
+  opacity: unset;
 }
 </style>

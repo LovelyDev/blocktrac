@@ -112,7 +112,8 @@ input {
 #txs_filter_clear{
   background-color: var(--theme-color3);
   color: black;
-  margin-right: 10px;
+  margin-right: 5px;
+  padding: 0px 20px;
 }
 
 #txs_filter_save img,
