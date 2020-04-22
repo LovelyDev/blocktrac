@@ -6,7 +6,7 @@
       <b-container id="profile_content">
         <b-row class="header_row">
           <b-col>
-            <b>My profile</b>
+            My profile
           </b-col>
         </b-row>
 
@@ -40,7 +40,7 @@
 
         <b-row class="header_row">
           <b-col>
-            <b>Plan details</b>
+            Plan details
           </b-col>
         </b-row>
 
@@ -49,7 +49,7 @@
             Plan details
           </b-col>
 
-          <b-col>
+          <b-col id="membership_level">
             {{membership_level}}
           </b-col>
 
@@ -60,7 +60,7 @@
 
         <b-row class="header_row">
           <b-col>
-            <b>Billing</b>
+            Billing
           </b-col>
         </b-row>
 
@@ -78,9 +78,6 @@
 import MainLayout     from './components/MainLayout.vue'
 import Authentication from './mixins/authentication'
 
-// TODO batch size (range above in template and default below in script)
-//      from payment plan / config
-
 export default {
   name: 'Profile',
 
@@ -97,6 +94,11 @@ export default {
   width: 50%;
   margin: auto;
   margin-top: 20px;
+  font-family: var(--theme-font4);
+}
+
+#profile h1{
+  font-family: var(--theme-font3);
 }
 
 #profile_content{
@@ -107,7 +109,9 @@ export default {
 
 .header_row{
   margin: 20px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #ededed;
+  font-weight: bold;
 }
 
 .input_row{
@@ -121,5 +125,9 @@ export default {
 .action{
   color: blue;
   cursor: pointer;
+}
+
+#membership_level{
+  text-transform: capitalize;
 }
 </style>
