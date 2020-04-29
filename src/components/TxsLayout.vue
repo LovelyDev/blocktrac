@@ -87,7 +87,7 @@ export default {
 }
 
 #txs_main_container{
-  flex-basis: 76%;
+  flex-basis: 74%;
   margin-left: auto;
   overflow: auto;
 }

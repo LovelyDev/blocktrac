@@ -1,5 +1,5 @@
 <template>
-  <div id="main_header">
+  <div id="main_header" :class="$mq">
     <div id="main_title_container">
       <router-link to="/txs">
         <h2 id="main_title">
@@ -14,99 +14,46 @@
       </router-link>
     </div>
 
-    <div id="main_nav">
-      <div id="about_link_container">
-        <router-link to="/about">
-          <span id="about_link">About</span>
-        </router-link>
-      </div>
+    <div v-if="mq_lt_lg">
+      <img id="main_hamburger_open_icon"
+           src="../assets/hamburger.svg"
+           @click="hamburger_visible = true"/>
 
-      <div id="help_link_container">
-        <router-link to="/help">
-          <span id="help_link">Help</span>
-        </router-link>
-      </div>
-
-      <div id="login_link_container" v-if="!logged_in">
-        <span id="login_link" v-b-modal.login_modal>
-          Login
-        </span>
-
-        <LoginModal />
-        <ForgotPasswordModal />
-      </div>
-
-      <div v-if="!logged_in"
-             id="register_link_container">
-        <span id="register_link" v-b-modal.register_modal>
-          Register
-        </span>
-
-        <RegistrationModal />
-        <RegisterFilterModal />
-      </div>
-
-      <div v-if="logged_in"
-             id="membership_level_link_container">
-        <router-link to="/plans">
-          <span id="membership_level_link">
-            {{is_premium_member ? 'Premium' : 'Get a pro account'}}
-          </span>
-        </router-link>
-      </div>
-
-      <div v-if="logged_in"
-             id="my_account_container">
-        <span id="my_account_link">
-          <span>My Account</span>
-
-          <span v-if="!my_account_visible">
-            <img class="my_account_arrow"
-                   src="../assets/arrow-down-gray.png" />
-          </span>
-
-          <span v-else>
-            <img class="my_account_arrow"
-                   src="../assets/arrow-up-blue.png" />
-          </span>
-        </span>
-
-        <b-popover id="my_account_popover"
-                   ref="my_account_popover"
-                   target="my_account_container"
-                   placement="bottomleft"
-                   @show="my_account_show"
-                   @hide="my_account_hide">
-          <div id="profile_link" class="my_account_popover_item">
-            <img src="../assets/profile.svg" />
-            <router-link to="/profile">Profile</router-link>
+      <transition name="fade">
+        <div id="main_hamburger" v-show="hamburger_visible">
+          <div id="hide_hamburger"
+               @click="hamburger_visible = false">
+            <img id="main_hamburger_close_icon"
+                 src="../assets/x-white.svg" />
           </div>
 
-          <div id="logout_link" class="my_account_popover_item"
-               @click="$refs.my_account_popover.$emit('close'); logout()">
-            <img src="../assets/logout.svg" />
-            <span>Log out</span>
-          </div>
-        </b-popover>
-      </div>
+          <MainNav @nav="hamburger_visible = false"/>
+        </div>
+      </transition>
     </div>
+
+    <MainNav v-else />
+
+    <LoginModal />
+    <ForgotPasswordModal />
+    <RegistrationModal />
+    <RegisterFilterModal />
   </div>
 </template>
 
 <script>
+import MainNav             from './MainNav'
+
 import LoginModal          from './modals/Login'
 import ForgotPasswordModal from './modals/ForgotPassword'
 import RegistrationModal   from './modals/Registration'
 import RegisterFilterModal from './modals/RegisterFilter'
 
-import Authentication   from '../mixins/authentication'
-
 export default {
   name: 'MainHeader',
 
-  mixins : [Authentication],
-
   components : {
+    MainNav,
     LoginModal,
     ForgotPasswordModal,
     RegistrationModal,
@@ -115,6 +62,7 @@ export default {
 
   data : function(){
     return {
+      hamburger_visible : false,
       my_account_visible : false
     };
   },
@@ -132,10 +80,6 @@ export default {
 </script>
 
 <style scoped>
-a:hover{
-  text-decoration: none;
-}
-
 #main_header{
   width: 92%;
   margin: auto;
@@ -144,8 +88,16 @@ a:hover{
   align-items: center;
 }
 
+#main_header.xs{
+  align-items: unset;
+}
+
 #main_title_container{
   flex-grow: 1;
+}
+
+#main_header.xs #main_title{
+  font-size: 1.1rem;
 }
 
 #main_title{
@@ -161,97 +113,33 @@ a:hover{
   color: var(--theme-color1);
 }
 
-#main_nav{
-  flex-basis: 28%;
-  display: flex;
-  justify-content: space-between;
-}
-
-#about_link{
-  font-family: var(--theme-font1);
-  color: var(--theme-color2);
-}
-
-#help_link{
-  font-family: var(--theme-font1);
-  color: var(--theme-color2);
-}
-
-#login_link{
-  font-family: var(--theme-font1);
+#main_hamburger_open_icon{
+  width: 25px;
   cursor: pointer;
-  color: var(--theme-color2);
 }
 
-#register_link{
-  font-family: var(--theme-font1);
-  cursor: pointer;
-  border-radius: 15px;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+#main_header.xs #main_hamburger_open_icon{
+  width: 15px;
+}
+
+#main_hamburger{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+
   background-color: var(--theme-color1);
-  color: white;
+  padding: 20px;
 }
 
-#profile_link{
-  font-family: var(--theme-font1);
+#main_hamburger_close_icon{
+  width: 25px;
 }
 
-#profile_link a{
-  color: var(--theme-color2);
-}
-
-#logout_link{
-  font-family: var(--theme-font1);
+#hide_hamburger{
   cursor: pointer;
-  color: var(--theme-color2);
-}
-
-#membership_level_link_container a{
-  background-color: var(--theme-color1);
-  color: white;
-  border-radius: 15px;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-#membership_level_link{
-  font-family: var(--theme-font5);
-}
-
-#my_account_container{
-  cursor: pointer;
-}
-
-#my_account_link{
-  font-family: var(--theme-font5);
-  color: var(--theme-color2);
-}
-
-.my_account_arrow{
-  width: 10px;
-  height: 5px;
-  margin-left: 7px;
-}
-
-#my_account_popover{
-  font-size: 1.2rem;
-  min-width: 125px;
-  left: 50px !important;
-}
-
-#my_account_popover img{
-  margin-right: 5px;
-}
-
-.my_account_popover_item{
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-right: 65px;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
+  text-align: right;
 }
 </style>
