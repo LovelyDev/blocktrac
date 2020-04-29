@@ -6,7 +6,7 @@
           <h2>A Transaction Tracker for XRP</h2>
 
           <p>
-            <span class="zt">Zerp Tracker</span> allows you to monitor XRP transactions in real time and setup alerts to be notified of ledger activity via email, text message, and more. By leveraging a rich and powerful pattern matching system, Zerp Tracker facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
+            <span class="zt">Zerp Tracker</span> allows you to monitor XRP transactions in real time and setup alerts to be notified of ledger activity via email, text message, and more. By leveraging a rich and powerful pattern matching system, <span class="zt">Zerp Tracker</span> facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
           </p>
         </div>
 
@@ -14,7 +14,7 @@
           <h4>Filtering On Your Terms</h4>
 
           <p>
-            Let's say you are a XRP account holder or you are responsible for managing the XRP account for your institution. It is pertinent that you are aware of all activity pertaining to your account, whether it is transactions originating from it or funds being sent to it by others. With <span class="zt">Zerp Tracker</span> you can receive notifications immediately when this type of activity is detected and more.
+            Let's say you are an XRP account holder or you are responsible for managing the XRP account for your institution. It is pertinent that you are aware of all activity pertaining to your account, whether it is transactions originating from it or funds being sent to it by others. With <span class="zt">Zerp Tracker</span> you can receive notifications immediately when this type of activity is detected and more.
           </p>
 
           <p>
