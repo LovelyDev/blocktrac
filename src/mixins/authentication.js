@@ -48,6 +48,8 @@ export default {
     },
 
     authorized_filters : function(){
+      if(!this.membership_level) return 0;
+
       // TODO: add additional filters associated with account
       return fr0xrpl.MEMBERSHIP_FEATURES[this.membership_level].filters;
     },
@@ -143,7 +145,8 @@ export default {
                   this.$removeCookie("profile");
                 }.bind(this))
 
-      this.$router.push("/txs");
+      if(this.$route.path != "/txs")
+        this.$router.push("/txs");
     },
 
     reset_password : function(){

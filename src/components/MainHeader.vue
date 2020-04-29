@@ -14,79 +14,81 @@
       </router-link>
     </div>
 
-    <div id="about_link_container">
-      <router-link to="/about">
-        <span id="about_link">About</span>
-      </router-link>
-    </div>
+    <div id="main_nav">
+      <div id="about_link_container">
+        <router-link to="/about">
+          <span id="about_link">About</span>
+        </router-link>
+      </div>
 
-    <div id="help_link_container">
-      <router-link to="/help">
-        <span id="help_link">Help</span>
-      </router-link>
-    </div>
+      <div id="help_link_container">
+        <router-link to="/help">
+          <span id="help_link">Help</span>
+        </router-link>
+      </div>
 
-    <div id="login_link_container" v-if="!logged_in">
-      <span id="login_link" v-b-modal.login_modal>
-        Login
-      </span>
-
-      <LoginModal />
-      <ForgotPasswordModal />
-    </div>
-
-    <div v-if="!logged_in"
-           id="register_link_container">
-      <span id="register_link" v-b-modal.register_modal>
-        Register
-      </span>
-
-      <RegistrationModal />
-      <RegisterFilterModal />
-    </div>
-
-    <div v-if="logged_in"
-           id="membership_level_link_container">
-      <router-link to="/plans">
-        <span id="membership_level_link">
-          {{is_premium_member ? 'Premium' : 'Get a pro account'}}
-        </span>
-      </router-link>
-    </div>
-
-    <div v-if="logged_in"
-           id="my_account_container">
-      <span id="my_account_link">
-        <span>My Account</span>
-
-        <span v-if="!my_account_visible">
-          <img class="my_account_arrow"
-                 src="../assets/arrow-down-gray.png" />
+      <div id="login_link_container" v-if="!logged_in">
+        <span id="login_link" v-b-modal.login_modal>
+          Login
         </span>
 
-        <span v-else>
-          <img class="my_account_arrow"
-                 src="../assets/arrow-up-blue.png" />
+        <LoginModal />
+        <ForgotPasswordModal />
+      </div>
+
+      <div v-if="!logged_in"
+             id="register_link_container">
+        <span id="register_link" v-b-modal.register_modal>
+          Register
         </span>
-      </span>
 
-      <b-popover id="my_account_popover"
-                 ref="my_account_popover"
-                 target="my_account_container"
-                 placement="bottomleft"
-                 @show="my_account_show"
-                 @hide="my_account_hide">
-        <div id="profile_link">
-          <img src="../assets/profile.svg" />
-          <router-link to="/profile">Profile</router-link>
-        </div>
+        <RegistrationModal />
+        <RegisterFilterModal />
+      </div>
 
-        <div id="logout_link"
-             @click="$refs.my_account_popover.$emit('close'); logout()">
-          <img src="../assets/logout.svg" />
-          <span>Log out</span>
-        </div>
-      </b-popover>
+      <div v-if="logged_in"
+             id="membership_level_link_container">
+        <router-link to="/plans">
+          <span id="membership_level_link">
+            {{is_premium_member ? 'Premium' : 'Get a pro account'}}
+          </span>
+        </router-link>
+      </div>
+
+      <div v-if="logged_in"
+             id="my_account_container">
+        <span id="my_account_link">
+          <span>My Account</span>
+
+          <span v-if="!my_account_visible">
+            <img class="my_account_arrow"
+                   src="../assets/arrow-down-gray.png" />
+          </span>
+
+          <span v-else>
+            <img class="my_account_arrow"
+                   src="../assets/arrow-up-blue.png" />
+          </span>
+        </span>
+
+        <b-popover id="my_account_popover"
+                   ref="my_account_popover"
+                   target="my_account_container"
+                   placement="bottomleft"
+                   @show="my_account_show"
+                   @hide="my_account_hide">
+          <div id="profile_link" class="my_account_popover_item">
+            <img src="../assets/profile.svg" />
+            <router-link to="/profile">Profile</router-link>
+          </div>
+
+          <div id="logout_link" class="my_account_popover_item"
+               @click="$refs.my_account_popover.$emit('close'); logout()">
+            <img src="../assets/logout.svg" />
+            <span>Log out</span>
+          </div>
+        </b-popover>
+      </div>
     </div>
   </div>
 </template>
@@ -130,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+a:hover{
+  text-decoration: none;
+}
+
 #main_header{
   width: 92%;
   margin: auto;
@@ -155,52 +161,31 @@ export default {
   color: var(--theme-color1);
 }
 
-a:hover{
-  text-decoration: none;
+#main_nav{
+  flex-basis: 28%;
+  display: flex;
+  justify-content: space-between;
 }
 
-#about_link,
-#help_link,
-#login_link,
-#register_link,
-#profile_link,
-#logout_link{
+#about_link{
   font-family: var(--theme-font1);
-}
-
-#membership_level_link,
-#my_account_link{
-  font-family: var(--theme-font5);
-}
-
-#login_link,
-#register_link,
-#logout_link{
-  cursor: pointer;
-}
-
-#about_link,
-#help_link,
-#login_link,
-#my_account_link,
-#profile_link a,
-#logout_link{
   color: var(--theme-color2);
 }
 
-#about_link_container,
-#help_link_container,
-#login_link_container{
-  flex-basis: 6%;
-  text-align: right;
+#help_link{
+  font-family: var(--theme-font1);
+  color: var(--theme-color2);
 }
 
-#register_link_container{
-  flex-basis: 10%;
-  text-align: right;
+#login_link{
+  font-family: var(--theme-font1);
+  cursor: pointer;
+  color: var(--theme-color2);
 }
 
 #register_link{
+  font-family: var(--theme-font1);
+  cursor: pointer;
   border-radius: 15px;
   padding: 5px;
   padding-left: 15px;
@@ -209,9 +194,18 @@ a:hover{
   color: white;
 }
 
-#membership_level_link_container{
-  flex-basis: 14%;
-  text-align: right;
+#profile_link{
+  font-family: var(--theme-font1);
+}
+
+#profile_link a{
+  color: var(--theme-color2);
+}
+
+#logout_link{
+  font-family: var(--theme-font1);
+  cursor: pointer;
+  color: var(--theme-color2);
 }
 
 #membership_level_link_container a{
@@ -223,10 +217,17 @@ a:hover{
   padding-right: 15px;
 }
 
+#membership_level_link{
+  font-family: var(--theme-font5);
+}
+
 #my_account_container{
-  flex-basis: 10%;
   cursor: pointer;
-  text-align: right;
+}
+
+#my_account_link{
+  font-family: var(--theme-font5);
+  color: var(--theme-color2);
 }
 
 .my_account_arrow{
@@ -245,8 +246,7 @@ a:hover{
   margin-right: 5px;
 }
 
-#profile_link,
-#logout_link{
+.my_account_popover_item{
   margin-top: 7px;
   margin-bottom: 7px;
   margin-right: 65px;
