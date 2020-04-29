@@ -1,5 +1,5 @@
 <template>
-  <div id="main_header" :class="$mq">
+  <div id="main_header">
     <div id="main_title_container">
       <router-link to="/txs">
         <h2 id="main_title">
@@ -77,7 +77,7 @@ export default {
   align-items: center;
 }
 
-#main_header.xs{
+#main_layout.xs #main_header{
   align-items: unset;
 }
 
@@ -85,7 +85,7 @@ export default {
   flex-grow: 1;
 }
 
-#main_header.xs #main_title{
+#main_layout.xs #main_title{
   font-size: 1.1rem;
 }
 
@@ -107,7 +107,7 @@ export default {
   cursor: pointer;
 }
 
-#main_header.xs #main_hamburger_open_icon{
+#main_layout.xs #main_hamburger_open_icon{
   width: 15px;
 }
 

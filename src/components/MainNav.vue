@@ -150,11 +150,11 @@ a:hover{
   justify-content: space-between;
 }
 
-#main_header.xxl #main_nav{
+#main_layout.xxl #main_nav{
   flex-basis: 26%;
 }
 
-#main_header.xxxl #main_nav{
+#main_layout.xxxl #main_nav{
   flex-basis: 15%;
 }
 

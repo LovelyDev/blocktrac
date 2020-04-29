@@ -1,5 +1,8 @@
 <template>
-  <b-container fluid class="p-0" id="main_layout">
+  <b-container fluid
+               id="main_layout"
+               class="p-0"
+               :class="$mq">
     <b-row id="main_header_container">
       <b-col>
         <MainHeader />
