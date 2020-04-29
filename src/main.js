@@ -65,7 +65,7 @@ Vue.mixin({
     },
 
     mq_gt_sm : function(){
-      return ['md', 'lg', 'xl'].includes(this.$mq);
+      return ['md', 'lg', 'xl', 'xxl', 'xxxl'].includes(this.$mq);
     },
 
     mq_md : function(){
@@ -77,7 +77,7 @@ Vue.mixin({
     },
 
     mq_gt_md : function(){
-      return ['lg', 'xl'].includes(this.$mq);
+      return ['lg', 'xl', 'xxl', 'xxxl'].includes(this.$mq);
     },
 
     mq_lg : function(){
@@ -89,7 +89,7 @@ Vue.mixin({
     },
 
     mq_gt_lg : function(){
-      return this.$mq == 'xl'
+      return ['xl', 'xxl', 'xxxl'].includes(this.$mq);
     },
 
     mq_xl : function(){
@@ -97,8 +97,32 @@ Vue.mixin({
     },
 
     mq_lt_xl : function(){
-      return this.$mq != 'xl';
-    }
+      return ['xs', 'sm', 'md', 'lg'].includes(this.$mq)
+    },
+
+    mq_gt_xl : function(){
+      return ['xxl', 'xxxl'].includes(this.$mq);
+    },
+
+    mq_xxl : function(){
+      return this.$mq == 'xxl';
+    },
+
+    mq_lt_xxl : function(){
+      return ['xs', 'sm', 'md', 'lg', 'xl'].includes(this.$mq)
+    },
+
+    mq_gt_xxl : function(){
+      return this.$mq == 'xxxl'
+    },
+
+    mq_xxxl : function(){
+      return this.$mq == 'xxxl';
+    },
+
+    mq_lt_xxxl : function(){
+      return this.$mq != 'xxxl';
+    },
   },
 
   methods : {

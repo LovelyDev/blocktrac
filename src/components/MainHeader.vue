@@ -85,6 +85,10 @@ export default {
   flex-grow: 1;
 }
 
+#main_title_container a{
+  text-decoration: none;
+}
+
 #main_layout.xs #main_title{
   font-size: 1.1rem;
 }
