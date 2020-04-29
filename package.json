@@ -14,6 +14,7 @@
     "ripple-lib": "^1.6.5",
     "vue": "^2.6.10",
     "vue-moment": "^4.1.0",
+    "vue-mq": "^1.0.1",
     "vue-native-websocket": "^2.0.13",
     "vue-reactive-cookie": "^1.0.4",
     "vue-resource": "^1.5.1",

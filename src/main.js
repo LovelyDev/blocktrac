@@ -18,6 +18,29 @@ Vue.use(VueMoment, {moment_tz});
 
 ///
 
+import VueMq from 'vue-mq'
+
+// From bootstrap:
+// xs - 0 on up
+// sm - 576 on up
+// md - 768 on up
+// lg - 992 on up
+// xl - 1200 on up
+//
+// vue-mq defines upper-bound of media-query
+// range hence levels are shifted
+Vue.use(VueMq, {
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 992,
+    lg: 1200,
+    xl: Infinity
+  }
+})
+
+///
+
 // TODO: remove old / unused components & assets
 
 import Landing       from './Landing.vue'
