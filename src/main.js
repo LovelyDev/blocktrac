@@ -36,7 +36,10 @@ Vue.use(VueMq, {
     md: 992,
     lg: 1200,
     xl: 1450,
-    xlp: Infinity // added this one
+
+    // added these two
+    xxl: 2100,
+    xxxl: Infinity,
   }
 })
 

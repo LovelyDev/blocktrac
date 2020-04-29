@@ -27,7 +27,7 @@
                  src="../assets/x-white.svg" />
           </div>
 
-          <MainNav @nav="hamburger_visible = false"/>
+          <MainNav hamburger @nav="hamburger_visible = false"/>
         </div>
       </transition>
     </div>
@@ -62,20 +62,9 @@ export default {
 
   data : function(){
     return {
-      hamburger_visible : false,
-      my_account_visible : false
+      hamburger_visible : false
     };
   },
-
-  methods : {
-    my_account_show : function(){
-      this.my_account_visible = true;
-    },
-
-    my_account_hide : function(){
-      this.my_account_visible = false;
-    }
-  }
 }
 </script>
 

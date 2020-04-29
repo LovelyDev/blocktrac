@@ -1,5 +1,5 @@
 <template>
-  <div id="main_nav" :class="$mq">
+  <div id="main_nav">
     <div id="about_link_container"
          class="nav_container">
       <router-link to="/about">
@@ -53,7 +53,22 @@
       </router-link>
     </div>
 
-    <div v-if="logged_in"
+    <div v-if="logged_in && hamburger"
+         id="profile_link"
+         class="nav_container">
+      <router-link to="/profile">
+        <span class="nav_link">Profile</span>
+      </router-link>
+    </div>
+
+    <div v-if="logged_in && hamburger"
+         id="logout_link"
+         class="nav_container"
+         @click="logout()">
+      <span class="nav_link">Log out</span>
+    </div>
+
+    <div v-if="logged_in && !hamburger"
            id="my_account_container"
            class="nav_container">
       <span id="my_account_link"
@@ -100,7 +115,27 @@ import Authentication from '../mixins/authentication'
 export default {
   name: 'MainNav',
 
-  mixins : [Authentication]
+  mixins : [Authentication],
+
+  props : {
+    hamburger : Boolean
+  },
+
+  data : function(){
+    return {
+      my_account_visible : false
+    };
+  },
+
+  methods : {
+    my_account_show : function(){
+      this.my_account_visible = true;
+    },
+
+    my_account_hide : function(){
+      this.my_account_visible = false;
+    }
+  }
 }
 </script>
 
@@ -110,13 +145,17 @@ a:hover{
 }
 
 #main_nav{
-  flex-basis: 28%;
+  flex-basis: 36%;
   display: flex;
   justify-content: space-between;
 }
 
-#main_nav.xlp{
-  flex-basis: 20%;
+#main_header.xxl #main_nav{
+  flex-basis: 26%;
+}
+
+#main_header.xxxl #main_nav{
+  flex-basis: 15%;
 }
 
 #main_hamburger #main_nav{
@@ -187,6 +226,15 @@ a:hover{
   padding: 5px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+#main_hamburger #membership_level_link_container a{
+  border-radius: 25px;
+  background-color: white;
+}
+
+#main_hamburger #membership_level_link{
+  color: var(--theme-color1);
 }
 
 #membership_level_link{
