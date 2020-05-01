@@ -1,5 +1,6 @@
 <template>
-  <div id="main_nav">
+  <div id="main_nav"
+       :class="{logged_in : logged_in}">
     <div class="nav_container">
       <router-link to="/about">
         <span id="about_link"
@@ -29,7 +30,8 @@
     </div>
 
     <div v-if="!logged_in"
-           class="nav_container">
+         id="register_link_container"
+         class="nav_container">
       <span id="register_link"
             class="nav_link"
             @click="$emit('nav')"
@@ -40,7 +42,8 @@
 
     <div v-if="logged_in"
            id="membership_level_link_container"
-           class="nav_container">
+           class="nav_container"
+           :class="{premium : is_premium_member}">
       <router-link to="/plans">
         <span id="membership_level_link"
               class="nav_link">
@@ -141,17 +144,8 @@ a:hover{
 }
 
 #main_nav{
-  flex-basis: 38%;
   display: flex;
   justify-content: space-between;
-}
-
-#main_layout.xxl #main_nav{
-  flex-basis: 29%;
-}
-
-#main_layout.xxxl #main_nav{
-  flex-basis: 25%;
 }
 
 #main_hamburger #main_nav{
@@ -159,7 +153,10 @@ a:hover{
 }
 
 .nav_container{
-  min-width: 50px;
+  min-width: 65px;
+}
+
+#main_nav:not(.logged_in) .nav_container{
   text-align: center;
 }
 
@@ -187,6 +184,10 @@ a:hover{
   font-family: var(--theme-font1);
   cursor: pointer;
   color: var(--theme-color2);
+}
+
+#register_link_container{
+  min-width: 125px;
 }
 
 #register_link{
@@ -218,6 +219,14 @@ a:hover{
   font-family: var(--theme-font1);
   cursor: pointer;
   color: var(--theme-color2);
+}
+
+#membership_level_link_container{
+  min-width: 125px;
+}
+
+#membership_level_link_container:not(.premium){
+  min-width: 185px;
 }
 
 #membership_level_link_container a{
