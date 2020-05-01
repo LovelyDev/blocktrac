@@ -1,7 +1,7 @@
 <template>
   <div class="account_detail">
     <div class="tx_detail_label">
-      <img src="../assets/person2.svg" />&nbsp;
+      <img src="../assets/person.svg" />&nbsp;
       <span>{{text}}</span>
     </div>
 

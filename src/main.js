@@ -16,8 +16,6 @@ Vue.use(VueMoment, {moment_tz});
 
 require('./mq')
 
-// TODO: remove old / unused components & assets
-
 import Landing       from './Landing'
 import Txs           from './Txs'
 import Tx            from './Tx'
