@@ -35,9 +35,16 @@
 
         <table id="payment_details">
           <tr>
-            <td class="form_text">First Name:</td>
+            <td v-if="mq_gt_sm"
+                class="form_text">
+              First Name:
+            </td>
 
             <td>
+              <div v-if="mq_lt_md">
+                First Name:
+              </div>
+
               <input type="text"
                      class="form_input"
                      v-model="first_name" />
@@ -45,9 +52,16 @@
           </tr>
 
           <tr>
-            <td class="form_text">Last Name:</td>
+            <td v-if="mq_gt_sm"
+                class="form_text">
+              Last Name:
+            </td>
 
             <td>
+              <div v-if="mq_lt_md">
+                Last Name:
+              </div>
+
               <input type="text"
                      class="form_input"
                      v-model="last_name" />
@@ -55,9 +69,17 @@
           </tr>
 
           <tr>
-            <td class="form_text">Card Number:</td>
+            <td v-if="mq_gt_sm"
+                class="form_text">
+              Card Number:
+            </td>
 
             <td>
+              <div v-if="mq_lt_md"
+                  class="form_text">
+                Card Number:
+              </div>
+
               <input type="text"
                      class="form_input"
                      v-model="card_number" />
@@ -65,9 +87,17 @@
           </tr>
 
           <tr>
-            <td class="form_text">Expiration Date:</td>
+            <td v-if="mq_gt_sm"
+                class="form_text">
+              Expiration Date:
+            </td>
 
             <td>
+              <div v-if="mq_lt_md"
+                  class="form_text">
+                Expiration Date:
+              </div>
+
               <input type="text"
                      class="form_input"
                      v-model="expiration_date" />
@@ -75,9 +105,17 @@
           </tr>
 
           <tr>
-            <td class="form_text">Security Code:</td>
+            <td v-if="mq_gt_sm"
+                class="form_text">
+              Security Code:
+            </td>
 
             <td>
+              <div v-if="mq_lt_md"
+                  class="form_text">
+                Security Code:
+              </div>
+
               <input type="text"
                      class="form_input"
                      v-model="security_code" />
@@ -85,7 +123,7 @@
           </tr>
 
           <tr>
-            <td></td>
+            <td v-if="mq_gt_sm"></td>
             <td style="text-align: right">
               <b-button id="place_order"
                         @click="submit">
@@ -212,6 +250,16 @@ export default {
   margin-top: 20px;
 }
 
+#main_layout.md #checkout_container,
+#main_layout.sm #checkout_container{
+  width: 80%;
+}
+
+#main_layout.xs #checkout_container{
+  width: unset;
+}
+
+
 #checkout_container h3{
   font-family: var(--theme-font3);
 }
@@ -220,6 +268,10 @@ export default {
   padding: 30px;
   background-color: white;
   border-radius: 4px;
+}
+
+#main_layout.xs #checkout_subcontainer{
+  padding: 15px;
 }
 
 #checkout_subcontainer h5{
