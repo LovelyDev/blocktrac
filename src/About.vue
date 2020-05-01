@@ -58,7 +58,7 @@
           </div>
 
           <p>
-            But if you do not want to build these expressions, fear not! <span class="zt">Zerp Tracker</span> bundles a <b>pre-built library of expressions</b>, allowing you to quickly setup the filters you are interested in. Each of these pre-built expressions are fully parameterized allowing you to plugin the transaction type, currencies, payment ranges that you are interested in and much more!
+            But if you do not want to build these expressions, fear not! <span class="zt">Zerp Tracker</span> bundles a <b>library of pre-built expressions</b>, allowing you to quickly setup the filters you are interested in. Each of these pre-built expressions are fully parameterized allowing you to plugin the transaction type, currencies, payment ranges that you are interested in and much more!
           </p>
 
           <img src="./assets/landing/section4a.png" />

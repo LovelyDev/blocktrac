@@ -152,7 +152,7 @@ export default {
             },
 
             {
-              title : "What happs when my account becomes unfunded?",
+              title : "What happens when my account becomes unfunded?",
               value : "Credit card details are stored on-file with our payment provided and you will automatically be billed for your new subscription period when your current one ends. If you are unable to send a payment we will contact you via email before downgrading you account to the free tier. If you update your information at any point we will restore your account along with all the filters you created."
             }
           ]
