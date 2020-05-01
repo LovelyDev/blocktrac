@@ -47,7 +47,7 @@
       <router-link to="/plans">
         <span id="membership_level_link"
               class="nav_link">
-          {{is_premium_member ? 'Premium' : 'Get a pro account'}}
+          {{is_premium_member ? 'Premium' : hamburger ? 'Upgrade' : 'Get a pro account'}}
         </span>
       </router-link>
     </div>

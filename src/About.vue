@@ -115,6 +115,12 @@ export default {
   padding: 25px;
 }
 
+#main_layout.sm #about,
+#main_layout.xs #about{
+  padding: unset;
+  padding-top: 25px;
+}
+
 #about_content{
   border: 1px solid #ededed;
   border-radius: 5px;
@@ -133,6 +139,11 @@ export default {
 .about_section{
   padding: 50px;
   color: var(--theme-color4);
+}
+
+#main_layout.sm .about_section,
+#main_layout.xs .about_section{
+  padding: 15px;
 }
 
 #about_section1 h2{
@@ -161,6 +172,11 @@ export default {
   display: block;
   width: 75%;
   margin: auto;
+}
+
+#main_layout.sm #about_section3 img,
+#main_layout.xs #about_section3 img{
+  width: 100%;
 }
 
 #expression_example2{
