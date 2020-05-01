@@ -1,7 +1,6 @@
 <template>
   <div id="main_nav">
-    <div id="about_link_container"
-         class="nav_container">
+    <div class="nav_container">
       <router-link to="/about">
         <span id="about_link"
               class="nav_link">
@@ -10,8 +9,7 @@
       </router-link>
     </div>
 
-    <div id="help_link_container"
-         class="nav_container">
+    <div class="nav_container">
       <router-link to="/help">
         <span id="help_link"
               class="nav_link">
@@ -21,7 +19,6 @@
     </div>
 
     <div v-if="!logged_in"
-         id="login_link_container"
          class="nav_container">
       <span id="login_link"
             class="nav_link"
@@ -32,7 +29,6 @@
     </div>
 
     <div v-if="!logged_in"
-           id="register_link_container"
            class="nav_container">
       <span id="register_link"
             class="nav_link"
@@ -145,21 +141,26 @@ a:hover{
 }
 
 #main_nav{
-  flex-basis: 36%;
+  flex-basis: 38%;
   display: flex;
   justify-content: space-between;
 }
 
 #main_layout.xxl #main_nav{
-  flex-basis: 26%;
+  flex-basis: 29%;
 }
 
 #main_layout.xxxl #main_nav{
-  flex-basis: 15%;
+  flex-basis: 25%;
 }
 
 #main_hamburger #main_nav{
   flex-direction: column;
+}
+
+.nav_container{
+  min-width: 50px;
+  text-align: center;
 }
 
 #main_hamburger .nav_container{
@@ -259,7 +260,7 @@ a:hover{
 #my_account_popover{
   font-size: 1.2rem;
   min-width: 125px;
-  left: 50px !important;
+  left: 57px !important;
 }
 
 #my_account_popover img{
