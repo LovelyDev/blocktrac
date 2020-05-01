@@ -8,7 +8,7 @@
           <div id="plan_details_subcontainer">
             <div id="plan_overview">
               <h4 id="plan_name">{{plan}}</h4>
-              ${{details.cost}} <span>/month</span>
+              <span>${{details.cost}} <span>/month</span></span>
             </div>
 
             <div id="plan_specifics">
@@ -38,7 +38,7 @@
             </div>
 
             <div id="additional_filters">
-              Filters:
+              <span>Filters:</span>
               <b-form-spinbutton class="additional_item" inline
                                 :max="max_additions.filters"
                                 v-model="additional_filters"
@@ -46,7 +46,7 @@
             </div>
 
             <div id="additional_sinks">
-              Sinks:
+              <span>Sinks:</span>
               <b-form-spinbutton class="additional_item" inline
                                 :max="max_additions.sinks"
                                 v-model="additional_sinks"
@@ -249,15 +249,22 @@ export default {
 
 #plan_container{
   display: flex;
+  justify-content: space-between;
 }
 
+#main_layout.md #plan_container,
+#main_layout.sm #plan_container,
+#main_layout.xs #plan_container{
+  flex-direction: column;
+}
+
+
 #plan_details{
-  flex-basis: 80%;
+  flex-basis: 78%;
   background-color: white;
   border: 1px solid var(--theme-color3);
   border-radius: 4px;
   padding: 20px;
-  margin-right: 20px;
 }
 
 #order_container{
@@ -267,6 +274,16 @@ export default {
   padding: 20px;
 }
 
+#main_layout.md #order_container,
+#main_layout.sm #order_container,
+#main_layout.xs #order_container{
+  margin-top: 15px;
+}
+
+#main_layout.xs #order_container{
+  padding: 20px 10px;
+}
+
 #plan_details_subcontainer{
   display: flex;
   justify-content: space-between;
@@ -274,9 +291,21 @@ export default {
   padding: 20px;
 }
 
+#main_layout.sm #plan_details_subcontainer,
+#main_layout.xs #plan_details_subcontainer{
+  flex-direction: column;
+  align-items: unset;
+}
+
 #plan_overview{
   flex-basis: 20%;
   font-family: var(--theme-font5);
+}
+
+#main_layout.sm #plan_overview,
+#main_layout.xs #plan_overview{
+  display: flex;
+  justify-content: space-between;
 }
 
 #plan_overview span{
@@ -284,20 +313,37 @@ export default {
 }
 
 #plan_specifics{
-  flex-basis: 50%;
+  flex-basis: 60%;
   display: flex;
   justify-content: space-between;
   font-size: 1.1rem;
 }
 
-#plan_specifics > div{
-  flex-basis: 30%;
+#main_layout.sm #plan_specifics,
+#main_layout.xs #plan_specifics{
+  margin-top: 10px;
+}
+
+#filters,
+#sinks{
+  flex-basis: 20%;
   padding: 0 10px;
   border-right: 1px solid var(--theme-color3);
 }
 
-#plan_specifics > div:last-child{
-  border-right: none;
+#alert_time{
+  flex-basis: 45%;
+  padding: 0 10px;
+}
+
+#main_layout.sm #filters,
+#main_layout.xs #filters,
+#main_layout.sm #sinks,
+#main_layout.xs #sinks,
+#main_layout.sm #alert_time,
+#main_layout.xs #alert_time{
+  flex-basis: 33%;
+  text-align: center;
 }
 
 .specifics_label{
@@ -318,10 +364,16 @@ export default {
   padding: 20px;
 }
 
+#main_layout.sm #additional_items,
+#main_layout.xs #additional_items{
+  flex-direction: column;
+}
+
 #enable_additional{
   flex-basis: 25%;
   display: flex;
   align-items: center;
+  margin-right: 10px;
 }
 
 #enable_additional_label{
@@ -339,9 +391,39 @@ export default {
   font-family: var(--theme-font1);
 }
 
+#additional_filters span,
+#additional_sinks span{
+  margin-right: 10px;
+}
+
+#main_layout.sm #additional_filters,
+#main_layout.sm #additional_sinks,
+#main_layout.xs #additional_filters,
+#main_layout.xs #additional_sinks{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#additional_filters{
+  margin-right: 10px;
+}
+
+#main_layout.sm #additional_filters,
+#main_layout.xs #additional_filters{
+  margin-right: unset;
+  margin-bottom: 10px;
+}
+
 #period_selector{
   margin-top: 50px;
   font-family: var(--theme-font5);
+}
+
+#main_layout.md #period_selector,
+#main_layout.sm #period_selector,
+#main_layout.xs #period_selector{
+  margin-top: 10px;
 }
 
 #period_selector h4{
@@ -353,11 +435,24 @@ export default {
   justify-content: space-evenly;
 }
 
+#main_layout.sm #plan_periods,
+#main_layout.xs #plan_periods{
+  flex-direction: column;
+}
+
 .plan_period{
   padding: 20px;
   border: 1px solid var(--theme-color1);
   border-radius: 4px;
   cursor: pointer;
+}
+
+#main_layout.sm .plan_period,
+#main_layout.xs .plan_period{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 .plan_period.selected{
