@@ -5,7 +5,7 @@
 
       <div id="help_content">
         <div id="help_categories">
-          <b-list-group>
+          <b-list-group v-if="mq_gt_md">
             <b-list-group-item v-for="category in categories"
                                :key="category"
                                class="help_category"
@@ -22,6 +22,18 @@
               </div>
             </b-list-group-item>
           </b-list-group>
+
+          <b-form-select v-else
+                         v-model="active"
+                         @change="set_active">
+            <b-form-select-option v-for="category in categories"
+                                  :key="category"
+                                  :value="category"
+                                  class="help_category">
+              <!-- TODO cannot add icon to select, use vue-select ? -->
+              {{category}}
+            </b-form-select-option>
+          </b-form-select>
         </div>
 
         <div id="help_topics">
@@ -190,7 +202,8 @@ export default {
 <style scoped>
 #help{
   margin-bottom: 25px;
-  padding: 25px;
+  padding: 5px;
+  padding-top: 25px;
 }
 
 #help_title{
@@ -199,15 +212,20 @@ export default {
 }
 
 #help_content{
-  border: 1px solid #ededed;
-  background-color: white;
   padding: 25px;
-
   display: flex;
+  justify-content: space-between;
+}
+
+#main_layout.md #help_content,
+#main_layout.sm #help_content,
+#main_layout.xs #help_content{
+  padding: 5px;
+  flex-direction: column;
 }
 
 #help_categories{
-  flex-basis:  22%;
+  flex-basis:  18%;
 }
 
 .help_category{
@@ -215,6 +233,9 @@ export default {
   cursor: pointer;
   border: none;
   font-family: var(--theme-font5);
+  padding: 10px;
+  background-color: unset;
+  color: #ABB4BF;
 }
 
 .help_category:first-child{
@@ -248,18 +269,34 @@ export default {
 }
 
 .category_expand{
-  flex-basis: 5%;
+  flex-basis: 7%;
 }
 
 #help_topics{
-  flex-basis:  76%;
+  flex-basis: 80%;
   padding: 15px;
+  border: 1px solid #ededed;
+  background-color: white;
+}
+
+#main_layout.md #help_topics,
+#main_layout.sm #help_topics,
+#main_layout.xs #help_topics{
+  padding: unset;
+  border: unset;
+  background-color: unset;
 }
 
 .topic{
-  padding: 25px;
+  padding: 10px;
   text-align: justify;
   border-bottom: 1px solid var(--theme-color3);
+}
+
+#main_layout.md .topic,
+#main_layout.sm .topic,
+#main_layout.xs .topic{
+  text-align: unset;
 }
 
 .topic:last-child{
