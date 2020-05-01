@@ -223,6 +223,13 @@ export default {
   font-family: var(--theme-font2);
 }
 
+#main_layout.md #success_checkout,
+#main_layout.sm #success_checkout,
+#main_layout.xs #success_checkout{
+  width: unset;
+  padding: 75px 20px;
+}
+
 #success_checkout h4{
   font-family: var(--theme-font3);
   margin-bottom: 20px;

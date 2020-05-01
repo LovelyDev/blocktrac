@@ -295,6 +295,7 @@ export default {
 #main_layout.xs #plan_details_subcontainer{
   flex-direction: column;
   align-items: unset;
+  padding: 0;
 }
 
 #plan_overview{
@@ -306,6 +307,7 @@ export default {
 #main_layout.xs #plan_overview{
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #plan_overview span{
@@ -344,6 +346,7 @@ export default {
 #main_layout.xs #alert_time{
   flex-basis: 33%;
   text-align: center;
+  padding: 0;
 }
 
 .specifics_label{
@@ -367,6 +370,7 @@ export default {
 #main_layout.sm #additional_items,
 #main_layout.xs #additional_items{
   flex-direction: column;
+  padding: 20px 0;
 }
 
 #enable_additional{
