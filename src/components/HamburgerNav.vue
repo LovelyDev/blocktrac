@@ -43,7 +43,7 @@ export default {
 }
 
 #main_layout.xs #main_hamburger_open_icon{
-  width: 15px;
+  width: 20px;
 }
 
 #main_hamburger{

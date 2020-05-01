@@ -18,18 +18,18 @@
 </template>
 
 <script>
-import PaymentTx              from './tx_types/Payment.vue'
-import OfferCreateTx          from './tx_types/OfferCreate.vue'
-import OfferCancelTx          from './tx_types/OfferCancel.vue'
-import EscrowCreateTx         from './tx_types/EscrowCreate.vue'
-import EscrowCancelTx         from './tx_types/EscrowCancel.vue'
-import EscrowFinishTx         from './tx_types/EscrowFinish.vue'
-import TrustSetTx             from './tx_types/TrustSet.vue'
-import SignerListSetTx        from './tx_types/SignerListSet.vue'
-import AccountSetTx           from './tx_types/AccountSet.vue'
-import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim.vue'
-import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate.vue'
-import PaymentChannelFundTx   from './tx_types/PaymentChannelFund.vue'
+import PaymentTx              from './tx_types/Payment'
+import OfferCreateTx          from './tx_types/OfferCreate'
+import OfferCancelTx          from './tx_types/OfferCancel'
+import EscrowCreateTx         from './tx_types/EscrowCreate'
+import EscrowCancelTx         from './tx_types/EscrowCancel'
+import EscrowFinishTx         from './tx_types/EscrowFinish'
+import TrustSetTx             from './tx_types/TrustSet'
+import SignerListSetTx        from './tx_types/SignerListSet'
+import AccountSetTx           from './tx_types/AccountSet'
+import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim'
+import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate'
+import PaymentChannelFundTx   from './tx_types/PaymentChannelFund'
 
 var HasTx = require('../mixins/has_tx').default;
 

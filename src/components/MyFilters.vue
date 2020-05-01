@@ -49,9 +49,9 @@
 
 <script>
 import Authentication    from '../mixins/authentication'
-import FilterList        from './FilterList.vue'
-import CreateFilterModal from './modals/CreateFilter.vue'
-import SettingsModal     from './modals/Settings.vue'
+import FilterList        from './FilterList'
+import CreateFilterModal from './modals/CreateFilter'
+import SettingsModal     from './modals/Settings'
 
 export default {
   name: 'MyFilters',

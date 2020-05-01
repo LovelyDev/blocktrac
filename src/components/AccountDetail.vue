@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import AccountLink from './AccountLink.vue'
+import AccountLink from './AccountLink'
 
 export default {
   name: 'AccountDetail',

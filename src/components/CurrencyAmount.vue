@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import AccountLink  from './AccountLink.vue'
-import CurrencyIcon from './CurrencyIcon.vue'
+import AccountLink  from './AccountLink'
+import CurrencyIcon from './CurrencyIcon'
 
 import config      from '../config.js'
 

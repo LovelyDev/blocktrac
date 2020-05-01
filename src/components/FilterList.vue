@@ -23,7 +23,7 @@
 <script>
 import Authentication from '../mixins/authentication'
 import ServerAPI      from '../mixins/server_api'
-import FilterSummary  from './FilterSummary.vue'
+import FilterSummary  from './FilterSummary'
 
 export default {
   name: 'FilterList',

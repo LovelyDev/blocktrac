@@ -33,7 +33,7 @@
 <script>
 import Authentication  from '../mixins/authentication'
 import ServerAPI       from '../mixins/server_api'
-import SaveFilterModal from './modals/SaveFilter.vue'
+import SaveFilterModal from './modals/SaveFilter'
 
 export default {
   name: 'TxFilter',

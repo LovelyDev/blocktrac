@@ -60,11 +60,11 @@
 <script>
 import ServerAPI from '../mixins/server_api'
 
-import DeleteFilterModal    from './modals/DeleteFilter.vue'
-import DuplicateFilterModal from './modals/DuplicateFilter.vue'
-import EditFilterModal      from './modals/EditFilter.vue'
+import DeleteFilterModal    from './modals/DeleteFilter'
+import DuplicateFilterModal from './modals/DuplicateFilter'
+import EditFilterModal      from './modals/EditFilter'
 
-import FilterSummary        from './FilterSummary.vue'
+import FilterSummary        from './FilterSummary'
 
 export default {
   name: 'FilterHeader',

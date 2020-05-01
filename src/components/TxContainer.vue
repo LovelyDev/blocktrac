@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import AccountDetail from './AccountDetail.vue'
+import AccountDetail from './AccountDetail'
 
 var HasTx = require('../mixins/has_tx').default
 

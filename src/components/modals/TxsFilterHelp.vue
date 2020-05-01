@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FilterHelp from '../FilterHelp.vue'
+import FilterHelp from '../FilterHelp'
 
 export default {
   name: 'TxsFilterHelpModal',

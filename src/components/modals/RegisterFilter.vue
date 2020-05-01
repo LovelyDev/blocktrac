@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import FilterSummary    from '../FilterSummary.vue'
-import RegistrationForm from '../forms/Registration.vue'
+import FilterSummary    from '../FilterSummary'
+import RegistrationForm from '../forms/Registration'
 import Validatable      from '../../mixins/validatable'
 
 export default {

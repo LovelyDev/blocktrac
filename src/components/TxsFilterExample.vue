@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import FilterHelpModal from './modals/TxsFilterHelp.vue'
+import FilterHelpModal from './modals/TxsFilterHelp'
 
 export default {
   name: 'TxFilterExample',

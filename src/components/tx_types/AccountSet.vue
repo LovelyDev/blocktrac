@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TxContainer from '../TxContainer.vue'
+import TxContainer from '../TxContainer'
 
 import util from '../../util'
 

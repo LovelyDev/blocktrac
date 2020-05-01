@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import LoginForm   from '../forms/Login.vue'
+import LoginForm   from '../forms/Login'
 import Validatable from '../../mixins/validatable'
 
 export default {

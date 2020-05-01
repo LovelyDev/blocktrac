@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import TxContainer    from '../TxContainer.vue'
-import CurrencyAmount from '../CurrencyAmount.vue'
-import AccountDetail  from '../AccountDetail.vue'
+import TxContainer    from '../TxContainer'
+import CurrencyAmount from '../CurrencyAmount'
+import AccountDetail  from '../AccountDetail'
 
 var HasTx = require('../../mixins/has_tx').default
 

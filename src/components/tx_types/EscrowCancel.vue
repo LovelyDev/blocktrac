@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import TxContainer  from '../TxContainer.vue'
-import CurrencyIcon from '../CurrencyIcon.vue'
+import TxContainer  from '../TxContainer'
+import CurrencyIcon from '../CurrencyIcon'
 
 import config        from '../../config'
 

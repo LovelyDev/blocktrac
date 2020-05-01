@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ForgotPasswordForm from '../forms/ForgotPassword.vue'
+import ForgotPasswordForm from '../forms/ForgotPassword'
 import Validatable        from '../../mixins/validatable'
 
 export default {

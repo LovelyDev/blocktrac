@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import TxsFilter        from './TxsFilter.vue'
-import TxsFilterExample from './TxsFilterExample.vue'
-import TxsCategories    from './TxsCategories.vue'
-import TxSummary        from './TxSummary.vue'
+import TxsFilter        from './TxsFilter'
+import TxsFilterExample from './TxsFilterExample'
+import TxsCategories    from './TxsCategories'
+import TxSummary        from './TxSummary'
 
 var CommandDispatcher = require('../mixins/command_dispatcher')
 

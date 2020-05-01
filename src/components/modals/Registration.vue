@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import RegistrationForm from '../forms/Registration.vue'
+import RegistrationForm from '../forms/Registration'
 import Validatable      from '../../mixins/validatable'
 
 // TODO: submit on enter (and other modals)

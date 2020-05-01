@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
+import MainLayout from './components/MainLayout'
 
 import fr0xrpl from './fr0xrpl'
 

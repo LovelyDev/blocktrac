@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import MyFilters      from './MyFilters.vue'
-import AccountMonitor from './AccountMonitor.vue'
+import MyFilters      from './MyFilters'
+import AccountMonitor from './AccountMonitor'
 
 import Authentication from '../mixins/authentication'
 

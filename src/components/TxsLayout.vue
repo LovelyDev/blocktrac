@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import MainLayout from './MainLayout.vue'
-import TxsControl from './TxsControl.vue'
-import TxsSideBar from './TxsSideBar.vue'
+import MainLayout from './MainLayout'
+import TxsControl from './TxsControl'
+import TxsSideBar from './TxsSideBar'
 
 export default {
   name: 'Txs',

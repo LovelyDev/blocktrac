@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import BatchSettingsForm from '../forms/BatchSettings.vue'
-import SinksSettingsForm from '../forms/SinksSettings.vue'
+import BatchSettingsForm from '../forms/BatchSettings'
+import SinksSettingsForm from '../forms/SinksSettings'
 
 // TODO save on ok
 

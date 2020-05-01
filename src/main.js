@@ -136,17 +136,17 @@ Vue.mixin({
 
 // TODO: remove old / unused components & assets
 
-import Landing       from './Landing.vue'
-import Txs           from './Txs.vue'
-import Tx            from './Tx.vue'
-import About         from './About.vue'
-import Help          from './Help.vue'
-import FilterDetails from './FilterDetails.vue'
-import FilterTester  from './FilterTester.vue'
-import Profile       from './Profile.vue'
-import Plans         from './Plans.vue'
-import Plan          from './Plan.vue'
-import Checkout      from './Checkout.vue'
+import Landing       from './Landing'
+import Txs           from './Txs'
+import Tx            from './Tx'
+import About         from './About'
+import Help          from './Help'
+import FilterDetails from './FilterDetails'
+import FilterTester  from './FilterTester'
+import Profile       from './Profile'
+import Plans         from './Plans'
+import Plan          from './Plan'
+import Checkout      from './Checkout'
 
 import("../public/common.css")
 import("../public/fonts.css")

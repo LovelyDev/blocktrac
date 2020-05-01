@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
+import MainLayout from './components/MainLayout'
 import config     from './config'
 
 export default {

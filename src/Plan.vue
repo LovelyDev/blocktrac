@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import MainLayout     from './components/MainLayout.vue'
+import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
 import fr0xrpl from './fr0xrpl'

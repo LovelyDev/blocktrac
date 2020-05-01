@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout.vue'
+import MainLayout from './components/MainLayout'
 
 export default {
   name: 'Landing',

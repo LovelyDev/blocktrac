@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import TxsLayout from './components/TxsLayout.vue'
-import TxsList   from './components/TxsList.vue'
+import TxsLayout from './components/TxsLayout'
+import TxsList   from './components/TxsList'
 
 export default {
   name: 'Txs',

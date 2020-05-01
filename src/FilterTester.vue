@@ -47,9 +47,9 @@
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 
-import TxsLayout      from './components/TxsLayout.vue'
-import FilterHeader   from './components/FilterHeader.vue'
-import TxSummary      from './components/TxSummary.vue'
+import TxsLayout      from './components/TxsLayout'
+import FilterHeader   from './components/FilterHeader'
+import TxSummary      from './components/TxSummary'
 
 import util           from './util'
 

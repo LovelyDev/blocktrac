@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TxContainer from '../TxContainer.vue'
+import TxContainer from '../TxContainer'
 
 var HasTx = require('../../mixins/has_tx').default
 

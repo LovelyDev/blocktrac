@@ -40,8 +40,8 @@
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 
-import TxsLayout      from './components/TxsLayout.vue'
-import FilterHeader   from './components/FilterHeader.vue'
+import TxsLayout      from './components/TxsLayout'
+import FilterHeader   from './components/FilterHeader'
 
 export default {
   name: 'FilterDetails',

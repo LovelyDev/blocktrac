@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import TxsLayout from './components/TxsLayout.vue'
-import TxSummary from './components/TxSummary.vue'
+import TxsLayout from './components/TxsLayout'
+import TxSummary from './components/TxSummary'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
 
