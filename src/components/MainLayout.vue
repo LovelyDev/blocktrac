@@ -4,7 +4,7 @@
                class="p-0"
                :class="$mq">
     <b-row id="main_header_container">
-      <b-col>
+      <b-col class="p-0">
         <MainHeader />
       </b-col>
     </b-row>
