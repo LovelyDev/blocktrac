@@ -211,7 +211,6 @@ export default {
 
 <style scoped>
 #plans{
-  width: 80%;
   margin: auto;
   margin-top: 20px;
 }
@@ -222,13 +221,27 @@ export default {
 
 #plans_container{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+}
+
+#main_layout.md #plans_container,
+#main_layout.sm #plans_container,
+#main_layout.xs #plans_container{
+  flex-direction: column;
 }
 
 .plan{
   border: 3px solid var(--theme-color3);
   background-color: white;
   border-radius: 5px;
+  width: 300px;
+  margin: auto;
+}
+
+#main_layout.md .plan,
+#main_layout.sm .plan,
+#main_layout.xs .plan{
+  margin-bottom: 20px;
 }
 
 .plan.suggested{
@@ -243,10 +256,11 @@ export default {
   background-color: var(--theme-color1);
   color: white;
   padding: 20px;
-  border-radius: 5px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   text-align: center;
+}
+
+#main_layout.lg .plan_header{
+  padding: 20px 5px;
 }
 
 .plan.suggested .plan_header{
