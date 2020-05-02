@@ -23,17 +23,19 @@
             </b-list-group-item>
           </b-list-group>
 
-          <b-form-select v-else
-                         v-model="active"
-                         @change="set_active">
-            <b-form-select-option v-for="category in categories"
-                                  :key="category"
-                                  :value="category"
-                                  class="help_category">
-              <!-- TODO cannot add icon to select, use vue-select ? -->
-              {{category}}
-            </b-form-select-option>
-          </b-form-select>
+          <multiselect v-else
+                       v-model="active"
+                       :options="categories">
+            <template slot="option" slot-scope="props">
+              <div class="help_category">
+                <div class="category_icon">
+                  <img :src="icon_for(props.option)" />
+                </div>
+
+                <span class="category_title">{{props.option}}</span>
+              </div>
+            </template>
+          </multiselect>
         </div>
 
         <div id="help_topics">
@@ -236,6 +238,12 @@ export default {
   padding: 10px;
   background-color: unset;
   color: #ABB4BF;
+}
+
+#main_layout.md .help_category,
+#main_layout.sm .help_category,
+#main_layout.xs .help_category{
+  padding: unset;
 }
 
 .help_category:first-child{
