@@ -6,11 +6,11 @@
 
     <div id="txs_filter_example_jsonpath"
           @click="set_filter(example)">
-      {{example}}
-    </div>
+      <span>{{example}}</span>
 
-    <div id="txs_filter_example_icon" v-b-modal.txs_filter_help>
-      <img src="../assets/question.svg" />
+      <img id="txs_filter_example_icon"
+           v-b-modal.txs_filter_help
+           src="../assets/question.svg" />
     </div>
 
     <FilterHelpModal />
@@ -50,6 +50,13 @@ export default {
   align-items: center;
 }
 
+#main_layout.sm #txs_filter_example,
+#main_layout.xs #txs_filter_example{
+  font-size: 0.85rem;
+  display: block;
+}
+
+
 #txs_filter_example_label{
   color: var(--theme-color4);
   margin-right: 5px;
@@ -62,9 +69,12 @@ export default {
   margin-right: 5px;
   margin-top: 3px;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
 }
 
 #txs_filter_example_icon{
-  cursor: pointer;
+  margin-left: 5px;
 }
 </style>
