@@ -30,8 +30,8 @@
 <script>
 import TxContainer    from '../TxContainer'
 import CurrencyAmount from '../CurrencyAmount'
+import HasTx          from '../../mixins/has_tx'
 
-var HasTx = require('../../mixins/has_tx').default
 export default {
   name   : 'OfferCancelTx',
 

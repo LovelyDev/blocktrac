@@ -17,10 +17,8 @@
 <script>
 import TxContainer  from '../TxContainer'
 import CurrencyIcon from '../CurrencyIcon'
-
-import config        from '../../config'
-
-var HasTx = require('../../mixins/has_tx').default
+import HasTx        from '../../mixins/has_tx'
+import config       from '../../config'
 
 export default {
   name   : 'EscrowFinishTx',

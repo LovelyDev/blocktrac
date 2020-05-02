@@ -9,10 +9,8 @@
 
 <script>
 import TxContainer from '../TxContainer'
-
-import util from '../../util'
-
-var HasTx = require('../../mixins/has_tx').default
+import HasTx       from '../../mixins/has_tx'
+import util        from '../../util'
 
 // TODO: also SetFlag, ClearFlag, EmailHash, MessageKey, TransferRate, TickSize
 

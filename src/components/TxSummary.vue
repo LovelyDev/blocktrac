@@ -30,8 +30,7 @@ import AccountSetTx           from './tx_types/AccountSet'
 import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim'
 import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate'
 import PaymentChannelFundTx   from './tx_types/PaymentChannelFund'
-
-var HasTx = require('../mixins/has_tx').default;
+import HasTx                  from '../mixins/has_tx'
 
 // TODO: test all tx type edge cases, capture txs representing all possibilities
 
