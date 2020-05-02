@@ -20,48 +20,41 @@
 
     <div id="edit_link"
           class="filter_action"
-          v-b-modal.edit_filter>
+          @click="run_action('edit_filter')">
       <img src="../assets/pencil.svg">
       <span>Edit</span>
     </div>
 
     <div id="duplicate_link"
           class="filter_action"
-          v-b-modal.duplicate_filter>
+          @click="run_action('duplicate_filter')">
       <img src="../assets/duplicate.svg">
       <span>Duplicate...</span>
     </div>
 
     <div id="delete_link"
           class="filter_action"
-          v-b-modal.delete_filter>
+          @click="run_action('delete_filter')">
       <img src="../assets/trash-white.svg">
+      <span id="delete_text">Delete</span>
     </div>
-
-    <EditFilterModal      :filter="filter" @edited="set_active_filter($event)" />
-    <DuplicateFilterModal :filter="filter" @created="set_active_filter($event)" />
-    <DeleteFilterModal    :filter="filter" @deleted="$router.push('/txs')" />
   </div>
 </template>
 
 <script>
-import FilterPages          from '../mixins/filter_pages'
-import ServerAPI            from '../mixins/server_api'
-
-import DeleteFilterModal    from './modals/DeleteFilter'
-import DuplicateFilterModal from './modals/DuplicateFilter'
-import EditFilterModal      from './modals/EditFilter'
-
+import FilterPages from '../mixins/filter_pages'
+import ServerAPI   from '../mixins/server_api'
 
 export default {
   name: 'FilterActions',
 
   mixins : [FilterPages, ServerAPI],
 
-  components : {
-    DeleteFilterModal,
-    DuplicateFilterModal,
-    EditFilterModal,
+  methods : {
+    run_action : function(modal){
+      this.$parent.hide();
+      this.$bvModal.show(modal);
+    }
   }
 }
 </script>
@@ -69,6 +62,11 @@ export default {
 <style scoped>
 #filter_actions{
   display: flex;
+}
+
+#main_layout.sm #filter_actions,
+#main_layout.xs #filter_actions{
+  flex-direction: column;
 }
 
 #filter_actions a{
@@ -84,6 +82,11 @@ export default {
 
   background-color: var(--theme-color1);
   color: white;
+}
+
+#main_layout.sm .filter_action,
+#main_layout.xs .filter_action{
+  margin: 5px;
 }
 
 .filter_action img{
@@ -102,7 +105,26 @@ export default {
   padding: 5px 20px;
 }
 
+#main_layout.sm #delete_link,
+#main_layout.xs #delete_link{
+  padding: 5px 10px;
+}
+
 #delete_link img{
   margin-right: 0;
+}
+
+#main_layout.sm #delete_link img,
+#main_layout.xs #delete_link img{
+  margin-right: 5px;
+}
+
+#delete_text{
+  display: none;
+}
+
+#main_layout.sm #delete_text,
+#main_layout.xs #delete_text{
+  display: unset;
 }
 </style>
