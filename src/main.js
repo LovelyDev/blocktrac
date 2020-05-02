@@ -62,13 +62,15 @@ const routes = [
   { path: '/about',    component: About    },
   { path: '/help',     component: Help     },
   { path: '/profile',  component: Profile  },
+
   { path: '/plans',    component: Plans    },
   { path: '/plan',     component: Plan,
                             name: 'plan',
                            props: true     },
+
   { path: '/checkout', component: Checkout,
                             name: 'checkout',
-                           props: true},
+                           props: true     },
 
   { path: '/filter/:id', component: FilterDetails,
     props: function(route){

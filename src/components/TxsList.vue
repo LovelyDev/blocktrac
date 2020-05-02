@@ -11,14 +11,15 @@
 
       <div v-if="!logged_in || remaining_filters > 0"
            id="create_filter"
+           :class="{logged_in : logged_in}"
            v-b-modal.create_filter>
-        <span v-if="!logged_in">
+        <div v-if="!logged_in">
           Create Personalized Filter
-        </span>
+        </div>
 
-        <span>
+        <div v-else>
           + Add New Filter
-        </span>
+        </div>
       </div>
 
       <CreateFilterModal @created="$refs.my_filters.load_filters()" />
@@ -130,10 +131,13 @@ export default {
   background-color: var(--theme-color1);
   color: white;
   border-radius: 5px;
-  margin-top: 5px;
   padding: 3px;
   cursor: pointer;
   text-align: center;
+}
+
+#create_filter:not(.logged_in){
+  margin-top: 10px;
 }
 
 .tx_summary_container{

@@ -49,8 +49,10 @@ export default {
 #main_layout.xs #txs_filter_controls{
   position: unset;
   margin-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column-reverse;
+  border-bottom: 1px solid var(--theme-color3);
 }
 
 .txs_filter_control{

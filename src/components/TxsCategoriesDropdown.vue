@@ -61,7 +61,7 @@ export default {
 
 <style scoped>
 #tx_categories{
-  margin: 10px 0;
+  padding: 5px 0;
 }
 
 .tx_category{
