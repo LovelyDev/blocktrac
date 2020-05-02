@@ -48,7 +48,7 @@ export default {
 #main_layout.sm #txs_filter_controls,
 #main_layout.xs #txs_filter_controls{
   position: unset;
-  margin: 10px 0;
+  margin-top: 10px;
   display: flex;
   flex-direction: column-reverse;
 }

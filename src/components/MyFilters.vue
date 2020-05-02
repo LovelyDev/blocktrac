@@ -49,6 +49,7 @@
 
 <script>
 import Authentication    from '../mixins/authentication'
+import HasFilters        from '../mixins/has_filters'
 import FilterList        from './FilterList'
 import CreateFilterModal from './modals/CreateFilter'
 import SettingsModal     from './modals/Settings'
@@ -56,31 +57,12 @@ import SettingsModal     from './modals/Settings'
 export default {
   name: 'MyFilters',
 
-  mixins : [Authentication],
+  mixins : [Authentication, HasFilters],
 
   components : {
     FilterList,
     CreateFilterModal,
     SettingsModal
-  },
-
-  computed : {
-    filters : function(){
-      return this.$store.state.filters;
-    },
-
-    remaining_filters : function(){
-      return this.authorized_filters - this.filters.length;
-    },
-
-    remaining_filters_msg : function(){
-      const remaining = this.remaining_filters;
-
-      if(remaining == 1)
-        return "1 filter is left. ";
-
-      return remaining + " filters are left. ";
-    }
   }
 }
 </script>

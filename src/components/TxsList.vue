@@ -2,7 +2,27 @@
   <div>
     <TxsFilter />
     <TxsFilterExample />
-    <TxsFilterControls v-if="mq_lte_md"/>
+
+    <template v-if="mq_lte_md">
+      <TxsFilterControls />
+
+      <FilterListDropdown v-if="logged_in"
+                          ref="my_filters" />
+
+      <div v-if="!logged_in || remaining_filters > 0"
+           id="create_filter"
+           v-b-modal.create_filter>
+        <span v-if="!logged_in">
+          Create Personalized Filter
+        </span>
+
+        <span>
+          + Add New Filter
+        </span>
+      </div>
+
+      <CreateFilterModal @created="$refs.my_filters.load_filters()" />
+    </template>
 
     <TxsCategoriesDropdown v-if="mq_lt_md" />
 
@@ -31,12 +51,17 @@ import TxsFilterControls     from './TxsFilterControls'
 import TxsCategories         from './TxsCategories'
 import TxsCategoriesDropdown from './TxsCategoriesDropdown'
 import TxSummary             from './TxSummary'
+import FilterListDropdown    from './FilterListDropdown'
+import CreateFilterModal     from './modals/CreateFilter'
+
+import Authentication        from '../mixins/authentication'
 import CommandDispatcher     from '../mixins/command_dispatcher'
+import HasFilters            from '../mixins/has_filters'
 
 export default {
   name: 'TxsList',
 
-  mixins : [CommandDispatcher],
+  mixins : [Authentication, CommandDispatcher, HasFilters],
 
   components : {
     TxsFilter,
@@ -45,6 +70,8 @@ export default {
     TxsCategories,
     TxsCategoriesDropdown,
     TxSummary,
+    FilterListDropdown,
+    CreateFilterModal
   },
 
   computed : {
@@ -99,6 +126,16 @@ export default {
   background-color: white;
 }
 
+#create_filter{
+  background-color: var(--theme-color1);
+  color: white;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 3px;
+  cursor: pointer;
+  text-align: center;
+}
+
 .tx_summary_container{
   padding: 0px;
 }
@@ -107,5 +144,4 @@ export default {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
 }
-
 </style>
