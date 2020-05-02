@@ -14,6 +14,13 @@ Vue.use(VueMoment, {moment_tz});
 
 ///
 
+import Multiselect from 'vue-multiselect'
+
+Vue.component('multiselect', Multiselect)
+import "vue-multiselect/dist/vue-multiselect.min.css"
+
+///
+
 require('./mq')
 
 import Landing       from './Landing'
