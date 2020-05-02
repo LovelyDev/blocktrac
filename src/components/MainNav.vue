@@ -63,7 +63,7 @@
     <div v-if="logged_in && hamburger"
          id="logout_link"
          class="nav_container"
-         @click="logout()">
+         @click="$emit('nav'); logout()">
       <span class="nav_link">Log out</span>
     </div>
 
