@@ -21,8 +21,10 @@ Vue.use(VueMq, {
 })
 
 // Custom mixin to define mq helpers
-// lt = less than
-// gt = greater than
+// lt  = less than
+// lte = less than or equal
+// gt  = greater than
+// gte = greater than or equal
 Vue.mixin({
   computed : {
     mq_xs : function(){
@@ -41,8 +43,16 @@ Vue.mixin({
       return this.$mq == 'xs';
     },
 
+    mq_lte_sm : function(){
+      return ['xs', 'sm'].includes(this.$mq);
+    },
+
     mq_gt_sm : function(){
       return ['md', 'lg', 'xl'].includes(this.$mq);
+    },
+
+    mq_gte_sm : function(){
+      return ['sm', 'md', 'lg', 'xl'].includes(this.$mq);
     },
 
     mq_md : function(){
@@ -53,8 +63,16 @@ Vue.mixin({
       return ['xs', 'sm'].includes(this.$mq);
     },
 
+    mq_lte_md : function(){
+      return ['xs', 'sm', 'md'].includes(this.$mq);
+    },
+
     mq_gt_md : function(){
       return ['lg', 'xl'].includes(this.$mq);
+    },
+
+    mq_gte_md : function(){
+      return ['md', 'lg', 'xl'].includes(this.$mq);
     },
 
     mq_lg : function(){
@@ -65,8 +83,16 @@ Vue.mixin({
       return ['xs', 'sm', 'md'].includes(this.$mq);
     },
 
+    mq_lte_lg : function(){
+      return ['xs', 'sm', 'md', 'lg'].includes(this.$mq);
+    },
+
     mq_gt_lg : function(){
       return this.$mq == 'xl';
+    },
+
+    mq_gte_lg : function(){
+      return ['lg', 'xl'].includes(this.$mq);
     },
 
     mq_xl : function(){
