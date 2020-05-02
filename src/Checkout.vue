@@ -35,7 +35,7 @@
 
         <table id="payment_details">
           <tr>
-            <td v-if="mq_gt_sm"
+            <td v-if="mq_gte_md"
                 class="form_text">
               First Name:
             </td>
@@ -52,7 +52,7 @@
           </tr>
 
           <tr>
-            <td v-if="mq_gt_sm"
+            <td v-if="mq_gte_md"
                 class="form_text">
               Last Name:
             </td>
@@ -69,7 +69,7 @@
           </tr>
 
           <tr>
-            <td v-if="mq_gt_sm"
+            <td v-if="mq_gte_md"
                 class="form_text">
               Card Number:
             </td>
@@ -87,7 +87,7 @@
           </tr>
 
           <tr>
-            <td v-if="mq_gt_sm"
+            <td v-if="mq_gte_md"
                 class="form_text">
               Expiration Date:
             </td>
@@ -105,7 +105,7 @@
           </tr>
 
           <tr>
-            <td v-if="mq_gt_sm"
+            <td v-if="mq_gte_md"
                 class="form_text">
               Security Code:
             </td>
@@ -123,7 +123,7 @@
           </tr>
 
           <tr>
-            <td v-if="mq_gt_sm"></td>
+            <td v-if="mq_gte_md"></td>
             <td style="text-align: right">
               <b-button id="place_order"
                         @click="submit">

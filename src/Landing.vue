@@ -5,7 +5,7 @@
         <div id="section1_subsection1">
           <div id="main_title">Zerp Tracker</div>
 
-          <ul class="main_features" v-if="mq_gt_sm">
+          <ul class="main_features" v-if="mq_gte_md">
             <li>Monitor your account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
@@ -13,7 +13,7 @@
           </ul>
 
           <div class="begin_today_wrapper">
-            <b-button v-if="mq_gt_sm"
+            <b-button v-if="mq_gte_md"
                       class="begin_today"
                       variant="primary">
               <router-link to="/txs">
@@ -85,7 +85,7 @@
         <img id="section4_img1" src="./assets/landing/section4a.png" />
 
         <div id="section4_subsection">
-          <img v-if="mq_gt_sm"
+          <img v-if="mq_gte_md"
                class="section4_img2"
                src="./assets/landing/section4b.png" />
 
