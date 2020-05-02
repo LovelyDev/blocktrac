@@ -47,7 +47,6 @@ export default {
   width: 30px;
 }
 
-#main_layout.sm .txs_icon img,
 #main_layout.xs .txs_icon img{
   width: 20px;
 }

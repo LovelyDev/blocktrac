@@ -9,7 +9,7 @@
     <input v-model="filter"
            placeholder="JSONPath Expression..." />
 
-    <TxsFilterControls v-if="mq_gte_md" />
+    <TxsFilterControls v-if="mq_gt_md" />
 
     <SaveFilterModal @created="load_filters"
                       :filter="save_filter" />

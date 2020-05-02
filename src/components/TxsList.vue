@@ -2,7 +2,7 @@
   <div>
     <TxsFilter />
     <TxsFilterExample />
-    <TxsFilterControls v-if="mq_lt_md"/>
+    <TxsFilterControls v-if="mq_lte_md"/>
 
     <TxsCategoriesDropdown v-if="mq_lt_md" />
 

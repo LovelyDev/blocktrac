@@ -44,6 +44,7 @@ export default {
   height: 75%;
 }
 
+#main_layout.md #txs_filter_controls,
 #main_layout.sm #txs_filter_controls,
 #main_layout.xs #txs_filter_controls{
   position: unset;
@@ -57,6 +58,7 @@ export default {
   padding: 0 5px;
 }
 
+#main_layout.md .txs_filter_control,
 #main_layout.sm .txs_filter_control,
 #main_layout.xs .txs_filter_control{
   width: 100%;
