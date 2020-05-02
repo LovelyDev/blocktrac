@@ -31,8 +31,7 @@ import TxsFilterControls     from './TxsFilterControls'
 import TxsCategories         from './TxsCategories'
 import TxsCategoriesDropdown from './TxsCategoriesDropdown'
 import TxSummary             from './TxSummary'
-
-var CommandDispatcher = require('../mixins/command_dispatcher')
+import CommandDispatcher     from '../mixins/command_dispatcher'
 
 export default {
   name: 'TxsList',

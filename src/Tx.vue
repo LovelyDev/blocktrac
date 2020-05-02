@@ -26,12 +26,11 @@
 </template>
 
 <script>
-import TxsLayout from './components/TxsLayout'
-import TxSummary from './components/TxSummary'
+import TxsLayout         from './components/TxsLayout'
+import TxSummary         from './components/TxSummary'
+import CommandDispatcher from './mixins/command_dispatcher'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
-
-var CommandDispatcher = require('./mixins/command_dispatcher')
 
 export default {
   name: 'Tx',

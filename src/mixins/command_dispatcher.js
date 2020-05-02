@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   created: function () {
     this.cmd_id = 0;
   },
