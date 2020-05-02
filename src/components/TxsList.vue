@@ -4,8 +4,10 @@
     <TxsFilterExample />
     <TxsFilterControls v-if="mq_lt_md"/>
 
+    <TxsCategoriesDropdown v-if="mq_lt_md" />
+
     <div id="txs_list">
-      <TxsCategories />
+      <TxsCategories v-if="mq_gte_md" />
 
       <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
@@ -23,11 +25,12 @@
 </template>
 
 <script>
-import TxsFilter         from './TxsFilter'
-import TxsFilterExample  from './TxsFilterExample'
-import TxsFilterControls from './TxsFilterControls'
-import TxsCategories     from './TxsCategories'
-import TxSummary         from './TxSummary'
+import TxsFilter             from './TxsFilter'
+import TxsFilterExample      from './TxsFilterExample'
+import TxsFilterControls     from './TxsFilterControls'
+import TxsCategories         from './TxsCategories'
+import TxsCategoriesDropdown from './TxsCategoriesDropdown'
+import TxSummary             from './TxSummary'
 
 var CommandDispatcher = require('../mixins/command_dispatcher')
 
@@ -41,6 +44,7 @@ export default {
     TxsFilterExample,
     TxsFilterControls,
     TxsCategories,
+    TxsCategoriesDropdown,
     TxSummary,
   },
 

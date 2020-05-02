@@ -74,9 +74,13 @@ export default {
 #txs_title{
   font-family: "Helvetica Bold";
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 1.7rem;
   margin-bottom: 0;
   margin-right: 10px;
+}
+
+#main_layout.xs #txs_title{
+  font-size: 5vw;
 }
 
 #txs_content{
