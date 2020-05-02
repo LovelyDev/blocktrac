@@ -2,6 +2,7 @@
   <div>
     <TxsFilter />
     <TxsFilterExample />
+    <TxsFilterControls v-if="mq_lt_md"/>
 
     <div id="txs_list">
       <TxsCategories />
@@ -22,10 +23,11 @@
 </template>
 
 <script>
-import TxsFilter        from './TxsFilter'
-import TxsFilterExample from './TxsFilterExample'
-import TxsCategories    from './TxsCategories'
-import TxSummary        from './TxSummary'
+import TxsFilter         from './TxsFilter'
+import TxsFilterExample  from './TxsFilterExample'
+import TxsFilterControls from './TxsFilterControls'
+import TxsCategories     from './TxsCategories'
+import TxSummary         from './TxSummary'
 
 var CommandDispatcher = require('../mixins/command_dispatcher')
 
@@ -37,6 +39,7 @@ export default {
   components : {
     TxsFilter,
     TxsFilterExample,
+    TxsFilterControls,
     TxsCategories,
     TxSummary,
   },

@@ -12,7 +12,7 @@
       </div>
 
       <div id="txs_content">
-        <div id="txs_sidebar_container">
+        <div id="txs_sidebar_container" v-if="mq_gt_md">
           <TxsSideBar />
         </div>
 
@@ -74,6 +74,7 @@ export default {
 #txs_title{
   font-family: "Helvetica Bold";
   font-weight: bold;
+  font-size: 5vw;
   margin-bottom: 0;
   margin-right: 10px;
 }
@@ -90,5 +91,12 @@ export default {
   flex-basis: 74%;
   margin-left: auto;
   overflow: auto;
+}
+
+#main_layout.md #txs_main_container,
+#main_layout.sm #txs_main_container,
+#main_layout.xs #txs_main_container{
+  flex-basis: unset;
+  width: 100%;
 }
 </style>

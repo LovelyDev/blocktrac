@@ -9,21 +9,7 @@
     <input v-model="filter"
            placeholder="JSONPath Expression..." />
 
-    <div id="txs_filter_controls">
-      <b-button id="txs_filter_clear"
-                :disabled="!filter"
-                @click="filter = ''">
-        <img src="../assets/x-black.svg" />
-        <span>Clear</span>
-      </b-button>
-
-      <b-button id="txs_filter_save"
-                :disabled="!filter"
-                v-b-modal.save_filter>
-        <img src="../assets/down-triangle-lines-plus.svg" />
-        <span>Save to filter</span>
-      </b-button>
-    </div>
+    <TxsFilterControls v-if="mq_gte_md" />
 
     <SaveFilterModal @created="load_filters"
                       :filter="save_filter" />
@@ -31,16 +17,18 @@
 </template>
 
 <script>
-import Authentication  from '../mixins/authentication'
-import ServerAPI       from '../mixins/server_api'
-import SaveFilterModal from './modals/SaveFilter'
+import Authentication    from '../mixins/authentication'
+import ServerAPI         from '../mixins/server_api'
+import TxsFilterControls from './TxsFilterControls'
+import SaveFilterModal   from './modals/SaveFilter'
 
 export default {
-  name: 'TxFilter',
+  name: 'TxsFilter',
 
   mixins : [Authentication, ServerAPI],
 
   components : {
+    TxsFilterControls,
     SaveFilterModal
   },
 
@@ -90,34 +78,5 @@ input {
 #txs_filter_icon .text{
   color: var(--theme-color4);
   opacity: 0.3;
-}
-
-#txs_filter_controls{
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  height: 75%;
-}
-
-#txs_filter_save,
-#txs_filter_clear{
-  height: 100%;
-  padding: 0 5px;
-}
-
-#txs_filter_save{
-  background-color: var(--theme-color5);
-}
-
-#txs_filter_clear{
-  background-color: var(--theme-color3);
-  color: black;
-  margin-right: 5px;
-  padding: 0px 20px;
-}
-
-#txs_filter_save img,
-#txs_filter_clear img{
-  margin-right: 5px;
 }
 </style>
