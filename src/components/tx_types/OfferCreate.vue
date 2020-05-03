@@ -1,18 +1,30 @@
 <template>
   <TxContainer :tx="tx">
-    <div class="buy_amount">
-      <div class="tx_detail_label">Buying</div>
+    <template v-if="mq_gte_md">
+      <div class="buy_amount">
+        <div class="tx_detail_label">Buying</div>
 
-      <span class="currency_amount">
-        <CurrencyAmount :amount="pays" no_issuer />
-      </span>
-    </div>
+        <span class="currency_amount">
+          <CurrencyAmount :amount="pays" no_issuer />
+        </span>
+      </div>
 
-    <div class="sell_amount">
-      <div class="tx_detail_label">Selling</div>
+      <div class="sell_amount">
+        <div class="tx_detail_label">Selling</div>
 
-      <span class="currency_amount">
-        <CurrencyAmount :amount="gets" no_issuer />
+        <span class="currency_amount">
+          <CurrencyAmount :amount="gets" no_issuer />
+        </span>
+      </div>
+    </template>
+
+    <div v-else
+         class="buy_sell_pair">
+      <div class="tx_detail_label">Buying/Selling</div>
+
+      <span class="currencies">
+        <CurrencyAmount :amount="pays" no_amount no_issuer /> /
+        <CurrencyAmount :amount="gets" no_amount no_issuer />
       </span>
     </div>
   </TxContainer>
@@ -54,6 +66,15 @@ export default {
 .buy_amount,
 .sell_amount{
   flex-basis: 23%;
+  font-size: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.buy_sell_pair{
+  flex-basis: 78%;
   font-size: 0.8rem;
 
   display: flex;

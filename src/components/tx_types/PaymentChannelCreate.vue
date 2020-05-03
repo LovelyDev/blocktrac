@@ -1,6 +1,8 @@
 <template>
   <TxContainer :tx="tx">
-    <AccountDetail :account="dst" text="Destination" />
+    <AccountDetail v-if="mq_gte_md"
+                   :account="dst"
+                   text="Destination" />
 
     <div class="currency_amount">
       <CurrencyAmount :amount="amount" />
@@ -45,5 +47,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+#main_layout.sm .currency_amount,
+#main_layout.xs .currency_amount{
+  flex-basis: 78%;
 }
 </style>

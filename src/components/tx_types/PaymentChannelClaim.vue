@@ -77,4 +77,14 @@ export default {
   align-items: center;
   justify-content: flex-end;
 }
+
+#main_layout.sm .balance_amount,
+#main_layout.xs .balance_amount{
+  flex-basis: 67%;
+}
+
+#main_layout.sm .status,
+#main_layout.xs .status{
+  flex-basis: 11%;
+}
 </style>

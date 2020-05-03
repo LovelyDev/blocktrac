@@ -47,4 +47,11 @@ export default {
   flex-direction: column;
   align-items: flex-end;
 }
+
+#main_layout.sm .signers,
+#main_layout.xs .signers,
+#main_layout.sm .quorum,
+#main_layout.xs .quorum{
+  flex-basis: 39%;
+}
 </style>

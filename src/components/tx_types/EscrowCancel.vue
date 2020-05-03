@@ -65,4 +65,11 @@ export default {
   flex-direction: column;
   align-items: flex-end;
 }
+
+#main_layout.sm .amount,
+#main_layout.xs .amount,
+#main_layout.sm .sequence,
+#main_layout.xs .sequence{
+  flex-basis: 78%;
+}
 </style>

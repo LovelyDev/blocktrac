@@ -1,6 +1,8 @@
 <template>
   <TxContainer :tx="tx">
-    <AccountDetail :account="issuer" text="Issuer" />
+    <AccountDetail v-if="mq_gte_md"
+                   :account="issuer"
+                   text="Issuer" />
 
     <div class="currency_amount">
       <CurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
@@ -58,5 +60,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+#main_layout.sm .currency_amount,
+#main_layout.xs .currency_amount{
+  flex-basis: 78%;
 }
 </style>

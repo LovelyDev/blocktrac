@@ -38,7 +38,16 @@ export default {
 
 <style scoped>
 .domain{
-  flex-basis: 12%;
+  flex-basis: 7%;
   font-size: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#main_layout.sm .domain,
+#main_layout.xs .domain{
+  flex-basis: 78%;
 }
 </style>

@@ -38,4 +38,9 @@ export default {
   justify-content: flex-end;
   align-items: center;
 }
+
+#main_layout.sm .currency_amount,
+#main_layout.xs .currency_amount{
+  flex-basis: 78%;
+}
 </style>
