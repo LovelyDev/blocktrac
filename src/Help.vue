@@ -54,8 +54,6 @@ import MainLayout from './components/MainLayout'
 
 import fr0xrpl from './fr0xrpl'
 
-// TODO finish flushing out FAQ answers
-
 export default {
   name: 'Help',
   components: {
@@ -88,6 +86,11 @@ export default {
             {
                title : "Where can I find out more?",
                value : "Many resources are avaiable online pertaining to XRP technologies. See the <a href='https://xrpl.org'>XRPL.org</a> portal for example."
+            },
+
+            {
+               title : "Help! I'm really lost / need tech support / have questions...",
+               value : "You may contact Dev Null Productions using the form on the <a href='/about'>About</a> page"
             }
           ]
         },
