@@ -1,8 +1,18 @@
 <template>
-  <img :src="src" />
+  <span class="currency">
+    <template v-if="have_icon">
+      <img :src="src" />
+    </template>
+
+    <template v-else>
+        <b>{{currency}}</b>
+    </template>
+  </span>
 </template>
 
 <script>
+import config from '../config.js'
+
 export default {
   name: 'CurrencyIcon',
 
@@ -14,6 +24,10 @@ export default {
   },
 
   computed : {
+    have_icon : function(){
+      return config.have_currency_icon(this.currency);
+    },
+
     src : function(){
       return require("@/assets/currencies/" + this.currency + ".svg");
     }
@@ -22,7 +36,11 @@ export default {
 </script>
 
 <style scoped>
-img{
+.currency{
+  margin-left: 3px;
+}
+
+.currency img{
   height: 15px;
   width: 15px;
   margin-bottom: 2px

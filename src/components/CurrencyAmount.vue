@@ -1,24 +1,17 @@
 <template>
   <span>
     <span v-if="is_drops">
-      <b>{{xrp_amount | round | delim}}</b>
+      <b v-if="!no_amount">{{xrp_amount | round | delim}}</b>
+
       <span class="currency">
         <CurrencyIcon currency="XRP" />
       </span>
     </span>
 
-    <!-- TODO render icons for all currencies -->
     <span v-else>
-      <b>{{amount["value"] | round | delim}}</b>
+      <b v-if="!no_amount">{{amount["value"] | round | delim}}</b>
 
-      <span v-if="have_currency_icon(amount['currency'])"
-            class="currency">
-        <CurrencyIcon :currency="amount['currency']" />
-      </span>
-
-      <span v-else class="currency">
-        <b>{{amount["currency"]}}</b>
-      </span>
+      <CurrencyIcon :currency="amount['currency']" />
 
       <sup v-if="!no_issuer">
         <AccountLink :account="amount['issuer']" shorten/>
@@ -31,7 +24,7 @@
 import AccountLink  from './AccountLink'
 import CurrencyIcon from './CurrencyIcon'
 
-import config      from '../config.js'
+import config       from '../config.js'
 
 // TODO: shorten large values (1000 -> 1K, 1000000 -> 1M, 1250000 -> 1.25M, etc)
 
@@ -44,6 +37,7 @@ export default {
       required : true
     },
 
+    no_amount : Boolean,
     no_issuer : Boolean
   },
 
@@ -65,18 +59,6 @@ export default {
     xrp_amount : function(){
       return parseFloat(this.amount) / config.DROPS_PER_XRP;
     }
-  },
-
-  methods : {
-    have_currency_icon : function(c){
-      return config.have_currency_icon(c);
-    }
   }
 }
 </script>
-
-<style scoped>
-.currency{
-  margin-left: 3px;
-}
-</style>
