@@ -52,7 +52,8 @@ export default {
 
   methods : {
     run_action : function(modal){
-      this.$parent.hide();
+      if(this.$parent.hide)
+        this.$parent.hide();
       this.$bvModal.show(modal);
     }
   }
