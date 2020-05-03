@@ -1,3 +1,5 @@
+const currency_icons = require("./assets/currencies.json")
+
 module.exports = {
   // Balance needed to be considered a premium account (in USD)
   MINUMUM_PREMIUM_BALANCE : 5,
@@ -18,14 +20,12 @@ module.exports = {
   // From the XRP Protocol
   DROPS_PER_XRP : 1000000,
 
-  // TODO other currency unicodes (or replace all w/ SVG icons?)
-  CURRENCY_UNICODES : {
-    'USD' : '&#36;',
-    'CNY' : '&#165;',
-    'JPY' : '&#165;',
-    'BTC' : '&#8383;',
-    'GBP' : '&#163;',
-    'EUR' : '&euro;'
+  // List of currency icons
+  currency_icons : currency_icons,
+
+  // Return bool indicating if we have currency icon
+  have_currency_icon : function(c){
+    return currency_icons.includes(c);
   },
 
   // Categories TXs fall in to

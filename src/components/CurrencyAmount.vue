@@ -11,10 +11,9 @@
     <span v-else>
       <b>{{amount["value"] | round | delim}}</b>
 
-      <span v-if="have_currency_unicode(amount['currency'])"
+      <span v-if="have_currency_icon(amount['currency'])"
             class="currency">
-        <span v-html="currency_unicode(amount['currency'])"
-              style="font-weight: bold;"/>
+        <CurrencyIcon :currency="amount['currency']" />
       </span>
 
       <span v-else class="currency">
@@ -69,12 +68,8 @@ export default {
   },
 
   methods : {
-    have_currency_unicode : function(c){
-      return !!config.CURRENCY_UNICODES[c];
-    },
-
-    currency_unicode : function(c){
-      return config.CURRENCY_UNICODES[c];
+    have_currency_icon : function(c){
+      return config.have_currency_icon(c);
     }
   }
 }
