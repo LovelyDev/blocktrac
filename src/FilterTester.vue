@@ -118,6 +118,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
 #no_matches_icon{
@@ -151,6 +152,11 @@ export default {
   align-items: center;
 }
 
+#main_layout.sm #filter_test_explanation,
+#main_layout.xs #filter_test_explanation{
+  padding: 10px;
+}
+
 #filter_test_explanation span{
   opacity: 0.6;
   font-size: 0.9rem;
@@ -160,6 +166,7 @@ export default {
 
 #filter_test_explanation img{
   margin-right: 5px;
+  min-width: 20px;
 }
 
 .tx_summary_container{
