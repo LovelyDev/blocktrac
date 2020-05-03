@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="account_link">
     <a :href="href">{{text}}</a>
   </span>
 </template>
@@ -29,3 +29,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.account_link{
+  font-size: 0.60rem;
+}
+</style>
