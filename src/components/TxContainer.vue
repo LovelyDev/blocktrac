@@ -18,7 +18,9 @@
       </div>
     </div>
 
-    <AccountDetail :account="account" text="Account" />
+    <AccountDetail v-if="mq_gte_md"
+                   :account="account"
+                   text="Account" />
 
     <slot></slot>
   </div>
@@ -70,6 +72,17 @@ export default {
   cursor: pointer;
 }
 
+.tx_icon img{
+  width: 20px;
+  height: 20px;
+}
+
+#main_layout.sm .tx_icon img,
+#main_layout.xs .tx_icon img{
+  width: 15px;
+  height: 15px;
+}
+
 .tx_icon_wrapper{
   display: flex;
   align-items: center;
@@ -78,6 +91,13 @@ export default {
   width: 32px;
   height: 32px;
   border-radius: 50%;
+}
+
+#main_layout.sm .tx_icon_wrapper,
+#main_layout.xs .tx_icon_wrapper{
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
 }
 
 .tx_icon_wrapper.success{
@@ -93,9 +113,14 @@ export default {
 
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .tx_timestamp{
-  font-size: 0.7rem;
+  font-size: 0.6rem;
+}
+
+.tx_type{
+  font-size: 0.8rem;
 }
 </style>
