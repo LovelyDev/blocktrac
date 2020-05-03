@@ -99,6 +99,7 @@ export default {
 #back_icon{
   flex-basis: 7%;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 #tx_header img{
@@ -107,6 +108,11 @@ export default {
   padding: 15px;
   border-radius: 35px;
 }
+
+#tx_subheader{
+  word-wrap: anywhere;
+}
+
 
 #tx_title{
   color: var(--theme-color2);
