@@ -111,10 +111,10 @@ export default {
 
   data : function(){
     return {
-      levels : fr0xrpl.MEMBERSHIP_LEVELS,
-      plans : fr0xrpl.MEMBERSHIP_FEATURES,
-      max_additions : fr0xrpl.MAX_ADDITIONS,
-      additions_cost : fr0xrpl.ADDITIONS_COST,
+      levels : fr0xrpl.membership_levels,
+      plans : fr0xrpl.membership_features,
+      max_additions : fr0xrpl.max_additions,
+      additions_cost : fr0xrpl.additions_cost,
        enable_additional : {},
       additional_filters : {},
         additional_sinks : {}

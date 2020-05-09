@@ -51,7 +51,7 @@ export default {
       if(!this.membership_level) return 0;
 
       // TODO: add additional filters associated with account
-      return fr0xrpl.MEMBERSHIP_FEATURES[this.membership_level].filters;
+      return fr0xrpl.membership_features[this.membership_level].filters;
     },
 
     ///

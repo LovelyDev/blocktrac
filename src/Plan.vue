@@ -164,7 +164,7 @@ export default {
     details : function(){
       if(!this.plan) return {};
 
-      return fr0xrpl.MEMBERSHIP_FEATURES[this.plan];
+      return fr0xrpl.membership_features[this.plan];
     },
 
     instant_alerts : function(){
@@ -195,10 +195,10 @@ export default {
       var period = this.period ? this.period : 1;
 
       if(this.enable_additional && this.additional_filters)
-        cost += this.additional_filters * fr0xrpl.ADDITIONS_COST.filters * period;
+        cost += this.additional_filters * fr0xrpl.additions_cost.filters * period;
 
       if(this.enable_additional && this.additional_sinks)
-        cost += this.additional_sinks * fr0xrpl.ADDITIONS_COST.sinks * period;
+        cost += this.additional_sinks * fr0xrpl.additions_cost.sinks * period;
 
       return cost;
     },

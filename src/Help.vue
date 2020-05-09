@@ -155,7 +155,7 @@ export default {
           topics : [
             {
                 title : "What are the different membership levels?",
-                value : "Currently " + fr0xrpl.MEMBERSHIP_LEVELS.join(", ") + " plans are available"
+                value : "Currently " + fr0xrpl.membership_levels.join(", ") + " plans are available"
             },
 
             {
