@@ -93,14 +93,18 @@ export default {
 
   methods : {
     register : function(){
-      this.$http.post(this.backend_url + "/register",
-                      {email : this.auth_email,
-                       password : this.auth_password})
+      var params = {email : this.auth_email,
+                 password : this.auth_password}
+
+      if(this.$store.state.in_progress_filter.server){
+        params.filter = this.$store.state.in_progress_filter.server
+        this.$store.commit('clear_in_progress_filter')
+      }
+
+      this.$http.post(this.backend_url + "/register", params)
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();
-                  // TODO if in_progress_filter is set,
-                  //      create new filter, reset (& in login below)
 
                 }.bind(this)).catch(function(err){
                   alert(err.body.error)
@@ -108,9 +112,15 @@ export default {
     },
 
     login : function(){
-      this.$http.post(this.backend_url + "/login",
-                      {email : this.auth_email,
-                       password : this.auth_password})
+      var params = {email : this.auth_email,
+                 password : this.auth_password}
+
+      if(this.$store.state.in_progress_filter.server){
+        params.filter = this.$store.state.in_progress_filter.server
+        this.$store.commit('clear_in_progress_filter')
+      }
+
+      this.$http.post(this.backend_url + "/login", params)
                 .then(function(response){
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();

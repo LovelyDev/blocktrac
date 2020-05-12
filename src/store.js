@@ -131,6 +131,10 @@ export const store = new Vuex.Store({
       state.in_progress_filter = filter;
     },
 
+    clear_in_progress_filter(state){
+      state.in_progress_filter = {};
+    },
+
     ///
 
     on_open_socket(state, cb) {
