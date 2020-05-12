@@ -39,8 +39,8 @@
                 <div class="label">Alert time:</div>
 
                 <span class="value">
-                  <b>{{plan.alert_time == 0 ? 'Instant' : plan.alert_time}}</b>
-                  <span v-if="plan.alert_time != 0"> min</span>
+                  <b>{{plan.notification_times.includes(0) ? 'Instant' : plan.notification_times[0]}}</b>
+                  <span v-if="!plan.notification_times.includes(0)"> min</span>
                 </span>
               </div>
             </div>

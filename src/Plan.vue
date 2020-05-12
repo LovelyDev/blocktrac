@@ -168,11 +168,11 @@ export default {
     },
 
     instant_alerts : function(){
-      return this.details.alert_time == 0;
+      return this.details.notification_times.includes(0);
     },
 
     alert_time_text : function(){
-      return this.instant_alerts ? 'Instant' : (this.details.alert_time + ' min');
+      return this.instant_alerts ? 'Instant' : (this.details.notification_times[0] + ' min');
     },
 
     total_filters : function(){
