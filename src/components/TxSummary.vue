@@ -34,6 +34,8 @@ import HasTx                  from '../mixins/has_tx'
 
 // TODO: test all tx type edge cases, capture txs representing all possibilities
 
+// TODO: DeletedAccount tx
+
 export default {
   name: 'TxSummary',
 

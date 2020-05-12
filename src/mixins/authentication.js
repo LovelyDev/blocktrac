@@ -60,6 +60,7 @@ export default {
       return !!this.auth_email;
     },
 
+    // XXX: copied from fr0xrpl util module
     invalid_email : function(){
       return this.have_email &&
              !(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.auth_email));

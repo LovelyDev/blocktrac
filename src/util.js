@@ -33,7 +33,7 @@ export default {
     return str;
   },
 
-  // XXX: copied from fr0xrpl Filter#matcher and Template#applyParams
+  // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params
   filter_matcher : function(filter){
     if(filter.Template){
       if(filter.params.length != Object.keys(filter.Template.params).length)
