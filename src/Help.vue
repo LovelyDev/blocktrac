@@ -146,6 +146,11 @@ export default {
             {
               title : "How can I be altered more frequently / instantaneously?",
               value : "Sign up for a higher subscription level to access more features."
+            },
+
+            {
+              title : "What happens if my email, sms, url is unavailable when a notification is sent?",
+              value : "At the current time we only send notifications once when Zerp Tracker detects matching transactions. Please make sure the target destination is online and accessible to ensure you receive notifications. In the future we may offer the ability to retry notification attempts."
             }
           ]
         },
@@ -170,7 +175,7 @@ export default {
 
             {
               title : "What happens when my account becomes unfunded?",
-              value : "Credit card details are stored on-file with our payment provided and you will automatically be billed for your new subscription period when your current one ends. If you are unable to send a payment we will contact you via email before downgrading you account to the free tier. If you update your information at any point we will restore your account along with all the filters you created."
+              value : "You will automatically be billed for your new subscription period when your current one ends. If we are unable to bill your credit card your account will be downgraded to the free tier. If you update your information at any point we will restore your account along with the filters you created."
             }
           ]
         },

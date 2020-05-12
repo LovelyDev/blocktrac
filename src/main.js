@@ -23,17 +23,18 @@ import "vue-multiselect/dist/vue-multiselect.min.css"
 
 require('./mq')
 
-import Landing       from './Landing'
-import Txs           from './Txs'
-import Tx            from './Tx'
-import About         from './About'
-import Help          from './Help'
-import FilterDetails from './FilterDetails'
-import FilterTester  from './FilterTester'
-import Profile       from './Profile'
-import Plans         from './Plans'
-import Plan          from './Plan'
-import Checkout      from './Checkout'
+import Landing        from './Landing'
+import Txs            from './Txs'
+import Tx             from './Tx'
+import About          from './About'
+import Help           from './Help'
+import TermsOfService from './TermsOfService'
+import FilterDetails  from './FilterDetails'
+import FilterTester   from './FilterTester'
+import Profile        from './Profile'
+import Plans          from './Plans'
+import Plan           from './Plan'
+import Checkout       from './Checkout'
 
 import("../public/common.css")
 import("../public/fonts.css")
@@ -61,6 +62,8 @@ const routes = [
                            props: true     },
   { path: '/about',    component: About    },
   { path: '/help',     component: Help     },
+  { path: '/terms',
+                 component: TermsOfService },
   { path: '/profile',  component: Profile  },
 
   { path: '/plans',    component: Plans    },

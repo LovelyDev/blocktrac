@@ -1,7 +1,8 @@
 <template>
   <b-row no-gutters id="main_footer">
     <b-col>
-      © 2020 Dev Null Productions LLC <span v-if="mq_gt_sm">|</span><br v-else /> All Rights Reserved 
+      © 2020 Dev Null Productions LLC<br />All Rights Reserved 
+      <span v-if="mq_gt_sm">|</span><br v-else /> <router-link to="/terms">Terms of Service</router-link>
     </b-col>
   </b-row>
 </template>
