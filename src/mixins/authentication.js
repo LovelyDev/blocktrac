@@ -1,3 +1,5 @@
+import zxcvbn  from "zxcvbn"
+
 import config  from '../config'
 import util    from '../util'
 import fr0xrpl from '../fr0xrpl'
@@ -76,9 +78,13 @@ export default {
              !!this.auth_password_confirm;
     },
 
+    password_strength : function(){
+      return zxcvbn(this.auth_password);
+    },
+
     weak_password : function(){
-      // TODO
-      return this.have_password && false;
+      return this.have_password &&
+             (this.password_strength.score < fr0xrpl.min_password_score);
     },
 
     password_mismatch : function(){

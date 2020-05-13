@@ -20,7 +20,8 @@
     "vue-reactive-cookie": "^1.0.4",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.1.3",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

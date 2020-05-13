@@ -33,7 +33,12 @@
 
       <td class="form_text">
         <span class="form_error">
-          Weak password
+          Weak password<br/>
+          {{password_strength.feedback.warning}}
+          <div v-for="(suggestion, s) in password_strength.feedback.suggestions"
+               :key="'password_suggestion_' + s">
+            {{suggestion}}
+          </div>
         </span>
       </td>
     </tr>
