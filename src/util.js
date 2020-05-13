@@ -33,6 +33,10 @@ export default {
     return str;
   },
 
+  capitalize : function(string){
+    return string[0].toUpperCase() + string.slice(1);
+  },
+
   // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params
   filter_matcher : function(filter){
     if(filter.Template){

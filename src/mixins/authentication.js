@@ -1,4 +1,5 @@
 import config  from '../config'
+import util    from '../util'
 import fr0xrpl from '../fr0xrpl'
 
 export default {
@@ -97,18 +98,17 @@ export default {
       var params = {email : this.auth_email,
                  password : this.auth_password}
 
-      if(this.$store.state.in_progress_filter.server){
+      if(this.$store.state.in_progress_filter.server)
         params.filter = this.$store.state.in_progress_filter.server
-        this.$store.commit('clear_in_progress_filter')
-      }
 
       this.$http.post(this.backend_url + "/register", params)
                 .then(function(response){
-                  this.$setCookie("authToken", response.body.authToken);
-                  this.load_user();
+                  this.$store.commit('clear_in_progress_filter')
+                  alert("Successfully registered, please check your email for confirmation code")
 
                 }.bind(this)).catch(function(err){
-                  alert(err.body.error)
+                  const msg = util.capitalize(err.body.error)
+                  alert("There was a problem registering: " + msg)
                 })
     },
 
@@ -116,18 +116,18 @@ export default {
       var params = {email : this.auth_email,
                  password : this.auth_password}
 
-      if(this.$store.state.in_progress_filter.server){
+      if(this.$store.state.in_progress_filter.server)
         params.filter = this.$store.state.in_progress_filter.server
-        this.$store.commit('clear_in_progress_filter')
-      }
 
       this.$http.post(this.backend_url + "/login", params)
                 .then(function(response){
+                  this.$store.commit('clear_in_progress_filter')
                   this.$setCookie("authToken", response.body.authToken);
                   this.load_user();
 
                 }.bind(this)).catch(function(err){
-                  alert(err.body.error)
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not login: " + msg)
                 })
     },
 
