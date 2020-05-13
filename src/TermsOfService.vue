@@ -5,14 +5,14 @@
 
       <div id="terms_content">
         <p>
-        Welcome to <b>Zerp Tracker</b>. If you continue to use this website and/or services, you are agreeing to comply with and be bound by the following terms and conditions of use, which govern Dev Null Productions' relationship with you in relation to this website/service. If you disagree with any part of these terms and conditions, please do not use our website/services.
+        Welcome to <b>Zerp Tracker</b>. By using this website and/or service, you implicity agree to comply with and be bound by the following terms and conditions of use. If you disagree with any part of these terms and conditions, please immediately cease using the Zerp Tracker website and service.
         </p>
 
         <p>
         The use of this <b>Zerp Tracker</b> is subject to the following terms of use:
         </p>
 
-        <ul>
+        <ul id="terms_list">
           <li>
           Neither Dev Null Productions nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website or from the Zerp Tracker service for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
           </li>
@@ -26,10 +26,6 @@
           </li>
 
           <li>
-          All trade marks reproduced in this website which are not the property of, or licensed to, the operator are acknowledged on the website.
-          </li>
-
-          <li>
           Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.
           </li>
 
@@ -38,7 +34,7 @@
           </li>
 
           <li>
-          Your use of this website and any dispute arising out of such use of the website is subject to the laws of New York, United States of America
+          Your use of this website and any dispute arising out of such use of the website is subject to the laws of the state of New York, United States of America
           </li>
         </ul>
       </div>
@@ -71,5 +67,17 @@ export default {
   font-family: var(--theme-font1);
   background-color: white;
   padding: 25px;
+}
+
+#main_layout.sm #terms_list{
+  padding-left: 25px;
+}
+
+#main_layout.xs #terms_list{
+  padding-left: 15px;
+}
+
+#terms_list li{
+  margin-bottom: 15px;
 }
 </style>
