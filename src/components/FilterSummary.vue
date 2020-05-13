@@ -32,10 +32,10 @@ export default {
     params : function(){
       if(!this.filter.Template) return [];
 
-      return Object.keys(this.filter.Template.params)
-                   .map(function(param, index){
-                     return param + ": " + this.filter.params[index];
-                   }.bind(this));
+      return this.filter.Template.params
+                 .map(function(param, index){
+                   return param['name'] + ": " + this.filter.params[index];
+                 }.bind(this));
     }
   }
 }

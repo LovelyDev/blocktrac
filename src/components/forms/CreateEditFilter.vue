@@ -38,7 +38,7 @@
       <tr v-for="p in template_params.length"
           :key="'param' + p">
         <td>
-          <span class="form_text">{{template_params[p-1]}}:</span>
+          <span class="form_text">{{template_params[p-1]['name']}}:</span>
         </td>
 
         <td>
@@ -209,7 +209,7 @@ export default {
     template_params : function(){
       if(!this.selected_template) return[];
 
-      return Object.keys(this.selected_template.params)
+      return this.selected_template.params
     },
 
     // TODO: more elegant solution,
