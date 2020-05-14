@@ -1,5 +1,6 @@
 <template>
   <b-modal id="register_filter_modal"
+           ref="register_filter_modal"
            title="Your filter is almost set"
            ok-title="Create Account"
            cancel-variant="light"
@@ -21,7 +22,8 @@
     </div>
 
     <RegistrationForm ref="form"
-               @validated="validate($event)" />
+               @validated="validate($event)"
+                  @submit="submit"/>
   </b-modal>
 </template>
 
@@ -49,6 +51,13 @@ export default {
   methods : {
     register : function(){
       this.$refs.form.register();
+    },
+
+    submit : function(){
+      if(this.is_valid){
+        this.register()
+        this.$refs.register_filter_modal.hide()
+      }
     }
   }
 }
