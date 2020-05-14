@@ -85,7 +85,6 @@ export const store = new Vuex.Store({
       state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
 
       // Update tallies
-
       state.tx_category_tallies['ALL']    += 1;
       state.tx_category_tallies[category] += 1;
     },
@@ -95,6 +94,7 @@ export const store = new Vuex.Store({
     },
 
     toggle_tx_category(state, category){
+      // Toggle category selection
       if(state.tx_categories.includes(category)){
         const index = state.tx_categories.indexOf(category);
         state.tx_categories.splice(index, 1);
@@ -102,7 +102,12 @@ export const store = new Vuex.Store({
       }else
         state.tx_categories.push(category);
 
-      // TODO clear and/or filter txs by category ?
+      // Filter txs by category
+      state.txs = state.txs.filter(function(tx){
+        var category = config.tx_category_for_type(tx["transaction"]["TransactionType"]);
+        return(state.tx_categories.length == 0 ||
+               state.tx_categories.includes(category))
+      })
     },
 
     clear_txs(state, filter){
