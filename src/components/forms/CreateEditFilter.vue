@@ -212,10 +212,8 @@ export default {
       return this.selected_template.params
     },
 
-    // TODO: more elegant solution,
-    //       deduce from fr0xrpl MEMBERSHIP_LEVEL config
     advanced_sinks_disabled : function(){
-      return !this.logged_in || this.is_basic_member;
+      return !this.logged_in || !this.membership_features.advanced_sinks
     },
 
     ///
