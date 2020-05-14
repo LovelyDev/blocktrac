@@ -114,7 +114,7 @@ export default {
       this.$http.post(this.backend_url + "/register", params)
                 .then(function(response){
                   this.$store.commit('clear_in_progress_filter')
-                  alert("Successfully registered, please check your email for confirmation code")
+                  alert("Please check your email to complete registration")
 
                 }.bind(this)).catch(function(err){
                   const msg = util.capitalize(err.body.error)
