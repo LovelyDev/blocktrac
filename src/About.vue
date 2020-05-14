@@ -83,7 +83,7 @@
             Questions, feedback, and technical support can be obtained by contacting Dev Null Productions via the following form:
           </p>
 
-          <!-- TODO contact form -->
+          <ContactForm />
         </div>
       </div>
     </div>
@@ -91,14 +91,16 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout'
-import config     from './config'
+import MainLayout  from './components/MainLayout'
+import ContactForm from './components/forms/Contact'
+import config      from './config'
 
 export default {
   name: 'About',
 
   components: {
-    MainLayout
+    MainLayout,
+    ContactForm
   },
 
   methods : {
