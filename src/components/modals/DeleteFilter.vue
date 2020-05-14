@@ -11,6 +11,8 @@
 <script>
 import Authentication from '../../mixins/authentication'
 
+import util from '../../util'
+
 export default {
   name: 'DeleteFilter',
 
@@ -31,7 +33,8 @@ export default {
                   this.$emit('deleted')
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not delete filter: " + msg)
                 })
     }
   }

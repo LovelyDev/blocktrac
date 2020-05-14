@@ -13,6 +13,8 @@
 import Authentication       from '../../mixins/authentication'
 import CreateEditFilterForm from '../forms/CreateEditFilter'
 
+import util from '../../util'
+
 export default {
   name: 'EditFilterModal',
 
@@ -45,7 +47,8 @@ export default {
                   this.$emit('edited', filter);
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not update filter: " + msg)
                 }.bind(this))
     }
   }
