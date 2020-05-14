@@ -52,7 +52,7 @@ export default {
 
   // XXX: copied from fr0xrpl util#is_valid_email
   is_valid_email : function(email){
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.auth_email);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   },
 
   // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params

@@ -10,6 +10,10 @@
              v-model="email" />
     </div>
 
+    <div v-if="have_email && !is_email_valid" id="email_invalid">
+      Invalid Email
+    </div>
+
     <div class="header">
       How can we help you?
     </div>
@@ -45,9 +49,26 @@ export default {
   },
 
   computed : {
+    have_email : function(){
+      return this.email != ""
+    },
+
+    is_email_valid : function(){
+      return this.have_email &&
+             util.is_valid_email(this.email)
+    },
+
+    have_inquiry : function(){
+      return this.inquiry != ""
+    },
+
+    is_inquiry_valid : function(){
+      return this.have_inquiry
+    },
+
     is_valid : function(){
-      return this.email != "" &&
-             this.inquiry  != ""
+      return this.is_email_valid &&
+             this.is_inquiry_valid
     }
   },
 
@@ -58,7 +79,8 @@ export default {
       const params = {email : this.email, inquiry : this.inquiry}
       this.$http.post(this.backend_url + "/contact", params)
                 .then(function(response){
-                  alert("Your inquiry has been sent to us, we will get back to you as soon as possible")
+                  alert("Your inquiry has been sent to us, " +
+                        "we will get back to you as soon as possible")
                   this.email = ""
                   this.inquiry = ""
 
@@ -84,6 +106,13 @@ textarea{
 
 .header{
   margin-top: 10px;
+}
+
+#email_invalid{
+  color: red;
+  font-size: 0.9rem;
+  font-family: var(--theme-font2);
+  font-style: italic;
 }
 
 #submit{
