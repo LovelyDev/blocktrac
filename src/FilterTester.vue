@@ -4,7 +4,6 @@
       <FilterHeader />
 
       <div v-if="matched_tests.length == 0" id="no_matches">
-        <!-- TODO report test results -->
         <img id="no_matches_icon"
              src="./assets/yellow-alert.svg" />
 
