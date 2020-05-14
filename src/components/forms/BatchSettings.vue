@@ -14,36 +14,46 @@
       </b-form-group>
     </div>
 
-    <div id="batch_size_summary" v-if="batch_size == 'instant'">
-    Receive notifications instantly
-    </div>
-
-    <div id="batch_size_summary" v-else>
+    <div id="batch_size_summary">
     Receive notifications after <b>{{batch_size}}</b> transactions
     </div>
   </div>
 </template>
 
 <script>
+import Authentication from '../../mixins/authentication'
+
 export default {
   name: 'BatchSettingsForm',
 
+  mixins : [Authentication],
+
   data : function(){
     return {
-      // TODO from user profile
-      batch_size : 5,
-
-      // TODO: from config, profile (disable instant)
-      batch_sizes : [
-        { text : 'Instant', value : 'instant' },
-        { text : '5',       value : 5  },
-        { text : '10',      value : 10 },
-        { text : '15',      value : 15 },
-        { text : '20',      value : 20 },
-        { text : '25',      value : 25 },
-      ]
+      set_batch_size : null
     }
   },
+
+  computed : {
+    batch_size : {
+      get : function(){
+        return this.set_batch_size || this.profile.batch_size
+      },
+
+      set : function(bs){
+        this.set_batch_size = bs;
+      }
+    },
+
+    batch_sizes : function(){
+      return this.membership_features.batch_sizes.map(function(bs){
+        return {
+          value : bs,
+          text : bs.toString()
+        }
+      })
+    }
+  }
 }
 </script>
 

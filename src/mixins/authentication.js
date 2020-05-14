@@ -50,11 +50,15 @@ export default {
       return this.membership_level == 'premium';
     },
 
+    membership_features : function(){
+      return fr0xrpl.membership_features[this.membership_level];
+    },
+
     authorized_filters : function(){
       if(!this.membership_level) return 0;
 
       // TODO: add additional filters associated with account
-      return fr0xrpl.membership_features[this.membership_level].filters;
+      return this.membership_features.filters;
     },
 
     ///
