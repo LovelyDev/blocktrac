@@ -2,6 +2,7 @@ import Vue  from 'vue'
 import Vuex from 'vuex'
 
 import config from './config'
+import util   from './util'
 
 var jsonpath = require('./vendor/jsonpath')
 
@@ -49,13 +50,17 @@ export const store = new Vuex.Store({
     },
 
     update_tx_filter(state, filter){
-      // TODO if filter not valid jsonpath, return
+      // If filter not valid jsonpath, return
+      if(filter && !util.is_valid_jsonpath(filter))
+        return
 
+      // Set jsonpath
       state.tx_filter = filter;
 
+      // If blank, return
       if(!filter) return;
 
-      // remove txs that don't match filter
+      // Remove txs that don't match filter
       for(var i = state.txs.length-1; i >= 0 ; i--){
         if(jsonpath.query(state.txs[i], filter).length == 0){
           state.txs.splice(i, 1);

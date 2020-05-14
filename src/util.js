@@ -1,3 +1,5 @@
+const jsonpath = require('./vendor/jsonpath')
+
 export default {
   delim_value : function(value){
     var delim = parseFloat(value).toString().split(".");
@@ -35,6 +37,22 @@ export default {
 
   capitalize : function(string){
     return string[0].toUpperCase() + string.slice(1);
+  },
+
+  // XXX: copied from fr0xrpl util#is_valid_jsonpath
+  is_valid_jsonpath : function(jp){
+    try{
+      jsonpath.parse(jp);
+      return true;
+
+    }catch(err){
+      return false;
+    }
+  },
+
+  // XXX: copied from fr0xrpl util#is_valid_email
+  is_valid_email : function(email){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.auth_email);
   },
 
   // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params

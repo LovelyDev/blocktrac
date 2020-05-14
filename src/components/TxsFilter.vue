@@ -1,18 +1,24 @@
 <template>
-  <div id="txs_filter">
-    <span id="txs_filter_icon">
-      <span class="text">{</span>
-      <img src="../assets/search.svg" />
-      <span class="text">}</span>
-    </span>
+  <div>
+    <div id="txs_filter">
+      <span id="txs_filter_icon">
+        <span class="text">{</span>
+        <img src="../assets/search.svg" />
+        <span class="text">}</span>
+      </span>
 
-    <input v-model="filter"
-           placeholder="JSONPath Expression..." />
+      <input v-model="filter"
+             placeholder="JSONPath Expression..." />
 
-    <TxsFilterControls v-if="mq_gt_md" />
+      <TxsFilterControls v-if="mq_gt_md" />
 
-    <SaveFilterModal @created="load_filters"
-                      :filter="save_filter" />
+      <SaveFilterModal @created="load_filters"
+                        :filter="save_filter" />
+    </div>
+
+    <div v-if="invalid" id="txs_filter_error">
+      Invalid Expression
+    </div>
   </div>
 </template>
 
@@ -21,6 +27,8 @@ import Authentication    from '../mixins/authentication'
 import ServerAPI         from '../mixins/server_api'
 import TxsFilterControls from './TxsFilterControls'
 import SaveFilterModal   from './modals/SaveFilter'
+
+import util              from '../util'
 
 export default {
   name: 'TxsFilter',
@@ -32,8 +40,14 @@ export default {
     SaveFilterModal
   },
 
+  data : function(){
+    return {
+      filter : null
+    }
+  },
+
   computed : {
-    filter : {
+    store_filter : {
       get : function(){
         return this.$store.state.tx_filter;
       },
@@ -43,8 +57,23 @@ export default {
       }
     },
 
+    invalid : function(){
+      return this.filter && !util.is_valid_jsonpath(this.filter)
+    },
+
     save_filter : function(){
       return {jsonpath : this.filter};
+    }
+  },
+
+  watch : {
+    filter : function(){
+      if(!this.invalid)
+        this.store_filter = this.filter
+    },
+
+    store_filter : function(){
+      this.filter = this.store_filter
     }
   }
 }
@@ -78,5 +107,14 @@ input {
 #txs_filter_icon .text{
   color: var(--theme-color4);
   opacity: 0.3;
+}
+
+#txs_filter_error{
+  margin-left: 15px;
+  margin-top: 5px;
+  color: red;
+  font-family: var(--theme-font2);
+  font-style: italic;
+  font-size: 0.8rem;
 }
 </style>
