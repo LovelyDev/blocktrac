@@ -6,6 +6,7 @@
 
     <div>
       <input type="text"
+             @keyup.enter="submit"
              v-model="email" />
     </div>
 
@@ -15,7 +16,8 @@
 
     <div>
       <textarea rows="20"
-                v-model="body" />
+                @keyup.enter="submit"
+                v-model="inquiry" />
     </div>
 
     <div id="submit">
@@ -26,28 +28,44 @@
 </template>
 
 <script>
+import ServerAPI from '../../mixins/server_api'
+
+import util from '../../util'
+
 export default {
   name: 'ContactForm',
+
+  mixins : [ServerAPI],
 
   data : function(){
     return {
       email : "",
-      body : ""
+      inquiry : ""
     }
   },
 
   computed : {
     is_valid : function(){
       return this.email != "" &&
-             this.body  != ""
+             this.inquiry  != ""
     }
   },
 
   methods : {
     submit : function(){
-      // TODO - submit and notify user
-      this.email = ""
-      this.body = ""
+      if(!this.is_valid) return
+
+      const params = {email : this.email, inquiry : this.inquiry}
+      this.$http.post(this.backend_url + "/contact", params)
+                .then(function(response){
+                  alert("Your inquiry has been sent to us, we will get back to you as soon as possible")
+                  this.email = ""
+                  this.inquiry = ""
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not submit form: " + msg)
+                })
     }
   }
 }
