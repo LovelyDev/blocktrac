@@ -151,6 +151,11 @@ export default {
             {
               title : "What happens if my email, sms, url is unavailable when a notification is sent?",
               value : "At the current time we only send notifications once when Zerp Tracker detects matching transactions. Please make sure the target destination is online and accessible to ensure you receive notifications. In the future we may offer the ability to retry notification attempts."
+            },
+
+            {
+              title : "Can I control how often I receive notifications?",
+              value : "Yes! You may edit transaction batch sizes and notification times via the <b>Settings</b> control in the <b>Filters List</b>. You will receive a notification whichever comes first, a filter matches the number of transactions specified by batch size or the amount of time specified by notification time passes since the first matched transaction is detected."
             }
           ]
         },
