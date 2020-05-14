@@ -8,8 +8,9 @@
       <router-link :to="'/filter/' + filter.id">
         <FilterSummary :filter="filter" />
 
-        <div>
-          <!-- TODO matches -->
+        <div v-if="filter.total_matches > 0"
+             class="filter_matches">
+          {{filter.total_matches}}
         </div>
 
         <div>
@@ -71,5 +72,14 @@ export default {
 
 .filter_row.active a{
   color: #425265;
+}
+
+.filter_matches{
+  background-color: white;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding: 0 7px;
+  font-family: var(--theme-font3);
+  font-weight: bold;
 }
 </style>
