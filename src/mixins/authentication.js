@@ -171,7 +171,16 @@ export default {
     },
 
     reset_password : function(){
-      // TODO
+      var params = {email : this.auth_email}
+      this.$http.put(this.backend_url + "/reset", params)
+                .then(function(response){
+                  alert("Please check your email for password reset instructions")
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not reset password: " + msg)
+                })
+
     }
   }
 }
