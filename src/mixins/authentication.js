@@ -54,18 +54,24 @@ export default {
       return fr0xrpl.membership_features[this.membership_level];
     },
 
+    additional_filters : function(){
+      return this.$cookies.additional_filters;
+    },
+
     authorized_filters : function(){
       if(!this.membership_level) return 0;
 
-      // TODO: add additional filters associated with account
-      return this.membership_features.filters;
+      return this.membership_features.filters + this.additional_filters;
+    },
+
+    additional_sinks : function(){
+      return this.$cookies.additional_sinks;
     },
 
     authorized_sinks : function(){
       if(!this.membership_level) return 0;
 
-      // TODO: add additional filters associated with account
-      return this.membership_features.sinks;
+      return this.membership_features.sinks + this.additional_sinks;
     },
 
     ///
@@ -154,6 +160,8 @@ export default {
                          this.$setCookie("email", response.body.email)
                          this.$setCookie("membership_level", response.body.membership_level);
                          this.$setCookie("profile",  response.body.profile)
+                         this.$setCookie("additional_filters",  response.body.additional_filters)
+                         this.$setCookie("additional_sinks",  response.body.additional_sinks)
                        }.bind(this))
     },
 
@@ -165,12 +173,16 @@ export default {
                   this.$removeCookie("email")
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
+                  this.$removeCookie("additional_filters")
+                  this.$removeCookie("additional_sinks")
 
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
                   this.$removeCookie("email")
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
+                  this.$removeCookie("additional_filters")
+                  this.$removeCookie("additional_sinks")
                 }.bind(this))
 
       if(this.$route.path != "/txs")
