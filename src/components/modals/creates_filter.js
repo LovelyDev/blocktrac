@@ -1,3 +1,5 @@
+import util from '../../util'
+
 export default {
   methods : {
     on_ok : function(){
@@ -24,7 +26,8 @@ export default {
                   this.$emit('created', response.body);
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not create filter: " + msg)
                 }.bind(this))
     }
   }
