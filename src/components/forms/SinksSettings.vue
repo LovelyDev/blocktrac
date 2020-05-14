@@ -67,10 +67,8 @@ export default {
   mixins : [Authentication],
 
   computed : {
-    // TODO: more elegant solution,
-    //       deduce from fr0xrpl MEMBERSHIP_LEVEL config
     advanced_sinks_disabled : function(){
-      return this.is_basic_member;
+      return !this.membership_features.advanced_sinks
     },
 
     remaining_sinks : function(){
