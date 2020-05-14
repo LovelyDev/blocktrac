@@ -30,21 +30,11 @@ export default {
 
   data : function(){
     return {
-      set_batch_size : null
+      batch_size : null
     }
   },
 
   computed : {
-    batch_size : {
-      get : function(){
-        return this.set_batch_size || this.profile.batch_size
-      },
-
-      set : function(bs){
-        this.set_batch_size = bs;
-      }
-    },
-
     batch_sizes : function(){
       return this.membership_features.batch_sizes.map(function(bs){
         return {
@@ -53,6 +43,10 @@ export default {
         }
       })
     }
+  },
+
+  created : function(){
+    this.batch_size = this.profile.batch_size
   }
 }
 </script>

@@ -14,7 +14,7 @@
       </b-form-group>
     </div>
 
-    <div id="notification_time_summary" v-if="set_notification_time == 0">
+    <div id="notification_time_summary" v-if="notification_time == 0">
     Receive notifications instantly
     </div>
 
@@ -34,21 +34,11 @@ export default {
 
   data : function(){
     return {
-      set_notification_time : null
+      notification_time : null
     }
   },
 
   computed : {
-    notification_time : {
-      get : function(){
-        return this.set_notification_time || this.profile.notification_time
-      },
-
-      set : function(nt){
-        this.set_notification_time = nt;
-      }
-    },
-
     notification_times : function(){
       return this.membership_features.notification_times.map(function(nt){
         return {
@@ -57,6 +47,10 @@ export default {
         }
       })
     }
+  },
+
+  created : function(){
+    this.notification_time = this.profile.notification_time
   }
 }
 </script>
