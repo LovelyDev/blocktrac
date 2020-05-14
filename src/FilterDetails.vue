@@ -30,7 +30,23 @@
       </div>
 
       <div v-else>
-        <!-- TODO render matched transactions -->
+        <b-list-group>
+          <b-list-group-item id="matched_txs_explanation">
+            <img src="./assets/info.svg" />
+            <span>
+              The following are transactions which your filter has matched.
+              <template v-if="filter.total_matches > transaction_history">
+                Only the last {{transaction_history}} matches are shown.
+              </template>
+            </span>
+          </b-list-group-item>
+
+          <b-list-group-item v-for="tx in matched_txs"
+                             :key="tx.transaction.hash"
+                             class="tx_summary_container">
+            <TxSummary :tx="tx" />
+          </b-list-group-item>
+        </b-list-group>
       </div>
     </div>
   </TxsLayout>
@@ -42,6 +58,9 @@ import ServerAPI      from './mixins/server_api'
 
 import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
+import TxSummary      from './components/TxSummary'
+
+import fr0xrpl        from './fr0xrpl'
 
 export default {
   name: 'FilterDetails',
@@ -50,11 +69,18 @@ export default {
 
   components: {
     TxsLayout,
-    FilterHeader
+    FilterHeader,
+    TxSummary
   },
 
   props : {
     id : Number
+  },
+
+  computed : {
+    transaction_history : function(){
+      return fr0xrpl.filter_transaction_history
+    }
   },
 
   watch : {
@@ -131,5 +157,31 @@ export default {
 
 #test_link_icon{
   margin-right: 10px;
+}
+
+#matched_txs_explanation{
+  display: flex;
+  align-items: center;
+}
+
+#main_layout.sm #matched_txs_explanation,
+#main_layout.xs #matched_txs_explanation{
+  padding: 10px;
+}
+
+#matched_txs_explanation span{
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-family: var(--theme-font4);
+  color: var(--theme-color2);
+}
+
+#matched_txs_explanation img{
+  margin-right: 5px;
+  min-width: 20px;
+}
+
+.tx_summary_container{
+  padding: 0px;
 }
 </style>

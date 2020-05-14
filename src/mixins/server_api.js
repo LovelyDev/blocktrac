@@ -122,7 +122,19 @@ export default {
     },
 
     load_matched_txs : function(id){
-      // TODO
+      this.$http.get(this.backend_url + "/filter/" + id + "/matches", this.auth_header)
+                .then(function(response){
+                  // clear matched txs
+                  this.matched_txs = []
+
+                  response.body.forEach(function(matched_tx){
+                    this.matched_txs.push(JSON.parse(matched_tx.raw))
+                  }.bind(this))
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve filter matches: " + msg)
+                }.bind(this))
     }
   }
 }
