@@ -1,5 +1,6 @@
 <template>
   <b-modal id="register_modal"
+           ref="register_modal"
            title="Register"
            ok-title="Register"
            cancel-variant="light"
@@ -9,15 +10,14 @@
            :ok-disabled="!is_valid"
            no-stacking>
     <RegistrationForm ref="form"
-               @validated="validate($event)" />
+               @validated="validate($event)"
+               @submit="submit" />
   </b-modal>
 </template>
 
 <script>
 import RegistrationForm from '../forms/Registration'
 import Validatable      from '../../mixins/validatable'
-
-// TODO: submit on enter (and other modals)
 
 export default {
   name: 'RegistrationModal',
@@ -31,6 +31,13 @@ export default {
   methods : {
     register : function(){
       this.$refs.form.register();
+    },
+
+    submit : function(){
+      if(this.is_valid){
+        this.register()
+        this.$refs.register_modal.hide()
+      }
     }
   }
 }

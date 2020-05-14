@@ -1,5 +1,6 @@
 <template>
   <b-modal id="forgot_password_modal"
+           ref="forgot_password_modal"
            title="Reset Password"
            ok-title="Reset"
            cancel-variant="light"
@@ -9,7 +10,8 @@
            :ok-disabled="!is_valid"
            no-stacking>
     <ForgotPasswordForm ref="form"
-                 @validated="validate($event)" />
+                 @validated="validate($event)"
+                 @submit="submit"/>
   </b-modal>
 </template>
 
@@ -29,6 +31,13 @@ export default {
   methods : {
     reset_password : function(){
       this.$refs.form.reset_password();
+    },
+
+    submit : function(){
+      if(this.is_valid){
+        this.reset_password()
+        this.$refs.forgot_password_modal.hide()
+      }
     }
   }
 }

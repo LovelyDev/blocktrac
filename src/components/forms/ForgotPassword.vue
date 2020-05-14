@@ -4,8 +4,9 @@
       <td>Email address:</td>
       <td>
         <input class="form_input"
-                type="text"
-             v-model="auth_email" />
+               type="text"
+               @keyup.enter="$emit('submit')"
+               v-model="auth_email" />
       </td>
     </tr>
   </table>

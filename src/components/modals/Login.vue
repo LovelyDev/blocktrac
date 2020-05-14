@@ -1,5 +1,6 @@
 <template>
   <b-modal id="login_modal"
+           ref="login_modal"
            title="Login"
            ok-title="Login"
            cancel-variant="light"
@@ -9,7 +10,8 @@
            :ok-disabled="!is_valid"
            no-stacking>
     <LoginForm ref="form"
-        @validated="validate($event)" />
+        @validated="validate($event)"
+           @submit="submit" />
   </b-modal>
 </template>
 
@@ -29,6 +31,13 @@ export default {
   methods : {
     login : function(){
       this.$refs.form.login();
+    },
+
+    submit : function(){
+      if(this.is_valid){
+        this.login()
+        this.$refs.login_modal.hide()
+      }
     }
   }
 }

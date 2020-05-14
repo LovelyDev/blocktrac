@@ -5,6 +5,7 @@
       <td>
         <input class="form_input"
                type="text"
+               @keyup.enter="$emit('submit')"
                v-model="auth_email" />
       </td>
     </tr>
@@ -14,6 +15,7 @@
       <td>
         <input class="form_input"
                type="password"
+               @keyup.enter="$emit('submit')"
                v-model="auth_password" />
       </td>
     </tr>
