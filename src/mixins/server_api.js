@@ -1,4 +1,5 @@
 import config from '../config'
+import util   from '../util'
 
 // NOTE: some of these methods/data require the auth_header
 //       provided by the 'authentication' mixin!
@@ -81,7 +82,8 @@ export default {
                     }.bind(this));
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve templates: " + msg)
                 }.bind(this))
     },
 
@@ -100,7 +102,8 @@ export default {
                     }.bind(this));
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve filters: " + msg)
                 }.bind(this))
     },
 
@@ -113,7 +116,8 @@ export default {
                     this.filter.Template.params = JSON.parse(this.filter.Template.params)
 
                 }.bind(this)).catch(function(err){
-                  // TODO
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve filter: " + msg)
                 }.bind(this))
     },
 
