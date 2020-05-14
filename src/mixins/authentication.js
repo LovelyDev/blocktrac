@@ -61,6 +61,13 @@ export default {
       return this.membership_features.filters;
     },
 
+    authorized_sinks : function(){
+      if(!this.membership_level) return 0;
+
+      // TODO: add additional filters associated with account
+      return this.membership_features.sinks;
+    },
+
     ///
 
     have_email : function(){

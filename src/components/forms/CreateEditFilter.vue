@@ -1,151 +1,93 @@
 <template>
-  <table class="form_table">
-    <tr v-if="!editing_filter && !saving_filter">
-      <td colspan="2">
-        <div id="filter_type">
-          <span id="by_category"
-               :class="{active : is_template_filter}"
-               @click="set_filter_type('template')">
-            <span>By Category</span>
-          </span>
+  <div>
+    <table class="form_table">
+      <tr v-if="!editing_filter && !saving_filter">
+        <td colspan="2">
+          <div id="filter_type">
+            <span id="by_category"
+                 :class="{active : is_template_filter}"
+                 @click="set_filter_type('template')">
+              <span>By Category</span>
+            </span>
 
-          <span id="by_expression"
-               :class="{active : is_expression_filter}"
-               @click="set_filter_type('expression')">
-            <span>By Expression</span>
-          </span>
-        </div>
-      </td>
-    </tr>
-
-    <tr v-if="is_template_filter">
-      <td class="form_text">Category:</td>
-
-      <td>
-        <b-form-select v-model="template"
-                       :disabled="editing_filter"
-                       class="form_text">
-          <b-form-select-option v-for="template in templates"
-                               :key="'template' + template.id"
-                               :value="template.id">
-            {{template.name}}
-          </b-form-select-option>
-        </b-form-select>
-      </td>
-    </tr>
-
-    <template v-if="is_template_filter && template_has_params">
-      <tr v-for="p in template_params.length"
-          :key="'param' + p">
-        <td>
-          <span class="form_text">{{template_params[p-1]['name']}}:</span>
+            <span id="by_expression"
+                 :class="{active : is_expression_filter}"
+                 @click="set_filter_type('expression')">
+              <span>By Expression</span>
+            </span>
+          </div>
         </td>
+      </tr>
+
+      <tr v-if="is_template_filter">
+        <td class="form_text">Category:</td>
+
+        <td>
+          <b-form-select v-model="template"
+                         :disabled="editing_filter"
+                         class="form_text">
+            <b-form-select-option v-for="template in templates"
+                                 :key="'template' + template.id"
+                                 :value="template.id">
+              {{template.name}}
+            </b-form-select-option>
+          </b-form-select>
+        </td>
+      </tr>
+
+      <template v-if="is_template_filter && template_has_params">
+        <tr v-for="p in template_params.length"
+            :key="'param' + p">
+          <td>
+            <span class="form_text">{{template_params[p-1]['name']}}:</span>
+          </td>
+
+          <td>
+            <input class="form_input"
+                   type="text"
+                   v-model="params[p-1]"
+                   :disabled="editing_filter" />
+          </td>
+        </tr>
+      </template>
+
+      <tr v-if="is_expression_filter">
+        <td class="form_text">Expression:</td>
 
         <td>
           <input class="form_input"
                  type="text"
-                 v-model="params[p-1]"
-                 :disabled="editing_filter" />
+                 title="expression"
+                 placeholder="JSONPath Expression..."
+                 v-model="jsonpath" />
         </td>
       </tr>
-    </template>
 
-    <tr v-if="is_expression_filter">
-      <td class="form_text">Expression:</td>
+      <tr>
+        <td class="form_text">Filter Name:</td>
 
-      <td>
-        <input class="form_input"
-               type="text"
-               title="expression"
-               placeholder="JSONPath Expression..."
-               v-model="jsonpath" />
-      </td>
-    </tr>
+        <td>
+          <input class="form_input"
+                 type="text"
+                 v-model="name" />
+        </td>
+      </tr>
 
-    <tr>
-      <td class="form_text">Filter Name:</td>
+      <tr>
+        <td colspan=2>
+          <div id="send_me" class="form_text">
+            Send Me Notifications Via:
+          </div>
+        </td>
+      </tr>
+    </table>
 
-      <td>
-        <input class="form_input"
-               type="text"
-               v-model="name" />
-      </td>
-    </tr>
-
-    <tr>
-      <td colspan=2>
-        <div id="send_me" class="form_text">
-          Send Me Notifications Via:
-        </div>
-      </td>
-    </tr>
-
-    <!-- TODO advanced sinks controls -->
-
-    <tr>
-      <td>
-        <b-form-checkbox v-model="enable_email"
-                         class="form_switch"
-                         switch>
-          Email
-        </b-form-checkbox>
-      </td>
-
-      <td>
-        <input type="text"
-               v-model="email_sinks"
-               :disabled="!enable_email"
-               class="form_input" />
-      </td>
-    </tr>
-
-    <tr v-if="advanced_sinks_disabled">
-      <td></td>
-
-      <td id="available_with_pro">
-        Available with <span class="pro">Pro</span> plans
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <b-form-checkbox v-model="enable_sms"
-                         class="form_switch"
-                         switch
-                         :disabled="advanced_sinks_disabled">
-          Text Message
-        </b-form-checkbox>
-      </td>
-
-      <td>
-        <input type="text"
-               v-model="sms_sinks"
-               :disabled="advanced_sinks_disabled || !enable_sms"
-               class="form_input" />
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-        <b-form-checkbox v-model="enable_webhook"
-                         class="form_switch"
-                         switch
-                         :disabled="advanced_sinks_disabled">
-          URL
-        </b-form-checkbox>
-      </td>
-
-      <td>
-        <input type="text"
-               v-model="webhook_sinks"
-               :disabled="advanced_sinks_disabled || !enable_webhook"
-               class="form_input" />
-      </td>
-    </tr>
-  </table>
+    <SinksInputs />
+  </div>
 </template>
 
 <script>
+import SinksInputs    from './SinksInputs'
 import ServerAPI      from '../../mixins/server_api'
 import Authentication from '../../mixins/authentication'
 
@@ -153,6 +95,10 @@ export default {
   name: 'CreateEditFilterForm',
 
   mixins : [ServerAPI, Authentication],
+
+  components : {
+    SinksInputs
+  },
 
   props : {
     edit_filter : Object,
@@ -168,14 +114,6 @@ export default {
       params : [],
       jsonpath : '',
       name : '',
-
-      enable_email : false,
-      enable_sms : false,
-      enable_webhook : false,
-
-      email_sinks : '',
-      sms_sinks : '',
-      webhook_sinks : ''
     };
   },
 
@@ -210,10 +148,6 @@ export default {
       if(!this.selected_template) return[];
 
       return this.selected_template.params
-    },
-
-    advanced_sinks_disabled : function(){
-      return !this.logged_in || !this.membership_features.advanced_sinks
     },
 
     ///
@@ -361,19 +295,5 @@ export default {
 #send_me{
   font-family: var(--theme-font5);
   margin-top: 20px;
-}
-
-#available_with_pro{
-  font-family: var(--theme-font4);
-}
-
-.pro{
-  border-radius: 15px;
-  padding: 3px 10px;
-  background-color: var(--theme-color5);
-  color: white;
-  opacity: 0.6;
-  font-family: var(--theme-font2);
-  font-size: 0.8rem;
 }
 </style>
