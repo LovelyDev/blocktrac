@@ -3,8 +3,6 @@ import util from '../../util'
 export default {
   methods : {
     on_ok : function(){
-      // TODO validate form
-
       if(!this.logged_in){
         const client = this.$refs.form.client_params;
         const server = this.$refs.form.server_params;

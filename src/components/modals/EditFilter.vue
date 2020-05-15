@@ -3,22 +3,25 @@
            title="Edit Filter"
            header-class="modal_header"
            centered
-           @ok="on_ok">
+           @ok="on_ok"
+           :ok-disabled="!is_valid">
     <CreateEditFilterForm ref="form"
-                 :edit_filter="filter" />
+                 :edit_filter="filter"
+                   @validated="validate($event)" />
   </b-modal>
 </template>
 
 <script>
 import Authentication       from '../../mixins/authentication'
 import CreateEditFilterForm from '../forms/CreateEditFilter'
+import Validatable          from '../../mixins/validatable'
 
 import util from '../../util'
 
 export default {
   name: 'EditFilterModal',
 
-  mixins : [Authentication],
+  mixins : [Authentication, Validatable],
 
   components : {
     CreateEditFilterForm
@@ -33,7 +36,6 @@ export default {
 
   methods : {
     on_ok : function(){
-      // TODO: validate form
       this.edit_filter();
     },
 

@@ -43,10 +43,22 @@
           </td>
 
           <td>
+            <!-- XXX: tried making this numeric for appropriate param types but
+                      caused more styling issues than it's worth, just convert below -->
             <input class="form_input"
                    type="text"
                    v-model="params[p-1]"
                    :disabled="editing_filter" />
+
+            <div class="form_text form_error">
+              <span v-if="is_template_filter &&
+                         !is_template_param_valid(params[p-1],
+                                         template_params[p-1])">
+                Must be a{{template_params[p-1]['type'] == 'Integer' ? 'n' : ''}}
+                {{template_params[p-1]['type'].toLowerCase()}}
+              </span>
+              <span v-else class="placeholder" />
+            </div>
           </td>
         </tr>
       </template>
@@ -60,6 +72,16 @@
                  title="expression"
                  placeholder="JSONPath Expression..."
                  v-model="jsonpath" />
+
+          <div class="form_text form_error">
+            <span v-if="is_expression_filter && !has_expression">
+              Expression required
+            </span>
+            <span v-else-if="is_expression_filter && !valid_expression">
+              Invalid expression
+            </span>
+            <span v-else class="placeholder" />
+          </div>
         </td>
       </tr>
 
@@ -70,6 +92,11 @@
           <input class="form_input"
                  type="text"
                  v-model="name" />
+
+          <div class="form_text form_error">
+            <span v-if="!has_name">Name required</span>
+            <span v-else class="placeholder" />
+          </div>
         </td>
       </tr>
 
@@ -90,11 +117,14 @@
 import SinksInputs    from './SinksInputs'
 import ServerAPI      from '../../mixins/server_api'
 import Authentication from '../../mixins/authentication'
+import Validator      from '../../mixins/validator'
+
+import util           from '../../util'
 
 export default {
   name: 'CreateEditFilterForm',
 
-  mixins : [ServerAPI, Authentication],
+  mixins : [ServerAPI, Authentication, Validator],
 
   components : {
     SinksInputs
@@ -134,6 +164,45 @@ export default {
       return this.filter_type == 'expression';
     },
 
+    ///
+
+    has_name : function(){
+      return this.name != '';
+    },
+
+    has_expression : function(){
+      return this.jsonpath != ''
+    },
+
+    valid_expression : function(){
+      return this.has_expression &&
+             util.is_valid_jsonpath(this.jsonpath);
+    },
+
+    params_are_valid : function(){
+      if(!this.template_has_params) return true;
+
+      if(this.params.length != this.template_params.length)
+        return false;
+
+      for(var p = 0; p < this.template_params.length; p += 1){
+        const param = this.params[p]
+        const template_param = this.template_params[p]
+        if(!this.is_template_param_valid(param, template_param))
+          return false;
+      }
+
+      return true;
+    },
+
+    is_valid : function(){
+      return this.name &&
+           ((this.is_expression_filter && this.valid_expression) ||
+            (this.is_template_filter   && this.params_are_valid))
+    },
+
+    ///
+
     selected_template : function(){
       return this.templates.find(function(t){
                return t.id == this.template;
@@ -152,6 +221,26 @@ export default {
 
     ///
 
+    converted_params : function(){
+      var converted = [];
+
+      for(var p = 0; p < this.template_params.length; p += 1){
+        const param = this.params[p]
+        const template_param = this.template_params[p]
+
+        if(template_param.type == 'Integer')
+          converted.push(parseInt(param))
+
+        else if(template_param.type == 'Float')
+          converted.push(parseFloat(param))
+
+        else
+          converted.push(param)
+      }
+
+      return converted;
+    },
+
     server_params : function(){
       var params = {
         name : this.name,
@@ -159,7 +248,7 @@ export default {
 
       if(this.is_template_filter){
         params['template'] = this.template;
-        params['params']   = JSON.stringify(this.params)
+        params['params']   = JSON.stringify(this.converted_params)
 
       }else
         params['jsonpath'] = this.jsonpath
@@ -177,7 +266,7 @@ export default {
 
       if(this.is_template_filter){
         params['Template'] = this.selected_template;
-        params['params']   = this.params;
+        params['params']   = this.converted_params;
 
       }else
         params['jsonpath'] = this.jsonpath
@@ -198,6 +287,27 @@ export default {
     set_filter_type : function(type){
       this.filter_type = type;
     },
+
+    is_template_param_valid : function(param, template_param){
+      if(param == '' || param == null) return false;
+
+      if(template_param['type'] == 'String' &&
+        !util.is_valid_string(param))
+        return false;
+
+      else if(template_param['type'] == 'Integer' &&
+             !util.is_valid_integer(parseInt(param)))
+        return false;
+
+      else if(template_param['type'] == 'Float' &&
+             !util.is_valid_integer(parseInt(param)) &&
+             !util.is_valid_float(parseFloat(param)))
+        return false;
+
+      return true;
+    },
+
+    ///
 
     parse_edit_filter : function(){
       this.name = this.edit_filter.name;

@@ -57,7 +57,10 @@ export default {
     return string[0].toUpperCase() + string.slice(1);
   },
 
-  // XXX: copied from fr0xrpl util#is_valid_jsonpath
+  ///
+
+  // XXX: validator methods copied from fr0xrpl util module
+
   is_valid_jsonpath : function(jp){
     try{
       jsonpath.parse(jp);
@@ -68,10 +71,26 @@ export default {
     }
   },
 
-  // XXX: copied from fr0xrpl util#is_valid_email
   is_valid_email : function(email){
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   },
+
+  is_valid_integer : function(test){
+    return Number(test) === test &&
+                     test % 1 === 0
+  },
+
+  is_valid_float : function(test){
+    return Number(test) === test &&
+                     test % 1 !== 0
+  },
+
+  is_valid_string : function(test){
+    return typeof test === 'string' ||
+            test instanceof String
+  },
+
+  ///
 
   // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params
   filter_matcher : function(filter){
