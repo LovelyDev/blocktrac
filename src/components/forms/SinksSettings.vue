@@ -6,7 +6,7 @@
     Send me notifications via
     </div>
 
-    <SinksInputs no_toggle />
+    <SinksInputs no_toggle selected_lifecycle />
   </div>
 </template>
 

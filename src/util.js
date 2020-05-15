@@ -75,6 +75,14 @@ export default {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   },
 
+  is_valid_sms : function(test){
+    return (/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im).test(test);
+  },
+
+  is_valid_url : function(test){
+    return (/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi).test(test)
+  },
+
   is_valid_integer : function(test){
     return Number(test) === test &&
                      test % 1 === 0

@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO advanced sinks controls, save filters on change -->
   <table class="form_table">
     <tr>
       <td>
@@ -16,10 +15,13 @@
       </td>
 
       <td class="input_col">
-        <input type="text"
-               v-model="email_sinks"
-               :disabled="!enable_email"
-               class="form_input" />
+        <multiselect :options="email_options_plus"
+                    :disabled="!enable_email"
+                  placeholder="Select Email"
+                    :multiple="true"
+                        label="text"
+                     track-by="value"
+                      v-model="selected['email']" />
       </td>
     </tr>
 
@@ -47,10 +49,13 @@
       </td>
 
       <td class="input_col">
-        <input type="text"
-               v-model="sms_sinks"
-               :disabled="advanced_sinks_disabled || !enable_sms"
-               class="form_input" />
+        <multiselect :options="sms_options_plus"
+                    :disabled="!enable_sms"
+                  placeholder="Select Phone Number"
+                    :multiple="true"
+                        label="text"
+                     track-by="value"
+                      v-model="selected['sms']" />
       </td>
     </tr>
 
@@ -70,10 +75,13 @@
       </td>
 
       <td class="input_col">
-        <input type="text"
-               v-model="webhook_sinks"
-               :disabled="advanced_sinks_disabled || !enable_webhook"
-               class="form_input" />
+        <multiselect :options="webhook_options_plus"
+                    :disabled="!enable_webhook"
+                  placeholder="Select URL"
+                    :multiple="true"
+                        label="text"
+                     track-by="value"
+                      v-model="selected['webhook']" />
       </td>
     </tr>
 
@@ -83,31 +91,56 @@
         <div>To create more, purchase a <span class="pro">Pro</span> plan.</div>
       </td>
     </tr>
+
+    <CreateSinkModal id='create_email_modal'
+                     type='email'
+                     @created="created_sink" />
+
+    <CreateSinkModal id='create_sms_modal'
+                     type='sms'
+                     @created="created_sink" />
+
+    <CreateSinkModal id='create_webhook_modal'
+                     type='webhook'
+                     @created="created_sink" />
   </table>
 </template>
 
 <script>
-import Authentication from '../../mixins/authentication'
-import ServerAPI      from '../../mixins/server_api'
+import CreateSinkModal from '../modals/CreateSink'
+import Authentication  from '../../mixins/authentication'
+import ServerAPI       from '../../mixins/server_api'
+
+import util from '../../util'
 
 export default {
   name: 'SinksInputs',
 
   mixins : [Authentication, ServerAPI],
 
+  components : {
+    CreateSinkModal
+  },
+
   props : {
-    no_toggle : Boolean
+    // hide toggle button
+    no_toggle : Boolean,
+
+    // tie selected sinks to sink lifecycle
+    selected_lifecycle : Boolean
   },
 
   data : function(){
     return {
-      enable_email : false,
-      enable_sms : false,
+      enable_email   : false,
+      enable_sms     : false,
       enable_webhook : false,
 
-      email_sinks : '',
-      sms_sinks : '',
-      webhook_sinks : ''
+      selected : {
+          email : [],
+            sms : [],
+        webhook : []
+      }
     };
   },
 
@@ -115,6 +148,8 @@ export default {
     advanced_sinks_disabled : function(){
       return !this.logged_in || !this.membership_features.advanced_sinks
     },
+
+    ///
 
     remaining_sinks : function(){
       return this.authorized_sinks - this.sinks.length;
@@ -127,6 +162,159 @@ export default {
         return "1 available sink is left"
 
       return remaining + " available sinks are left"
+    },
+
+    ///
+
+    email_sinks : function(){
+      return this.sinks.filter(function(sink){
+        return sink.type == "email"
+      })
+    },
+
+    sms_sinks : function(){
+      return this.sinks.filter(function(sink){
+        return sink.type == "sms"
+      })
+    },
+
+    webhook_sinks : function(){
+      return this.sinks.filter(function(sink){
+        return sink.type == "webhook"
+      })
+    },
+
+    sinks_by_type : function(){
+      return {
+          email : this.email_sinks,
+            sms : this.sms_sinks,
+        webhook : this.webhook_sinks
+      }
+    },
+
+    ///
+
+    email_options : function(){
+      return this.email_sinks.map(function(email){
+        return {text : email.target, value: email.id}
+      });
+    },
+
+    email_options_plus : function(){
+      var options = this.email_options.slice();
+
+      if(this.remaining_sinks > 0)
+        options.push({text : "+ Add Email", value : -1})
+
+      return options;
+    },
+
+    sms_options : function(){
+      return this.sms_sinks.map(function(sms){
+        return {text : sms.target, value: sms.id}
+      });
+    },
+
+    sms_options_plus : function(){
+      var options = this.sms_options.slice();
+
+      if(this.remaining_sinks > 0)
+        options.push({text : "+ Add Phone Number", value : -1})
+
+      return options;
+    },
+
+    webhook_options : function(){
+      return this.webhook_sinks.map(function(webhook){
+        return {text : webhook.target, value: webhook.id}
+      });
+    },
+
+    webhook_options_plus : function(){
+      var options = this.webhook_options.slice();
+
+      if(this.remaining_sinks > 0)
+        options.push({text : "+ Add URL", value : -1})
+
+      return options;
+    },
+  },
+
+  watch : {
+    sinks : function(){
+      if(this.selected_lifecycle){
+        // Selected always contains all sinks
+        this.selected.email   = this.email_options
+        this.selected.sms     = this.sms_options
+        this.selected.webhook = this.webhook_options
+      }
+    },
+
+    selected : {
+      handler : function(){
+        this.sync_sinks('email')
+        this.sync_sinks('sms')
+        this.sync_sinks('webhook')
+      },
+
+      deep: true
+    }
+  },
+
+  methods : {
+    created_sink : function(sink){
+      this.load_sinks()
+
+      // Add newly created sink to selected
+      if(!this.selected_lifecycle){
+        this.selected[sink.type].push({
+           text : sink.target,
+          value : sink.id
+        })
+      }
+    },
+
+    sync_sinks : function(type){
+      const add =
+        this.selected[type].filter(function(sink){
+          return sink.value == -1
+        })[0]
+
+      // If 'Add New' option selected, remove it from selected
+      // list and launch CreateSink modal
+      if(add){
+        this.selected[type].splice(this.selected[type].indexOf(add), 1)
+        this.$bvModal.show('create_' + type + '_modal')
+      }
+
+      if(this.selected_lifecycle){
+        // If selected no longer contains all the sinks,
+        // delete sink which was removed
+        if(this.selected[type].length != this.sinks_by_type[type].length){
+          const selected = this.selected[type].map(function(sink){
+            return sink.value
+          })
+
+          const deleted = this.sinks_by_type[type].filter(function(sink){
+            return !selected.includes(sink.id)
+          })
+
+          deleted.forEach(function(sink){
+            this.delete_sink(sink)
+          }.bind(this))
+        }
+      }
+    },
+
+    delete_sink : function(sink){
+      this.$http.delete(this.backend_url + "/sink/" + sink.id, this.auth_header)
+                .then(function(response){
+                  this.load_sinks()
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not delete sink: " + msg)
+                })
     }
   },
 
