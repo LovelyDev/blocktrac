@@ -88,11 +88,12 @@
 
 <script>
 import Authentication from '../../mixins/authentication'
+import ServerAPI      from '../../mixins/server_api'
 
 export default {
   name: 'SinksInputs',
 
-  mixins : [Authentication],
+  mixins : [Authentication, ServerAPI],
 
   props : {
     no_toggle : Boolean
@@ -116,8 +117,7 @@ export default {
     },
 
     remaining_sinks : function(){
-      // TODO subtract current sinks
-      return this.authorized_sinks;
+      return this.authorized_sinks - this.sinks.length;
     },
 
     remaining_sinks_msg : function(){
@@ -136,6 +136,8 @@ export default {
       this.enable_sms = this.membership_features.advanced_sinks
       this.enable_webhook = this.membership_features.advanced_sinks
     }
+
+    this.load_sinks()
   }
 }
 </script>

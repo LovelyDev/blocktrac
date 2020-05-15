@@ -25,6 +25,7 @@ export const store = new Vuex.Store({
                           }, {}),
 
         templates : [],
+            sinks : [],
           filters : [],
       matched_txs : [],
 
@@ -123,6 +124,10 @@ export const store = new Vuex.Store({
 
     set_templates(state, templates){
       state.templates = templates;
+    },
+
+    set_sinks(state, sinks){
+      state.sinks = sinks;
     },
 
     set_filters(state, filters){

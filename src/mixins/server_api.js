@@ -20,6 +20,16 @@ export default {
       }
     },
 
+    sinks : {
+      set : function(sinks){
+        this.$store.commit('set_sinks', sinks);
+      },
+
+      get : function(){
+        return this.$store.state.sinks;
+      }
+    },
+
     filters : {
       set : function(filters){
         this.$store.commit('set_filters', filters);
@@ -86,6 +96,24 @@ export default {
                   alert("Could not retrieve templates: " + msg)
                 }.bind(this))
     },
+
+    load_sinks : function(){
+      this.$http.get(this.backend_url + "/sinks", this.auth_header)
+                .then(function(response){
+                    // clear sinks
+                    this.sinks = [];
+
+                    // parse and populate
+                    response.body.forEach(function(sink){
+                      this.sinks.push(sink)
+                    }.bind(this));
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve sinks: " + msg)
+                }.bind(this))
+    },
+
 
     load_filters : function(){
       this.$http.get(this.backend_url + "/filters", this.auth_header)
