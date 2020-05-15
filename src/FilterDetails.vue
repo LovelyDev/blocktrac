@@ -11,9 +11,9 @@
           No matches at the moment
         </div>
 
-        <div id="notifications_text">
-          <span id="get_notifications">You will get notifications via</span>
-          ... <!-- TODO sinks -->
+        <div v-if="have_sinks"
+             id="notifications_text">
+          <span id="get_notifications">You will get notifications via {{sinks_text}}</span>
         </div>
 
         <div id="check_filter">
@@ -78,6 +78,18 @@ export default {
   },
 
   computed : {
+    have_sinks : function(){
+      if(!this.filter || !this.filter.Sinks) return false;
+
+      return this.filter.Sinks.length > 0
+    },
+
+    sinks_text : function(){
+      return this.filter.Sinks.map(function(sink){
+               return sink.type + " " + sink.target;
+             }).join(", ")
+    },
+
     transaction_history : function(){
       return fr0xrpl.filter_transaction_history
     }
