@@ -17,8 +17,7 @@ export default {
 
   computed : {
     href : function(){
-      // TODO local account page (remove xrp1ntel reference from project)
-      return config.XRP1NTEL_URL + "/account/" + this.account;
+      return "/account/" + this.account;
     },
 
     text : function(){

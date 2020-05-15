@@ -8,9 +8,6 @@ module.exports = {
   // TODO: load from config and/or change to fr.0xr.pl in production
   BACKEND_URL : "http://localhost:3000",
 
-  // Used for account links and similar
-  XRP1NTEL_URL : "https://xrp1ntel.com",
-
   // Ripple Websocket URI
   RIPPLE_WS : "wss://s2.ripple.com:443",
 

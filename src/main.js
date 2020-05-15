@@ -26,6 +26,7 @@ require('./mq')
 import Landing        from './Landing'
 import Txs            from './Txs'
 import Tx             from './Tx'
+import Account        from './Account'
 import About          from './About'
 import Help           from './Help'
 import TermsOfService from './TermsOfService'
@@ -59,6 +60,9 @@ const routes = [
   { path: '/',         component: Landing  },
   { path: '/txs',      component: Txs      },
   { path: '/tx/:hash', component: Tx,
+                           props: true     },
+  { path: '/account/:id',
+                       component: Account,
                            props: true     },
   { path: '/about',    component: About    },
   { path: '/help',     component: Help     },

@@ -50,9 +50,14 @@ export default {
       return this.section == 'txs';
     },
 
+    account : function(){
+      return this.section == 'account';
+    },
+
     title : function(){
-      return this.live ? 'Live Transactions' :
-                              'Transactions'
+      return this.live    ? 'Live Transactions' :
+             this.account ?          'Accounts' :
+                                 'Transactions'
     }
   }
 }

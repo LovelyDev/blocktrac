@@ -113,7 +113,6 @@ export default {
   word-wrap: anywhere;
 }
 
-
 #tx_title{
   color: var(--theme-color2);
   opacity: 0.6;
