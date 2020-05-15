@@ -21,7 +21,13 @@ export default {
       this.$http.post(this.backend_url + "/filter",
                       params, this.auth_header)
                 .then(function(response){
-                  this.$emit('created', response.body);
+                  const filter = response.body;
+
+                  filter.params = JSON.parse(filter.params)
+                  if(filter.Template)
+                    filter.Template.params = JSON.parse(filter.Template.params)
+
+                  this.$emit('created', filter)
 
                 }.bind(this)).catch(function(err){
                   const msg = util.capitalize(err.body.error)

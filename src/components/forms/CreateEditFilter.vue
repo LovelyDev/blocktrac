@@ -246,12 +246,14 @@ export default {
         name : this.name,
       }
 
-      if(this.is_template_filter){
-        params['template'] = this.template;
-        params['params']   = JSON.stringify(this.converted_params)
+      if(!this.editing_filter){
+        if(this.is_template_filter){
+          params['template'] = this.template;
+          params['params']   = JSON.stringify(this.converted_params)
 
-      }else
-        params['jsonpath'] = this.jsonpath
+        }else
+          params['jsonpath'] = this.jsonpath
+      }
 
       params['sinks'] = Object.values(this.$refs.sinks_inputs.$data.selected)
                               .flat().map(function(sink){ return sink.value })
