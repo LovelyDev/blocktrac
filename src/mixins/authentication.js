@@ -55,7 +55,7 @@ export default {
     },
 
     additional_filters : function(){
-      return this.$cookies.additional_filters;
+      return parseInt(this.$cookies.additional_filters);
     },
 
     authorized_filters : function(){
@@ -65,7 +65,7 @@ export default {
     },
 
     additional_sinks : function(){
-      return this.$cookies.additional_sinks;
+      return parseInt(this.$cookies.additional_sinks);
     },
 
     authorized_sinks : function(){
