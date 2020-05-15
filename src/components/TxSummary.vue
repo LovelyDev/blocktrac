@@ -11,6 +11,7 @@
     <TrustSetTx             :tx="tx" v-else-if="tx_type == 'TrustSet'"             />
     <SignerListSetTx        :tx="tx" v-else-if="tx_type == 'SignerListSet'"        />
     <AccountSetTx           :tx="tx" v-else-if="tx_type == 'AccountSet'"           />
+    <AccountDeleteTx        :tx="tx" v-else-if="tx_type == 'AccountDelete'"        />
     <PaymentChannelClaimTx  :tx="tx" v-else-if="tx_type == 'PaymentChannelClaim'"  />
     <PaymentChannelCreateTx :tx="tx" v-else-if="tx_type == 'PaymentChannelCreate'" />
     <PaymentChannelFundTx   :tx="tx" v-else-if="tx_type == 'PaymentChannelFund'"   />
@@ -27,14 +28,13 @@ import EscrowFinishTx         from './tx_types/EscrowFinish'
 import TrustSetTx             from './tx_types/TrustSet'
 import SignerListSetTx        from './tx_types/SignerListSet'
 import AccountSetTx           from './tx_types/AccountSet'
+import AccountDeleteTx        from './tx_types/AccountDelete'
 import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim'
 import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate'
 import PaymentChannelFundTx   from './tx_types/PaymentChannelFund'
 import HasTx                  from '../mixins/has_tx'
 
 // TODO: test all tx type edge cases, capture txs representing all possibilities
-
-// TODO: DeletedAccount tx
 
 export default {
   name: 'TxSummary',
@@ -51,6 +51,7 @@ export default {
     TrustSetTx,
     SignerListSetTx,
     AccountSetTx,
+    AccountDeleteTx,
     PaymentChannelClaimTx,
     PaymentChannelCreateTx,
     PaymentChannelFundTx

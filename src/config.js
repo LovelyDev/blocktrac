@@ -54,6 +54,7 @@ module.exports = {
         return "TRUST LINES";
 
       case "AccountSet":
+      case "AccountDelete":
       case "SignerListSet":
         return "ACCOUNT SETS";
   
