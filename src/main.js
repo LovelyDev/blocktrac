@@ -110,7 +110,6 @@ import { store } from './store'
 import VueResource   from 'vue-resource'
 import VueNativeSock from 'vue-native-websocket'
 
-// TODO detect socket disconnections, display toast
 Vue.use(VueResource)
 Vue.use(VueNativeSock, config.RIPPLE_WS,
                        { format: 'json',

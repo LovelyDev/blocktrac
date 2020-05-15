@@ -3,6 +3,8 @@
                id="main_layout"
                class="p-0"
                :class="$mq">
+    <ConnectionStatus />
+
     <b-row id="main_header_container">
       <b-col class="p-0">
         <MainHeader />
@@ -22,15 +24,17 @@
 </template>
 
 <script>
-import MainHeader from './MainHeader'
-import MainFooter from './MainFooter'
+import MainHeader       from './MainHeader'
+import MainFooter       from './MainFooter'
+import ConnectionStatus from './ConnectionStatus'
 
 export default {
   name: 'MainLayout',
 
   components : {
     MainHeader,
-    MainFooter
+    MainFooter,
+    ConnectionStatus
   },
 
   props : {
