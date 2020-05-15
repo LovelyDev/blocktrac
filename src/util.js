@@ -59,7 +59,7 @@ export default {
 
   ///
 
-  // XXX: validator methods copied from fr0xrpl util module
+  // XXX: validator methods copied from ziti util module
 
   is_valid_jsonpath : function(jp){
     try{
@@ -100,7 +100,7 @@ export default {
 
   ///
 
-  // XXX: copied from fr0xrpl Filter#matcher and Template#apply_params
+  // XXX: copied from ziti Filter#matcher and Template#apply_params
   filter_matcher : function(filter){
     if(filter.Template){
       if(filter.params.length != Object.keys(filter.Template.params).length)

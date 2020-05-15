@@ -2,7 +2,7 @@ import zxcvbn  from "zxcvbn"
 
 import config  from '../config'
 import util    from '../util'
-import fr0xrpl from '../fr0xrpl'
+import ziti    from '../ziti'
 
 export default {
   data : function(){
@@ -51,7 +51,7 @@ export default {
     },
 
     membership_features : function(){
-      return fr0xrpl.membership_features[this.membership_level];
+      return ziti.membership_features[this.membership_level];
     },
 
     additional_filters : function(){
@@ -99,7 +99,7 @@ export default {
 
     weak_password : function(){
       return this.have_password &&
-             (this.password_strength.score < fr0xrpl.min_password_score);
+             (this.password_strength.score < ziti.min_password_score);
     },
 
     password_mismatch : function(){

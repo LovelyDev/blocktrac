@@ -98,7 +98,7 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
-import fr0xrpl from './fr0xrpl'
+import ziti from './ziti'
 
 export default {
   name: 'Plans',
@@ -111,10 +111,10 @@ export default {
 
   data : function(){
     return {
-      levels : fr0xrpl.membership_levels,
-      plans : fr0xrpl.membership_features,
-      max_additions : fr0xrpl.max_additions,
-      additions_cost : fr0xrpl.additions_cost,
+      levels : ziti.membership_levels,
+      plans : ziti.membership_features,
+      max_additions : ziti.max_additions,
+      additions_cost : ziti.additions_cost,
        enable_additional : {},
       additional_filters : {},
         additional_sinks : {}

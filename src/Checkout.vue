@@ -140,7 +140,7 @@
 <script>
 import MainLayout from './components/MainLayout'
 
-import fr0xrpl from './fr0xrpl'
+import ziti from './ziti'
 
 export default {
   name: 'Checkout',
@@ -171,7 +171,7 @@ export default {
     details : function(){
       if(!this.plan) return {};
 
-      return fr0xrpl.membership_features[this.plan];
+      return ziti.membership_features[this.plan];
     },
 
     total_cost : function(){
@@ -182,10 +182,10 @@ export default {
       var period = this.period ? this.period : 1;
 
       if(this.filters)
-        cost += this.filters * fr0xrpl.additions_cost.filters * period;
+        cost += this.filters * ziti.additions_cost.filters * period;
 
       if(this.sinks)
-        cost += this.sinks * fr0xrpl.additions_cost.sinks * period;
+        cost += this.sinks * ziti.additions_cost.sinks * period;
 
       return cost;
     },

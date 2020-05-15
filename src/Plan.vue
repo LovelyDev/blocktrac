@@ -133,7 +133,7 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
-import fr0xrpl from './fr0xrpl'
+import ziti from './ziti'
 
 export default {
   name: 'Plan',
@@ -155,7 +155,7 @@ export default {
       enable_additional : false,
       additional_filters : null,
       additional_sinks : null,
-      max_additions : fr0xrpl.MAX_ADDITIONS,
+      max_additions : ziti.MAX_ADDITIONS,
       period : null
     }
   },
@@ -164,7 +164,7 @@ export default {
     details : function(){
       if(!this.plan) return {};
 
-      return fr0xrpl.membership_features[this.plan];
+      return ziti.membership_features[this.plan];
     },
 
     instant_alerts : function(){
@@ -195,10 +195,10 @@ export default {
       var period = this.period ? this.period : 1;
 
       if(this.enable_additional && this.additional_filters)
-        cost += this.additional_filters * fr0xrpl.additions_cost.filters * period;
+        cost += this.additional_filters * ziti.additions_cost.filters * period;
 
       if(this.enable_additional && this.additional_sinks)
-        cost += this.additional_sinks * fr0xrpl.additions_cost.sinks * period;
+        cost += this.additional_sinks * ziti.additions_cost.sinks * period;
 
       return cost;
     },

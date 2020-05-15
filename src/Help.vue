@@ -52,7 +52,7 @@
 <script>
 import MainLayout from './components/MainLayout'
 
-import fr0xrpl from './fr0xrpl'
+import ziti from './ziti'
 
 export default {
   name: 'Help',
@@ -165,7 +165,7 @@ export default {
           topics : [
             {
                 title : "What are the different membership levels?",
-                value : "Currently " + fr0xrpl.membership_levels.join(", ") + " plans are available"
+                value : "Currently " + ziti.membership_levels.join(", ") + " plans are available"
             },
 
             {

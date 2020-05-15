@@ -60,7 +60,7 @@ import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
 import TxSummary      from './components/TxSummary'
 
-import fr0xrpl        from './fr0xrpl'
+import ziti           from './ziti'
 
 export default {
   name: 'FilterDetails',
@@ -91,7 +91,7 @@ export default {
     },
 
     transaction_history : function(){
-      return fr0xrpl.filter_transaction_history
+      return ziti.filter_transaction_history
     }
   },
 
