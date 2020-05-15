@@ -7,16 +7,11 @@
                type="text"
                @keyup.enter="$emit('submit')"
                v-model="auth_email" />
-      </td>
-    </tr>
 
-    <tr v-if="invalid_email">
-      <td></td>
-
-      <td class="form_text">
-        <span class="form_error">
-          Invalid Email
-        </span>
+        <div class="form_text form_error">
+          <span v-if="invalid_email">Invalid Email</span>
+          <span v-else class="placeholder" />
+        </div>
       </td>
     </tr>
 
@@ -27,22 +22,12 @@
                type="password"
                @keyup.enter="$emit('submit')"
                v-model="auth_password" />
+
+        <div class="form_text form_error">
+          <span v-if="weak_password">Weak password</span>
+          <span v-else class="placeholder" />
+        </div>
        </td>
-    </tr>
-
-    <tr v-if="weak_password">
-      <td></td>
-
-      <td class="form_text">
-        <span class="form_error">
-          Weak password<br/>
-          {{password_strength.feedback.warning}}
-          <div v-for="(suggestion, s) in password_strength.feedback.suggestions"
-               :key="'password_suggestion_' + s">
-            {{suggestion}}
-          </div>
-        </span>
-      </td>
     </tr>
 
     <tr>
@@ -52,16 +37,10 @@
                type="password"
                @keyup.enter="$emit('submit')"
                v-model="auth_password_confirm" />
-       </td>
-    </tr>
-
-    <tr v-if="password_mismatch">
-      <td></td>
-
-      <td class="form_text">
-        <span class="form_error">
-          Passwords do not match
-        </span>
+        <div class="form_text form_error">
+          <span v-if="password_mismatch">Passwords do not match</span>
+          <span v-else class="placeholder" />
+        </div>
       </td>
     </tr>
 

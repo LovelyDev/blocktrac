@@ -35,11 +35,12 @@ body{
 .form_table{
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 10px;
+  border-spacing: 0 5px;
 }
 
 .form_text{
   font-family: var(--theme-font4);
+  vertical-align: top;
 }
 
 .form_input{
@@ -49,7 +50,12 @@ body{
 
 .form_error{
   color: red;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
+}
+
+.form_error .placeholder{
+  margin: 5px;
+  content: '\a0';
 }
 
 .form_switch{
