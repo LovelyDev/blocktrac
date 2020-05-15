@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 #filter_actions{
-  min-width: 400px;
+  min-width: 500px;
   display: flex;
 }
 

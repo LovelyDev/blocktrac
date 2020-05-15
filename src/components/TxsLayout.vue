@@ -94,6 +94,7 @@ export default {
 
 #txs_sidebar_container{
   flex-basis: 22%;
+  margin-right: 25px;
 }
 
 #txs_main_container{
