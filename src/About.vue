@@ -79,7 +79,7 @@
         <div id="about_section5" class="about_section">
           <h4>Contact Us</h4>
 
-          <p>
+          <p style="text-align: center">
             Questions, feedback, and technical support can be obtained by contacting Dev Null Productions via the following form:
           </p>
 
