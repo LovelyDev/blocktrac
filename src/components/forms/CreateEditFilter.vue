@@ -109,7 +109,7 @@
       </tr>
     </table>
 
-    <SinksInputs />
+    <SinksInputs ref="sinks_inputs" />
   </div>
 </template>
 
@@ -253,8 +253,8 @@ export default {
       }else
         params['jsonpath'] = this.jsonpath
 
-      // TODO sinks param (and in client_params below)
-      //params['sinks'] = [this.sink]
+      params['sinks'] = Object.values(this.$refs.sinks_inputs.$data.selected)
+                              .flat().map(function(sink){ return sink.value })
 
       return params;
     },
