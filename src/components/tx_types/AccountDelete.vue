@@ -16,8 +16,6 @@ import AccountDetail  from '../AccountDetail'
 import CurrencyAmount from '../CurrencyAmount'
 import HasTx          from '../../mixins/has_tx'
 
-// TODO
-
 export default {
   name   : 'AccountDeleteTx',
 
