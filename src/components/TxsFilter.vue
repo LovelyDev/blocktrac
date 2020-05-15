@@ -7,7 +7,7 @@
         <span class="text">}</span>
       </span>
 
-      <input v-model="filter"
+      <input v-model="expression"
              placeholder="JSONPath Expression..." />
 
       <TxsFilterControls v-if="mq_gt_md" />
@@ -42,7 +42,7 @@ export default {
 
   data : function(){
     return {
-      filter : null
+      expression : null
     }
   },
 
@@ -58,22 +58,22 @@ export default {
     },
 
     invalid : function(){
-      return this.filter && !util.is_valid_jsonpath(this.filter)
+      return this.expression && !util.is_valid_jsonpath(this.expression)
     },
 
     save_filter : function(){
-      return {jsonpath : this.filter};
+      return {jsonpath : this.expression};
     }
   },
 
   watch : {
-    filter : function(){
+    expression : function(){
       if(!this.invalid)
-        this.store_filter = this.filter
+        this.store_filter = this.expression
     },
 
     store_filter : function(){
-      this.filter = this.store_filter
+      this.expression = this.store_filter
     }
   }
 }
