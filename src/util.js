@@ -1,5 +1,20 @@
 const jsonpath = require('./vendor/jsonpath')
 
+function round_value(value, decimals){
+  if(!value) {
+    value = 0;
+  }
+
+  if(decimals == 0)
+    return parseInt(value);
+
+  if(!decimals)
+    decimals = Math.abs(value) < 0.0001 ? 10 : 5;
+
+  value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
+  return value;
+}
+
 export default {
   delim_value : function(value){
     var delim = parseFloat(value).toString().split(".");
@@ -7,19 +22,22 @@ export default {
     return delim.join(".");
   },
 
-  round_value : function(value, decimals){
-    if(!value) {
-      value = 0;
-    }
+  round_value : round_value,
 
-    if(decimals == 0)
-      return parseInt(value);
+  abbrev : function(value){
+    if(value > 1000000000000)
+      return round_value(value/1000000000000, 2) + "T"
 
-    if(!decimals)
-      decimals = Math.abs(value) < 0.0001 ? 10 : 5;
+    else if(value > 1000000000)
+      return round_value(value/1000000000, 2) + "B"
 
-    value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
-    return value;
+    else if(value > 1000000)
+      return round_value(value/1000000, 2) + "M"
+
+    else if(value > 1000)
+      return round_value(value/1000, 2) + "K"
+
+    return round_value(value)
   },
 
   ledger_time_to_unix : function(t){

@@ -1,7 +1,7 @@
 <template>
   <span>
     <span v-if="is_drops">
-      <b v-if="!no_amount">{{xrp_amount | round | delim}}</b>
+      <b v-if="!no_amount">{{xrp_amount | abbrev}}</b>
 
       <span class="currency">
         <CurrencyIcon currency="XRP" />
@@ -9,7 +9,7 @@
     </span>
 
     <span v-else>
-      <b v-if="!no_amount">{{amount["value"] | round | delim}}</b>
+      <b v-if="!no_amount">{{amount["value"] | abbrev}}</b>
 
       <CurrencyIcon :currency="amount['currency']" />
 
@@ -25,8 +25,6 @@ import AccountLink  from './AccountLink'
 import CurrencyIcon from './CurrencyIcon'
 
 import config       from '../config.js'
-
-// TODO: shorten large values (1000 -> 1K, 1000000 -> 1M, 1250000 -> 1.25M, etc)
 
 export default {
   name: 'CurrencyAmount',

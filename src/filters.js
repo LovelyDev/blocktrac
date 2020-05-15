@@ -11,6 +11,11 @@ Vue.filter('round', function(value, decimals) {
   return util.round_value(value, decimals);
 });
 
+// Returns abbreviated numeric representation
+Vue.filter('abbrev', function(value){
+  return util.abbrev(value)
+})
+
 // Return string as is if < length, else truncate and add ellipsis
 Vue.filter("ellipsis", function(value, length){
   if(!length || value.length <= length)
