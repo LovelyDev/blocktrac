@@ -40,6 +40,10 @@
           </li>
 
           <li>
+          Dev Null Productions may change these Terms of Service at any time and without prior notice. Upon such event, you agree to comply and be bound with the new terms and conditions.
+          </li>
+
+          <li>
           Your use of this website and any dispute arising out of such use of the website is subject to the laws of the state of New York, United States of America
           </li>
         </ul>
