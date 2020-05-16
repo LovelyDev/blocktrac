@@ -98,7 +98,7 @@
     <tr id="sinks_footer">
       <td colspan="2">
         <div>{{remaining_sinks_msg}}</div>
-        <div>To create more, purchase a <span class="pro">Pro</span> plan.</div>
+        <div>To create more, <router-link to="/plans" class="pro">upgrade</router-link> your plan.</div>
       </td>
     </tr>
 
@@ -357,6 +357,10 @@ export default {
   opacity: 0.6;
   font-family: var(--theme-font2);
   font-size: 0.8rem;
+}
+
+.pro:hover{
+  text-decoration: none;
 }
 
 
