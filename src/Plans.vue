@@ -68,7 +68,7 @@
                 <td>Filters:</td>
                 <td><b-form-spinbutton class="additional_item" inline
                                        :max="max_additions.filters"
-                                       v-model="additional_filters[name]"
+                                       v-model="selected_additional_filters[name]"
                                        :disabled="!enable_additional[name]"/></td>
               </tr>
 
@@ -76,15 +76,15 @@
                 <td>Sinks:</td>
                 <td><b-form-spinbutton class="additional_item" inline
                                        :max="max_additions.sinks"
-                                       v-model="additional_sinks[name]"
+                                       v-model="selected_additional_sinks[name]"
                                        :disabled="!enable_additional[name]"/></td>
               </tr>
             </table>
 
             <router-link :to="{name: 'plan',
                                params: {plan : name,
-                                     filters : additional_filters[name],
-                                       sinks : additional_sinks[name]}}"
+                                     filters : selected_additional_filters[name],
+                                       sinks : selected_additional_sinks[name]}}"
                          v-if="upgrade_enabled[name]">
               <b-button class="upgrade">
                 Upgrade ${{total_cost[name]}}
@@ -124,8 +124,8 @@ export default {
       max_additions : ziti.max_additions,
       additions_cost : ziti.additions_cost,
        enable_additional : {},
-      additional_filters : {},
-        additional_sinks : {}
+      selected_additional_filters : {},
+        selected_additional_sinks : {}
     }
   },
 
@@ -149,11 +149,11 @@ export default {
                else
                  cost[level] = this.plans[level].cost;
 
-               if(this.enable_additional[level] && this.additional_filters[level])
-                 cost[level] += this.additional_filters[level] * this.additions_cost.filters;
+               if(this.enable_additional[level] && this.selected_additional_filters[level])
+                 cost[level] += this.selected_additional_filters[level] * this.additions_cost.filters;
 
-               if(this.enable_additional[level] && this.additional_sinks[level])
-                 cost[level] += this.additional_sinks[level] * this.additions_cost.sinks;
+               if(this.enable_additional[level] && this.selected_additional_sinks[level])
+                 cost[level] += this.selected_additional_sinks[level] * this.additions_cost.sinks;
 
                return cost;
              }.bind(this), {});
@@ -191,8 +191,8 @@ export default {
       handler : function(){
         Object.keys(this.plans).forEach(function(plan){
           if(!this.enable_additional[plan]){
-            delete this.additional_filters[plan];
-            delete this.additional_sinks[plan];
+            delete this.selected_additional_filters[plan];
+            delete this.selected_additional_sinks[plan];
           }
         }.bind(this))
       },

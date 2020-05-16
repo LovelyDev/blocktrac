@@ -48,7 +48,7 @@
               <span>Filters:</span>
               <b-form-spinbutton class="additional_item" inline
                                 :max="max_additions.filters"
-                                v-model="additional_filters"
+                                v-model="selected_additional_filters"
                                 :disabled="!enable_additional"/>
             </div>
 
@@ -56,7 +56,7 @@
               <span>Sinks:</span>
               <b-form-spinbutton class="additional_item" inline
                                 :max="max_additions.sinks"
-                                v-model="additional_sinks"
+                                v-model="selected_additional_sinks"
                                 :disabled="!enable_additional"/>
             </div>
           </div>
@@ -122,8 +122,8 @@
 
             <router-link :to="{name : 'checkout',
                                params : {plan : plan,
-                                         filters : additional_filters,
-                                         sinks : additional_sinks,
+                                         filters : selected_additional_filters,
+                                         sinks : selected_additional_sinks,
                                          period : period}}">
               <b-button id="checkout_button" variant="light">
                 Checkout
@@ -160,9 +160,9 @@ export default {
   data : function(){
     return {
       enable_additional : false,
-      additional_filters : null,
-      additional_sinks : null,
-      max_additions : ziti.MAX_ADDITIONS,
+      selected_additional_filters : null,
+      selected_additional_sinks : null,
+      max_additions : ziti.max_additions,
       period : null
     }
   },
@@ -183,15 +183,15 @@ export default {
     },
 
     total_filters : function(){
-      if(!this.enable_additional || !this.additional_filters)
+      if(!this.enable_additional || !this.selected_additional_filters)
         return this.details.filters;
-      return this.details.filters + this.additional_filters;
+      return this.details.filters + this.selected_additional_filters;
     },
 
     total_sinks : function(){
-      if(!this.enable_additional || !this.additional_sinks)
+      if(!this.enable_additional || !this.selected_additional_sinks)
         return this.details.sinks;
-      return this.details.sinks + this.additional_sinks;
+      return this.details.sinks + this.selected_additional_sinks;
     },
 
     total_cost : function(){
@@ -201,11 +201,11 @@ export default {
 
       var period = this.period ? this.period : 1;
 
-      if(this.enable_additional && this.additional_filters)
-        cost += this.additional_filters * ziti.additions_cost.filters * period;
+      if(this.enable_additional && this.selected_additional_filters)
+        cost += this.selected_additional_filters * ziti.additions_cost.filters * period;
 
-      if(this.enable_additional && this.additional_sinks)
-        cost += this.additional_sinks * ziti.additions_cost.sinks * period;
+      if(this.enable_additional && this.selected_additional_sinks)
+        cost += this.selected_additional_sinks * ziti.additions_cost.sinks * period;
 
       return cost;
     },
@@ -214,8 +214,8 @@ export default {
   watch : {
     enable_additional : function(){
       if(!this.enable_additional){
-        this.additional_filters = null;
-        this.additional_sinks = null;
+        this.selected_additional_filters = null;
+        this.selected_additional_sinks = null;
       }
     },
   },
@@ -235,10 +235,10 @@ export default {
       this.enable_additional = true;
 
     if(this.filters)
-      this.additional_filters = this.filters;
+      this.selected_additional_filters = this.filters;
 
     if(this.sinks)
-      this.additional_sinks = this.sinks;
+      this.selected_additional_sinks = this.sinks;
   }
 }
 </script>
