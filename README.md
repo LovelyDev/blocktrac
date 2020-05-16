@@ -1,24 +1,26 @@
-# toxrpl
+# Zitui - Zerp Tracker Frontend Web UI
 
-## Project setup
-```
-yarn install
-```
+## Overview
+Zitui is the implementation of the Zerp Tracker frontend, a service used to register and run JSONPath filters against XRP blockchain transactions.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+Zitui requires a Ziti backend be deployed and is accessible for web API requests. Zitui handles user interface interaction and dispatches calls to the Ziti web API.
 
-### Compiles and minifies for production
-```
-yarn build
-```
+Zitui is implemented as a [vuejs](https://vuejs.org/) static site and imposes minimal requirements beyond a standard vuejs stack.
 
-### Lints and fixes files
-```
-yarn lint
-```
+Zitui was developed on *Fedora Linux* systems and deployed to a *CentOS* environment though theoretically an environment which supports vuejs should suffice to run the application.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Run From Source
+
+1. git clone ...
+2. yarn install
+3. yarn serve
+
+
+## Build the RPM
+1. ...
+2. yarn build
+
+
+## Legal
+Copyright (c) 2020 Dev Null Productions LLC, All Rights Reserved
+[devnullproductions@gmail.com](mailto:devnullproductions@gmail.com)
