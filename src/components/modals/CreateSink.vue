@@ -1,3 +1,9 @@
+<!--
+  * Create Sink Modal
+  * Encapsulates CreateSinkForm to create new sink
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal :id="id"
            :title="'Create ' + type_text"

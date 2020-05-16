@@ -1,3 +1,11 @@
+/*
+ * Create Filter Mixin
+ * Defines common logic used by modals which create filter.
+ * If user is not logged in on confirmation, temporarily
+ * store 'in_progress' filter, else create filter as intended.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
 import util from '../../util'
 
 export default {

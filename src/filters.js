@@ -1,3 +1,11 @@
+/*
+ * VueJS text formatting filters
+ * Note: These define filters in the context of vuejs and not
+ * Zerp Tracker (eg text formatters vs transaction processors)
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import Vue from 'vue';
 import util from './util';
 

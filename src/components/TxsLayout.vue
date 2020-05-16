@@ -1,3 +1,11 @@
+<!--
+  * Txs 'Sub'Layout
+  * Common layout used by many Tx/Account/Other pages in the UI,
+  * rendering TxsControl and TxsSidebar, along with providing
+  * slot for page specific content.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout :section="section">
     <div id="txs_layout">

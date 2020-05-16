@@ -1,3 +1,10 @@
+<!--
+  * Txs Categories Component
+  * Displays toggleable list of categories on larger layouts.
+  * Replaced with TxsCategoriesDropdown on smaller layouts.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-list-group horizontal id="tx_categories">
     <b-list-group-item v-for="category in primary_categories"

@@ -1,3 +1,13 @@
+/*
+ * Helper providing access to a local transaction specified as
+ * a property param to the component including this mixin.
+ *
+ * Used by all components rendered for a single transaction
+ * including the tx_type summaries.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import util   from '../util'
 import config from '../config'
 
@@ -63,6 +73,8 @@ export default {
   },
 
   methods : {
+    // Returns the nodes of the specified type
+    // created by transaction
     created_nodes : function(type){
       return this.affected_nodes.filter(function(node){
                return node['CreatedNode'] &&
@@ -70,6 +82,8 @@ export default {
              });
     },
 
+    // Returns the first node of the specified type
+    // created by transaction
     created_node : function(type){
       const node = this.created_nodes(type)[0];
       if(!node) return null;
@@ -77,6 +91,8 @@ export default {
       return node['CreatedNode']
     },
 
+    // Returns the fields associated with the first
+    // created node of the specified type
     created_fields : function(type){
       const node = this.created_node(type);
       if(!node) return null;
@@ -86,6 +102,8 @@ export default {
 
     ///
 
+    // Returns the nodes of the specified type
+    // modified by transaction
     modified_nodes : function(type){
       return this.affected_nodes.filter(function(node){
                return node['ModifiedNode'] &&
@@ -93,6 +111,8 @@ export default {
              });
     },
 
+    // Returns the first node of the specified type
+    // modified by transaction
     modified_node : function(type){
       const node = this.modified_nodes(type)[0];
       if(!node) return null;
@@ -100,6 +120,8 @@ export default {
       return node['ModifiedNode']
     },
 
+    // Returns the fields associated with the first
+    // modified node of the specified type
     modified_fields : function(type){
       const node = this.modified_node(type);
       if(!node) return null;
@@ -109,6 +131,8 @@ export default {
 
     ///
 
+    // Returns the nodes of the specified type
+    // deleted by transaction
     deleted_nodes : function(type){
       return this.affected_nodes.filter(function(node){
                return node['DeletedNode'] &&
@@ -116,6 +140,8 @@ export default {
              });
     },
 
+    // Returns the first node of the specified type
+    // deleted by transaction
     deleted_node : function(type){
       const node = this.deleted_nodes(type)[0];
       if(!node) return null;
@@ -123,6 +149,8 @@ export default {
       return node['DeletedNode']
     },
 
+    // Returns the fields associated with the first
+    // deleted node of the specified type
     deleted_fields : function(type){
       const node = this.deleted_node(type);
       if(!node) return null;

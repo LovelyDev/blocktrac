@@ -1,3 +1,10 @@
+<!--
+  * Txs SideBar
+  * Only displayed on larger resolutions, encapsulates
+  * MyFilters and AccountMonitor component
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-container>
     <b-row v-if="logged_in"

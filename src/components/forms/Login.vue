@@ -1,3 +1,9 @@
+<!--
+  * Create Sink Form
+  * Allows the user to login to the web application
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <table class="form_table">
     <tr>

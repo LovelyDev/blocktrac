@@ -1,3 +1,11 @@
+<!--
+  * Filter Tester Page
+  * Renders test transactions for a single filter, specified by ID.
+  * Test transactions are precaptured live-transactions which serve
+  * as a static database to test filters against.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxsLayout section="filter_tester">
     <div id="filter_tester">

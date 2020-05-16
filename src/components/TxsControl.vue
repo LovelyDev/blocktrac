@@ -1,3 +1,10 @@
+<!--
+  * Txs Control Buttons
+  * Controls which affect the contents/rendering of the
+  * LiveTxs stream.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <span id="txs_controls">
     <span id="txs_play_pause" class="txs_icon" v-on:click="play_pause()">

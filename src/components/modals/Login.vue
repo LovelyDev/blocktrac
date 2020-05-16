@@ -1,3 +1,9 @@
+<!--
+  * Create Filter Modal
+  * Encapsulates LoginForm to create new user session
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="login_modal"
            ref="login_modal"

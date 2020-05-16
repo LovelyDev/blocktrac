@@ -1,3 +1,9 @@
+/*
+ * Main application entry point.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import Vue from 'vue'
 
 ///
@@ -56,6 +62,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// Application routes definition
 const routes = [
   { path: '/',         component: Landing  },
   { path: '/txs',      component: Txs      },
@@ -110,6 +117,7 @@ import { store } from './store'
 import VueResource   from 'vue-resource'
 import VueNativeSock from 'vue-native-websocket'
 
+// Automatically connect to websocket on startup
 Vue.use(VueResource)
 Vue.use(VueNativeSock, config.RIPPLE_WS,
                        { format: 'json',
@@ -119,6 +127,7 @@ Vue.use(VueNativeSock, config.RIPPLE_WS,
 
 ///
 
+// We also use various methods in the ripple api
 const RippleAPI = require('ripple-lib').RippleAPI;
 Vue.prototype.$rippleAPI = new RippleAPI({
   server: config.RIPPLE_WS

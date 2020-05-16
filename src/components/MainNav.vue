@@ -1,3 +1,10 @@
+<!--
+  * Main Site Navigation
+  * Top level site navigation rendered on app pages on larger
+  * resolutions. Replaced with HamburgerNav on smaller resolutions
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="main_nav"
        :class="{logged_in : logged_in}">

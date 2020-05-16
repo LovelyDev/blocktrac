@@ -1,3 +1,9 @@
+<!--
+  * Sink Settings Form
+  * Encapsulates Sink Inputs.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="sinks">
     <h4 id="sinks_title">Notifications:</h4>

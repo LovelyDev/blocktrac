@@ -1,3 +1,10 @@
+<!--
+  * Create Edit Filter Form
+  * Primary form used to create and edit jsonpath-based and
+  * template-based filters.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <table class="form_table">

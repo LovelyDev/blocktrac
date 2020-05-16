@@ -1,3 +1,9 @@
+<!--
+  * Contact Form
+  * Allows the user to send an inqury via email to us.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="contact_form">
     <div class="header">

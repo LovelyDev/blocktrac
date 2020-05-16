@@ -1,3 +1,9 @@
+<!--
+  * Duplicate Filter Modal
+  * Encapsulates CreateEditFilterForm to edit existing filter
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="edit_filter"
            title="Edit Filter"

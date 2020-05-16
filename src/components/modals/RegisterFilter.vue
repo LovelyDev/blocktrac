@@ -1,3 +1,10 @@
+<!--
+  * Create Filter Modal
+  * Encapsulates RegistrationForm to create new user, creating
+  * specified filter in the process
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="register_filter_modal"
            ref="register_filter_modal"

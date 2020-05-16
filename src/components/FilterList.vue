@@ -1,3 +1,9 @@
+<!--
+  * Filter List Component
+  * List of filters displayed in sidebase on larger resolutions.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <!-- XXX: include route path in key so filter nav changes update active class -->

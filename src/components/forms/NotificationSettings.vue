@@ -1,3 +1,10 @@
+<!--
+  * Batch Settings Form
+  * Allows the user to set the notification time, the amount of
+  * time to wait after a matched transaction before sending a
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="notification_settings">
     <h4 id="notification_time_title">Notification Time:</h4>

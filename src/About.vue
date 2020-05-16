@@ -1,3 +1,10 @@
+<!--
+  * About Page
+  * User friendly explanatory text of application functionality
+  * and contact form.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="about">
     <div id="about">

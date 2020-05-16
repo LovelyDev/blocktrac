@@ -1,3 +1,10 @@
+<!--
+  * Filter Summary Component
+  * Consise high level summary of filter displayed in various
+  * components in the site.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <div class="filter_title">{{filter.name}}</div>

@@ -1,3 +1,8 @@
+<!--
+  * Offer Create Transaction Details
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxContainer :tx="tx">
     <template v-if="mq_gte_md">

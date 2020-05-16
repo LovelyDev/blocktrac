@@ -1,3 +1,10 @@
+<!--
+  * Landing Page
+  * First page displayed to the user at the root of the application,
+  * consists of high level features and screenshots.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="landing">
     <div id="landing_container">

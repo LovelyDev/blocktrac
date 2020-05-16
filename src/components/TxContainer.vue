@@ -1,3 +1,10 @@
+<!--
+  * Tx Container
+  * Wrapping container encapsulation every transaction, providing
+  * slot for tx-type specific rendering.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div class="tx_container">
     <div class="tx_icon"

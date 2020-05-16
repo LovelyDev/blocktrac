@@ -1,3 +1,9 @@
+<!--
+  * Txs Filter Controls
+  * Controls to clear and save the LiveTxs filter expression.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="txs_filter_controls">
     <b-button id="txs_filter_clear"

@@ -1,3 +1,9 @@
+<!--
+  * Create Sink Form
+  * Allows the user to register / create a new application account.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <table class="form_table">
     <tr>
@@ -42,6 +48,10 @@
           <span v-else class="placeholder" />
         </div>
       </td>
+    </tr>
+
+    <tr>
+      <td>TODO: Agree to terms of service checkbox (with link to ToS page and validation checked)</td>
     </tr>
 
     <tr>

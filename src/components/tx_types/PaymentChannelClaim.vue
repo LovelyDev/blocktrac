@@ -1,3 +1,8 @@
+<!--
+  * Payment Channel Claim Transaction Details
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxContainer :tx="tx">
     <div class="balance_amount">

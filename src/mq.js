@@ -1,3 +1,10 @@
+/*
+ * Top level Media Query imports and definitions.
+ * Defines responsive breakpoints and helper methods.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import Vue   from 'vue'
 import VueMq from 'vue-mq'
 

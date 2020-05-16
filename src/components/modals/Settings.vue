@@ -1,3 +1,11 @@
+<!--
+  * Settings Modal
+  * Encapsulates BatchSettings, NotificationSettings, and
+  * SinksSettings Form allowing the user to set various
+  * profile level settings.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="settings_modal"
            title="Filter Settings"

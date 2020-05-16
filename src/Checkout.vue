@@ -1,3 +1,10 @@
+<!--
+  * Checkout Page
+  * Final page in the checkout process, where user specifies
+  * payment details and receives confirmation after being charged.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="checkout">
     <div id="success_checkout" v-if="success">

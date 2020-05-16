@@ -1,3 +1,8 @@
+<!--
+  * Signer List Set Transaction Details
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxContainer :tx="tx">
     <div class="signers">

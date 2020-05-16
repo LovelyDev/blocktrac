@@ -1,3 +1,10 @@
+<!--
+  * Connection Status Toast
+  * Non-closable toast rendered on socket disconnections
+  * and hidden on reconnections.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-toast id="connection_status"
            variant="danger"

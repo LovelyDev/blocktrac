@@ -1,3 +1,10 @@
+<!--
+  * Batch Settings Form
+  * Allows the user to set the batch size, the number of
+  * transactions to accumulate before sending a notification.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="batch_settings">
     <h4 id="batch_size_title">Batch:</h4>

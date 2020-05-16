@@ -1,3 +1,9 @@
+/*
+ * Zitui Application configuration
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 const currency_icons = require("./assets/currencies.json")
 
 module.exports = {

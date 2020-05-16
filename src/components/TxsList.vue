@@ -1,3 +1,13 @@
+<!--
+  * Txs List Component
+  * Main Live Txs List, renders live transacitons as they are
+  * received locally by websocket.
+  *
+  * Also encapsulates other components including TxsFilter,
+  * TxsExample, and TxsCategories[Dropdown]
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <TxsFilter />

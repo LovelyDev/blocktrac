@@ -1,3 +1,11 @@
+/*
+ * Helper module defining some computed properties to infer
+ * page based on route (url). Used by a few components to
+ * determine subcomponents to render.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 export default {
   computed : {
     is_filter_page : function(){

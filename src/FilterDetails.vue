@@ -1,3 +1,9 @@
+<!--
+  * Filter Details Page
+  * Renders details of a single filter, specified by ID
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxsLayout section="filter">
     <div id="filter_details">

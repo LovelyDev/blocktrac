@@ -1,3 +1,11 @@
+<!--
+  * Filter Actions Buttons
+  * Rendered on Filter Details and Tester pages (in dropdown in
+  * smaller resolutions), providing high level filter-related
+  * navigation and actions.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="filter_actions">
     <router-link :to="'/filter/' + filter.id">

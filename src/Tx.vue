@@ -1,3 +1,10 @@
+<!--
+  * Tx Page
+  * Renders information about a single transaction,
+  * specified by hash
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxsLayout section="tx">
     <div id="tx">

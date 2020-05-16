@@ -1,3 +1,9 @@
+<!--
+  * Filter List Dropdown Component
+  * List of filters displayed via dropdown for smaller resolutions
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="my_filters">
     <multiselect :options="filters"

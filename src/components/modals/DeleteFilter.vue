@@ -1,3 +1,9 @@
+<!--
+  * Delete Filter Modal
+  * Warns / prompts user to verify deleting filter action
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="delete_filter"
            title="Delete Filter"

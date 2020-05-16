@@ -1,3 +1,9 @@
+<!--
+  * Terms of Service Page
+  * Renders legal text and terms of service use.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="terms">
     <div id="terms">

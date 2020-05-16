@@ -1,3 +1,10 @@
+<!--
+  * Currency Icon Component
+  * Renders graphical currency icon if it is available, else
+  * just render currency text.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <span class="currency">
     <template v-if="have_icon">

@@ -1,3 +1,10 @@
+<!--
+  * Filter Header Component
+  * Rendered on Filter Details and Tester page, encapsulates
+  * filter header, actions, and related modals.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="filter_header">
     <div id="filter_subheader">

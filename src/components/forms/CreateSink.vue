@@ -1,3 +1,9 @@
+<!--
+  * Create Sink Form
+  * Allows the user to create a new server-side notification sink.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <table id="create_sink_form">
     <tr>

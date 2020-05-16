@@ -1,3 +1,11 @@
+<!--
+  * Txs Filter Input
+  * Input which the user can enter JSONPath expression to be
+  * applied against the live txs stream in their browser.
+  * Contains controls to clear and save expression.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <div id="txs_filter">

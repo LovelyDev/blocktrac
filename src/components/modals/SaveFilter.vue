@@ -1,3 +1,10 @@
+<!--
+  * Duplicate Filter Modal
+  * Encapsulates CreateEditFilterForm to save TxsFilter expression
+  * to new filter.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="save_filter"
            title="Save Filter"

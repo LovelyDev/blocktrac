@@ -1,3 +1,9 @@
+<!--
+  * Create Filter Modal
+  * Encapsulates ForgotPasswordForm to reset user password
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="forgot_password_modal"
            ref="forgot_password_modal"

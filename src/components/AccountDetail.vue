@@ -1,3 +1,10 @@
+<!--
+  * Account Detail Component
+  * Renders account detail icon, link to account page,
+  * and configurable text.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div class="account_detail">
     <div class="tx_detail_label">

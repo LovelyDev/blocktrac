@@ -1,3 +1,9 @@
+/*
+ * Helper to manage tx category operations / state.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import config from '../config'
 
 export default {
@@ -28,12 +34,14 @@ export default {
   },
 
   methods : {
+    // Returns boolean indicating if category is enabled
     is_enabled : function(category){
       const all = category == 'ALL';
       return ( all && this.enabled_categories.length == 0) ||
              (!all && this.enabled_categories.includes(category))
     },
 
+    // Enable / disable category
     toggle_category : function(category){
       if(category == 'ALL')
         this.$store.commit('clear_tx_categories');
@@ -42,12 +50,14 @@ export default {
         this.$store.commit('toggle_tx_category', category)
     },
 
+    // Enable / disable specified categories
     toggle_categories : function(categories){
       categories.forEach(function(category){
         this.toggle_category(category);
       }.bind(this))
     },
 
+    // Return icon for specified category
     category_icon : function(category){
       const color = this.is_enabled(category) ? 'blue' : 'gray';
       const asset = category.replace(" ", "-")

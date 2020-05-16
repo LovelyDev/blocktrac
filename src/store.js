@@ -1,3 +1,8 @@
+/*
+ * Application store of shared data
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
 import Vue  from 'vue'
 import Vuex from 'vuex'
 
@@ -12,11 +17,13 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
+    // Data pertaining to TxsList
             txs : [],
     loading_txs : true,
      paused_txs : false,
       tx_filter : '',
 
+    // Categories used to filter the TxsList
           tx_categories : [],
     tx_category_tallies : config.TX_CATEGORIES
                                 .reduce(function(tallies, category, i){
@@ -24,6 +31,7 @@ export const store = new Vuex.Store({
                             return tallies;
                           }, {}),
 
+    // Constructs retrieved via the Ziti Server API
         templates : [],
             sinks : [],
           filters : [],
@@ -32,12 +40,14 @@ export const store = new Vuex.Store({
     active_filter : {},
     in_progress_filter : {},
 
+    // Callbacks registered on various socket-related events
     callbacks : {
       socket_open : [],
       socket_msg  : [],
          commands : {}
     },
 
+    // Socket status variables
     socket: {
       isConnected: false,
       message: '',
@@ -46,10 +56,12 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    // Enable/disable live transaction stream
     toggle_paused_txs(state){
       state.paused_txs = !state.paused_txs;
     },
 
+    // Called when JSONPath expression filter is updated in UI
     update_tx_filter(state, filter){
       // If filter not valid jsonpath, return
       if(filter && !util.is_valid_jsonpath(filter))
@@ -69,6 +81,7 @@ export const store = new Vuex.Store({
       }
     },
 
+    // Store a tx which was received from rippled server
     add_tx(state, tx){
       if(state.paused_txs) return;
 
@@ -95,10 +108,12 @@ export const store = new Vuex.Store({
       state.tx_category_tallies[category] += 1;
     },
 
+    // Reset tx categories to initial state
     clear_tx_categories(state, category){
       state.tx_categories = [];
     },
 
+    // Enable / disable a specific tx category
     toggle_tx_category(state, category){
       // Toggle category selection
       if(state.tx_categories.includes(category)){
@@ -116,41 +131,52 @@ export const store = new Vuex.Store({
       })
     },
 
+    // Clear all local transactions
     clear_txs(state, filter){
       state.txs = [];
     },
 
     ///
 
+    // Store templates retrieved from server
     set_templates(state, templates){
       state.templates = templates;
     },
 
+    // Store sinks retrieved from server
     set_sinks(state, sinks){
       state.sinks = sinks;
     },
 
+    // Store filters retrieved from server
     set_filters(state, filters){
       state.filters = filters;
     },
 
+    // Store matched transactions retrieved from server
     set_matched_txs(state, matched_txs){
       state.matched_txs = matched_txs;
     },
 
+    // Set the active filter which the user is interacting with
     set_active_filter(state, filter){
       state.active_filter = filter;
     },
 
+    // Store filter user is creating temporarily until
+    // registration/login is finished
     set_in_progress_filter(state, filter){
       state.in_progress_filter = filter;
     },
 
+    // Clear the in progress filter
     clear_in_progress_filter(state){
       state.in_progress_filter = {};
     },
 
     ///
+
+    // Rippled websocket related callbacks
 
     on_open_socket(state, cb) {
       if(state.socket.isConnected){

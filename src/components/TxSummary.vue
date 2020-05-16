@@ -1,3 +1,9 @@
+<!--
+  * Txs Summary Component
+  * Enapsulates tx-type specific component.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div class="tx_summary"
       :class="success ? 'success' : 'failed'"

@@ -1,3 +1,9 @@
+<!--
+  * Main Site Layout
+  * Top level encapsulation component, rendered on all pages.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-container fluid
                id="main_layout"

@@ -1,3 +1,10 @@
+<!--
+  * Profile Page
+  * High level user account settings and options. Here the user
+  * can change their email, password, and billing information.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="profile">
     <div id="profile">
@@ -95,6 +102,8 @@
 <script>
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
+
+// TODO handle change email / password / plan actions
 
 export default {
   name: 'Profile',

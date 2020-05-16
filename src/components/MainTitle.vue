@@ -1,3 +1,9 @@
+<!--
+  * Main Title Text
+  * Rendered on all pages.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="main_title_container">
     <router-link to="/txs">

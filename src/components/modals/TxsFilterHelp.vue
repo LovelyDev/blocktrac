@@ -1,3 +1,9 @@
+<!--
+  * Txs Filter Help Modal
+  * Encapsulates Txs Filter Help content
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="txs_filter_help"
            title="JSONPath Help"

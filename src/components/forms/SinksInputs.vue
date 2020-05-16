@@ -1,3 +1,13 @@
+<!--
+  * Sinks Inputs
+  * Allows the user select, create, and delete sinks. If
+  * selected_lifecycle flag is specified, dropdown selection
+  * content will be tied to lifecycle of sink (creating new
+  * sink will populate selection, removing selected item will
+  * delete sink)
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <table class="form_table">
     <tr>

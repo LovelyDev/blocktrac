@@ -1,3 +1,9 @@
+<!--
+  * Create Sink Form
+  * Allows the user to reset their password
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <table class="form_table">
     <tr>

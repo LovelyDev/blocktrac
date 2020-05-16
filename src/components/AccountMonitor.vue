@@ -1,3 +1,11 @@
+<!--
+  * Account Monitor Widget
+  * Provides a control to set JSONPath filter with expression
+  * that will match transactions containing the specified
+  * Account ID.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="account_monitor">
     <p><b>Monitor your account</b></p>

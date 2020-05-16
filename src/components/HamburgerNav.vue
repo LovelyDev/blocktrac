@@ -1,3 +1,10 @@
+<!--
+  * Hamburger Navigation
+  * Top level navigation rendered in lieu of main nav in
+  * smaller resolutions.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <img id="main_hamburger_open_icon"

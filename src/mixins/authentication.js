@@ -1,3 +1,11 @@
+/*
+ * Authentication mixin providing high level definitions and
+ * functions relating to user registration, state management
+ * (login / logout), and other actions.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import zxcvbn  from "zxcvbn"
 
 import config  from '../config'
@@ -115,6 +123,8 @@ export default {
   },
 
   methods : {
+    // Send register request to server.
+    // Displays instructions on completion.
     register : function(){
       var params = {email : this.auth_email,
                  password : this.auth_password}
@@ -133,6 +143,8 @@ export default {
                 })
     },
 
+    // Send login request to server.
+    // Sets auth token and loads user on completion.
     login : function(){
       var params = {email : this.auth_email,
                  password : this.auth_password}
@@ -152,6 +164,8 @@ export default {
                 })
     },
 
+    // Send request to get user from server.
+    // Stores user information locally upon retrieval
     load_user : function(){
       return this.$http.get(this.backend_url + "/user", this.auth_header)
                        .then(function(response){
@@ -163,6 +177,8 @@ export default {
                        }.bind(this))
     },
 
+    // Send logout request to server.
+    // Deletes local user information on completion or error
     logout : function(){
       this.$http.delete(this.backend_url + "/logout",
                 {headers : {authorization : this.auth_token}})
@@ -187,6 +203,8 @@ export default {
         this.$router.push("/txs");
     },
 
+    // Send reset_password request to server
+    // Displays instructions on completion.
     reset_password : function(){
       var params = {email : this.auth_email}
       this.$http.put(this.backend_url + "/reset", params)

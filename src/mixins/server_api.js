@@ -1,3 +1,9 @@
+/*
+ * Helper mixin provider Ziti server API access and methods.
+ *
+ * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ */
+
 import config from '../config'
 import util   from '../util'
 
@@ -79,6 +85,7 @@ export default {
         this.$router.push("/filter/" + filter.id);
     },
 
+    // Loads templates from server, storing the result
     load_templates : function(){
       this.$http.get(this.backend_url + "/templates")
                 .then(function(response){
@@ -97,6 +104,7 @@ export default {
                 }.bind(this))
     },
 
+    // Loads sinks from server, storing the result
     load_sinks : function(){
       this.$http.get(this.backend_url + "/sinks", this.auth_header)
                 .then(function(response){
@@ -114,7 +122,7 @@ export default {
                 }.bind(this))
     },
 
-
+    // Loads filters from server, storing the result
     load_filters : function(){
       this.$http.get(this.backend_url + "/filters", this.auth_header)
                 .then(function(response){
@@ -135,6 +143,7 @@ export default {
                 }.bind(this))
     },
 
+    // Loads filter from server, storing the result
     load_filter : function(id){
       this.$http.get(this.backend_url + "/filter/" + id, this.auth_header)
                 .then(function(response){
@@ -149,6 +158,7 @@ export default {
                 }.bind(this))
     },
 
+    // Loads matched transactions from server, storing the result
     load_matched_txs : function(id){
       this.$http.get(this.backend_url + "/filter/" + id + "/matches", this.auth_header)
                 .then(function(response){

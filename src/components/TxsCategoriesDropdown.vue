@@ -1,3 +1,9 @@
+<!--
+  * Txs Categories Dropdown Component
+  * Displays toggleable list of categories on smaller layouts.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div id="tx_categories">
     <multiselect v-model="selected_categories"

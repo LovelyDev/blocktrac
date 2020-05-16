@@ -1,3 +1,10 @@
+<!--
+  * Plan Page
+  * Rendered when user selects a plan from options on Plans page
+  * and presents user with plan overview and options to customize.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <MainLayout section="plan">
     <div id="plan">

@@ -1,3 +1,8 @@
+<!--
+  * Account Set Transaction Details
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <TxContainer :tx="tx">
     <div class="domain" v-if="domain">

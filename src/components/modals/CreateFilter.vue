@@ -1,3 +1,9 @@
+<!--
+  * Create Filter Modal
+  * Encapsulates CreateEditFilterForm to create new filters
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <b-modal id="create_filter"
            title="Create New Filter"

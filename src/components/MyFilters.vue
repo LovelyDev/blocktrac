@@ -1,3 +1,10 @@
+<!--
+  * 'My Filters' Widget
+  * Encapsulates Filter List, Settings, and Add New Filter button
+  * in the sidebar.
+  *
+  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  -->
 <template>
   <div>
     <div v-if="!logged_in" id="my_filters_anon">
