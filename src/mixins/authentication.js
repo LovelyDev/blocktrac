@@ -190,6 +190,9 @@ export default {
                   this.$removeCookie("additional_filters")
                   this.$removeCookie("additional_sinks")
 
+                  if(this.$route.path != "/txs")
+                    this.$router.push("/txs");
+
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
                   this.$removeCookie("email")
@@ -197,10 +200,11 @@ export default {
                   this.$removeCookie("profile");
                   this.$removeCookie("additional_filters")
                   this.$removeCookie("additional_sinks")
+
+                  if(this.$route.path != "/txs")
+                    this.$router.push("/txs");
                 }.bind(this))
 
-      if(this.$route.path != "/txs")
-        this.$router.push("/txs");
     },
 
     // Send reset_password request to server
