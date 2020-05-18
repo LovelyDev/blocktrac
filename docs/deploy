@@ -129,7 +129,7 @@ httpd/zitui setup:
 1. dnf install httpd mod_ssl rsync
 2. mkdir /var/www/zitui
 3. <on local machine>
-4. scp httpd.conf root@zitui:/etc/httpd/conf.d/zerptrackercom.conf
+4. scp httpd.conf root@zitui:/etc/httpd/conf.d/zerptrackercom.conf # comment out mod_ssl / 443 sections / https redirects for now
 5. Edit src/config.js to reference BACKEND_URL
 6. ./deploy
 7. <on zitui>
@@ -138,8 +138,72 @@ httpd/zitui setup:
 10. firewall-cmd --permanent --add-service=http
 11. firewall-cmd --permanent --add-service=https
 12. firewall-cmd --reload
-... letsencrypt certificate
+
+letsencrypt certificate:
+13. dnf install python3
+14. adduser letsencrypt
+15. passwd letsencrypt
+16. groupadd letsencrypt
+17. mkdir /etc/letsencrypt
+18. mkdir /etc/letsencrypt/certs
+19. mkdir /etc/letsencrypt/private
+20. chown -R root:letsencrypt /etc/letsencrypt
+21. chmod 750 /etc/letsencrypt/
+22. chmod 775 /etc/letsencrypt/certs
+23. chmod 750 /etc/letsencrypt/private
+24. usermod -a -G letsencrypt rippled
+25. mkdir -p /var/www/<COMPACT_HOSTNAME>/.well-known/acme-challenge
+26. chown -R letsencrypt.letsencrypt /var/www/zitui/.well-known/
+27. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/letsencrypt/acme_tiny.py
+28. chown root.letsencrypt /home/letsencrypt/acme_tiny.py
+29. chmod 750 /home/letsencrypt/acme_tiny.py
+30. openssl genrsa 4096 > /etc/letsencrypt/private/account.key
+31. openssl genrsa 4096 > /etc/letsencrypt/private/zerptrackercom.key
+32. openssl dhparam -out /etc/letsencrypt/certs/dhparam.pem 4096 # general locally then scp to zitui (is dhparam needed? not referenced anywhere)
+33. openssl req -new -sha256 -key /etc/letsencrypt/private/zerptrackercom.key -subj "/CN=zerptracker.com" > /etc/letsencrypt/private/zerptrackercom.csr
+34. vi /home/letencrypt/renew_cert.sh
+    - <add>
+    python3 /home/letsencrypt/acme_tiny.py --account-key /etc/letsencrypt/private/account.key --csr /etc/letsencrypt/private/zerptrackercom.csr --acme-dir /var/www/zitui/.well-known/acme-challenge/ > /etc/letsencrypt/certs/signed-zerptrackercom.crt || exit
+    curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /etc/letsencrypt/certs/intermediate-zerptrackercom.pem
+    cat /etc/letsencrypt/certs/signed-zerptrackercom.crt /etc/letsencrypt/certs/intermediate-zerptrackercom.pem > /etc/letsencrypt/certs/chained_cert-zerptrackercom.pem
+35. su letsencrypt
+36. cd
+37. ./renew_cert.sh # verify success
+38. exit
+39. chown root:letsencrypt /home/letsencrypt/renew_cert.sh
+40. chmod 750 /home/letsencrypt/renew_cert.sh
+41. chown root:letsencrypt /etc/letsencrypt/private/account.key
+42. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
+43. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
+44. chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
+45. chmod 640 /etc/letsencrypt/private/account.key
+46. chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
+47. chmod 640 /etc/letsencrypt/private/zerptrackercom.key
+48. chmod 640 /etc/letsencrypt/certs/dhparam.pem
+49. vi /etc/httpd/conf.d/zerptrackercom.conf
+    - uncomment ssl / 443 sections / https redirect
+50. vi /etc/httpd/conf.d/ssl.conf
+    - comment out entire virtual host
+51. service httpd reload
+52. EDITOR="vi" visudo -f /etc/sudoers.d/letsencrypt-services-reload
+    - add the following:
+    letsencrypt ALL=NOPASSWD: /usr/sbin/service httpd reload
+53. vi /home/letencrypt/renew_cert.sh
+    - append
+     sudo service httpd reload
+54. su letsencrypt
+55. EDITOR="vi" crontab -e
+    - add
+    30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/letsencrypt/renew_cert.sh >> /var/log/acme_tiny.log
+56. exit
+57. touch /var/log/acme_tiny.log
+58. chown letsencrypt.letsencrypt /var/log/acme_tiny.log
+59. chmod 640 /var/log/acme_tiny.log
 
 zitz1/zitz2
 -----------
 ...
+
+Post Setup
+----------
+On *all* servers edit /etc/ssh/sshd_config and disable PermitRootLogin, restart ssh
