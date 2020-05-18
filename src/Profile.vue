@@ -9,7 +9,20 @@
     <div id="profile">
       <h1>Account:</h1>
 
-      <ProfileForm />
+      <div id="profile_content">
+        <ProfileForm      ref="form"
+                     @editing="enable_save = true"
+                 @not_editing="enable_save = false"
+                   @validated="validate($event)"/>
+
+        <div v-show="enable_save"
+             id="save_wrapper">
+          <b-button :disabled="!is_valid"
+                    @click="save_profile">
+            Save
+          </b-button>
+        </div>
+      </div>
     </div>
   </MainLayout>
 </template>
@@ -17,18 +30,60 @@
 <script>
 import MainLayout     from './components/MainLayout'
 import ProfileForm    from './components/forms/Profile'
-import Authentication from './mixins/authentication'
 
-// TODO handle change email / password
+import Authentication from './mixins/authentication'
+import Validatable    from './mixins/validatable'
+
+import util from './util'
 
 export default {
   name: 'Profile',
 
-  mixins : [Authentication],
+  mixins : [Authentication, Validatable],
 
   components: {
     MainLayout,
     ProfileForm
+  },
+
+  data : function(){
+    return {
+      enable_save : false
+    }
+  },
+
+  methods : {
+    save_profile : function(){
+      var params = {}
+
+      var editing_email = this.$refs.form.editing_email
+      if(editing_email)
+        params.email = this.$refs.form.auth_email
+
+      var editing_password = this.$refs.form.editing_password
+      if(editing_password)
+        params.password = this.$refs.form.auth_password
+
+      this.$http.put(this.backend_url + "/user",
+                      params, this.auth_header)
+                .then(function(response){
+                  var msg = '';
+
+                  if(editing_password)
+                    msg += 'Password was updated. '
+
+                  if(editing_email)
+                    msg += 'Confirmation code was sent to your new email'
+
+                  this.$refs.form.reset()
+
+                  alert(msg)
+
+                }.bind(this)).catch(function(err){
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not save profile: " + msg)
+                }.bind(this))
+    }
   }
 }
 </script>
@@ -49,5 +104,23 @@ export default {
 
 #profile h1{
   font-family: var(--theme-font3);
+}
+
+#profile_content{
+  background-color: white;
+  border: 1px solid #ededed;
+  padding: 25px;
+  max-width: unset;
+}
+
+#main_layout.md #profile_content,
+#main_layout.sm #profile_content,
+#main_layout.xs #profile_content{
+  padding: 10px;
+}
+
+#save_wrapper{
+  margin: 10px;
+  text-align: right;
 }
 </style>
