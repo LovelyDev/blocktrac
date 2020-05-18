@@ -107,7 +107,7 @@
         </td>
       </tr>
 
-      <tr>
+      <tr v-if="logged_in">
         <td colspan=2>
           <div id="send_me" class="form_text">
             Send Me Notifications Via:
@@ -116,7 +116,7 @@
       </tr>
     </table>
 
-    <SinksInputs ref="sinks_inputs" />
+    <SinksInputs v-if="logged_in" ref="sinks_inputs" />
   </div>
 </template>
 
@@ -262,8 +262,9 @@ export default {
           params['jsonpath'] = this.jsonpath
       }
 
-      params['sinks'] = Object.values(this.$refs.sinks_inputs.$data.selected)
-                              .flat().map(function(sink){ return sink.value })
+      if(this.logged_in)
+        params['sinks'] = Object.values(this.$refs.sinks_inputs.$data.selected)
+                                .flat().map(function(sink){ return sink.value })
 
       return params;
     },
