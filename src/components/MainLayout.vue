@@ -37,7 +37,9 @@ import ConnectionStatus from './ConnectionStatus'
 // TODO 'fingerprint' server method (noop),
 //      always request here if logged in so that
 //      authToken is always refreshed even if page doesn't
-//      invoke serverside action
+//      invoke serverside action.
+//      If fingerprint returns error, assume auth timeout
+//      has expired and perform actions similar to explicit logout
 
 export default {
   name: 'MainLayout',

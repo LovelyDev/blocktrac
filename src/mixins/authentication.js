@@ -171,6 +171,8 @@ export default {
     // Send request to get user from server.
     // Stores user information locally upon retrieval
     load_user : function(){
+      // TODO: store data in store
+
       return this.$http.get(this.backend_url + "/user", this.auth_header)
                        .then(function(response){
                          this.$setCookie("email", response.body.email)
