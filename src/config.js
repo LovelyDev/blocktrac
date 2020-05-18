@@ -11,7 +11,7 @@ module.exports = {
   MINUMUM_PREMIUM_BALANCE : 5,
 
   // Backend URL to get/set data
-  // TODO: load from config and/or change to fr.0xr.pl in production
+  // TODO: load from config and/or change to api.zerptracker.com in production
   BACKEND_URL : "http://localhost:3000",
 
   // Ripple Websocket URI
