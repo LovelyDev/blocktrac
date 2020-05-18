@@ -20,13 +20,13 @@
           </ul>
 
           <div class="begin_today_wrapper">
-            <b-button v-if="mq_gte_md"
-                      class="begin_today"
-                      variant="primary">
-              <router-link to="/txs">
-                <b>Begin today</b>
-              </router-link>
-            </b-button>
+            <router-link to="/txs">
+              <b-button v-if="mq_gte_md"
+                        class="begin_today"
+                        variant="primary">
+                  <b>Begin today</b>
+              </b-button>
+            </router-link>
           </div>
         </div>
 
