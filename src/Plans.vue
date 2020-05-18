@@ -91,6 +91,12 @@
               </b-button>
             </router-link>
 
+            <b-button v-else-if="!logged_in"
+                      class="upgrade"
+                      v-b-modal.login_modal>
+              Login to Upgrade
+            </b-button>
+
             <b-button class="upgrade" v-else disabled>
               <span v-if="is_current_plan(name)">Current Plan</span>
               <span v-else>Subscription Ends in {{expires}} days</span>
@@ -162,6 +168,14 @@ export default {
     upgrade_enabled : function(){
       var enabled = {};
 
+      // Must be logged in to upgrade
+      if(!this.logged_in){
+        for(var l = 0; l < this.levels.length; l += 1)
+          enabled[this.levels[l]] = false
+
+        return enabled;
+      }
+
       // only enable for current level if purchasing additional options
       enabled[this.membership_level] =
         this.total_cost[this.membership_level] > 0;
@@ -169,7 +183,7 @@ export default {
       // no downgrades
       var level_index = this.levels.indexOf(this.membership_level);
       if(level_index != 0)
-        for(var l = 0; l < level_index; l += 1)
+        for(l = 0; l < level_index; l += 1)
           enabled[this.levels[l]] = false;
 
       // allow upgrade

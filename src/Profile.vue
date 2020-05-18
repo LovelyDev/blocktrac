@@ -84,6 +84,12 @@ export default {
                   alert("Could not save profile: " + msg)
                 }.bind(this))
     }
+  },
+
+  created : function(){
+    // If not logged in, redirect to /txs
+    if(!this.logged_in)
+      this.$router.push("/txs")
   }
 }
 </script>
