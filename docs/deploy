@@ -117,11 +117,45 @@ ziti setup:
 34. ... notify_sinks
 35. ... manage_users
 36. <detach from screen>
-37. <as root>
-... lets encrypt certificate
-38. firewall-cmd --permanent --add-masquerade
-39. firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
-40. firewall-cmd --reload
+
+network setup:
+37. firewall-cmd --permanent --add-masquerade
+38. firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
+38. firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=3001
+39. firewall-cmd --permanent --add-service=http
+40. firewall-cmd --permanent --add-service=https
+41. firewall-cmd --direct --permanent --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 80 -j REDIRECT --to-ports 3000
+42. firewall-cmd --reload
+
+letsencrypt setup:
+43. mkdir /home/ziti/letsencrypt
+44. mkdir /home/ziti/letsencrypt/certs
+45. mkdir /home/ziti/letsencrypt/private
+46. chmod 750 /home/ziti/letsencrypt/
+47. chmod 775 /home/ziti/letsencrypt/certs
+48. chmod 750 /home/ziti/letsencrypt/private
+49. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
+50. chmod 750 /home/ziti/acme_tiny.py
+51. openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
+52. openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
+53. openssl req -new -sha256 -key /home/ziti/letsencrypt/private/apizerptrackercom.key -subj "/CN=api.zerptracker.com" > /home/ziti/letsencrypt/private/apizerptrackercom.csr
+54. chmod 640 /home/ziti/letsencrypt/private/account.key
+55. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.key
+56. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
+57. vi /home/ziti/renew_cert.sh
+    - <add>
+    python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/ziti/.well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
+    curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem
+    cat /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem > /home/ziti/letsencrypt/certs/chained_cert-apizerptrackercom.pem
+58. chmod 750 /home/ziti/renew_cert.sh
+60. /home/ziti/renew_cert.sh
+61. <as root>
+62. touch /var/log/acme_tiny.log
+63. chown ziti.ziti /var/log/acme_tiny.log
+64. <as ziti>
+65. EDITOR="vi" crontab -e
+    - add
+    30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
 
 zitui
 -----
@@ -161,44 +195,45 @@ letsencrypt certificate:
 31. openssl genrsa 4096 > /etc/letsencrypt/private/zerptrackercom.key
 32. openssl dhparam -out /etc/letsencrypt/certs/dhparam.pem 4096 # general locally then scp to zitui (is dhparam needed? not referenced anywhere)
 33. openssl req -new -sha256 -key /etc/letsencrypt/private/zerptrackercom.key -subj "/CN=zerptracker.com" > /etc/letsencrypt/private/zerptrackercom.csr
-34. vi /home/letencrypt/renew_cert.sh
+34. su letsencrypt
+35. cd
+36. vi /home/letencrypt/renew_cert.sh
     - <add>
     python3 /home/letsencrypt/acme_tiny.py --account-key /etc/letsencrypt/private/account.key --csr /etc/letsencrypt/private/zerptrackercom.csr --acme-dir /var/www/zitui/.well-known/acme-challenge/ > /etc/letsencrypt/certs/signed-zerptrackercom.crt || exit
     curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /etc/letsencrypt/certs/intermediate-zerptrackercom.pem
     cat /etc/letsencrypt/certs/signed-zerptrackercom.crt /etc/letsencrypt/certs/intermediate-zerptrackercom.pem > /etc/letsencrypt/certs/chained_cert-zerptrackercom.pem
-35. su letsencrypt
-36. cd
-37. ./renew_cert.sh # verify success
-38. exit
-39. chown root:letsencrypt /home/letsencrypt/renew_cert.sh
-40. chmod 750 /home/letsencrypt/renew_cert.sh
-41. chown root:letsencrypt /etc/letsencrypt/private/account.key
-42. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
-43. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
-44. chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
-45. chmod 640 /etc/letsencrypt/private/account.key
-46. chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
-47. chmod 640 /etc/letsencrypt/private/zerptrackercom.key
-48. chmod 640 /etc/letsencrypt/certs/dhparam.pem
-49. vi /etc/httpd/conf.d/zerptrackercom.conf
+37. chmod 750 /home/letsencrypt/renew_cert.sh
+38. ./renew_cert.sh # verify success
+39. exit
+40. chown root:letsencrypt /home/letsencrypt/renew_cert.sh
+41. chmod 750 /home/letsencrypt/renew_cert.sh
+42. chown root:letsencrypt /etc/letsencrypt/private/account.key
+43. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
+44. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
+45. chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
+46. chmod 640 /etc/letsencrypt/private/account.key
+47. chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
+48. chmod 640 /etc/letsencrypt/private/zerptrackercom.key
+49. chmod 640 /etc/letsencrypt/certs/dhparam.pem
+50. vi /etc/httpd/conf.d/zerptrackercom.conf
     - uncomment ssl / 443 sections / https redirect
-50. vi /etc/httpd/conf.d/ssl.conf
+51. vi /etc/httpd/conf.d/ssl.conf
     - comment out entire virtual host
-51. service httpd reload
-52. EDITOR="vi" visudo -f /etc/sudoers.d/letsencrypt-services-reload
+52. service httpd reload
+53. EDITOR="vi" visudo -f /etc/sudoers.d/letsencrypt-services-reload
     - add the following:
     letsencrypt ALL=NOPASSWD: /usr/sbin/service httpd reload
-53. vi /home/letencrypt/renew_cert.sh
+54. vi /home/letencrypt/renew_cert.sh
     - append
      sudo service httpd reload
-54. su letsencrypt
-55. EDITOR="vi" crontab -e
+55. su letsencrypt
+56. EDITOR="vi" crontab -e
     - add
     30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/letsencrypt/renew_cert.sh >> /var/log/acme_tiny.log
-56. exit
-57. touch /var/log/acme_tiny.log
-58. chown letsencrypt.letsencrypt /var/log/acme_tiny.log
-59. chmod 640 /var/log/acme_tiny.log
+57. exit
+58. touch /var/log/acme_tiny.log
+59. chown letsencrypt.letsencrypt /var/log/acme_tiny.log
+60. chmod 640 /var/log/acme_tiny.log
 
 zitz1/zitz2
 -----------
@@ -206,4 +241,5 @@ zitz1/zitz2
 
 Post Setup
 ----------
-On *all* servers edit /etc/ssh/sshd_config and disable PermitRootLogin, restart ssh
+- On *all* servers edit /etc/ssh/sshd_config and disable PermitRootLogin, restart ssh
+- Backup all keys & passwords
