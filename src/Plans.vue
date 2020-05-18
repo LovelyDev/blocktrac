@@ -195,8 +195,8 @@ export default {
     },
 
     expires : function(){
-      // TODO
-      return 5;
+      const days = ((Date.parse(this.renewal_date) - Date.now()) / 1000 / 60 / 60 / 24).toFixed(0)
+      return days;
     }
   },
 
