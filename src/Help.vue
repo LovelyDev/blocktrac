@@ -180,6 +180,11 @@ export default {
             },
 
             {
+                title : "How much do Pro accounts cost?",
+                value : "See available <a href='/plans'>Plans</a> for more details."
+            },
+
+            {
               title : "What payment options are available to me?",
               value : "We currently accept only accept credit card payments but are exploring additional payment options (available in the near future)."
             },
