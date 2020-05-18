@@ -46,6 +46,10 @@ export default {
       return this.$cookies.profile;
     },
 
+    renewal_date : function(){
+      return this.$cookies.renewal_date;
+    },
+
     membership_level : function(){
       return this.$cookies.membership_level;
     },
@@ -172,6 +176,7 @@ export default {
                          this.$setCookie("email", response.body.email)
                          this.$setCookie("membership_level", response.body.membership_level);
                          this.$setCookie("profile",  response.body.profile)
+                         this.$setCookie("renewal_date",  response.body.renewal_date)
                          this.$setCookie("additional_filters",  response.body.additional_filters)
                          this.$setCookie("additional_sinks",  response.body.additional_sinks)
                        }.bind(this))
@@ -187,6 +192,7 @@ export default {
                   this.$removeCookie("email")
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
+                  this.$removeCookie("renewal_date")
                   this.$removeCookie("additional_filters")
                   this.$removeCookie("additional_sinks")
 
@@ -198,6 +204,7 @@ export default {
                   this.$removeCookie("email")
                   this.$removeCookie("membership_level")
                   this.$removeCookie("profile");
+                  this.$removeCookie("renewal_date")
                   this.$removeCookie("additional_filters")
                   this.$removeCookie("additional_sinks")
 
