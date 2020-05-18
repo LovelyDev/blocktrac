@@ -20,4 +20,6 @@ yarn-error.log*
 *.sln
 *.sw?
 
+src/ziti.js
 yarn.lock
+deploy
