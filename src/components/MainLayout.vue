@@ -34,6 +34,11 @@ import MainHeader       from './MainHeader'
 import MainFooter       from './MainFooter'
 import ConnectionStatus from './ConnectionStatus'
 
+// TODO 'fingerprint' server method (noop),
+//      always request here if logged in so that
+//      authToken is always refreshed even if page doesn't
+//      invoke serverside action
+
 export default {
   name: 'MainLayout',
 
