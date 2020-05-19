@@ -177,6 +177,8 @@ export default {
                          this.$store.commit('set_user', response.body);
 
                        }.bind(this)).catch(function(err){
+                          alert("Session timed out, you have been logged out");
+
                           // If user cannot be loaded, clear
                           this.$removeCookie("authToken")
                           this.$store.commit('clear_user')
