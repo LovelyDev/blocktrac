@@ -41,7 +41,7 @@
             <img src="./assets/info.svg" />
             <span>
               The following are transactions which your filter has matched.
-              <template v-if="filter.total_matches > transaction_history">
+              <template v-if="active_filter.total_matches > transaction_history">
                 Only the last {{transaction_history}} matches are shown.
               </template>
             </span>
@@ -85,13 +85,15 @@ export default {
 
   computed : {
     have_sinks : function(){
-      if(!this.filter || !this.filter.Sinks) return false;
+      if(!this.active_filter ||
+         !this.active_filter.Sinks)
+         return false;
 
-      return this.filter.Sinks.length > 0
+      return this.active_filter.Sinks.length > 0
     },
 
     sinks_text : function(){
-      return this.filter.Sinks.map(function(sink){
+      return this.active_filter.Sinks.map(function(sink){
                return sink.type + " " + sink.target;
              }).join(", ")
     },

@@ -20,27 +20,26 @@ export default {
         this.$bvModal.show("register_filter_modal");
 
       }else
-        this.create_filter();
+        this.create_filter_();
     },
 
-    create_filter : function(){
+    create_filter_ : function(){
       var params = this.$refs.form.server_params;
 
-      this.$http.post(this.backend_url + "/filter",
-                      params, this.auth_header)
-                .then(function(response){
-                  const filter = response.body;
+      this.create_filter(params)
+          .then(function(response){
+            const filter = response.body;
 
-                  filter.params = JSON.parse(filter.params)
-                  if(filter.Template)
-                    filter.Template.params = JSON.parse(filter.Template.params)
+            filter.params = JSON.parse(filter.params)
+            if(filter.Template)
+              filter.Template.params = JSON.parse(filter.Template.params)
 
-                  this.$emit('created', filter)
+            this.$emit('created', filter)
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not create filter: " + msg)
-                }.bind(this))
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not create filter: " + msg)
+          }.bind(this))
     }
   }
 }

@@ -310,21 +310,21 @@ export default {
           })
 
           deleted.forEach(function(sink){
-            this.delete_sink(sink)
+            this.delete_sink_(sink)
           }.bind(this))
         }
       }
     },
 
-    delete_sink : function(sink){
-      this.$http.delete(this.backend_url + "/sink/" + sink.id, this.auth_header)
-                .then(function(response){
-                  this.load_sinks()
+    delete_sink_ : function(sink){
+      this.delete_sink(sink.id)
+          .then(function(response){
+            this.load_sinks()
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not delete sink: " + msg)
-                })
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not delete sink: " + msg)
+          })
     }
   },
 

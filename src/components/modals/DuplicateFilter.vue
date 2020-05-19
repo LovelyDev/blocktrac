@@ -19,14 +19,21 @@
 
 <script>
 import Authentication       from '../../mixins/authentication'
-import CreatesFilter        from './creates_filter'
-import CreateEditFilterForm from '../forms/CreateEditFilter'
+import ServerAPI            from '../../mixins/server_api'
 import Validatable          from '../../mixins/validatable'
+import CreatesFilter        from './creates_filter'
+
+import CreateEditFilterForm from '../forms/CreateEditFilter'
 
 export default {
   name: 'DuplicateFilterModal',
 
-  mixins : [Authentication, CreatesFilter, Validatable],
+  mixins : [
+    Authentication,
+    ServerAPI,
+    CreatesFilter,
+    Validatable
+  ],
 
   components : {
     CreateEditFilterForm

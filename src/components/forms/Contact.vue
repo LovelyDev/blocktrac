@@ -83,17 +83,17 @@ export default {
       if(!this.is_valid) return
 
       const params = {email : this.email, inquiry : this.inquiry}
-      this.$http.post(this.backend_url + "/contact", params)
-                .then(function(response){
-                  alert("Your inquiry has been sent to us, " +
-                        "we will get back to you as soon as possible")
-                  this.email = ""
-                  this.inquiry = ""
+      this.contact(params)
+          .then(function(response){
+            alert("Your inquiry has been sent to us, " +
+                  "we will get back to you as soon as possible")
+            this.email = ""
+            this.inquiry = ""
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not submit form: " + msg)
-                })
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not submit form: " + msg)
+          })
     }
   }
 }

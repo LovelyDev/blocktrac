@@ -56,7 +56,7 @@ export default {
       }
     },
 
-    filter : {
+    active_filter : {
       set : function(filter){
         this.$store.commit('set_active_filter', filter);
       },
@@ -69,7 +69,7 @@ export default {
 
   methods : {
     set_active_filter : function(filter){
-      this.filter = filter;
+      this.active_filter = filter;
 
       const replace = this.filters.find(function(f){
                         return f.id == filter.id;
@@ -151,10 +151,14 @@ export default {
     load_filter : function(id){
       this.$http.get(this.backend_url + "/filter/" + id, this.auth_header)
                 .then(function(response){
-                  this.filter = response.body;
-                  this.filter.params = JSON.parse(this.filter.params);
-                  if(this.filter.Template)
-                    this.filter.Template.params = JSON.parse(this.filter.Template.params)
+                  this.active_filter = response.body;
+
+                  this.active_filter.params =
+                    JSON.parse(this.active_filter.params);
+
+                  if(this.active_filter.Template)
+                    this.active_filter.Template.params =
+                      JSON.parse(this.active_filter.Template.params)
 
                 }.bind(this)).catch(function(err){
                   const msg = util.capitalize(err.body.error)
@@ -164,7 +168,8 @@ export default {
 
     // Loads matched transactions from server, storing the result
     load_matched_txs : function(id){
-      this.$http.get(this.backend_url + "/filter/" + id + "/matches", this.auth_header)
+      this.$http.get(this.backend_url + "/filter/" + id + "/matches",
+                                                    this.auth_header)
                 .then(function(response){
                   // clear matched txs
                   this.matched_txs = []
@@ -194,6 +199,35 @@ export default {
 
     confirm_email : function(params){
       return this.$http.put(this.backend_url + "/confirm", params)
+    },
+
+    contact : function(params){
+      return this.$http.post(this.backend_url + "/contact", params)
+    },
+
+    create_sink : function(params){
+      return this.$http.post(this.backend_url + "/sink",
+                               params, this.auth_header)
+    },
+
+    delete_sink : function(id){
+      return this.$http.delete(this.backend_url + "/sink/" + id,
+                                               this.auth_header)
+    },
+
+    create_filter : function(params){
+      return this.$http.post(this.backend_url + "/filter",
+                                 params, this.auth_header)
+    },
+
+    edit_filter : function(id, params){
+      return this.$http.put(this.backend_url + "/filter/" + id,
+                                      params, this.auth_header)
+    },
+
+    delete_filter : function(id){
+      return this.$http.delete(this.backend_url + "/filter/" + id,
+                                                 this.auth_header)
     }
   }
 }

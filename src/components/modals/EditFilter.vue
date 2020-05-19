@@ -19,6 +19,8 @@
 
 <script>
 import Authentication       from '../../mixins/authentication'
+import ServerAPI            from '../../mixins/server_api'
+
 import CreateEditFilterForm from '../forms/CreateEditFilter'
 import Validatable          from '../../mixins/validatable'
 
@@ -27,7 +29,7 @@ import util from '../../util'
 export default {
   name: 'EditFilterModal',
 
-  mixins : [Authentication, Validatable],
+  mixins : [Authentication, ServerAPI, Validatable],
 
   components : {
     CreateEditFilterForm
@@ -42,27 +44,26 @@ export default {
 
   methods : {
     on_ok : function(){
-      this.edit_filter();
+      this.edit_filter_();
     },
 
-    edit_filter : function(){
+    edit_filter_ : function(){
       var params = this.$refs.form.server_params;
 
-      this.$http.put(this.backend_url + "/filter/" + this.filter.id,
-                      params, this.auth_header)
-                .then(function(response){
-                  const filter = response.body;
+      this.edit_filter(this.filter.id, params)
+          .then(function(response){
+            const filter = response.body;
 
-                  filter.params = JSON.parse(filter.params)
-                  if(filter.Template)
-                    filter.Template.params = JSON.parse(filter.Template.params)
+            filter.params = JSON.parse(filter.params)
+            if(filter.Template)
+              filter.Template.params = JSON.parse(filter.Template.params)
 
-                  this.$emit('edited', filter);
+            this.$emit('edited', filter);
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not update filter: " + msg)
-                }.bind(this))
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not update filter: " + msg)
+          }.bind(this))
     }
   }
 }

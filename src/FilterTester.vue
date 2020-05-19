@@ -91,8 +91,8 @@ export default {
   },
 
   watch : {
-    filter : function(){
-      var jp = util.filter_matcher(this.filter);
+    active_filter : function(){
+      var jp = util.filter_matcher(this.active_filter);
 
       Object.keys(captured_txs).forEach(function(ctx){
         const json = captured_txs[ctx];

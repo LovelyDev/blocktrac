@@ -9,12 +9,14 @@
   <div id="filter_header">
     <div id="filter_subheader">
       <div id="filter_subheader_icon">
-        <img v-if="is_filter_page" src="../assets/down-triangle-lines-white.svg" />
-        <img v-if="is_test_page"   src="../assets/repeat.svg" />
+        <img v-if="is_filter_page"
+              src="../assets/down-triangle-lines-white.svg" />
+        <img v-if="is_test_page"
+              src="../assets/repeat.svg" />
       </div>
 
       <div>
-        <FilterSummary :filter="filter" />
+        <FilterSummary :filter="active_filter" />
       </div>
 
     </div>
@@ -31,9 +33,12 @@
       </b-popover>
     </div>
 
-    <EditFilterModal      :filter="filter" @edited="set_active_filter($event)" />
-    <DuplicateFilterModal :filter="filter" @created="set_active_filter($event)" />
-    <DeleteFilterModal    :filter="filter" @deleted="$router.push('/txs')" />
+    <EditFilterModal      :filter="active_filter"
+                          @edited="set_active_filter($event)" />
+    <DuplicateFilterModal :filter="active_filter"
+                         @created="set_active_filter($event)" />
+    <DeleteFilterModal    :filter="active_filter"
+                         @deleted="$router.push('/txs')" />
   </div>
 </template>
 

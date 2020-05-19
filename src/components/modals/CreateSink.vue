@@ -8,7 +8,7 @@
   <b-modal :id="id"
            :title="'Create ' + type_text"
            centered
-           @ok="create_sink"
+           @ok="create_sink_"
            :ok-disabled="!is_valid">
     <CreateSinkForm ref="form"
                   :type="type"
@@ -18,6 +18,8 @@
 
 <script>
 import Authentication from '../../mixins/authentication'
+import ServerAPI      from '../../mixins/server_api'
+
 import CreateSinkForm from '../forms/CreateSink'
 import Validatable    from '../../mixins/validatable'
 
@@ -51,18 +53,17 @@ export default {
   },
 
   methods : {
-    create_sink : function(){
+    create_sink_ : function(){
       const params = { type : this.type, target : this.$refs.form.target }
 
-      this.$http.post(this.backend_url + "/sink",
-                        params, this.auth_header)
-                .then(function(response){
-                  this.$emit('created', response.body)
+      this.create_sink(params)
+          .then(function(response){
+            this.$emit('created', response.body)
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not create sink: " + msg)
-                })
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not create sink: " + msg)
+          })
     }
   }
 }

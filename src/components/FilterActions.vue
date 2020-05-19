@@ -8,7 +8,7 @@
   -->
 <template>
   <div id="filter_actions">
-    <router-link :to="'/filter/' + filter.id">
+    <router-link :to="'/filter/' + active_filter.id">
       <span id="live_link"
             class="filter_action"
             v-if="!is_filter_page">
@@ -17,7 +17,7 @@
       </span>
     </router-link>
 
-    <router-link :to="'/test/' + filter.id">
+    <router-link :to="'/test/' + active_filter.id">
       <div id="test_link"
             class="filter_action"
             v-if="!is_test_page">
