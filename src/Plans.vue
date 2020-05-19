@@ -195,7 +195,8 @@ export default {
     },
 
     expires : function(){
-      const days = ((Date.parse(this.renewal_date) - Date.now()) / 1000 / 60 / 60 / 24).toFixed(0)
+      const remaining = Date.parse(this.renewal_date) - Date.now()
+      const days = (remaining / 1000 / 60 / 60 / 24).toFixed(0)
       return days;
     }
   },
