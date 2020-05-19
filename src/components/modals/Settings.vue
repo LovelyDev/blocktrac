@@ -24,14 +24,16 @@
 import BatchSettingsForm        from '../forms/BatchSettings'
 import NotificationSettingsForm from '../forms/NotificationSettings'
 import SinksSettingsForm        from '../forms/SinksSettings'
+
 import Authentication           from '../../mixins/authentication'
+import ServerAPI                from '../../mixins/server_api'
 
 import util from '../../util'
 
 export default {
   name: 'SettingsModal',
 
-  mixins : [Authentication],
+  mixins : [Authentication, ServerAPI],
 
   components : {
     BatchSettingsForm,
@@ -48,15 +50,14 @@ export default {
         }
       }
 
-      this.$http.put(this.backend_url + "/user",
-                      params, this.auth_header)
-                .then(function(response){
-                  this.load_user()
+      this.update_user(params)
+          .then(function(response){
+            this.load_user()
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not save settings: " + msg)
-                }.bind(this))
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not save settings: " + msg)
+          }.bind(this))
     }
   }
 }

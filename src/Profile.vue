@@ -32,6 +32,7 @@ import MainLayout     from './components/MainLayout'
 import ProfileForm    from './components/forms/Profile'
 
 import Authentication from './mixins/authentication'
+import ServerAPI      from './mixins/server_api'
 import Validatable    from './mixins/validatable'
 
 import util from './util'
@@ -39,7 +40,7 @@ import util from './util'
 export default {
   name: 'Profile',
 
-  mixins : [Authentication, Validatable],
+  mixins : [Authentication, ServerAPI, Validatable],
 
   components: {
     MainLayout,
@@ -64,25 +65,24 @@ export default {
       if(editing_password)
         params.password = this.$refs.form.auth_password
 
-      this.$http.put(this.backend_url + "/user",
-                      params, this.auth_header)
-                .then(function(response){
-                  var msg = '';
+      this.update_user(params)
+          .then(function(response){
+            var msg = '';
 
-                  if(editing_password)
-                    msg += 'Password was updated. '
+            if(editing_password)
+              msg += 'Password was updated. '
 
-                  if(editing_email)
-                    msg += 'Confirmation code was sent to your new email'
+            if(editing_email)
+              msg += 'Confirmation code was sent to your new email'
 
-                  this.$refs.form.reset()
+            this.$refs.form.reset()
 
-                  alert(msg)
+            alert(msg)
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not save profile: " + msg)
-                }.bind(this))
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not save profile: " + msg)
+          }.bind(this))
     }
   },
 

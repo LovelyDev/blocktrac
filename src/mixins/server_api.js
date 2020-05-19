@@ -85,6 +85,10 @@ export default {
         this.$router.push("/filter/" + filter.id);
     },
 
+    ///
+
+    // Handle these method callbacks here
+
     // Loads templates from server, storing the result
     load_templates : function(){
       this.$http.get(this.backend_url + "/templates")
@@ -173,6 +177,15 @@ export default {
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve filter matches: " + msg)
                 }.bind(this))
+    },
+
+    ///
+
+    // Return promise, handle these methods callbacks in invoker
+
+    update_user : function(user){
+      return this.$http.put(this.backend_url + "/user",
+                                user, this.auth_header)
     }
   }
 }
