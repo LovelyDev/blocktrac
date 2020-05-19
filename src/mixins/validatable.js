@@ -20,6 +20,10 @@ export default {
   },
 
   methods : {
+    reset_validity: function(){
+      this.is_valid = false
+    },
+
     validate : function(validated){
       this.is_valid = validated;
     }

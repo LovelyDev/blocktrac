@@ -12,6 +12,7 @@
            cancel-variant="light"
            header-class="modal_header"
            centered
+           @shown="shown"
            @ok="reset_password"
            :ok-disabled="!is_valid"
            no-stacking>
@@ -44,6 +45,11 @@ export default {
         this.reset_password()
         this.$refs.forgot_password_modal.hide()
       }
+    },
+
+    shown : function(){
+      this.reset_validity()
+      this.$refs.form.$refs.email.focus()
     }
   }
 }

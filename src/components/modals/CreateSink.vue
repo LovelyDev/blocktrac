@@ -8,6 +8,7 @@
   <b-modal :id="id"
            :title="'Create ' + type_text"
            centered
+           @shown="reset_validity"
            @ok="create_sink_"
            :ok-disabled="!is_valid">
     <CreateSinkForm ref="form"

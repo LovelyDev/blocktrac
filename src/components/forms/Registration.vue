@@ -9,7 +9,8 @@
     <tr>
       <td class="form_text">Email address:</td>
       <td>
-        <input class="form_input"
+        <input ref="email"
+               class="form_input"
                type="text"
                @keyup.enter="$emit('submit')"
                v-model="auth_email" />
