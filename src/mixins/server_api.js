@@ -186,6 +186,14 @@ export default {
     update_user : function(user){
       return this.$http.put(this.backend_url + "/user",
                                 user, this.auth_header)
+    },
+
+    reset_password : function(params){
+      return this.$http.put(this.backend_url + "/reset", params)
+    },
+
+    confirm_email : function(params){
+      return this.$http.put(this.backend_url + "/confirm", params)
     }
   }
 }

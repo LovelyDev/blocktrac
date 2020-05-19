@@ -31,6 +31,7 @@ import MainLayout        from './components/MainLayout'
 import ResetPasswordForm from './components/forms/ResetPassword'
 
 import Authentication    from './mixins/authentication'
+import ServerAPI         from './mixins/server_api'
 import Validatable       from './mixins/validatable'
 
 import util from './util'
@@ -38,7 +39,7 @@ import util from './util'
 export default {
   name: 'ResetPassword',
 
-  mixins : [Authentication, Validatable],
+  mixins : [Authentication, ServerAPI, Validatable],
 
   components: {
     MainLayout,
@@ -59,18 +60,18 @@ export default {
       const password = this.$refs.form.auth_password
       const params = {code : this.code, password : password}
 
-      this.$http.put(this.backend_url + "/reset", params)
-                .then(function(res){
-                  alert("Password successfully reset");
+      this.reset_password(params)
+          .then(function(res){
+            alert("Password successfully reset");
 
-                  this.$router.push("/txs")
+            this.$router.push("/txs")
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not reset password: " + msg);
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not reset password: " + msg);
 
-                  this.$router.push("/txs")
-                })
+            this.$router.push("/txs")
+          })
     }
   }
 }

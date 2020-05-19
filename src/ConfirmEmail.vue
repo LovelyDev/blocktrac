@@ -16,13 +16,14 @@
 <script>
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
+import ServerAPI      from './mixins/server_api'
 
 import util from './util'
 
 export default {
   name: 'ConfirmEmail',
 
-  mixins : [Authentication],
+  mixins : [Authentication, ServerAPI],
 
   components: {
     MainLayout
@@ -36,21 +37,22 @@ export default {
   },
 
   methods : {
-    confirm_email : function(){
-      this.$http.put(this.backend_url + "/confirm", {code : this.code})
-                .then(function(res){
-                  alert("Email successfully confirmed, you may now login")
-                  this.$router.push("/txs")
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not confirm email: " + msg)
-                  this.$router.push("/txs")
-                })
+    send_request : function(){
+      const params = {code : this.code}
+      this.confirm_email(params)
+          .then(function(res){
+            alert("Email successfully confirmed, you may now login")
+            this.$router.push("/txs")
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Could not confirm email: " + msg)
+            this.$router.push("/txs")
+          })
     }
   },
 
   created : function(){
-    this.confirm_email()
+    this.send_request()
   }
 }
 </script>
