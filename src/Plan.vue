@@ -222,7 +222,7 @@ export default {
 
   methods : {
     set_period : function(month){
-      this.period = month;
+      this.period = parseInt(month);
     },
   },
 
