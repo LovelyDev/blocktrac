@@ -43,6 +43,7 @@ export default {
           .then(function(res){
             alert("Email successfully confirmed, you may now login")
             this.$router.push("/txs")
+
           }.bind(this)).catch(function(err){
             const msg = util.capitalize(err.body.error)
             alert("Could not confirm email: " + msg)

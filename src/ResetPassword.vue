@@ -63,13 +63,11 @@ export default {
       this.reset_password(params)
           .then(function(res){
             alert("Password successfully reset");
-
             this.$router.push("/txs")
 
           }.bind(this)).catch(function(err){
             const msg = util.capitalize(err.body.error)
             alert("Could not reset password: " + msg);
-
             this.$router.push("/txs")
           })
     }
