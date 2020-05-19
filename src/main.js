@@ -39,6 +39,7 @@ import TermsOfService from './TermsOfService'
 import FilterDetails  from './FilterDetails'
 import FilterTester   from './FilterTester'
 import Profile        from './Profile'
+import ConfirmEmail   from './ConfirmEmail'
 import Plans          from './Plans'
 import Plan           from './Plan'
 import Checkout       from './Checkout'
@@ -85,6 +86,10 @@ const routes = [
   { path: '/checkout', component: Checkout,
                             name: 'checkout',
                            props: true     },
+
+  { path: '/confirm/:code', component: ConfirmEmail,
+                                 name: 'confirm',
+                                props: true},
 
   { path: '/filter/:id', component: FilterDetails,
     props: function(route){
