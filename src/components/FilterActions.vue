@@ -70,8 +70,15 @@ export default {
 
 <style scoped>
 #filter_actions{
-  min-width: 500px;
   display: flex;
+}
+
+#filter_details #filter_actions{
+  min-width: 400px;
+}
+
+#filter_tester #filter_actions{
+  min-width: 500px;
 }
 
 #main_layout.sm #filter_actions,
