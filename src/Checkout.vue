@@ -198,7 +198,10 @@ export default {
     },
 
     next_payment : function(){
-      return 'TODO'
+      var period = this.period ? this.period : 1;
+      var renewal = new Date(Date.now());
+          renewal.setMonth(renewal.getMonth() + period)
+      return renewal.toLocaleDateString()
     }
   },
 
