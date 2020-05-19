@@ -121,6 +121,8 @@ export default {
                     }.bind(this));
 
                 }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve sinks: " + msg)
                 }.bind(this))
@@ -142,6 +144,8 @@ export default {
                     }.bind(this));
 
                 }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve filters: " + msg)
                 }.bind(this))
@@ -161,6 +165,8 @@ export default {
                       JSON.parse(this.active_filter.Template.params)
 
                 }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve filter: " + msg)
                 }.bind(this))
@@ -179,6 +185,8 @@ export default {
                   }.bind(this))
 
                 }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve filter matches: " + msg)
                 }.bind(this))

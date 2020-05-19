@@ -127,6 +127,10 @@ export default {
   },
 
   methods : {
+    not_authenticated : function(err){
+      return err.status == 401;
+    },
+
     // Send register request to server.
     // Displays instructions on completion.
     register : function(){
