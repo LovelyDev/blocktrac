@@ -51,7 +51,7 @@ export default {
     edit_filter_ : function(){
       var params = this.$refs.form.server_params;
 
-      this.edit_filter(this.filter.id, params)
+      this.update_filter(this.filter.id, params)
           .then(function(response){
             const filter = response.body;
 

@@ -228,7 +228,7 @@ export default {
                                  params, this.auth_header)
     },
 
-    edit_filter : function(id, params){
+    update_filter : function(id, params){
       return this.$http.put(this.backend_url + "/filter/" + id,
                                       params, this.auth_header)
     },
