@@ -17,6 +17,16 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
+    // Logged in user
+    user : {
+      email : '',
+      membership_level : '',
+      profile : '',
+      renewal_date : '',
+      additional_filters : 0,
+      additional_sinks : 0
+    },
+
     // Data pertaining to TxsList
             txs : [],
     loading_txs : true,
@@ -56,6 +66,26 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    // set logged in user
+    set_user(state, user) {
+      state.user.email = user.email;
+      state.user.membership_level = user.membership_level;
+      state.user.profile = JSON.parse(user.profile);
+      state.user.renewal_date = user.renewal_date;
+      state.user.additional_filters = user.additional_filters;
+      state.user.additional_sinks = user.additional_sinks;
+    },
+
+    // clear logged in user
+    clear_user(state) {
+      state.user.email = ''
+      state.user.membership_level = '';
+      state.user.profile = '';
+      state.user.renewal_date = '';
+      state.user.additional_filters = 0;
+      state.user.additional_sinks = 0;
+    },
+
     // Enable/disable live transaction stream
     toggle_paused_txs(state){
       state.paused_txs = !state.paused_txs;

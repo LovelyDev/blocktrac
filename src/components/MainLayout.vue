@@ -34,15 +34,12 @@ import MainHeader       from './MainHeader'
 import MainFooter       from './MainFooter'
 import ConnectionStatus from './ConnectionStatus'
 
-// TODO 'fingerprint' server method (noop),
-//      always request here if logged in so that
-//      authToken is always refreshed even if page doesn't
-//      invoke serverside action.
-//      If fingerprint returns error, assume auth timeout
-//      has expired and perform actions similar to explicit logout
+import Authentication   from '../mixins/authentication'
 
 export default {
   name: 'MainLayout',
+
+  mixins : [Authentication],
 
   components : {
     MainHeader,
@@ -55,6 +52,13 @@ export default {
       type : String,
       required : true
     }
+  },
+
+  created : function(){
+    // If logged in, always load user to
+    // verify user session is still active
+    if(this.auth_token)
+      this.load_user();
   }
 }
 </script>

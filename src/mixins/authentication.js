@@ -39,19 +39,19 @@ export default {
     },
 
     email : function(){
-      return this.$cookies.email;
+      return this.$store.state.user.email;
     },
 
     profile : function(){
-      return this.$cookies.profile;
+      return this.$store.state.user.profile;
     },
 
     renewal_date : function(){
-      return this.$cookies.renewal_date;
+      return this.$store.state.user.renewal_date;
     },
 
     membership_level : function(){
-      return this.$cookies.membership_level;
+      return this.$store.state.user.membership_level;
     },
 
     is_basic_member : function(){
@@ -67,7 +67,7 @@ export default {
     },
 
     additional_filters : function(){
-      return parseInt(this.$cookies.additional_filters);
+      return this.$store.state.user.additional_filters;
     },
 
     authorized_filters : function(){
@@ -77,7 +77,7 @@ export default {
     },
 
     additional_sinks : function(){
-      return parseInt(this.$cookies.additional_sinks);
+      return this.$store.state.user.additional_sinks;
     },
 
     authorized_sinks : function(){
@@ -169,46 +169,39 @@ export default {
     },
 
     // Send request to get user from server.
-    // Stores user information locally upon retrieval
+    // Stores user information locally upon retrieval.
+    // Delete user information on error and redirects to /txs on error.
     load_user : function(){
-      // TODO: store data in store
-
       return this.$http.get(this.backend_url + "/user", this.auth_header)
                        .then(function(response){
-                         this.$setCookie("email", response.body.email)
-                         this.$setCookie("membership_level", response.body.membership_level);
-                         this.$setCookie("profile",  response.body.profile)
-                         this.$setCookie("renewal_date",  response.body.renewal_date)
-                         this.$setCookie("additional_filters",  response.body.additional_filters)
-                         this.$setCookie("additional_sinks",  response.body.additional_sinks)
-                       }.bind(this))
+                         this.$store.commit('set_user', response.body);
+
+                       }.bind(this)).catch(function(err){
+                          // If user cannot be loaded, clear
+                          this.$removeCookie("authToken")
+                          this.$store.commit('clear_user')
+
+                          if(this.$route.path != "/txs")
+                            this.$router.push("/txs");
+                       })
     },
 
     // Send logout request to server.
-    // Deletes local user information on completion or error
+    // Deletes local user information and redirects to /txs
+    // on completion or error.
     logout : function(){
       this.$http.delete(this.backend_url + "/logout",
                 {headers : {authorization : this.auth_token}})
                 .then(function(response){
                   this.$removeCookie("authToken")
-                  this.$removeCookie("email")
-                  this.$removeCookie("membership_level")
-                  this.$removeCookie("profile");
-                  this.$removeCookie("renewal_date")
-                  this.$removeCookie("additional_filters")
-                  this.$removeCookie("additional_sinks")
+                  this.$store.commit('clear_user')
 
                   if(this.$route.path != "/txs")
                     this.$router.push("/txs");
 
                 }.bind(this)).catch(function(err){
                   this.$removeCookie("authToken")
-                  this.$removeCookie("email")
-                  this.$removeCookie("membership_level")
-                  this.$removeCookie("profile");
-                  this.$removeCookie("renewal_date")
-                  this.$removeCookie("additional_filters")
-                  this.$removeCookie("additional_sinks")
+                  this.$store.commit('clear_user')
 
                   if(this.$route.path != "/txs")
                     this.$router.push("/txs");
