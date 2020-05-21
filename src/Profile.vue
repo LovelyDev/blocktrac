@@ -37,6 +37,8 @@ import Validatable    from './mixins/validatable'
 
 import util from './util'
 
+// TODO: cancel membership button (if not basic membership level) and action
+
 export default {
   name: 'Profile',
 
@@ -64,6 +66,8 @@ export default {
       var editing_password = this.$refs.form.editing_password
       if(editing_password)
         params.password = this.$refs.form.auth_password
+
+      // TODO save billing info
 
       this.update_user(params)
           .then(function(response){

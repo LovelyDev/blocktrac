@@ -125,6 +125,16 @@ export default {
             test instanceof String
   },
 
+  // Return bool if input is valid credit card number
+  is_valid_credit_card_number : function(test){
+    return /^[0-9]{14}[0-9]{0,2}$/.test(test);
+  },
+
+  // Return bool if input is valid credit card cvc
+  is_valid_credit_card_cvc : function(test){
+    return /^[0-9]{3}$/.test(test);
+  },
+
   ///
 
   // Compile matcher from filter object. Returns jsonpath

@@ -55,7 +55,7 @@
 
       <b-col v-if="!editing_password"
              class="value">
-       *****
+       *********
       </b-col>
 
       <b-col v-else>
@@ -136,9 +136,88 @@
       </b-col>
     </b-row>
 
-    <b-row class="input_row">
-      <b-col>
-        TODO
+    <b-row id="credit_card_number_row"
+           class="input_row">
+      <b-col class="label" cols=4>
+        Credit Card
+      </b-col>
+
+      <b-col v-if="!editing_credit_card"
+             class="value">
+       ****************
+      </b-col>
+
+      <b-col v-else>
+        <input id="credit_card_number"
+               class="form_input"
+               type="text"
+               v-model="credit_card_number" />
+
+        <div class="form_text form_error">
+          <span v-if="invalid_credit_card_number">Must be 14 to 16 digits</span>
+          <span v-else class="placeholder" />
+        </div>
+      </b-col>
+
+      <b-col v-if="mq_gt_md"
+             @click="editing_credit_card = !editing_credit_card"
+             class="action" cols=2>
+        <span v-if="!editing_credit_card">Update</span>
+        <span v-else>Cancel</span>
+      </b-col>
+
+      <b-col v-else
+             @click="editing_credit_card = !editing_credit_card"
+             class="action" cols=1>
+        <img src="../../assets/pencil-blue.svg" />
+      </b-col>
+    </b-row>
+
+    <b-row v-if="editing_credit_card"
+           id="credit_card_cvc_row"
+           class="input_row">
+      <b-col class="label" cols=4>
+        CVC
+      </b-col>
+
+      <b-col id="credit_card_cvc_wrapper">
+        <input id="credit_card_cvc"
+               class="form_input"
+               type="text"
+               maxlength="3"
+               size="3"
+               v-model="credit_card_cvc" />
+
+        <div class="form_text form_error">
+          <span v-if="invalid_credit_card_cvc">Must be 3 digits</span>
+          <span v-else class="placeholder" />
+        </div>
+      </b-col>
+
+      <b-col :cols="mq_gt_md ? 2 : 1">
+        &nbsp;
+      </b-col>
+    </b-row>
+
+    <b-row v-if="editing_credit_card"
+           id="credit_card_expiration_row"
+           class="input_row">
+      <b-col class="label" cols=4>
+        Expiration
+      </b-col>
+
+      <b-col id="credit_card_expiration_wrapper">
+        <b-form-select id="credit_card_month"
+                       v-model="credit_card_month"
+                       :options="credit_card_months" />
+
+        <b-form-select id="credit_card_year"
+                       v-model="credit_card_year"
+                       :options="credit_card_years" />
+      </b-col>
+
+      <b-col :cols="mq_gt_md ? 2 : 1">
+        &nbsp;
       </b-col>
     </b-row>
   </b-container>
@@ -146,28 +225,51 @@
 
 <script>
 import Authentication from '../../mixins/authentication'
+import HasCreditCard  from '../../mixins/has_credit_card'
 import Validator      from '../../mixins/validator'
 
 export default {
   name: 'Profile',
 
-  mixins : [Authentication, Validator],
+  mixins : [Authentication, HasCreditCard, Validator],
 
   data : function(){
     return {
       editing_email : false,
-      editing_password : false
+      editing_password : false,
+      editing_credit_card : false
     }
   },
 
   computed : {
     editing_fields : function(){
-      return this.editing_email || this.editing_password;
+      return this.editing_email || this.editing_password || this.editing_credit_card;
+    },
+
+    is_valid_email : function(){
+      return !this.editing_email ||
+             (this.have_email &&
+             !this.invalid_email);
+    },
+
+    is_valid_password : function(){
+      return !this.editing_password ||
+             (this.have_passwords &&
+             !this.invalid_passwords);
+    },
+
+    is_valid_credit_card : function(){
+      return !this.editing_credit_card ||
+             (this.have_credit_card_number &&
+             !this.invalid_credit_card_number &&
+              this.have_credit_card_cvc &&
+             !this.invalid_credit_card_cvc);
     },
 
     is_valid : function(){
-      return (!this.editing_email    || (this.have_email && !this.invalid_email)) &&
-             (!this.editing_password || (this.have_passwords && !this.invalid_passwords));
+      return this.is_valid_email &&
+             this.is_valid_password &&
+             this.is_valid_credit_card;
     }
   },
 
@@ -239,11 +341,15 @@ export default {
   margin: 20px 0;
 }
 
-#password_row{
+#password_row,
+#credit_card_number_row,
+#credit_card_cvc_row{
   margin-bottom: 0;
 }
 
-#confirm_password_row{
+#confirm_password_row,
+#credit_card_cvc_row,
+#credit_card_expiration_row{
   margin-top: 5px;
 }
 
@@ -262,5 +368,33 @@ export default {
 
 #membership_level{
   text-transform: capitalize;
+}
+
+#credit_card_number{
+  text-align: right;
+}
+
+#credit_card_cvc_wrapper{
+  text-align: right;
+}
+
+#credit_card_cvc{
+  text-align: right;
+  width: unset;
+}
+
+#credit_card_expiration_wrapper{
+  text-align: right;
+}
+
+#credit_card_month{
+  width: 40%;
+  margin-right: 5px;
+  text-align: right;
+}
+
+#credit_card_year{
+  width: 50%;
+  text-align: right;
 }
 </style>
