@@ -21,7 +21,7 @@ import ServerAPI      from '../../mixins/server_api'
 import util from '../../util'
 
 export default {
-  name: 'DeleteFilter',
+  name: 'DeleteFilterModal',
 
   mixins : [Authentication, ServerAPI],
 
