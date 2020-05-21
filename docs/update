@@ -4,12 +4,18 @@ Update guide
 
 ziti_db
 -------
+- ...
 
 ziti_api
 --------
+- Replace uri in config/config.js
+- Replace email, twilio, and stripe config in config/auth_config.js
+- ...
 
 zitui
 -----
+- Replace BACKEND_URL in src/config.js
+- ...
 
 zitz1/zitz2
 -----------
