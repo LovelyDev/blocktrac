@@ -147,11 +147,15 @@
        ****************
       </b-col>
 
-      <b-col v-else>
+      <b-col v-else
+             id="credit_card_number_wrapper">
         <input id="credit_card_number"
                class="form_input"
                type="text"
-               v-model="credit_card_number" />
+               maxlength="19"
+               size="19"
+               :value="credit_card_number_with_dashes"
+               @input="set_credit_card_number($event.target.value)" />
 
         <div class="form_text form_error">
           <span v-if="invalid_credit_card_number">Must be 14 to 16 digits</span>
@@ -283,6 +287,11 @@ export default {
       this.auth_password_confirm = ''
     },
 
+    editing_credit_card : function(){
+      this.credit_card_number = '';
+      this.credit_card_cvc = '';
+    },
+
     editing_fields : function(){
       if(this.editing_fields)
         this.$emit('editing')
@@ -295,6 +304,7 @@ export default {
     reset : function(){
       this.editing_email = false
       this.editing_password = false
+      this.editing_credit_card = false
     }
   },
 
@@ -370,8 +380,13 @@ export default {
   text-transform: capitalize;
 }
 
+#credit_card_number_wrapper{
+  text-align: right;
+}
+
 #credit_card_number{
   text-align: right;
+  width: unset;
 }
 
 #credit_card_cvc_wrapper{
@@ -388,13 +403,13 @@ export default {
 }
 
 #credit_card_month{
-  width: 40%;
+  width: 125px;
   margin-right: 5px;
   text-align: right;
 }
 
 #credit_card_year{
-  width: 50%;
+  width: 100px;
   text-align: right;
 }
 </style>

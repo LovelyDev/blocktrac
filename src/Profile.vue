@@ -67,14 +67,24 @@ export default {
       if(editing_password)
         params.password = this.$refs.form.auth_password
 
-      // TODO save billing info
+      var editing_credit_card = this.$refs.form.editing_credit_card
+      if(editing_credit_card)
+        params.credit_card = {
+             number : this.$refs.form.credit_card_number,
+                cvc : this.$refs.form.credit_card_cvc,
+          exp_month : this.$refs.form.credit_card_month.substr(0, 2),
+           exp_year : this.$refs.form.credit_card_year
+        }
 
       this.update_user(params)
           .then(function(response){
             var msg = '';
 
             if(editing_password)
-              msg += 'Password was updated. '
+              msg += "Password was updated.\n"
+
+            if(editing_credit_card)
+              msg += "Credit card was updated.\n"
 
             if(editing_email)
               msg += 'Confirmation code was sent to your new email'

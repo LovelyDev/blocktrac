@@ -43,6 +43,11 @@ export default {
   },
 
   computed : {
+    credit_card_number_with_dashes : function(){
+      if(!this.credit_card_number) return ''
+      return this.credit_card_number.match(/.{1,4}/g).join('-')
+    },
+
     have_credit_card_number : function(){
       return !!this.credit_card_number;
     },
@@ -59,6 +64,12 @@ export default {
     invalid_credit_card_cvc : function(){
       return this.have_credit_card_cvc &&
              !util.is_valid_credit_card_cvc(this.credit_card_cvc);
+    }
+  },
+
+  methods : {
+    set_credit_card_number : function(ccn){
+      this.credit_card_number = ccn.replace(/-/g, '').replace(/ /g, '')
     }
   }
 }
