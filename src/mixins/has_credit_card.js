@@ -64,6 +64,15 @@ export default {
     invalid_credit_card_cvc : function(){
       return this.have_credit_card_cvc &&
              !util.is_valid_credit_card_cvc(this.credit_card_cvc);
+    },
+
+    credit_card_params : function(){
+      return {
+           number : this.credit_card_number,
+              cvc : this.credit_card_cvc,
+        exp_month : this.credit_card_month.substr(0, 2),
+         exp_year : this.credit_card_year
+      }
     }
   },
 

@@ -13,9 +13,7 @@
       </div>
 
       <h4>
-        You have been successfully updated to the
-        <b><span class="plan_name">{{plan}}</span></b>
-        plan
+        You have been successfully updated your plan!
       </h4>
 
       <div>
@@ -41,37 +39,13 @@
         </div>
 
         <table id="payment_details">
-          <tr>
-            <td v-if="mq_gte_md"
-                class="form_text">
-              First Name:
-            </td>
-
-            <td>
-              <div v-if="mq_lt_md">
-                First Name:
-              </div>
-
-              <input type="text"
-                     class="form_input"
-                     v-model="first_name" />
-            </td>
-          </tr>
-
-          <tr>
-            <td v-if="mq_gte_md"
-                class="form_text">
-              Last Name:
-            </td>
-
-            <td>
-              <div v-if="mq_lt_md">
-                Last Name:
-              </div>
-
-              <input type="text"
-                     class="form_input"
-                     v-model="last_name" />
+          <tr v-if="has_credit_card">
+            <td colspan="2"
+                id="use_existing_credit_card_wrapper">
+              <b-form-checkbox switch
+                 v-model="use_existing_credit_card">
+                Use Existing Credit Card
+              </b-form-checkbox>
             </td>
           </tr>
 
@@ -87,27 +61,21 @@
                 Card Number:
               </div>
 
-              <input type="text"
-                     class="form_input"
-                     v-model="card_number" />
-            </td>
-          </tr>
+              <div id="credit_card_number_wrapper">
+                <input id="credit_card_number"
+                       class="form_input"
+                       type="text"
+                       maxlength="19"
+                       size="19"
+                       :disabled="has_credit_card && use_existing_credit_card"
+                       :value="credit_card_number_with_dashes"
+                       @input="set_credit_card_number($event.target.value)" />
 
-          <tr>
-            <td v-if="mq_gte_md"
-                class="form_text">
-              Expiration Date:
-            </td>
-
-            <td>
-              <div v-if="mq_lt_md"
-                  class="form_text">
-                Expiration Date:
+                <div class="form_text form_error">
+                  <span v-if="invalid_credit_card_number">Must be 14 to 16 digits</span>
+                  <span v-else class="placeholder" />
+                </div>
               </div>
-
-              <input type="text"
-                     class="form_input"
-                     v-model="expiration_date" />
             </td>
           </tr>
 
@@ -123,9 +91,46 @@
                 Security Code:
               </div>
 
-              <input type="text"
-                     class="form_input"
-                     v-model="security_code" />
+              <div id="credit_card_cvc_wrapper">
+                <input id="credit_card_cvc"
+                       class="form_input"
+                       type="text"
+                       maxlength="3"
+                       size="3"
+                       :disabled="has_credit_card && use_existing_credit_card"
+                       v-model="credit_card_cvc" />
+
+                <div class="form_text form_error">
+                  <span v-if="invalid_credit_card_cvc">Must be 3 digits</span>
+                  <span v-else class="placeholder" />
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td v-if="mq_gte_md"
+                class="form_text">
+              Expiration Date:
+            </td>
+
+            <td>
+              <div v-if="mq_lt_md"
+                  class="form_text">
+                Expiration Date:
+              </div>
+
+              <div id="credit_card_expiration_wrapper">
+                <b-form-select id="credit_card_month"
+                               :disabled="has_credit_card && use_existing_credit_card"
+                               v-model="credit_card_month"
+                               :options="credit_card_months" />
+
+                <b-form-select id="credit_card_year"
+                               :disabled="has_credit_card && use_existing_credit_card"
+                               v-model="credit_card_year"
+                               :options="credit_card_years" />
+              </div>
             </td>
           </tr>
 
@@ -133,6 +138,7 @@
             <td v-if="mq_gte_md"></td>
             <td style="text-align: right">
               <b-button id="place_order"
+                        :disabled="!is_valid"
                         @click="submit">
                 Place Order
               </b-button>
@@ -145,12 +151,19 @@
 </template>
 
 <script>
-import MainLayout from './components/MainLayout'
+import Authentication from './mixins/authentication'
+import HasCreditCard  from './mixins/has_credit_card'
+import ServerAPI      from './mixins/server_api'
 
+import MainLayout     from './components/MainLayout'
+
+import util from './util'
 import ziti from './ziti'
 
 export default {
   name: 'Checkout',
+
+  mixins : [Authentication, HasCreditCard, ServerAPI],
 
   components: {
     MainLayout
@@ -158,16 +171,15 @@ export default {
 
   props : {
     plan : String,
-    filters : Number,
-    sinks : Number,
+    specified_filters : Number,
+    specified_sinks : Number,
     period : Number
   },
 
   data : function(){
     return {
       success : false,
-      first_name : '',
-      last_name : '',
+      use_existing_credit_card : true,
       card_number : '',
       expiration_date : '',
       security_code : ''
@@ -188,11 +200,15 @@ export default {
 
       var period = this.period ? this.period : 1;
 
-      if(this.filters)
-        cost += this.filters * ziti.additions_cost.filters * period;
+      if(this.specified_filters)
+        cost += this.specified_filters *
+                ziti.additions_cost.filters *
+                period;
 
-      if(this.sinks)
-        cost += this.sinks * ziti.additions_cost.sinks * period;
+      if(this.specified_sinks)
+        cost += this.specified_sinks *
+                ziti.additions_cost.sinks *
+                period;
 
       return cost;
     },
@@ -202,13 +218,59 @@ export default {
       var renewal = new Date(Date.now());
           renewal.setMonth(renewal.getMonth() + period)
       return renewal.toLocaleDateString()
+    },
+
+    is_valid: function(){
+      return (this.has_credit_card && this.use_existing_credit_card) ||
+             (this.have_credit_card_number &&
+             !this.invalid_credit_card_number &&
+              this.have_credit_card_cvc &&
+             !this.invalid_credit_card_cvc);
+    },
+
+    plan_params : function(){
+      var params = {}
+      if(this.plan != this.membership_level){
+        params.membership_level = this.plan
+        params.membership_months = this.period || 1
+      }
+
+      if(this.specified_filters)
+        params.additional_filters = this.specified_filters
+
+      if(this.specified_sinks)
+        params.additional_sinks = this.specified_sinks
+
+      return params;
     }
   },
 
   methods : {
     submit : function(){
-      // TODO validate fields, submit payment, wait for confirmation, refresh account info
-      this.success = true;
+      if(!this.use_existing_credit_card){
+        // store new credit card
+        this.update_user({credit_card : this.credit_card_params})
+            .then(function(){
+              this.purchase_plan_()
+
+            }.bind(this)).catch(function(err){
+              const msg = util.capitalize(err.body.error)
+              alert("Could not process credit card: " + msg)
+            })
+
+      }else
+        this.purchase_plan_()
+    },
+
+    purchase_plan_ : function(){
+      this.purchase_plan(this.plan_params)
+          .then(function(){
+            this.success = true;
+
+          }.bind(this)).catch(function(err){
+            const msg = util.capitalize(err.body.error)
+            alert("Problem processing payment: " + msg)
+          })
     }
   },
 
@@ -321,8 +383,41 @@ export default {
   border-spacing: 15px;
 }
 
-#payment_details input{
-  width: 100%;
+#use_existing_credit_card_wrapper{
+  text-align: right;
+}
+
+#credit_card_number_wrapper{
+  text-align: right;
+}
+
+#credit_card_number{
+  text-align: right;
+  width: unset;
+}
+
+#credit_card_cvc_wrapper{
+  text-align: right;
+}
+
+#credit_card_cvc{
+  text-align: right;
+  width: unset;
+}
+
+#credit_card_expiration_wrapper{
+  text-align: right;
+}
+
+#credit_card_month{
+  width: 125px;
+  margin-right: 5px;
+  text-align: right;
+}
+
+#credit_card_year{
+  width: 100px;
+  text-align: right;
 }
 
 #place_order{

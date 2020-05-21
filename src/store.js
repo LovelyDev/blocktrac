@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
       membership_level : '',
       profile : '',
       renewal_date : '',
+      has_credit_card : false,
       additional_filters : 0,
       additional_sinks : 0
     },
@@ -72,6 +73,7 @@ export const store = new Vuex.Store({
       state.user.membership_level = user.membership_level;
       state.user.profile = JSON.parse(user.profile);
       state.user.renewal_date = user.renewal_date;
+      state.user.has_credit_card = user.has_credit_card;
       state.user.additional_filters = user.additional_filters;
       state.user.additional_sinks = user.additional_sinks;
     },
@@ -81,6 +83,7 @@ export const store = new Vuex.Store({
       state.user.email = ''
       state.user.membership_level = '';
       state.user.profile = '';
+      state.user.has_credit_card = false;
       state.user.renewal_date = '';
       state.user.additional_filters = 0;
       state.user.additional_sinks = 0;

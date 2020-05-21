@@ -61,7 +61,7 @@
             </div>
           </div>
 
-          <div id="period_selector">
+          <div id="period_selector" v-if="plan != membership_level">
             <h4>Choose period</h4>
 
             <div id="plan_periods">
@@ -122,8 +122,8 @@
 
             <router-link :to="{name : 'checkout',
                                params : {plan : plan,
-                                         filters : selected_additional_filters,
-                                         sinks : selected_additional_sinks,
+                                         specified_filters : selected_additional_filters,
+                                         specified_sinks   : selected_additional_sinks,
                                          period : period}}">
               <b-button id="checkout_button" variant="light">
                 Checkout

@@ -71,12 +71,7 @@ export default {
 
       var editing_credit_card = this.$refs.form.editing_credit_card
       if(editing_credit_card)
-        params.credit_card = {
-             number : this.$refs.form.credit_card_number,
-                cvc : this.$refs.form.credit_card_cvc,
-          exp_month : this.$refs.form.credit_card_month.substr(0, 2),
-           exp_year : this.$refs.form.credit_card_year
-        }
+        params.credit_card = this.$refs.form.credit_card_params
 
       this.update_user(params)
           .then(function(response){

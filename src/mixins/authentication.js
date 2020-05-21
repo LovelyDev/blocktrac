@@ -50,6 +50,10 @@ export default {
       return this.$store.state.user.renewal_date;
     },
 
+    has_credit_card : function(){
+      return this.$store.state.user.has_credit_card;
+    },
+
     membership_level : function(){
       return this.$store.state.user.membership_level;
     },

@@ -201,6 +201,11 @@ export default {
                                 user, this.auth_header)
     },
 
+    purchase_plan : function(plan){
+      return this.$http.post(this.backend_url + "/purchase",
+                                     plan, this.auth_header)
+    },
+
     cancel_subscription : function(){
       return this.$http.post(this.backend_url + "/cancel",
                                          this.auth_header)
