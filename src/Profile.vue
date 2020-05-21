@@ -23,21 +23,22 @@
           </b-button>
         </div>
       </div>
+
+      <CancelSubscriptionModal @cancelled="load_user" />
     </div>
   </MainLayout>
 </template>
 
 <script>
-import MainLayout     from './components/MainLayout'
-import ProfileForm    from './components/forms/Profile'
+import MainLayout              from './components/MainLayout'
+import ProfileForm             from './components/forms/Profile'
+import CancelSubscriptionModal from './components/modals/CancelSubscription'
 
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 import Validatable    from './mixins/validatable'
 
 import util from './util'
-
-// TODO: cancel membership button (if not basic membership level) and action
 
 export default {
   name: 'Profile',
@@ -46,7 +47,8 @@ export default {
 
   components: {
     MainLayout,
-    ProfileForm
+    ProfileForm,
+    CancelSubscriptionModal
   },
 
   data : function(){

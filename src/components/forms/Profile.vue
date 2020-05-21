@@ -35,14 +35,14 @@
 
       <b-col v-if="mq_gt_md"
              @click="editing_email = !editing_email"
-             class="action" cols=2>
+             class="action" cols=3>
         <span v-if="!editing_email">Update</span>
         <span v-else>Cancel</span>
       </b-col>
 
       <b-col v-else
              @click="editing_email = !editing_email"
-             class="action" cols="1">
+             class="action" cols="2">
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -70,14 +70,14 @@
 
       <b-col v-if="mq_gt_md"
              @click="editing_password = !editing_password"
-             class="action" cols=2>
+             class="action" cols=3>
         <span v-if="!editing_password">Change Password</span>
         <span v-else>Cancel</span>
       </b-col>
 
       <b-col v-else
              @click="editing_password = !editing_password"
-             class="action" cols=1>
+             class="action" cols=2>
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -99,7 +99,7 @@
         </div>
       </b-col>
 
-      <b-col :cols="mq_gt_md ? 2 : 1">
+      <b-col :cols="mq_gt_md ? 3 : 2">
         &nbsp;
       </b-col>
     </b-row>
@@ -120,13 +120,30 @@
       </b-col>
 
       <b-col v-if="mq_gt_md"
-             class="action" cols=2>
-        <router-link to="/plans">Change plan</router-link>
+             class="action" cols=3>
+        <div v-if="!is_premium_member">
+          <router-link to="/plans">Change plan</router-link>
+        </div>
+
+        <div v-if="!is_basic_member"
+              v-b-modal.cancel_subscription>
+          Cancel subscription
+        </div>
       </b-col>
 
       <b-col v-else
-             class="action" cols=1>
-        <img src="../../assets/pencil-blue.svg" />
+             class="action" cols=2>
+        <span v-if="!is_basic_member">
+          <img src="../../assets/red-x.svg"
+               style="width: 15px; margin-right: 10px"
+               v-b-modal.cancel_subscription />
+        </span>
+
+        <span v-if="!is_premium_member">
+          <router-link to="/plans">
+            <img src="../../assets/pencil-blue.svg" />
+          </router-link>
+        </span>
       </b-col>
     </b-row>
 
@@ -165,14 +182,14 @@
 
       <b-col v-if="mq_gt_md"
              @click="editing_credit_card = !editing_credit_card"
-             class="action" cols=2>
+             class="action" cols=3>
         <span v-if="!editing_credit_card">Update</span>
         <span v-else>Cancel</span>
       </b-col>
 
       <b-col v-else
              @click="editing_credit_card = !editing_credit_card"
-             class="action" cols=1>
+             class="action" cols=2>
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -198,7 +215,7 @@
         </div>
       </b-col>
 
-      <b-col :cols="mq_gt_md ? 2 : 1">
+      <b-col :cols="mq_gt_md ? 3 : 2">
         &nbsp;
       </b-col>
     </b-row>
@@ -220,7 +237,7 @@
                        :options="credit_card_years" />
       </b-col>
 
-      <b-col :cols="mq_gt_md ? 2 : 1">
+      <b-col :cols="mq_gt_md ? 3 : 2">
         &nbsp;
       </b-col>
     </b-row>
@@ -315,7 +332,12 @@ export default {
 </script>
 
 <style scoped>
-.label{
+#profile_form{
+  max-width: unset;
+}
+
+.label,
+.value{
   padding: 0;
 }
 
@@ -325,7 +347,7 @@ export default {
 #main_layout.md .value,
 #main_layout.sm .value,
 #main_layout.xs .value{
-  font-size: 3.6vw;
+  font-size: 3.2vw;
 }
 
 .header_row{
@@ -366,6 +388,8 @@ export default {
 .action{
   color: blue;
   cursor: pointer;
+  padding: 0;
+  text-align: right;
 }
 
 .action a{

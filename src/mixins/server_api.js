@@ -201,6 +201,11 @@ export default {
                                 user, this.auth_header)
     },
 
+    cancel_subscription : function(){
+      return this.$http.post(this.backend_url + "/cancel",
+                                         this.auth_header)
+    },
+
     reset_password : function(params){
       return this.$http.put(this.backend_url + "/reset", params)
     },
