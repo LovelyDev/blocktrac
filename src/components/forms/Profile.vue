@@ -47,7 +47,8 @@
       </b-col>
     </b-row>
 
-    <b-row class="input_row">
+    <b-row id="password_row"
+           class="input_row">
       <b-col class="label" cols=4>
         Password
       </b-col>
@@ -82,6 +83,7 @@
     </b-row>
 
     <b-row v-if="editing_password"
+           id="confirm_password_row"
            class="input_row">
       <b-col class="label" cols=4>
         Confirm Password
@@ -235,6 +237,14 @@ export default {
 #main_layout.sm .input_row,
 #main_layout.xs .input_row{
   margin: 20px 0;
+}
+
+#password_row{
+  margin-bottom: 0;
+}
+
+#confirm_password_row{
+  margin-top: 5px;
 }
 
 .action{
