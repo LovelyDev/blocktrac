@@ -121,7 +121,12 @@ export default {
 
             {
               title : "How am I notified of new transactions?",
-              value : "You can setup endpoints to be notified of transactions via email, text message, and webhooks. These can all be configured via the <b>Filter Settings</b> on the left-hand sidebar once logged in. Note certain endpoint types are only available to users signed up for premium plans."
+              value : "You can setup sinks (notification endpoints) to be notified of transactions via email, text message, and webhooks. These can all be configured via the <b>Filter Settings</b> on the left-hand sidebar once logged in. Note certain sink types are only available to users signed up for premium plans."
+            },
+
+            {
+              title : "How many filters / sinks am I permitted to have?",
+              value : "This is determined on a plan-by-plan basis, see <a href='/plans'>Plans</a> for more details. You may purchase up to " + ziti.max_additions.filters + " additional filters and " + ziti.max_additions.sinks + " additional sinks beyond your plan"
             }
           ]
         },
@@ -135,7 +140,7 @@ export default {
             },
 
             {
-              title : "What is this JSONPath buisiness?",
+              title : "What is this JSONPath business?",
               value : "JSONPath is a powerful expression matching language that is used when inspecting each and every transaction in the live transaction stream. There are many online resources with JSONPath documentation and examples, we encourage all users to explore the powerful deep-inspection capabilities that this syntax supports."
             },
 
