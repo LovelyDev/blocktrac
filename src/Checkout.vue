@@ -13,7 +13,7 @@
       </div>
 
       <h4>
-        You have been successfully updated your plan!
+        You have been successfully upgraded your plan!
       </h4>
 
       <div>
@@ -193,10 +193,17 @@ export default {
       return ziti.membership_features[this.plan];
     },
 
+    upgrading_plan : function(){
+      return this.plan != this.membership_level
+    },
+
     total_cost : function(){
-      var cost = this.period ?
-                 this.details.monthly_costs[this.period] :
-                 this.details.cost;
+      var cost = 0
+
+      if(this.upgrading_plan)
+        cost += this.period ?
+                this.details.monthly_costs[this.period] :
+                this.details.cost;
 
       var period = this.period ? this.period : 1;
 
@@ -230,7 +237,7 @@ export default {
 
     plan_params : function(){
       var params = {}
-      if(this.plan != this.membership_level){
+      if(this.upgrading_plan){
         params.membership_level = this.plan
         params.membership_months = this.period || 1
       }

@@ -67,17 +67,17 @@
               <tr>
                 <td>Filters:</td>
                 <td><b-form-spinbutton class="additional_item" inline
-                                       :max="max_additions.filters"
+                                       :max="max_filters"
                                        v-model="selected_additional_filters[name]"
-                                       :disabled="!enable_additional[name]"/></td>
+                                       :disabled="!enable_additional[name] || max_filters == 0"/></td>
               </tr>
 
               <tr>
                 <td>Sinks:</td>
                 <td><b-form-spinbutton class="additional_item" inline
-                                       :max="max_additions.sinks"
+                                       :max="max_sinks"
                                        v-model="selected_additional_sinks[name]"
-                                       :disabled="!enable_additional[name]"/></td>
+                                       :disabled="!enable_additional[name] || max_sinks == 0"/></td>
               </tr>
             </table>
 
@@ -127,7 +127,6 @@ export default {
     return {
       levels : ziti.membership_levels,
       plans : ziti.membership_features,
-      max_additions : ziti.max_additions,
       additions_cost : ziti.additions_cost,
       enable_additional : {},
       selected_additional_filters : {},
@@ -147,6 +146,13 @@ export default {
       return this.levels[this.levels.indexOf(this.membership_level)+1];
     },
 
+    max_filters : function(){
+      return ziti.max_additions.filters - this.additional_filters;
+    },
+
+    max_sinks : function(){
+      return ziti.max_additions.sinks - this.additional_sinks;
+    },
 
     total_cost : function(){
       return this.levels.reduce(function(cost, level){

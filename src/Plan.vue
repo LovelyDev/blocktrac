@@ -47,21 +47,21 @@
             <div id="additional_filters">
               <span>Filters:</span>
               <b-form-spinbutton class="additional_item" inline
-                                :max="max_additions.filters"
+                                :max="max_filters"
                                 v-model="selected_additional_filters"
-                                :disabled="!enable_additional"/>
+                                :disabled="!enable_additional || max_filters == 0"/>
             </div>
 
             <div id="additional_sinks">
               <span>Sinks:</span>
               <b-form-spinbutton class="additional_item" inline
-                                :max="max_additions.sinks"
+                                :max="max_sinks"
                                 v-model="selected_additional_sinks"
-                                :disabled="!enable_additional"/>
+                                :disabled="!enable_additional || max_sinks == 0"/>
             </div>
           </div>
 
-          <div id="period_selector" v-if="plan != membership_level">
+          <div id="period_selector" v-if="upgrading_plan">
             <h4>Choose period</h4>
 
             <div id="plan_periods">
@@ -85,7 +85,7 @@
         </div>
 
         <div id="order_container">
-          <h4><b>Your order</b></h4>
+          <h4><b>Your plan</b></h4>
 
           <div id="order_details">
             <div class="order_detail">
@@ -162,7 +162,6 @@ export default {
       enable_additional : false,
       selected_additional_filters : null,
       selected_additional_sinks : null,
-      max_additions : ziti.max_additions,
       period : null
     }
   },
@@ -172,6 +171,18 @@ export default {
       if(!this.plan) return {};
 
       return ziti.membership_features[this.plan];
+    },
+
+    max_filters : function(){
+      return ziti.max_additions.filters - this.additional_filters;
+    },
+
+    max_sinks : function(){
+      return ziti.max_additions.sinks - this.additional_sinks;
+    },
+
+    upgrading_plan : function(){
+      return this.plan != this.membership_level
     },
 
     instant_alerts : function(){
@@ -195,9 +206,12 @@ export default {
     },
 
     total_cost : function(){
-      var cost = this.period ?
-                 this.details.monthly_costs[this.period] :
-                 this.details.cost;
+      var cost = 0;
+
+      if(this.upgrading_plan)
+        cost += this.period ?
+                this.details.monthly_costs[this.period] :
+                this.details.cost;
 
       var period = this.period ? this.period : 1;
 
