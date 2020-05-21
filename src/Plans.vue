@@ -129,9 +129,9 @@ export default {
       plans : ziti.membership_features,
       max_additions : ziti.max_additions,
       additions_cost : ziti.additions_cost,
-       enable_additional : {},
+      enable_additional : {},
       selected_additional_filters : {},
-        selected_additional_sinks : {}
+      selected_additional_sinks : {}
     }
   },
 
