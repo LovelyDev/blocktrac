@@ -33,6 +33,14 @@ System & Postgres:
 
 ziti_api
 --------
+Services:
+- prefix all with NODE_ENV='production'
+- yarn serve
+- ./workers/listen_to_txs.js
+- ./workers/run_filters.js
+- ./workers/notify_sinks.js
+- ./workers/manage_users.js
+
 System:
   <On local machine>
   - Run through Zitui upgrade
@@ -57,9 +65,12 @@ Ziti:
   - Restore production db host in config.js
   - Restore uri in config/ziti.js
   - Replace email, twilio, and stripe config in config/auth_config.js
-  - pg_dump to backup
-  - yarn db:migrate
-    - Verify db
+  - If db migrations:
+    - pg_dump to backup
+    - yarn db:migrate
+      - Verify db
+  - If dependencies added:
+    - yarn install
   - Start services
   - Verify
 
