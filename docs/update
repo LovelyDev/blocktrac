@@ -4,18 +4,90 @@ Update guide
 
 ziti_db
 -------
-- ...
+System & Postgres:
+  <On local machine>
+  - Run through Zitui upgrade
+  - Enable maintenance flag in config before deploy
+
+  <On ziti_api>
+  - Stop services
+
+  <On server>
+  - If updating system:
+    - sudo dnf update
+    - sudo reboot
+    - Verify
+  - If updating postgres:
+    - sudo dnf update postgresql
+    - sudo service postgresql restart
+    - Verify
+
+  <On ziti_api>
+  - Start services
+  - Verify
+
+  <On local machine>
+  - Disable maintentance flag in config
+  - Deploy
+  - Verify
 
 ziti_api
 --------
-- Replace uri in config/config.js
-- Replace email, twilio, and stripe config in config/auth_config.js
-- ...
+System:
+  <On local machine>
+  - Run through Zitui upgrade
+  - Enable maintenance flag in config before deploy
+
+  <On server>
+  - Stop services
+  - sudo dnf update
+  - sudo reboot
+  - Start services (in screen)
+  - Verify
+
+Ziti:
+  <On local machine>
+  - Run through Zitui upgrade
+  - Enable maintenance flag in config before deploy
+
+  <On server>
+  - Stash config : config.js, ziti.js, and auth_config.js
+  - Stop services
+  - git pull / checkout specific tag
+  - Restore production db host in config.js
+  - Restore uri in config/ziti.js
+  - Replace email, twilio, and stripe config in config/auth_config.js
+  - Start services
+  - Verify
+
+  <On local machine>
+  - Disable maintentance flag in zitui config
+  - Deploy
+  - Verify
 
 zitui
 -----
-- Replace BACKEND_URL in src/config.js
-- ...
+System:
+  - Deploy zitui updates to failover server
+  - Point domain at failover server
+  - Wait for domain update to complete
+  - Verify
+
+  <On server>
+  - sudo dnf update
+  - Reboot
+
+  - Point domain at primary service
+  - Wait for domain update to complete
+  - Verify
+
+ZitUI:
+  <On local machine>
+  - git checkout specific tag
+  - Replace BACKEND_URL in src/config.js
+  - ./deploy
+  - Verify
 
 zitz1/zitz2
 -----------
+- ...
