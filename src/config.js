@@ -7,9 +7,6 @@
 const currency_icons = require("./assets/currencies.json")
 
 module.exports = {
-  // Balance needed to be considered a premium account (in USD)
-  MINUMUM_PREMIUM_BALANCE : 5,
-
   // Backend URL to get/set data
   BACKEND_URL : "http://localhost:3000",
   //BACKEND_URL : "https://api.zerptracker.com",
