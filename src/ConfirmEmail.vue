@@ -18,7 +18,8 @@ import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 
-import util from './util'
+import util   from './util'
+import config from './config'
 
 export default {
   name: 'ConfirmEmail',
@@ -53,6 +54,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     this.send_request()
   }
 }

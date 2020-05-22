@@ -38,7 +38,8 @@ import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 import Validatable    from './mixins/validatable'
 
-import util from './util'
+import config from './config'
+import util   from './util'
 
 export default {
   name: 'Profile',
@@ -98,6 +99,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     // If not logged in, redirect to /txs
     if(!this.logged_in)
       this.$router.push("/txs")

@@ -112,7 +112,8 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
-import ziti from './ziti'
+import config from './config'
+import ziti   from './ziti'
 
 export default {
   name: 'Plans',
@@ -233,6 +234,13 @@ export default {
 
     is_top_plan : function(plan){
       return this.top_plan == plan;
+    }
+  },
+
+  created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
     }
   }
 }

@@ -30,6 +30,7 @@ import "vue-multiselect/dist/vue-multiselect.min.css"
 require('./mq')
 
 import Landing        from './Landing'
+import Maintenance    from './Maintenance'
 import Txs            from './Txs'
 import Tx             from './Tx'
 import Account        from './Account'
@@ -67,6 +68,8 @@ Vue.use(VueRouter)
 // Application routes definition
 const routes = [
   { path: '/',         component: Landing  },
+  { path: '/maintenance',
+                       component: Maintenance },
   { path: '/txs',      component: Txs      },
   { path: '/tx/:hash', component: Tx,
                            props: true     },

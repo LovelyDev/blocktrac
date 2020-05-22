@@ -14,12 +14,21 @@
 import TxsLayout from './components/TxsLayout'
 import TxsList   from './components/TxsList'
 
+import config    from './config'
+
 export default {
   name: 'Txs',
 
   components: {
     TxsLayout,
     TxsList
+  },
+
+  created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
   }
 }
 </script>

@@ -157,8 +157,9 @@ import ServerAPI      from './mixins/server_api'
 
 import MainLayout     from './components/MainLayout'
 
-import util from './util'
-import ziti from './ziti'
+import util   from './util'
+import config from './config'
+import ziti   from './ziti'
 
 export default {
   name: 'Checkout',
@@ -282,6 +283,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     // if no plan specified, nav to plans
     if(!this.plan)
       this.$router.push({path : '/plans'});

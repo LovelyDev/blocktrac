@@ -66,6 +66,7 @@ import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
 import TxSummary      from './components/TxSummary'
 
+import config         from './config'
 import ziti           from './ziti'
 
 export default {
@@ -112,6 +113,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     this.load_filter(this.id)
     this.load_matched_txs(this.id)
   }

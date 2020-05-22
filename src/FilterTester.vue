@@ -59,6 +59,7 @@ import FilterHeader   from './components/FilterHeader'
 import TxSummary      from './components/TxSummary'
 
 import util           from './util'
+import config         from './config'
 
 var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
@@ -103,6 +104,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     this.load_filter(this.id)
   }
 }

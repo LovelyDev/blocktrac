@@ -17,6 +17,10 @@ module.exports = {
   // Ripple Websocket URI
   RIPPLE_WS : "wss://s2.ripple.com:443",
 
+  // Enable to disable site functionaily,
+  // display maintenance page
+  MAINTENANCE_MODE : false,
+
   // Number of TXs to retain in history
   TX_HISTORY : 75,
 

@@ -140,7 +140,8 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
-import ziti from './ziti'
+import config from './config'
+import ziti   from './ziti'
 
 export default {
   name: 'Plan',
@@ -241,6 +242,11 @@ export default {
   },
 
   created : function(){
+    if(config.MAINTENANCE_MODE){
+      this.$router.push({path : '/maintenance'});
+      return;
+    }
+
     // if no plan specified, nav to plans
     if(!this.plan)
       this.$router.push({path : '/plans'});

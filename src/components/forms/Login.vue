@@ -42,6 +42,8 @@
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 
+import config         from '../../config'
+
 export default {
   name: 'LoginForm',
 
@@ -52,6 +54,11 @@ export default {
       return this.have_email &&
              this.have_password;
     }
+  },
+
+  created : function(){
+    if(config.MAINTENANCE_MODE && this.$route.path != '/maintenance')
+      this.$router.push({path : '/maintenance'});
   }
 }
 </script>

@@ -74,6 +74,8 @@
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 
+import config         from '../../config'
+
 export default {
   name: 'RegistrationForm',
 
@@ -93,6 +95,11 @@ export default {
             !this.invalid_passwords &&
              this.tos_agree;
     }
+  },
+
+  created : function(){
+    if(config.MAINTENANCE_MODE && this.$route.path != '/maintenance')
+      this.$router.push({path : '/maintenance'});
   }
 }
 </script>
