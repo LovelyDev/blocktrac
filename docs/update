@@ -57,6 +57,9 @@ Ziti:
   - Restore production db host in config.js
   - Restore uri in config/ziti.js
   - Replace email, twilio, and stripe config in config/auth_config.js
+  - pg_dump to backup
+  - yarn db:migrate
+    - Verify db
   - Start services
   - Verify
 
