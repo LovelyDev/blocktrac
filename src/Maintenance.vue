@@ -5,17 +5,17 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <MainLayout section="maintenance">
-    <div id="maintenance_container">
-      <h2>We are currently undergoing maintenance</h2>
-      <img src="./assets/currencies/XRP.svg" width="30%" />
-      <h3>Please check back later</h3>
-    </div>
-  </MainLayout>
+  <div id="maintenance_container">
+    <MainTitle />
+
+    <h3>We are currently undergoing maintenance</h3>
+    <img src="./assets/currencies/XRP.svg" width="30%" />
+    <h3>Please check back later</h3>
+  </div>
 </template>
 
 <script>
-import MainLayout from './components/MainLayout'
+import MainTitle from './components/MainTitle'
 
 import config     from './config'
 
@@ -23,7 +23,7 @@ export default {
   name: 'Maintenance',
 
   components: {
-    MainLayout
+    MainTitle
   },
 
   created : function(){
@@ -35,17 +35,26 @@ export default {
 
 <style scoped>
 #maintenance_container{
-  margin: 50px;
+  height: 100%;
   padding: 50px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  justify-content: center;
 
   font-family: var(--theme-font1);
   background-color: #EEEEEE;
   border-radius: 15px;
+}
+
+#main_title_container{
+  flex-grow: unset;
+}
+
+#maintenance_container h3{
+  margin-top: 25px;
 }
 
 #maintenance_container img{
