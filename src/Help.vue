@@ -60,6 +60,11 @@ import MainLayout from './components/MainLayout'
 
 import ziti from './ziti'
 
+const caps_text =
+  Object.keys(ziti.monthly_sink_caps).map(function(type){
+    return ziti.monthly_sink_caps[type] + " " + type
+  }).join(", ")
+
 export default {
   name: 'Help',
   components: {
@@ -170,6 +175,16 @@ export default {
             },
 
             {
+              title : "Are there limits to notifications?",
+              value : "Currently Zerp Tracker imposes the following base caps on notifications: " + caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " sms notifications. Once you have exceeded the limit for a particular type notifications will not be sent via that channel until your subscription is renewed."
+            },
+
+            {
+              title : "Can I limit the rate of notifications?",
+              value : "Yes! You may edit the number of notifications of each type you receive per hour via the <b>Settings</b> control in the <b>Filters List</b>. Once Zerp Tracker has exceed the limit configured for a particular type, notifications will not be sent via that channel until the next hour."
+            },
+
+            {
               title : "What happens if my email, sms, url is unavailable when a notification is sent?",
               value : "At the current time we only send notifications once when Zerp Tracker detects matching transactions. Please make sure the target destination is online and accessible to ensure you receive notifications. In the future we may offer the ability to retry notification attempts."
             },
@@ -212,6 +227,11 @@ export default {
             {
               title : "What happens when my account becomes unfunded?",
               value : "You will automatically be billed for your new subscription period when your current one ends. If we are unable to bill your credit card your account will be downgraded to the free tier. If you update your information at any point we will restore your account along with the filters you created."
+            },
+
+            {
+              title : "If I cancel my subscription will I be refunded?",
+              value : "Unfortunately we are not able to offer refunds at the current time. If you wish to cancel, please do so before your subscription is renewed to avoid unintended charges. In the future we will explore offering prorated refunds for unused portions of subscriptions."
             }
           ]
         },
