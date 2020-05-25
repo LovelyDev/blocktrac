@@ -192,6 +192,11 @@ export const store = new Vuex.Store({
       state.matched_txs = matched_txs;
     },
 
+    // Store notifications retrieved from server
+    set_notifications(state, notifications){
+      state.notifications = notifications
+    },
+
     // Set the active filter which the user is interacting with
     set_active_filter(state, filter){
       state.active_filter = filter;

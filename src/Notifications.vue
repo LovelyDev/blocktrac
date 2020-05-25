@@ -8,34 +8,14 @@
   <TxsLayout section="notifications">
     <b-list-group>
       <b-list-group-item>
-        <div id="filter_header">
-          Filter
-        </div>
-
-        <div id="target_header">
-          Target
-        </div>
-
-        <div id="transactions_header">
-          Transactions
-        </div>
+        <NotificationHeader />
       </b-list-group-item>
 
       <b-list-group-item v-for="notification in notifications"
                          :key="notification.id"
-                         class="notification">
-        <router-link :path="'/notification/' + notification.id">
-          <div class="filter">
-            {{notification.Filter.name}}
-          </div>
-
-          <div class="target">
-            {{notification.Sink.type}}: {{notification.Sink.target}}
-          </div>
-
-          <div class="transactions">
-            {{notification.MatchedTransactions.length}}
-          </div>
+                         class="notification_wrapper">
+        <router-link :to="'/notification/' + notification.id">
+          <NotificationSummary :notification="notification" />
         </router-link>
       </b-list-group-item>
     </b-list-group>
@@ -43,15 +23,24 @@
 </template>
 
 <script>
-import Authentication from './mixins/authentication'
-import ServerAPI      from './mixins/server_api'
+import Authentication      from './mixins/authentication'
+import ServerAPI           from './mixins/server_api'
 
-import config from './config'
+import TxsLayout           from './components/TxsLayout'
+import NotificationHeader  from './components/NotificationHeader'
+import NotificationSummary from './components/NotificationSummary'
+import config              from './config'
 
 export default {
   name: 'Notifications',
 
   mixins : [Authentication, ServerAPI],
+
+  components : {
+    TxsLayout,
+    NotificationHeader,
+    NotificationSummary
+  },
 
   created : function(){
     if(config.MAINTENANCE_MODE){
@@ -65,7 +54,17 @@ export default {
 </script>
 
 <style scoped>
-.notification a{
+.notification_wrapper{
+  padding: 0;
+}
+
+.notification_wrapper a{
+  padding: 10px;
   display: flex;
+  color: black;
+}
+
+.notification_wrapper a:hover{
+  text-decoration: none;
 }
 </style>

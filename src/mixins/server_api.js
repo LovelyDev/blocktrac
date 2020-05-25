@@ -57,7 +57,7 @@ export default {
     },
 
     notifications : {
-      set : function(filters){
+      set : function(notifications){
         this.$store.commit('set_notifications', notifications);
       },
 
@@ -191,7 +191,9 @@ export default {
                   this.matched_txs = []
 
                   response.body.forEach(function(matched_tx){
-                    this.matched_txs.push(JSON.parse(matched_tx.raw))
+                    var tx = JSON.parse(matched_tx.raw);
+                        tx.transaction.date = matched_tx.date;
+                    this.matched_txs.push(tx)
                   }.bind(this))
 
                 }.bind(this)).catch(function(err){
@@ -203,7 +205,7 @@ export default {
     },
 
     // Loads notifications from server, storing the result
-    load_notifications : function(id){
+    load_notifications : function(){
       this.$http.get(this.backend_url + "/notifications/", this.auth_header)
                 .then(function(response){
                   // set notifications

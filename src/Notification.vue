@@ -6,12 +6,22 @@
   -->
 <template>
   <TxsLayout section="notification">
-    <div>{{notification.Filter.name}}</div>
-    <div>{{notification.Sink.type}}: {{notification.Sink.target}}</div>
+    <div id="notification_header_wrapper">
+      <NotificationHeader />
+      <NotificationSummary :notification="notification" />
+    </div>
 
     <b-list-group>
+      <b-list-group-item id="matched_txs_explanation">
+        <img src="./assets/info.svg" />
+        <span>
+          The following transactions were included in this notification.
+        </span>
+      </b-list-group-item>
+
       <b-list-group-item v-for="tx in notification.MatchedTransactions"
-                         :key="tx.transaction.hash">
+                         :key="tx.transaction.hash"
+                         class="tx_summary_container">
         <TxSummary :tx="tx" />
       </b-list-group-item>
     </b-list-group>
@@ -22,7 +32,10 @@
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 
-import TxSummary      from './components/TxSummary'
+import TxsLayout           from './components/TxsLayout'
+import NotificationHeader  from './components/NotificationHeader'
+import NotificationSummary from './components/NotificationSummary'
+import TxSummary           from './components/TxSummary'
 
 import config from './config'
 
@@ -31,7 +44,12 @@ export default {
 
   mixins : [Authentication, ServerAPI],
 
-  compontents : {TxSummary},
+  components : {
+    TxsLayout,
+    NotificationHeader,
+    NotificationSummary,
+    TxSummary
+  },
 
   props : {
     id : Number
@@ -41,7 +59,7 @@ export default {
     return {
       notification : {
         Filter : {},
-          Sink : {},
+        Sink : {},
         MatchedTransactions : []
       }
     }
@@ -53,12 +71,14 @@ export default {
       return;
     }
 
-    this.load_notification()
-        .then(function(notification){
-          this.notification = notification
+    this.load_notification(this.id)
+        .then(function(response){
+          this.notification = response.body
 
-          this.notification.MatchedTransactions.forEach(function(tx, t){
-            this.notification.MatchedTransactions[t] = JSON.parse(tx.raw)
+          this.notification.MatchedTransactions.forEach(function(matched_tx, t){
+            var tx = JSON.parse(matched_tx.raw)
+                tx.transaction.date = matched_tx.date
+            this.notification.MatchedTransactions[t] = tx
           }.bind(this))
 
         }.bind(this)).catch(function(err){
@@ -70,4 +90,35 @@ export default {
 </script>
 
 <style scoped>
+#notification_header_wrapper{
+  background-color: white;
+  border-bottom: 1px solid var(--theme-color3);
+  padding: 10px;
+}
+
+#matched_txs_explanation{
+  display: flex;
+  align-items: center;
+}
+
+#main_layout.sm #matched_txs_explanation,
+#main_layout.xs #matched_txs_explanation{
+  padding: 10px;
+}
+
+#matched_txs_explanation span{
+  opacity: 0.6;
+  font-size: 0.9rem;
+  font-family: var(--theme-font4);
+  color: var(--theme-color2);
+}
+
+#matched_txs_explanation img{
+  margin-right: 5px;
+  min-width: 20px;
+}
+
+.tx_summary_container{
+  padding: 0px;
+}
 </style>
