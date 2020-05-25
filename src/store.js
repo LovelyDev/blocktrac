@@ -43,10 +43,11 @@ export const store = new Vuex.Store({
                           }, {}),
 
     // Constructs retrieved via the Ziti Server API
-        templates : [],
-            sinks : [],
-          filters : [],
-      matched_txs : [],
+          templates : [],
+              sinks : [],
+            filters : [],
+        matched_txs : [],
+      notifications : [],
 
     active_filter : {},
     in_progress_filter : {},

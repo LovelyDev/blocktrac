@@ -56,6 +56,16 @@ export default {
       }
     },
 
+    notifications : {
+      set : function(filters){
+        this.$store.commit('set_notifications', notifications);
+      },
+
+      get : function(){
+        return this.$store.state.notifications;
+      }
+    },
+
     active_filter : {
       set : function(filter){
         this.$store.commit('set_active_filter', filter);
@@ -192,6 +202,21 @@ export default {
                 }.bind(this))
     },
 
+    // Loads notifications from server, storing the result
+    load_notifications : function(id){
+      this.$http.get(this.backend_url + "/notifications/", this.auth_header)
+                .then(function(response){
+                  // set notifications
+                  this.notifications = response.body
+
+                }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve notifications: " + msg)
+                }.bind(this))
+    },
+
     ///
 
     // Return promise, handle these methods callbacks in invoker
@@ -246,6 +271,10 @@ export default {
     delete_filter : function(id){
       return this.$http.delete(this.backend_url + "/filter/" + id,
                                                  this.auth_header)
+    },
+
+    load_notification : function(id){
+      return this.$http.get(this.backend_url + "/notification/" + id, this.auth_header)
     }
   }
 }

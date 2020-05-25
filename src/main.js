@@ -39,6 +39,8 @@ import Help           from './Help'
 import TermsOfService from './TermsOfService'
 import FilterDetails  from './FilterDetails'
 import FilterTester   from './FilterTester'
+import Notifications  from './Notifications'
+import Notification   from './Notification'
 import Profile        from './Profile'
 import ConfirmEmail   from './ConfirmEmail'
 import ResetPassword  from './ResetPassword'
@@ -110,6 +112,14 @@ const routes = [
       return {id : parseInt(route.params.id) };
     }
   },
+
+  { path : '/notifications', component: Notifications },
+
+  { path: '/notification/:id', component: Notification,
+    props: function(route){
+      return {id : parseInt(route.params.id) };
+    }
+  }
 ]
 
 const router = new VueRouter({
