@@ -99,6 +99,7 @@ ZitUI:
   <On local machine>
   - git checkout specific tag
   - Replace BACKEND_URL in src/config.js
+  - Copy latest config/ziti.js from ziti project to src/
   - ./deploy
   - Verify
 
