@@ -152,8 +152,13 @@ export default {
             {
               title : "Is filter history retained?",
               value : "Currently Zerp Tracker retains the latest " + ziti.filter_transaction_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
-            },
+            }
+          ]
+        },
 
+        "Notifications" : {
+          icon : "txs/offers-gray",
+          topics : [
             {
               title : "How often am I notified of matched filters?",
               value : "Depending on your subscription level, you will be notified of transactions once a certain number of them have been matched and/or a minimum amount of time has gone by. See the different <a href='/plans'>Plans</a> for more info"
