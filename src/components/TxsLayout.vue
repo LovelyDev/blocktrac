@@ -54,18 +54,24 @@ export default {
   },
 
   computed : {
-    live : function(){
-      return this.section == 'txs';
-    },
-
     account : function(){
       return this.section == 'account';
     },
 
+    notifications : function(){
+      return this.section == 'notifications' ||
+             this.section == 'notification'
+    },
+
+    live : function(){
+      return this.section == 'txs';
+    },
+
     title : function(){
-      return this.live    ? 'Live Transactions' :
-             this.account ?          'Accounts' :
-                                 'Transactions'
+      return this.account       ?          'Accounts' :
+             this.notifications ?     'Notifications' :
+             this.live          ? 'Live Transactions' :
+                                       'Transactions';
     }
   }
 }
