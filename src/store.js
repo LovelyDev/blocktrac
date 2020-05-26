@@ -72,7 +72,7 @@ export const store = new Vuex.Store({
     set_user(state, user) {
       state.user.email = user.email;
       state.user.membership_level = user.membership_level;
-      state.user.profile = JSON.parse(user.profile);
+      state.user.profile = user.profile;
       state.user.renewal_date = user.renewal_date;
       state.user.has_credit_card = user.has_credit_card;
       state.user.additional_filters = user.additional_filters;

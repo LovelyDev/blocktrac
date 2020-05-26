@@ -29,11 +29,6 @@ export default {
       this.create_filter(params)
           .then(function(response){
             const filter = response.body;
-
-            filter.params = JSON.parse(filter.params)
-            if(filter.Template)
-              filter.Template.params = JSON.parse(filter.Template.params)
-
             this.$emit('created', filter)
 
           }.bind(this)).catch(function(err){

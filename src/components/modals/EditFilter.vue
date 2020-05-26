@@ -54,11 +54,6 @@ export default {
       this.update_filter(this.filter.id, params)
           .then(function(response){
             const filter = response.body;
-
-            filter.params = JSON.parse(filter.params)
-            if(filter.Template)
-              filter.Template.params = JSON.parse(filter.Template.params)
-
             this.$emit('edited', filter);
 
           }.bind(this)).catch(function(err){

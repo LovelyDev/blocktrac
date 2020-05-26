@@ -76,7 +76,7 @@ export default {
           this.notification = response.body
 
           this.notification.MatchedTransactions.forEach(function(matched_tx, t){
-            var tx = JSON.parse(matched_tx.raw)
+            var tx = matched_tx.raw
                 tx.transaction.date = matched_tx.date
             this.notification.MatchedTransactions[t] = tx
           }.bind(this))

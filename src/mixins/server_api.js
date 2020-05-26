@@ -103,14 +103,8 @@ export default {
     load_templates : function(){
       this.$http.get(this.backend_url + "/templates")
                 .then(function(response){
-                    // clear templates
-                    this.templates = [];
-
-                    // parse and populate
-                    response.body.forEach(function(template){
-                      template.params = JSON.parse(template.params);
-                      this.templates.push(template)
-                    }.bind(this));
+                    // set templates
+                    this.templates = response.body
 
                 }.bind(this)).catch(function(err){
                   const msg = util.capitalize(err.body.error)
@@ -142,16 +136,8 @@ export default {
     load_filters : function(){
       this.$http.get(this.backend_url + "/filters", this.auth_header)
                 .then(function(response){
-                    // clear filters
-                    this.filters = [];
-
-                    // parse and populate
-                    response.body.forEach(function(filter){
-                      filter.params = JSON.parse(filter.params)
-                      if(filter.Template)
-                        filter.Template.params = JSON.parse(filter.Template.params)
-                      this.filters.push(filter)
-                    }.bind(this));
+                    // set filters
+                    this.filters = response.body
 
                 }.bind(this)).catch(function(err){
                   if(this.not_authenticated(err)) return; // XXX
@@ -166,13 +152,6 @@ export default {
       this.$http.get(this.backend_url + "/filter/" + id, this.auth_header)
                 .then(function(response){
                   this.active_filter = response.body;
-
-                  this.active_filter.params =
-                    JSON.parse(this.active_filter.params);
-
-                  if(this.active_filter.Template)
-                    this.active_filter.Template.params =
-                      JSON.parse(this.active_filter.Template.params)
 
                 }.bind(this)).catch(function(err){
                   if(this.not_authenticated(err)) return; // XXX
@@ -191,7 +170,7 @@ export default {
                   this.matched_txs = []
 
                   response.body.forEach(function(matched_tx){
-                    var tx = JSON.parse(matched_tx.raw);
+                    var tx = matched_tx.raw
                         tx.transaction.date = matched_tx.date;
                     this.matched_txs.push(tx)
                   }.bind(this))

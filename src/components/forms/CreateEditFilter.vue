@@ -256,7 +256,7 @@ export default {
       if(!this.editing_filter){
         if(this.is_template_filter){
           params['template'] = this.template;
-          params['params']   = JSON.stringify(this.converted_params)
+          params['params']   = this.converted_params
 
         }else
           params['jsonpath'] = this.jsonpath
