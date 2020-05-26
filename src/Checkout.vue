@@ -291,6 +291,8 @@ export default {
     // if no plan specified, nav to plans
     if(!this.plan)
       this.$router.push({path : '/plans'});
+
+    this.use_existing_credit_card = this.has_credit_card
   }
 }
 </script>

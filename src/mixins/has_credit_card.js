@@ -70,7 +70,7 @@ export default {
       return {
            number : this.credit_card_number,
               cvc : this.credit_card_cvc,
-        exp_month : this.credit_card_month.substr(0, 2),
+        exp_month : parseInt(this.credit_card_month.substr(0, 2)),
          exp_year : this.credit_card_year
       }
     }
