@@ -62,7 +62,7 @@ import ziti from './ziti'
 
 const caps_text =
   Object.keys(ziti.monthly_sink_caps).map(function(type){
-    return ziti.monthly_sink_caps[type] + " " + type
+    return type.toUpperCase() + " (" + ziti.monthly_sink_caps[type] + ")"
   }).join(", ")
 
 export default {
@@ -176,13 +176,13 @@ export default {
 
             {
               title : "Are there limits to notifications?",
-              value : "Currently Zerp Tracker imposes the following base caps on notifications: " + caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " sms notifications. Once you have exceeded the limit for a particular type notifications will not be sent via that channel until your subscription is renewed."
+              value : "Currently Zerp Tracker imposes the following base caps on the following notification types: " + caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " SMS notifications.<br/>Once you have exceeded the limit for a particular type, notifications will not be sent via that channel until your subscription is renewed."
             },
 
-            {
-              title : "Can I limit the rate of notifications?",
-              value : "Yes! You may edit the number of notifications of each type you receive per hour via the <b>Settings</b> control in the <b>Filters List</b>. Once Zerp Tracker has exceed the limit configured for a particular type, notifications will not be sent via that channel until the next hour."
-            },
+            //{
+            //  title : "Can I limit the rate of notifications?",
+            //  value : "Yes! You may edit the number of notifications of each type you receive per hour via the <b>Settings</b> control in the <b>Filters List</b>. Once Zerp Tracker has exceed the limit configured for a particular type, notifications will not be sent via that channel until the next hour."
+            //},
 
             {
               title : "What happens if my email, sms, url is unavailable when a notification is sent?",
