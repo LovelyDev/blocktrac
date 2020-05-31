@@ -76,84 +76,91 @@ postgrsql setup:
 
 ziti_api
 ----
-user setup:
+base setup:
 1. <Set ziti_db ip in /etc/hosts>
 2. adduser ziti
 3. passwd ziti
 4. touch /var/log/ziti.log
 5. chown ziti.ziti /var/log/ziti.log
+6. edit /etc/selinux/config to set SELINUX=disabled
+7. reboot
 
 postgresql setup:
-6. <login as ziti>
-7. mkdir .postgresql
-8. cd .postgresql
-9. openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
-10. openssl rsa -in postgresql.key -out postgresql.key # remove passphrase 
-11. openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
-12. scp postgresql.csr ziti_db:~/
-13. <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
-14. scp ziti_db:~/postgresql.crt .
-15. scp ziti_db:/var/lib/pgsql/data/root.crt .
-16. chmod 600 postgrseql.*
+8. <login as ziti>
+9. mkdir .postgresql
+10. cd .postgresql
+11. openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
+12. openssl rsa -in postgresql.key -out postgresql.key # remove passphrase
+13. openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
+14. scp postgresql.csr ziti_db:~/
+15. <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
+16. scp ziti_db:~/postgresql.crt .
+17. scp ziti_db:/var/lib/pgsql/data/root.crt .
+18. chmod 600 postgrseql.*
 
 ziti setup:
-17. <as root>
-18. curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-19. rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-20. dnf install epel-release
-21. dnf install git screen htop nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
-22. <as ziti>
-23. git clone git@bitbucket.org:movitto/ziti.git
-24. cd ziti
-25. CXXFLAGS="-Wno-cast-function-type" yarn install
-26. edit config/config.js to point to db
-27. NODE_ENV='production' yarn db:migrate
-28. NODE_ENV='production' yarn db:seed
-29. screen
-30. htop
-31. NODE_ENV='production' yarn serve
-32. ... listen_to_txs
-33. ... run_filters
-34. ... notify_sinks
-35. ... manage_users
-36. <detach from screen>
+19. <as root>
+20. curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+21. rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+22. dnf install epel-release
+23. dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
+24. <as ziti>
+25. git clone git@bitbucket.org:movitto/ziti.git
+26. cd ziti
+27. CXXFLAGS="-Wno-cast-function-type" yarn install
+28. edit config/config.js to point to db
+29. NODE_ENV='production' yarn db:migrate
+30. NODE_ENV='production' yarn db:seed
+31. <as root>
+32. ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
+33. systemctl daemon-reload
+34. systemctl start ziti-api
+35. systemctl enable ziti-api
+36. systemctl start ziti-txs
+37. systemctl enable ziti-txs
+38. systemctl start ziti-filters
+39. systemctl enable ziti-filters
+40. systemctl start ziti-sinks
+41. systemctl enable ziti-sinks
+42. systemctl start ziti-users
+43. systemctl enable ziti-users
 
 network setup:
-37. firewall-cmd --permanent --add-masquerade
-38. firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
-38. firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=3001
-39. firewall-cmd --permanent --add-service=http
-40. firewall-cmd --permanent --add-service=https
-41. firewall-cmd --direct --permanent --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 80 -j REDIRECT --to-ports 3000
-42. firewall-cmd --reload
+44. firewall-cmd --permanent --add-masquerade
+45. firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
+46. firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=3001
+47. firewall-cmd --permanent --add-service=http
+48. firewall-cmd --permanent --add-service=https
+49. firewall-cmd --direct --permanent --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 80 -j REDIRECT --to-ports 3000
+50. firewall-cmd --reload
 
 letsencrypt setup:
-43. mkdir /home/ziti/letsencrypt
-44. mkdir /home/ziti/letsencrypt/certs
-45. mkdir /home/ziti/letsencrypt/private
-46. chmod 750 /home/ziti/letsencrypt/
-47. chmod 775 /home/ziti/letsencrypt/certs
-48. chmod 750 /home/ziti/letsencrypt/private
-49. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
-50. chmod 750 /home/ziti/acme_tiny.py
-51. openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
-52. openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
-53. openssl req -new -sha256 -key /home/ziti/letsencrypt/private/apizerptrackercom.key -subj "/CN=api.zerptracker.com" > /home/ziti/letsencrypt/private/apizerptrackercom.csr
-54. chmod 640 /home/ziti/letsencrypt/private/account.key
-55. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.key
-56. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
-57. vi /home/ziti/renew_cert.sh
+51. mkdir /home/ziti/letsencrypt
+52. mkdir /home/ziti/letsencrypt/certs
+53. mkdir /home/ziti/letsencrypt/private
+54. chmod 750 /home/ziti/letsencrypt/
+55. chmod 775 /home/ziti/letsencrypt/certs
+56. chmod 750 /home/ziti/letsencrypt/private
+57. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
+58. chmod 750 /home/ziti/acme_tiny.py
+59. openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
+60. openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
+61. openssl req -new -sha256 -key /home/ziti/letsencrypt/private/apizerptrackercom.key -subj "/CN=api.zerptracker.com" > /home/ziti/letsencrypt/private/apizerptrackercom.csr
+62. chmod 640 /home/ziti/letsencrypt/private/account.key
+63. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.key
+64. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
+65. vi /home/ziti/renew_cert.sh
     - <add>
     python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/ziti/.well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
     curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem
     cat /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem > /home/ziti/letsencrypt/certs/chained_cert-apizerptrackercom.pem
-58. chmod 750 /home/ziti/renew_cert.sh
-60. /home/ziti/renew_cert.sh
-61. <as root>
-62. touch /var/log/acme_tiny.log
-63. chown ziti.ziti /var/log/acme_tiny.log
-64. <as ziti>
-65. EDITOR="vi" crontab -e
+66. chmod 750 /home/ziti/renew_cert.sh
+67. /home/ziti/renew_cert.sh
+68. <as root>
+69. touch /var/log/acme_tiny.log
+70. chown ziti.ziti /var/log/acme_tiny.log
+71. <as ziti>
+72. EDITOR="vi" crontab -e
     - add
     30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
 

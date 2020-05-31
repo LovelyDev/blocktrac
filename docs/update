@@ -71,6 +71,8 @@ Ziti:
       - Verify db
   - If dependencies added:
     - yarn install
+  - If service filers updated
+    - systemctl daemon-reload
   - Start services
   - Verify
 
