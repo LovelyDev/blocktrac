@@ -34,12 +34,12 @@ System & Postgres:
 ziti_api
 --------
 Services:
-- prefix all with NODE_ENV='production'
-- yarn serve
-- ./workers/listen_to_txs.js
-- ./workers/run_filters.js
-- ./workers/notify_sinks.js
-- ./workers/manage_users.js
+- systemctl start|stop|enable|disable|status <service name>
+- ziti-api
+- ziti-txs
+- ziti-filters
+- ziti-sinks
+- ziti-users
 
 System:
   <On local machine>
@@ -71,7 +71,7 @@ Ziti:
       - Verify db
   - If dependencies added:
     - yarn install
-  - If service filers updated
+  - If service files updated
     - systemctl daemon-reload
   - Start services
   - Verify
