@@ -2,7 +2,7 @@
 Deployment guide
 ================
 
-Setup 5 servers:
+Setup 4 servers:
 - ziti_db
   - postgresql
 - ziti_api
@@ -12,15 +12,13 @@ Setup 5 servers:
   - zitui webapp
 - zitz1
   - backups
-- zitz2
-  - backups
 
 Startup linodes for each of the servers
 - ziti_db  (Linode 4GB)
+  - enable linode backups
 - ziti_api (Linode 4GB)
 - zitui    (Linode 2GB)
 - zitz1    (Linode 2GB)
-- zitz2    (Linode 2GB) - different data center
 
 Edit DNS:
 - point zerptracker.com A and AAAA records at zitui
@@ -48,7 +46,8 @@ postgrsql setup:
 - postgresql-setup initdb
 - vi /var/lib/pgsql/data/pg_hba.conf
   - <change local, host ipv4, and host ipv6 to reject>
-  - <add>: hostssl all             all                    <ZITI IP ADDR>/32      md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITI_API IP ADDR>/32      md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITZ1 IP ADDR>/32      md5 clientcert=1
 - openssl genrsa -des3 -out server.key 2048 # any passphrase
 - openssl rsa -in server.key -out server.key # removes passphrase
 - chmod 400 server.key
@@ -60,15 +59,20 @@ postgrsql setup:
 - chown postgres.postgres server.crt
 - vi /var/lib/pgsql/data/postgresql.conf
   - <make following changes>:
-    listen_addresses = '<IP SERVER WILL LISTEN ON>'
+    listen_addresses = '<IPs SERVER WILL LISTEN ON>'
     ssl = on
     ssl_ca_file = 'root.crt'
+  - both public and private IPs should be represented
 - systemctl enable postgresql.service
 - systemctl start postgresql.service
 - firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
-    source address="192.168.195.58/32"
-    port protocol="tcp" port="5432" accept' 
+    source address="<ZITI_API IP>/32"
+    port protocol="tcp" port="5432" accept'
+- firewall-cmd --permanent --add-rich-rule='
+    rule family="ipv4"
+    source address="<ZITZ1 IP>/32"
+    port protocol="tcp" port="5432" accept'
 - firewall-cmd --reload
 - su - postgres
 - createuser --interactive --pwprompt # answers: ziti / <password> / <password> / n / n / n
@@ -243,9 +247,32 @@ letsencrypt certificate:
 - chown letsencrypt.letsencrypt /var/log/acme_tiny.log
 - chmod 640 /var/log/acme_tiny.log
 
-zitz1/zitz2
+zitz1
 -----------
-...
+- <Set ziti_db ip in /etc/hosts>
+- adduser ziti
+- passwd ziti
+
+postgresql setup:
+- dnf install postgresql
+- <login as ziti>
+- mkdir .postgresql
+- cd .postgresql
+- openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
+- openssl rsa -in postgresql.key -out postgresql.key # remove passphrase
+- openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
+- scp postgresql.csr ziti_db:~/
+- <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
+- scp ziti_db:~/postgresql.crt .
+- scp ziti_db:/var/lib/pgsql/data/root.crt .
+- chmod 600 postgrseql.*
+- vi .pgpass
+  ziti_db:5432:ziti:ziti:<postgresql password>
+- chmod 400 .pgpass
+- psql ziti_db -Uziti ziti
+  - verify connection
+- crontab -e
+  0 0,12 * * * pg_dump -hziti_db -Uziti ziti > /home/ziti/ziti.sql.`date -u +\%s`
 
 Post Setup
 ----------

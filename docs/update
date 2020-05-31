@@ -105,6 +105,8 @@ ZitUI:
   - ./deploy
   - Verify
 
-zitz1/zitz2
+zitz1
 -----------
-- ...
+- Do not do this during backup window
+- sudo dnf update
+- sudo reboot
