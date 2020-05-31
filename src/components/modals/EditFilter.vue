@@ -9,7 +9,6 @@
            title="Edit Filter"
            header-class="modal_header"
            centered
-           @shown="reset_validity"
            @ok="on_ok"
            :ok-disabled="!is_valid">
     <CreateEditFilterForm ref="form"
