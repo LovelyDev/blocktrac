@@ -107,6 +107,17 @@
         </td>
       </tr>
 
+      <tr v-if="editing_filter">
+        <td class="form_text">Disable</td>
+
+        <td>
+          <b-form-checkbox v-model="disable"
+                           class="form_switch"
+                           style="float: right"
+                           switch />
+        </td>
+      </tr>
+
       <tr v-if="logged_in">
         <td colspan=2>
           <div id="send_me" class="form_text">
@@ -151,6 +162,7 @@ export default {
       params : [],
       jsonpath : '',
       name : '',
+      disable : false
     };
   },
 
@@ -260,7 +272,9 @@ export default {
 
         }else
           params['jsonpath'] = this.jsonpath
-      }
+
+      }else
+        params['disabled'] = this.disable
 
       if(this.logged_in)
         params['sinks'] = Object.values(this.$refs.sinks_inputs.$data.selected)
@@ -331,6 +345,8 @@ export default {
         this.filter_type = 'expression';
         this.jsonpath = this.edit_filter.jsonpath;
       }
+
+      this.disable = this.edit_filter.disabled
     },
 
     parse_duplicate_filter : function(){
