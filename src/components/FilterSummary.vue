@@ -7,7 +7,13 @@
   -->
 <template>
   <div>
-    <div class="filter_title">{{filter.name}}</div>
+    <div class="filter_title">
+      <span>{{filter.name}}</span>
+      <sup v-if="filter.disabled"
+           class="filter_disabled">
+        (Disabled)
+      </sup>
+    </div>
 
     <div v-if="filter.Template">
       <div class="template_name">{{filter.Template.name}}:</div>
@@ -21,6 +27,7 @@
       <div class="expression_title">Expression:</div>
       <div class="filter_expression">{{filter.jsonpath}}</div>
     </div>
+
   </div>
 </template>
 
@@ -64,6 +71,13 @@ export default {
 .template_param,
 .filter_expression{
   font-family: var(--theme-font2);
+  font-size: 0.8rem;
+}
+
+.filter_disabled{
+  font-style: italic;
+  font-weight: normal;
+  color: red;
   font-size: 0.8rem;
 }
 </style>
