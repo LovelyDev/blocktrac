@@ -30,218 +30,218 @@ Edit DNS:
 
 All servers prequisites
 -----------------------
-1. Install CentOS8
-   - Minimal install
-   - Full disk
-   - Enable network
-   - Set root pass
-   - Create user w/ admin privilages
-2. sudo dnf update
-3. set hostname in /etc/hostname
-4. Add private ip via linode dashboard
-5. sudo reboot
+- Install CentOS8
+  - Minimal install
+  - Full disk
+  - Enable network
+  - Set root pass
+  - Create user w/ admin privilages
+- sudo dnf update
+- set hostname in /etc/hostname
+- Add private ip via linode dashboard
+- sudo reboot
 
 ziti_db
 -------
 postgrsql setup:
-1. dnf install postgresql-server
-2. postgresql-setup initdb
-3. vi /var/lib/pgsql/data/pg_hba.conf
+- dnf install postgresql-server
+- postgresql-setup initdb
+- vi /var/lib/pgsql/data/pg_hba.conf
   - <change local, host ipv4, and host ipv6 to reject>
   - <add>: hostssl all             all                    <ZITI IP ADDR>/32      md5 clientcert=1
-4. openssl genrsa -des3 -out server.key 2048 # any passphrase
-5. openssl rsa -in server.key -out server.key # removes passphrase
-6. chmod 400 server.key
-7. chown postgres.postgres server.key
-8. openssl req -new -key server.key -days 3650 -out server.crt -x509 -subj '/CN=ziti_db'
-9. chmod 400 server.crt
-10. chown postgres.postgres server.crt
-11. cp server.crt root.crt
-12. chown postgres.postgres server.crt
-13. vi /var/lib/pgsql/data/postgresql.conf
-    - <make following changes>:
-      listen_addresses = '<IP SERVER WILL LISTEN ON>'
-      ssl = on
-      ssl_ca_file = 'root.crt'
-14. systemctl enable postgresql.service
-15. systemctl start postgresql.service
-16. firewall-cmd --permanent --add-rich-rule='
+- openssl genrsa -des3 -out server.key 2048 # any passphrase
+- openssl rsa -in server.key -out server.key # removes passphrase
+- chmod 400 server.key
+- chown postgres.postgres server.key
+- openssl req -new -key server.key -days 3650 -out server.crt -x509 -subj '/CN=ziti_db'
+- chmod 400 server.crt
+- chown postgres.postgres server.crt
+- cp server.crt root.crt
+- chown postgres.postgres server.crt
+- vi /var/lib/pgsql/data/postgresql.conf
+  - <make following changes>:
+    listen_addresses = '<IP SERVER WILL LISTEN ON>'
+    ssl = on
+    ssl_ca_file = 'root.crt'
+- systemctl enable postgresql.service
+- systemctl start postgresql.service
+- firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
     source address="192.168.195.58/32"
     port protocol="tcp" port="5432" accept' 
-17. firewall-cmd --reload
-18. su - postgres
-19. createuser --interactive --pwprompt # answers: ziti / <password> / <password> / n / n / n
-20. createdb -O ziti ziti
+- firewall-cmd --reload
+- su - postgres
+- createuser --interactive --pwprompt # answers: ziti / <password> / <password> / n / n / n
+- createdb -O ziti ziti
 
 ziti_api
 ----
 base setup:
-1. <Set ziti_db ip in /etc/hosts>
-2. adduser ziti
-3. passwd ziti
-4. touch /var/log/ziti.log
-5. chown ziti.ziti /var/log/ziti.log
-6. edit /etc/selinux/config to set SELINUX=disabled
-7. reboot
+- <Set ziti_db ip in /etc/hosts>
+- adduser ziti
+- passwd ziti
+- touch /var/log/ziti.log
+- chown ziti.ziti /var/log/ziti.log
+- edit /etc/selinux/config to set SELINUX=disabled
+- reboot
 
 postgresql setup:
-8. <login as ziti>
-9. mkdir .postgresql
-10. cd .postgresql
-11. openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
-12. openssl rsa -in postgresql.key -out postgresql.key # remove passphrase
-13. openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
-14. scp postgresql.csr ziti_db:~/
-15. <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
-16. scp ziti_db:~/postgresql.crt .
-17. scp ziti_db:/var/lib/pgsql/data/root.crt .
-18. chmod 600 postgrseql.*
+- <login as ziti>
+- mkdir .postgresql
+- cd .postgresql
+- openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
+- openssl rsa -in postgresql.key -out postgresql.key # remove passphrase
+- openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
+- scp postgresql.csr ziti_db:~/
+- <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
+- scp ziti_db:~/postgresql.crt .
+- scp ziti_db:/var/lib/pgsql/data/root.crt .
+- chmod 600 postgrseql.*
 
 ziti setup:
-19. <as root>
-20. curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
-21. rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
-22. dnf install epel-release
-23. dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
-24. <as ziti>
-25. git clone git@bitbucket.org:movitto/ziti.git
-26. cd ziti
-27. CXXFLAGS="-Wno-cast-function-type" yarn install
-28. edit config/config.js to point to db
-29. NODE_ENV='production' yarn db:migrate
-30. NODE_ENV='production' yarn db:seed
-31. <as root>
-32. ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
-33. systemctl daemon-reload
-34. systemctl start ziti-api
-35. systemctl enable ziti-api
-36. systemctl start ziti-txs
-37. systemctl enable ziti-txs
-38. systemctl start ziti-filters
-39. systemctl enable ziti-filters
-40. systemctl start ziti-sinks
-41. systemctl enable ziti-sinks
-42. systemctl start ziti-users
-43. systemctl enable ziti-users
+- <as root>
+- curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+- rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+- dnf install epel-release
+- dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
+- <as ziti>
+- git clone git@bitbucket.org:movitto/ziti.git
+- cd ziti
+- CXXFLAGS="-Wno-cast-function-type" yarn install
+- edit config/config.js to point to db
+- NODE_ENV='production' yarn db:migrate
+- NODE_ENV='production' yarn db:seed
+- <as root>
+- ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
+- systemctl daemon-reload
+- systemctl start ziti-api
+- systemctl enable ziti-api
+- systemctl start ziti-txs
+- systemctl enable ziti-txs
+- systemctl start ziti-filters
+- systemctl enable ziti-filters
+- systemctl start ziti-sinks
+- systemctl enable ziti-sinks
+- systemctl start ziti-users
+- systemctl enable ziti-users
 
 network setup:
-44. firewall-cmd --permanent --add-masquerade
-45. firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
-46. firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=3001
-47. firewall-cmd --permanent --add-service=http
-48. firewall-cmd --permanent --add-service=https
-49. firewall-cmd --direct --permanent --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 80 -j REDIRECT --to-ports 3000
-50. firewall-cmd --reload
+- firewall-cmd --permanent --add-masquerade
+- firewall-cmd --permanent --add-forward-port=port=80:proto=tcp:toport=3000
+- firewall-cmd --permanent --add-forward-port=port=443:proto=tcp:toport=3001
+- firewall-cmd --permanent --add-service=http
+- firewall-cmd --permanent --add-service=https
+- firewall-cmd --direct --permanent --add-rule ipv4 nat OUTPUT 0 -p tcp -o lo --dport 80 -j REDIRECT --to-ports 3000
+- firewall-cmd --reload
 
 letsencrypt setup:
-51. mkdir /home/ziti/letsencrypt
-52. mkdir /home/ziti/letsencrypt/certs
-53. mkdir /home/ziti/letsencrypt/private
-54. chmod 750 /home/ziti/letsencrypt/
-55. chmod 775 /home/ziti/letsencrypt/certs
-56. chmod 750 /home/ziti/letsencrypt/private
-57. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
-58. chmod 750 /home/ziti/acme_tiny.py
-59. openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
-60. openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
-61. openssl req -new -sha256 -key /home/ziti/letsencrypt/private/apizerptrackercom.key -subj "/CN=api.zerptracker.com" > /home/ziti/letsencrypt/private/apizerptrackercom.csr
-62. chmod 640 /home/ziti/letsencrypt/private/account.key
-63. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.key
-64. chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
-65. vi /home/ziti/renew_cert.sh
-    - <add>
-    python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/ziti/.well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
-    curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem
-    cat /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem > /home/ziti/letsencrypt/certs/chained_cert-apizerptrackercom.pem
-66. chmod 750 /home/ziti/renew_cert.sh
-67. /home/ziti/renew_cert.sh
-68. <as root>
-69. touch /var/log/acme_tiny.log
-70. chown ziti.ziti /var/log/acme_tiny.log
-71. <as ziti>
-72. EDITOR="vi" crontab -e
-    - add
-    30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
+- mkdir /home/ziti/letsencrypt
+- mkdir /home/ziti/letsencrypt/certs
+- mkdir /home/ziti/letsencrypt/private
+- chmod 750 /home/ziti/letsencrypt/
+- chmod 775 /home/ziti/letsencrypt/certs
+- chmod 750 /home/ziti/letsencrypt/private
+- curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
+- chmod 750 /home/ziti/acme_tiny.py
+- openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
+- openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
+- openssl req -new -sha256 -key /home/ziti/letsencrypt/private/apizerptrackercom.key -subj "/CN=api.zerptracker.com" > /home/ziti/letsencrypt/private/apizerptrackercom.csr
+- chmod 640 /home/ziti/letsencrypt/private/account.key
+- chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.key
+- chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
+- vi /home/ziti/renew_cert.sh
+  - <add>
+  python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/ziti/.well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
+  curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem
+  cat /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem > /home/ziti/letsencrypt/certs/chained_cert-apizerptrackercom.pem
+- chmod 750 /home/ziti/renew_cert.sh
+- /home/ziti/renew_cert.sh
+- <as root>
+- touch /var/log/acme_tiny.log
+- chown ziti.ziti /var/log/acme_tiny.log
+- <as ziti>
+- EDITOR="vi" crontab -e
+  - add
+  30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
 
 zitui
 -----
 httpd/zitui setup:
-1. dnf install httpd mod_ssl rsync
-2. mkdir /var/www/zitui
-3. <on local machine>
-4. scp httpd.conf root@zitui:/etc/httpd/conf.d/zerptrackercom.conf # comment out mod_ssl / 443 sections / https redirects for now
-5. Edit src/config.js to reference BACKEND_URL
-6. Copy latest config/ziti.js from ziti to src/
-7. ./deploy
-8. <on zitui>
-9. chown -R root.root /var/www/zitui
-10. service httpd start
-11. firewall-cmd --permanent --add-service=http
-12. firewall-cmd --permanent --add-service=https
-13. firewall-cmd --reload
+- dnf install httpd mod_ssl rsync
+- mkdir /var/www/zitui
+- <on local machine>
+- scp httpd.conf root@zitui:/etc/httpd/conf.d/zerptrackercom.conf # comment out mod_ssl / 443 sections / https redirects for now
+- Edit src/config.js to reference BACKEND_URL
+- Copy latest config/ziti.js from ziti to src/
+- ./deploy
+- <on zitui>
+- chown -R root.root /var/www/zitui
+- service httpd start
+- firewall-cmd --permanent --add-service=http
+- firewall-cmd --permanent --add-service=https
+- firewall-cmd --reload
 
 letsencrypt certificate:
-14. dnf install python3
-15. adduser letsencrypt
-16. passwd letsencrypt
-17. groupadd letsencrypt
-18. mkdir /etc/letsencrypt
-19. mkdir /etc/letsencrypt/certs
-20. mkdir /etc/letsencrypt/private
-21. chown -R root:letsencrypt /etc/letsencrypt
-22. chmod 750 /etc/letsencrypt/
-23. chmod 775 /etc/letsencrypt/certs
-24. chmod 750 /etc/letsencrypt/private
-25. usermod -a -G letsencrypt rippled
-26. mkdir -p /var/www/<COMPACT_HOSTNAME>/.well-known/acme-challenge
-27. chown -R letsencrypt.letsencrypt /var/www/zitui/.well-known/
-28. curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/letsencrypt/acme_tiny.py
-29. chown root.letsencrypt /home/letsencrypt/acme_tiny.py
-30. chmod 750 /home/letsencrypt/acme_tiny.py
-31. openssl genrsa 4096 > /etc/letsencrypt/private/account.key
-32. openssl genrsa 4096 > /etc/letsencrypt/private/zerptrackercom.key
-33. openssl dhparam -out /etc/letsencrypt/certs/dhparam.pem 4096 # general locally then scp to zitui (is dhparam needed? not referenced anywhere)
-34. openssl req -new -sha256 -key /etc/letsencrypt/private/zerptrackercom.key -subj "/CN=zerptracker.com" > /etc/letsencrypt/private/zerptrackercom.csr
-35. su letsencrypt
-36. cd
-37. vi /home/letencrypt/renew_cert.sh
-    - <add>
-    python3 /home/letsencrypt/acme_tiny.py --account-key /etc/letsencrypt/private/account.key --csr /etc/letsencrypt/private/zerptrackercom.csr --acme-dir /var/www/zitui/.well-known/acme-challenge/ > /etc/letsencrypt/certs/signed-zerptrackercom.crt || exit
-    curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /etc/letsencrypt/certs/intermediate-zerptrackercom.pem
-    cat /etc/letsencrypt/certs/signed-zerptrackercom.crt /etc/letsencrypt/certs/intermediate-zerptrackercom.pem > /etc/letsencrypt/certs/chained_cert-zerptrackercom.pem
-38. chmod 750 /home/letsencrypt/renew_cert.sh
-39. ./renew_cert.sh # verify success
-40. exit
-41. chown root:letsencrypt /home/letsencrypt/renew_cert.sh
-42. chmod 750 /home/letsencrypt/renew_cert.sh
-43. chown root:letsencrypt /etc/letsencrypt/private/account.key
-44. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
-45. chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
-46. chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
-47. chmod 640 /etc/letsencrypt/private/account.key
-48. chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
-49. chmod 640 /etc/letsencrypt/private/zerptrackercom.key
-50. chmod 640 /etc/letsencrypt/certs/dhparam.pem
-51. vi /etc/httpd/conf.d/zerptrackercom.conf
-    - uncomment ssl / 443 sections / https redirect
-52. vi /etc/httpd/conf.d/ssl.conf
-    - comment out entire virtual host
-53. service httpd reload
-54. EDITOR="vi" visudo -f /etc/sudoers.d/letsencrypt-services-reload
-    - add the following:
-    letsencrypt ALL=NOPASSWD: /usr/sbin/service httpd reload
-55. vi /home/letencrypt/renew_cert.sh
-    - append
-     sudo service httpd reload
-56. su letsencrypt
-57. EDITOR="vi" crontab -e
-    - add
-    30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/letsencrypt/renew_cert.sh >> /var/log/acme_tiny.log
-58. exit
-59. touch /var/log/acme_tiny.log
-60. chown letsencrypt.letsencrypt /var/log/acme_tiny.log
-61. chmod 640 /var/log/acme_tiny.log
+- dnf install python3
+- adduser letsencrypt
+- passwd letsencrypt
+- groupadd letsencrypt
+- mkdir /etc/letsencrypt
+- mkdir /etc/letsencrypt/certs
+- mkdir /etc/letsencrypt/private
+- chown -R root:letsencrypt /etc/letsencrypt
+- chmod 750 /etc/letsencrypt/
+- chmod 775 /etc/letsencrypt/certs
+- chmod 750 /etc/letsencrypt/private
+- usermod -a -G letsencrypt rippled
+- mkdir -p /var/www/<COMPACT_HOSTNAME>/.well-known/acme-challenge
+- chown -R letsencrypt.letsencrypt /var/www/zitui/.well-known/
+- curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/letsencrypt/acme_tiny.py
+- chown root.letsencrypt /home/letsencrypt/acme_tiny.py
+- chmod 750 /home/letsencrypt/acme_tiny.py
+- openssl genrsa 4096 > /etc/letsencrypt/private/account.key
+- openssl genrsa 4096 > /etc/letsencrypt/private/zerptrackercom.key
+- openssl dhparam -out /etc/letsencrypt/certs/dhparam.pem 4096 # general locally then scp to zitui (is dhparam needed? not referenced anywhere)
+- openssl req -new -sha256 -key /etc/letsencrypt/private/zerptrackercom.key -subj "/CN=zerptracker.com" > /etc/letsencrypt/private/zerptrackercom.csr
+- su letsencrypt
+- cd
+- vi /home/letencrypt/renew_cert.sh
+  - <add>
+  python3 /home/letsencrypt/acme_tiny.py --account-key /etc/letsencrypt/private/account.key --csr /etc/letsencrypt/private/zerptrackercom.csr --acme-dir /var/www/zitui/.well-known/acme-challenge/ > /etc/letsencrypt/certs/signed-zerptrackercom.crt || exit
+  curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /etc/letsencrypt/certs/intermediate-zerptrackercom.pem
+  cat /etc/letsencrypt/certs/signed-zerptrackercom.crt /etc/letsencrypt/certs/intermediate-zerptrackercom.pem > /etc/letsencrypt/certs/chained_cert-zerptrackercom.pem
+- chmod 750 /home/letsencrypt/renew_cert.sh
+- ./renew_cert.sh # verify success
+- exit
+- chown root:letsencrypt /home/letsencrypt/renew_cert.sh
+- chmod 750 /home/letsencrypt/renew_cert.sh
+- chown root:letsencrypt /etc/letsencrypt/private/account.key
+- chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
+- chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
+- chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
+- chmod 640 /etc/letsencrypt/private/account.key
+- chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
+- chmod 640 /etc/letsencrypt/private/zerptrackercom.key
+- chmod 640 /etc/letsencrypt/certs/dhparam.pem
+- vi /etc/httpd/conf.d/zerptrackercom.conf
+  - uncomment ssl / 443 sections / https redirect
+- vi /etc/httpd/conf.d/ssl.conf
+  - comment out entire virtual host
+- service httpd reload
+- EDITOR="vi" visudo -f /etc/sudoers.d/letsencrypt-services-reload
+  - add the following:
+  letsencrypt ALL=NOPASSWD: /usr/sbin/service httpd reload
+- vi /home/letencrypt/renew_cert.sh
+  - append
+   sudo service httpd reload
+- su letsencrypt
+- EDITOR="vi" crontab -e
+  - add
+  30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/letsencrypt/renew_cert.sh >> /var/log/acme_tiny.log
+- exit
+- touch /var/log/acme_tiny.log
+- chown letsencrypt.letsencrypt /var/log/acme_tiny.log
+- chmod 640 /var/log/acme_tiny.log
 
 zitz1/zitz2
 -----------
