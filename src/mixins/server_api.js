@@ -87,7 +87,7 @@ export default {
 
       if(replace)
         this.filters.splice(this.filters.indexOf(replace),
-                            1, this.filter);
+                            1, this.active_filter);
       else
         this.filters.push(filter);
 
