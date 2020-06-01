@@ -58,15 +58,14 @@ Ziti:
   - Enable maintenance flag in config before deploy
 
   <On server>
-  - Stash config : config.js, ziti.js, and auth_config.js
+  - git diff > ~/diff
+  - git checkout -- config
   - Stop services
   - git pull / checkout specific tag
-  - Restore production db host in config.js
-  - Restore uri in config/ziti.js
-  - Replace email, twilio, and stripe config in config/auth_config.js
+  - git apply ~/diff
   - If db migrations:
     - pg_dump to backup
-    - yarn db:migrate
+    - NODE_ENV='production' yarn db:migrate
       - Verify db
   - If dependencies added:
     - yarn install
@@ -104,12 +103,11 @@ Ziti:
   - Enable maintenance flag in config before deploy
 
   <On server>
-  - Stash config : config.js, ziti.js, and auth_config.js
+  - git diff > ~/diff
+  - git checkout -- config
   - Stop services
   - git pull / checkout specific tag
-  - Restore production db host in config.js
-  - Restore uri in config/ziti.js
-  - Replace email, twilio, and stripe config in config/auth_config.js
+  - git apply ~/diff
   - If dependencies added:
     - yarn install
   - If service files updated

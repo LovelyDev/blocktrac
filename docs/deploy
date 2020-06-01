@@ -160,6 +160,7 @@ letsencrypt setup:
 - chmod 775 /home/ziti/letsencrypt/certs
 - chmod 750 /home/ziti/letsencrypt/private
 - curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/ziti/acme_tiny.py
+  - add small delay hack: time.sleep(3) on line 138 between wellknown_file.write and wellknown_url =
 - chmod 750 /home/ziti/acme_tiny.py
 - openssl genrsa 4096 > /home/ziti/letsencrypt/private/account.key
 - openssl genrsa 4096 > /home/ziti/letsencrypt/private/apizerptrackercom.key
