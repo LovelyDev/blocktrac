@@ -2,11 +2,17 @@
 Deployment guide
 ================
 
-Setup 4 servers:
+Setup 5 servers:
 - ziti_db
   - postgresql
 - ziti_api
-  - ziti application
+  - ziti web API
+  - workers:
+    - listen_for_txs
+    - notify_sinks
+    - manage_users
+- ziti_worker1
+  - run_filters worker
 - zitui
   - httpd
   - zitui webapp
@@ -14,11 +20,14 @@ Setup 4 servers:
   - backups
 
 Startup linodes for each of the servers
-- ziti_db  (Linode 4GB)
-  - enable linode backups
-- ziti_api (Linode 4GB)
-- zitui    (Linode 2GB)
-- zitz1    (Linode 2GB)
+- ziti_db      (Linode 4GB - $20/mo)
+  - enable linode backups    ($5/mo)
+- ziti_api     (Linode 4GB - $20/mo)
+- ziti_worker1 (Linode 8GB - $40/mo)
+- zitui        (Linode 2GB - $10/mo)
+- zitz1        (Linode 2GB - $10/mo)
+                             ------
+                           ($105/mo)
 
 Edit DNS:
 - point zerptracker.com A and AAAA records at zitui
@@ -31,9 +40,7 @@ All servers prequisites
 - Install CentOS8
   - Minimal install
   - Full disk
-  - Enable network
   - Set root pass
-  - Create user w/ admin privilages
 - sudo dnf update
 - set hostname in /etc/hostname
 - Add private ip via linode dashboard
@@ -46,8 +53,9 @@ postgrsql setup:
 - postgresql-setup initdb
 - vi /var/lib/pgsql/data/pg_hba.conf
   - <change local, host ipv4, and host ipv6 to reject>
-  - <add>: hostssl all             all                    <ZITI_API IP ADDR>/32      md5 clientcert=1
-  - <add>: hostssl all             all                    <ZITZ1 IP ADDR>/32      md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITI_API IP ADDR>/32     md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITI_WORKER1 IP ADDR>/32 md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITZ1 IP ADDR>/32        md5 clientcert=1
 - openssl genrsa -des3 -out server.key 2048 # any passphrase
 - openssl rsa -in server.key -out server.key # removes passphrase
 - chmod 400 server.key
@@ -68,6 +76,10 @@ postgrsql setup:
 - firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
     source address="<ZITI_API IP>/32"
+    port protocol="tcp" port="5432" accept'
+- firewall-cmd --permanent --add-rich-rule='
+    rule family="ipv4"
+    source address="<ZITI_WORKER1 IP>/32"
     port protocol="tcp" port="5432" accept'
 - firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
@@ -109,10 +121,14 @@ ziti setup:
 - dnf install epel-release
 - dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
 - <as ziti>
+- ssh-keygen (defaults)
+  - Copy .ssh/id_rsa.pub to Bitbucket > Ziti > Repo Settings > Access Keys > Add Key
 - git clone git@bitbucket.org:movitto/ziti.git
 - cd ziti
 - CXXFLAGS="-Wno-cast-function-type" yarn install
-- edit config/config.js to point to db
+- edit config/config.js to point to db & set password (production)
+- edit config/ziti.js to set uri
+- edit config/auth_config.js to set email, twilio, stripe config
 - NODE_ENV='production' yarn db:migrate
 - NODE_ENV='production' yarn db:seed
 - <as root>
@@ -122,8 +138,6 @@ ziti setup:
 - systemctl enable ziti-api
 - systemctl start ziti-txs
 - systemctl enable ziti-txs
-- systemctl start ziti-filters
-- systemctl enable ziti-filters
 - systemctl start ziti-sinks
 - systemctl enable ziti-sinks
 - systemctl start ziti-users
@@ -167,6 +181,49 @@ letsencrypt setup:
 - EDITOR="vi" crontab -e
   - add
   30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
+
+ziti_worker1
+------------
+base setup:
+- <Set ziti_db ip in /etc/hosts>
+- adduser ziti
+- passwd ziti
+- touch /var/log/ziti.log
+- chown ziti.ziti /var/log/ziti.log
+- edit /etc/selinux/config to set SELINUX=disabled
+- reboot
+
+postgresql setup:
+- <login as ziti>
+- mkdir .postgresql
+- cd .postgresql
+- openssl genrsa -des3 -out postgresql.key 2048 # any passphrase
+- openssl rsa -in postgresql.key -out postgresql.key # remove passphrase
+- openssl req -new -key postgresql.key -out postgresql.csr -subj '/CN=ziti'
+- scp postgresql.csr ziti_db:~/
+- <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
+- scp ziti_db:~/postgresql.crt .
+- scp ziti_db:/var/lib/pgsql/data/root.crt .
+- chmod 600 postgrseql.*
+
+ziti setup:
+- <as root>
+- curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+- rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
+- dnf install epel-release
+- dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
+- <as ziti>
+- ssh-keygen (defaults)
+  - Copy .ssh/id_rsa.pub to Bitbucket > Ziti > Repo Settings > Access Keys > Add Key
+- git clone git@bitbucket.org:movitto/ziti.git
+- cd ziti
+- CXXFLAGS="-Wno-cast-function-type" yarn install
+- edit config/config.js to point to db & set password (production)
+- <as root>
+- ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
+- systemctl daemon-reload
+- systemctl start ziti-filters
+- systemctl enable ziti-filters
 
 zitui
 -----

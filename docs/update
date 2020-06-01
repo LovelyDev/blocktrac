@@ -37,7 +37,6 @@ Services:
 - systemctl start|stop|enable|disable|status <service name>
 - ziti-api
 - ziti-txs
-- ziti-filters
 - ziti-sinks
 - ziti-users
 
@@ -69,6 +68,48 @@ Ziti:
     - pg_dump to backup
     - yarn db:migrate
       - Verify db
+  - If dependencies added:
+    - yarn install
+  - If service files updated
+    - systemctl daemon-reload
+  - Start services
+  - Verify
+
+  <On local machine>
+  - Disable maintentance flag in zitui config
+  - Deploy
+  - Verify
+
+ziti_worker1
+------------
+Services:
+- systemctl start|stop|enable|disable|status <service name>
+- ziti-filters
+
+System:
+  <On local machine>
+  - Run through Zitui upgrade
+  - Enable maintenance flag in config before deploy
+
+  <On server>
+  - Stop services
+  - sudo dnf update
+  - sudo reboot
+  - Start services (in screen)
+  - Verify
+
+Ziti:
+  <On local machine>
+  - Run through Zitui upgrade
+  - Enable maintenance flag in config before deploy
+
+  <On server>
+  - Stash config : config.js, ziti.js, and auth_config.js
+  - Stop services
+  - git pull / checkout specific tag
+  - Restore production db host in config.js
+  - Restore uri in config/ziti.js
+  - Replace email, twilio, and stripe config in config/auth_config.js
   - If dependencies added:
     - yarn install
   - If service files updated
