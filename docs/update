@@ -37,8 +37,8 @@ Services:
 - systemctl start|stop|enable|disable|status <service name>
 - ziti-api
 - ziti-txs
-- ziti-sinks
 - ziti-users
+- scripts/status (optional)
 
 System:
   <On local machine>
@@ -63,12 +63,12 @@ Ziti:
   - Stop services
   - git pull / checkout specific tag
   - git apply ~/diff
+  - If dependencies added:
+    - yarn install
   - If db migrations:
     - pg_dump to backup
     - NODE_ENV='production' yarn db:migrate
       - Verify db
-  - If dependencies added:
-    - yarn install
   - If service files updated
     - systemctl daemon-reload
   - Start services
@@ -79,11 +79,12 @@ Ziti:
   - Deploy
   - Verify
 
-ziti_worker1
-------------
+ziti_worker1/ziti_worker2
+-------------------------
 Services:
 - systemctl start|stop|enable|disable|status <service name>
-- ziti-filters
+- ziti-filters (worker1)
+- ziti-sinks (worker2)
 
 System:
   <On local machine>

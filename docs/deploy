@@ -9,10 +9,12 @@ Setup 5 servers:
   - ziti web API
   - workers:
     - listen_for_txs
-    - notify_sinks
     - manage_users
+    - scripts/status
 - ziti_worker1
   - run_filters worker
+- ziti_worker2
+  - notify_sinks worker
 - zitui
   - httpd
   - zitui webapp
@@ -24,10 +26,11 @@ Startup linodes for each of the servers
   - enable linode backups    ($5/mo)
 - ziti_api     (Linode 4GB - $20/mo)
 - ziti_worker1 (Linode 8GB - $40/mo)
+- ziti_worker2 (Linode 8GB - $40/mo)
 - zitui        (Linode 2GB - $10/mo)
 - zitz1        (Linode 2GB - $10/mo)
                              ------
-                           ($105/mo)
+                           ($145/mo)
 
 Edit DNS:
 - point zerptracker.com A and AAAA records at zitui
@@ -55,6 +58,7 @@ postgrsql setup:
   - <change local, host ipv4, and host ipv6 to reject>
   - <add>: hostssl all             all                    <ZITI_API IP ADDR>/32     md5 clientcert=1
   - <add>: hostssl all             all                    <ZITI_WORKER1 IP ADDR>/32 md5 clientcert=1
+  - <add>: hostssl all             all                    <ZITI_WORKER2 IP ADDR>/32 md5 clientcert=1
   - <add>: hostssl all             all                    <ZITZ1 IP ADDR>/32        md5 clientcert=1
 - openssl genrsa -des3 -out server.key 2048 # any passphrase
 - openssl rsa -in server.key -out server.key # removes passphrase
@@ -83,6 +87,10 @@ postgrsql setup:
     port protocol="tcp" port="5432" accept'
 - firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
+    source address="<ZITI_WORKER2 IP>/32"
+    port protocol="tcp" port="5432" accept'
+- firewall-cmd --permanent --add-rich-rule='
+    rule family="ipv4"
     source address="<ZITZ1 IP>/32"
     port protocol="tcp" port="5432" accept'
 - firewall-cmd --reload
@@ -91,7 +99,7 @@ postgrsql setup:
 - createdb -O ziti ziti
 
 ziti_api
-----
+--------
 base setup:
 - <Set ziti_db ip in /etc/hosts>
 - adduser ziti
@@ -112,7 +120,7 @@ postgresql setup:
 - <on ziti_db>:  openssl x509 -req -days 3650 -in postgresql.csr -CA /var/lib/pgsql/data/root.crt -CAkey /var/lib/pgsql/data/server.key -out postgresql.crt -CAcreateserial
 - scp ziti_db:~/postgresql.crt .
 - scp ziti_db:/var/lib/pgsql/data/root.crt .
-- chmod 600 postgrseql.*
+- chmod 600 postgresql.*
 
 ziti setup:
 - <as root>
@@ -142,6 +150,8 @@ ziti setup:
 - systemctl enable ziti-sinks
 - systemctl start ziti-users
 - systemctl enable ziti-users
+- Optionally:
+  - NODE_ENV='production' /home/ziti/ziti/scripts/status.js
 
 network setup:
 - firewall-cmd --permanent --add-masquerade
@@ -183,8 +193,8 @@ letsencrypt setup:
   - add
   30 3 1 Feb,Apr,Jun,Aug,Oct,Dec * /home/ziti/renew_cert.sh >> /var/log/acme_tiny.log
 
-ziti_worker1
-------------
+ziti_worker1/ziti_worker2
+-------------------------
 base setup:
 - <Set ziti_db ip in /etc/hosts>
 - adduser ziti
@@ -220,11 +230,17 @@ ziti setup:
 - cd ziti
 - CXXFLAGS="-Wno-cast-function-type" yarn install
 - edit config/config.js to point to db & set password (production)
+- edit config/auth.js to set email and twilio credentials (production, worker2 only)
 - <as root>
 - ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
 - systemctl daemon-reload
-- systemctl start ziti-filters
-- systemctl enable ziti-filters
+- worker1:
+  - systemctl start ziti-filters
+  - systemctl enable ziti-filters
+- worker2:
+  - systemctl start ziti-sinks
+  - systemctl enable ziti-sinks
+
 
 zitui
 -----
