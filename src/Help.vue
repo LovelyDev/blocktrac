@@ -60,7 +60,7 @@ import MainLayout from './components/MainLayout'
 
 import ziti from './ziti'
 
-const caps_text =
+const sinks_caps_text =
   Object.keys(ziti.monthly_sink_caps).map(function(type){
     return type.toUpperCase() + " (" + ziti.monthly_sink_caps[type] + ")"
   }).join(", ")
@@ -157,7 +157,12 @@ export default {
             {
               title : "Is filter history retained?",
               value : "Currently Zerp Tracker retains the latest " + ziti.filter_transaction_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
-            }
+            },
+
+            {
+              title : "Are there limits to filter matches?",
+              value : "Currently Zerp Tracker imposes the a limit of " + ziti.filter_interval_cap + " matches every " + (ziti.timeouts.filter_reset/1000) + " seconds for every filter. Once a filter has exceeded the limit excess matches will be discard."
+            },
           ]
         },
 
@@ -176,7 +181,7 @@ export default {
 
             {
               title : "Are there limits to notifications?",
-              value : "Currently Zerp Tracker imposes the following base caps on the following notification types: " + caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " SMS notifications.<br/>Once you have exceeded the limit for a particular type, notifications will not be sent via that channel until your subscription is renewed."
+              value : "Currently Zerp Tracker imposes the following base caps on the following notification types: " + sinks_caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " SMS notifications.<br/>Once you have exceeded the limit for a particular type, notifications will not be sent via that channel until your subscription is renewed."
             },
 
             //{
