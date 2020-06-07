@@ -127,6 +127,11 @@ export default {
   font-size: 0.6rem;
 }
 
+#main_layout.sm .tx_timestamp,
+#main_layout.xs .tx_timestamp{
+  white-space: nowrap;
+}
+
 .tx_type{
   font-size: 0.8rem;
 }
