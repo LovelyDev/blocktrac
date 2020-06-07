@@ -100,11 +100,6 @@ export default {
 </script>
 
 <style scoped>
-#contact_form{
-  width: 50%;
-  margin: auto;
-}
-
 input,
 textarea{
   width: 100%;
