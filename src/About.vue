@@ -84,6 +84,7 @@
         </div>
 
         <div id="about_section5" class="about_section">
+          <div id="contact" />
           <h4>Contact Us</h4>
 
           <p style="text-align: center">

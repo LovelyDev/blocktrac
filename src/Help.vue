@@ -101,7 +101,7 @@ export default {
 
             {
                title : "Help! I'm really lost / need tech support / have questions...",
-               value : "You may contact Dev Null Productions using the form on the <a href='/about'>About</a> page"
+               value : "You may contact Dev Null Productions using this <a href='/about#contact'>form</a>."
             }
           ]
         },
