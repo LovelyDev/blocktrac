@@ -294,7 +294,8 @@ export default {
 
 #main_layout.sm #section2_img,
 #main_layout.xs #section2_img{
-  max-width: 70%;
+  width: 100%;
+  min-width: 100%;
 }
 
 #section2_content{
