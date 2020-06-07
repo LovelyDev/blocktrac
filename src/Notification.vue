@@ -19,10 +19,10 @@
         </span>
       </b-list-group-item>
 
-      <b-list-group-item v-for="tx in notification.MatchedTransactions"
-                         :key="tx.transaction.hash"
+      <b-list-group-item v-for="match in notification.FilterMatches"
+                         :key="match.hash"
                          class="tx_summary_container">
-        <TxSummary :tx="tx" />
+        <TxSummary :tx="match" />
       </b-list-group-item>
     </b-list-group>
   </TxsLayout>
@@ -60,7 +60,7 @@ export default {
       notification : {
         Filter : {},
         Sink : {},
-        MatchedTransactions : []
+        FilterMatches : []
       }
     }
   },
@@ -75,10 +75,10 @@ export default {
         .then(function(response){
           this.notification = response.body
 
-          this.notification.MatchedTransactions.forEach(function(matched_tx, t){
-            var tx = matched_tx.raw
-                tx.transaction.date = matched_tx.date
-            this.notification.MatchedTransactions[t] = tx
+          this.notification.FilterMatches.forEach(function(filter_match, t){
+            var tx = filter_match.Transaction.raw
+                tx.transaction.date = filter_match.Transaction.date
+            this.notification.FilterMatches[t] = tx
           }.bind(this))
 
         }.bind(this)).catch(function(err){

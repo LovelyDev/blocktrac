@@ -46,13 +46,13 @@ export default {
       }
     },
 
-    matched_txs : {
-      set : function(matched_txs){
-        this.$store.commit('set_matched_txs', matched_txs);
+    filter_matches : {
+      set : function(filter_matches){
+        this.$store.commit('set_filter_matches', filter_matches);
       },
 
       get : function(){
-        return this.$store.state.matched_txs;
+        return this.$store.state.filter_matches;
       }
     },
 
@@ -161,18 +161,18 @@ export default {
                 }.bind(this))
     },
 
-    // Loads matched transactions from server, storing the result
-    load_matched_txs : function(id){
+    // Loads filter matches from server, storing the result
+    load_filter_matches : function(id){
       this.$http.get(this.backend_url + "/filter/" + id + "/matches",
                                                     this.auth_header)
                 .then(function(response){
-                  // clear matched txs
-                  this.matched_txs = []
+                  // clear matches
+                  this.filter_matches = []
 
-                  response.body.forEach(function(matched_tx){
-                    var tx = matched_tx.raw
-                        tx.transaction.date = matched_tx.date;
-                    this.matched_txs.push(tx)
+                  response.body.forEach(function(matched){
+                    var tx = matched.Transaction.raw
+                        tx.transaction.date = matched.Transaction.date;
+                    this.filter_matches.push(tx)
                   }.bind(this))
 
                 }.bind(this)).catch(function(err){

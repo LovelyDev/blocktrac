@@ -43,11 +43,11 @@ export const store = new Vuex.Store({
                           }, {}),
 
     // Constructs retrieved via the Ziti Server API
-          templates : [],
-              sinks : [],
-            filters : [],
-        matched_txs : [],
-      notifications : [],
+           templates : [],
+               sinks : [],
+             filters : [],
+      filter_matches : [],
+       notifications : [],
 
     active_filter : {},
     in_progress_filter : {},
@@ -187,9 +187,9 @@ export const store = new Vuex.Store({
       state.filters = filters;
     },
 
-    // Store matched transactions retrieved from server
-    set_matched_txs(state, matched_txs){
-      state.matched_txs = matched_txs;
+    // Store filter matches retrieved from server
+    set_filter_matches(state, filter_matches){
+      state.filter_matches = filter_matches;
     },
 
     // Store notifications retrieved from server

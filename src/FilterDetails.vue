@@ -9,7 +9,7 @@
     <div id="filter_details">
       <FilterHeader />
 
-      <div v-if="matched_txs.length == 0" id="no_matches">
+      <div v-if="filter_matches.length == 0" id="no_matches">
         <img id="no_matches_icon"
              src="./assets/bell-green-border.svg" />
 
@@ -47,10 +47,10 @@
             </span>
           </b-list-group-item>
 
-          <b-list-group-item v-for="tx in matched_txs"
-                             :key="tx.transaction.hash"
+          <b-list-group-item v-for="match in filter_matches"
+                             :key="match.transaction.hash"
                              class="tx_summary_container">
-            <TxSummary :tx="tx" />
+            <TxSummary :tx="match" />
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -108,7 +108,7 @@ export default {
     // XXX: need to watch route incase switching between filters
     $route : function(){
       this.load_filter(this.id)
-      this.load_matched_txs(this.id)
+      this.load_filter_matches(this.id)
     }
   },
 
@@ -119,7 +119,7 @@ export default {
     }
 
     this.load_filter(this.id)
-    this.load_matched_txs(this.id)
+    this.load_filter_matches(this.id)
   }
 }
 </script>

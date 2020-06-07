@@ -19,7 +19,7 @@
     </div>
 
     <div class="transactions">
-      {{notification.MatchedTransactions.length}}
+      {{notification.FilterMatches.length}}
     </div>
   </div>
 </template>
