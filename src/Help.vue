@@ -31,7 +31,9 @@
 
           <multiselect v-else
                        v-model="active"
-                       :options="categories">
+                       :options="categories"
+                       :searchable="false"
+                       deselectLabel="">
             <template slot="option" slot-scope="props">
               <div class="help_category">
                 <div class="category_icon">

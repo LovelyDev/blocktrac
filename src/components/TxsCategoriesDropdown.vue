@@ -10,7 +10,10 @@
                  :options="categories"
                  placeholder="Select Transaction Types"
                  :multiple="true"
-                 :close-on-select="false">
+                 :close-on-select="false"
+                 :searchable="false"
+                 selectLabel=""
+                 deselectLabel="">
       <template slot="option" slot-scope="props">
         <div class="tx_category">
           <img :src="category_icon(props.option)" class="category_icon" />

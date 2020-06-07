@@ -8,7 +8,10 @@
   <div id="my_filters">
     <multiselect :options="filters"
                  placeholder="My Filters"
-                 @select="nav_to_filter">
+                 @select="nav_to_filter"
+                 :searchable="false"
+                 open-direction="bottom"
+                 selectLabel="">
       <template slot="option" slot-scope="props">
         <FilterSummary :filter="props.option" />
       </template>
