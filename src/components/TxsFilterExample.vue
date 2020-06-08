@@ -11,9 +11,8 @@
       Example:
     </div>
 
-    <div id="txs_filter_example_jsonpath"
-          @click="set_filter(example)">
-      <span>{{example}}</span>
+    <div id="txs_filter_example_jsonpath">
+      <span @click="set_filter(example)">{{example}}</span>
 
       <img id="txs_filter_example_icon"
            v-b-modal.txs_filter_help
