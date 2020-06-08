@@ -12,6 +12,7 @@
 
     <div>
       <input type="text"
+             autocapitalize="none"
              @keyup.enter="submit"
              :value="email"
              @input="evnt=> email = evnt.target.value" />
