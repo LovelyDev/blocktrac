@@ -29,7 +29,8 @@
     <div>
       <textarea rows="20"
                 @keyup.enter="submit"
-                v-model="inquiry" />
+                :value="inquiry"
+                @input="evnt=> inquiry = evnt.target.value" />
     </div>
 
     <div id="submit">
