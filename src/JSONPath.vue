@@ -100,7 +100,7 @@
          <b-alert show variant="warning" id="top_level_wrapper_note">
          <span><b>Note</b>:</span>
          <span style="margin-left: 10px">
-         Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying: <b>{ transaction : &lt;actual transaction&gt; }</b>
+         Before processing, Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying: <b>{ transaction : &lt;actual transaction&gt; }</b>
          </span>
          </b-alert>
 

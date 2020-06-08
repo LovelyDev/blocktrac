@@ -36,7 +36,7 @@ export default {
 
   data : function(){
     return {
-      example : '$..[?(parseInt(@.Amount) > 500000000)]'
+      example : '$.transaction[?(parseInt(@.Amount) > 500000000)]'
     };
   },
 

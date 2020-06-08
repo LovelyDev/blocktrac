@@ -6,6 +6,7 @@
   -->
 <template>
   <b-modal id="txs_filter_help"
+           ref="txs_filter_help"
            title="JSONPath Help"
            header-class="modal_header"
            size="lg"
@@ -27,6 +28,7 @@ export default {
   methods : {
     set_filter : function(filter){
       this.$store.commit('update_tx_filter', filter);
+      this.$refs.txs_filter_help.hide()
     }
   }
 }
