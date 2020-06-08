@@ -25,6 +25,7 @@
 
       <b-col v-else>
         <input class="form_input" type="text"
+               autocapitalize="none"
                :value="auth_email"
                @input="evnt=> auth_email = evnt.target.value" />
 
