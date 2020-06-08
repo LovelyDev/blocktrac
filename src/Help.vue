@@ -188,7 +188,7 @@ export default {
             },
 
             {
-              title : "How can I be altered more frequently / instantaneously?",
+              title : "How can I be alerted more frequently / instantaneously?",
               value : "Sign up for a higher subscription level to access more features."
             },
 
