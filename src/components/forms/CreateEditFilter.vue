@@ -87,6 +87,9 @@
             <span v-else-if="is_expression_filter && !valid_expression">
               Invalid expression
             </span>
+            <span v-else-if="is_expression_filter && !safe_expression">
+              {{unsafety_reasons}}
+            </span>
             <span v-else class="placeholder" />
           </div>
         </td>
@@ -198,6 +201,27 @@ export default {
              util.is_valid_jsonpath(this.jsonpath);
     },
 
+    safe_expression : function(){
+      return this.has_expression &&
+             this.valid_expression &&
+            !util.is_jsonpath_unsafe(this.jsonpath);
+    },
+
+    unsafety_reasons : function(){
+      if(this.safe_expression) return;
+      return Object.keys(util.why_jsonpath_unsafe(this.jsonpath))
+                   .map(function(reason){
+                     if(reason == "invalid_code")
+                       return "Invalid expression"
+                     else if(reason == "has_function")
+                       return "Cannot declare function"
+                     else if(reason == "has_loop")
+                       return "Cannot use loops"
+                     else if(reason == "has_call")
+                       return "Cannot call functions"
+                   }).join(", ")
+    },
+
     params_are_valid : function(){
       if(!this.template_has_params) return true;
 
@@ -216,8 +240,12 @@ export default {
 
     is_valid : function(){
       return this.name &&
-           ((this.is_expression_filter && this.valid_expression) ||
-            (this.is_template_filter   && this.params_are_valid))
+           ((this.is_expression_filter &&
+             this.valid_expression     &&
+             this.safe_expression)     ||
+
+            (this.is_template_filter   &&
+             this.params_are_valid))
     },
 
     ///
