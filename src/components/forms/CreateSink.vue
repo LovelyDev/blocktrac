@@ -11,6 +11,7 @@
       <td>
         <input class="form_input"
                type="text"
+               autocapitalize="none"
                v-model="target" />
 
         <div v-if="!have_target"

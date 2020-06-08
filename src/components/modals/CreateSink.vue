@@ -29,7 +29,7 @@ import util from '../../util'
 export default {
   name: 'CreateSinkModal',
 
-  mixins : [Authentication, Validatable],
+  mixins : [Authentication, ServerAPI, Validatable],
 
   props : {
     id : {
