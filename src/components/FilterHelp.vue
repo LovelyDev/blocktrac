@@ -47,7 +47,7 @@
 
       <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
-          $.transaction[?(@.TransactionType != 'OfferCreate')]
+          $.transaction[?(@.TransactionType && @.TransactionType != 'OfferCreate')]
         </b>
         <br/>
         Filter out OfferCreate Transactions
@@ -55,7 +55,7 @@
 
       <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
-          $.meta[?(@.TransactionResult == 'tesSUCCESS')]
+          $.transaction[?(@.TransactionResult == 'tesSUCCESS')]
         </b>
         <br/>
         Filter Transactions by specific result type
