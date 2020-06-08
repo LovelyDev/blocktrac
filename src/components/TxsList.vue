@@ -42,9 +42,9 @@
 
       <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
-                           :key="tx.transaction.hash"
+                           :key="tx.transaction.transaction.hash"
                            class="tx_summary_container">
-          <TxSummary :tx="tx" />
+          <TxSummary :tx="tx.transaction" />
         </b-list-group-item>
       </b-list-group>
 

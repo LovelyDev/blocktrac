@@ -119,11 +119,13 @@ export const store = new Vuex.Store({
     add_tx(state, tx){
       if(state.paused_txs) return;
 
+      const wrapped = { transaction : tx }
+
       if(state.tx_filter)
-        if(jsonpath.query(tx, state.tx_filter).length == 0)
+        if(jsonpath.query(wrapped, state.tx_filter).length == 0)
           return;
 
-      var category = config.tx_category_for_type(tx["transaction"]["TransactionType"]);
+      var category = config.tx_category_for_type(wrapped["transaction"]["transaction"]["TransactionType"]);
       if(state.tx_categories.length != 0 &&
         !state.tx_categories.includes(category))
         return;
@@ -131,10 +133,10 @@ export const store = new Vuex.Store({
       state.loading_txs = false;
 
       // making message reactive slows down perf
-      Object.freeze(tx);
+      Object.freeze(wrapped);
 
       // Add to txs list and cap number
-      state.txs.unshift(tx);
+      state.txs.unshift(wrapped);
       state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
 
       // Update tallies
@@ -159,7 +161,7 @@ export const store = new Vuex.Store({
 
       // Filter txs by category
       state.txs = state.txs.filter(function(tx){
-        var category = config.tx_category_for_type(tx["transaction"]["TransactionType"]);
+        var category = config.tx_category_for_type(tx["transaction"]["transaction"]["TransactionType"]);
         return(state.tx_categories.length == 0 ||
                state.tx_categories.includes(category))
       })

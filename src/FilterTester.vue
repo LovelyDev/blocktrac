@@ -40,9 +40,9 @@
           </b-list-group-item>
 
           <b-list-group-item v-for="tx in matched_tests"
-                             :key="tx.transaction.hash"
+                             :key="tx.transaction.transaction.hash"
                              class="tx_summary_container">
-            <TxSummary :tx="tx" />
+            <TxSummary :tx="tx.transaction" />
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -66,7 +66,7 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 const captured_txs =
   require("./assets/captured_txs.json").reduce(function(ct, ctx){
-    ct[ctx.replace(".json", "")] = Object.freeze(require("./assets/captured_txs/" + ctx))
+    ct[ctx.replace(".json", "")] = Object.freeze({ transaction : require("./assets/captured_txs/" + ctx)})
     return ct;
   }, {});
 

@@ -25,6 +25,13 @@
       <li>And anything else!</li>
     </ul>
 
+    <b-alert show variant="warning" id="top_level_wrapper_note">
+    <span><b>Note</b>:</span>
+    <span style="margin-left: 10px">
+      Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying: <b>{ transaction : &lt;actual transaction&gt; }</b>
+    </span>
+    </b-alert>
+
     <p>
     For example the following are valid JSONPath expressions:
     </p>
@@ -56,7 +63,7 @@
 
       <li class="filter_help_example">
         <b class="json_example" v-on:click="set_filter">
-          $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
+          $.transaction.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
         </b>
         <br/>
         View transactions which create new accounts
@@ -80,6 +87,11 @@ export default {
 <style>
 #filter_help{
   color: var(--theme-color2);
+}
+
+#top_level_wrapper_note{
+  font-size: 1.1rem;
+  display: flex;
 }
 
 #filter_help_examples{
