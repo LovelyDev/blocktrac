@@ -12,6 +12,7 @@
         <input ref="email"
                class="form_input"
                type="text"
+               autocapitalize="none"
                @keyup.enter="$emit('submit')"
                v-model="auth_email" />
 
