@@ -80,6 +80,8 @@ export default {
 #filter_subheader{
   display: flex;
   align-items: center;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 #filter_subheader_icon{

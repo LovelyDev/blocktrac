@@ -12,7 +12,7 @@
       <span id="live_link"
             class="filter_action"
             v-if="!is_filter_page">
-          <img src="../assets/filters-back.png" width="25px" />
+          <img src="../assets/filters-back.png" width="25px" height="25px" />
           <span>Back to Live Filtering</span>
       </span>
     </router-link>
@@ -84,6 +84,7 @@ export default {
 #main_layout.sm #filter_actions,
 #main_layout.xs #filter_actions{
   flex-direction: column;
+  min-width: unset;
 }
 
 #filter_actions a{
