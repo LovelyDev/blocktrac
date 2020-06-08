@@ -55,7 +55,7 @@
     <tr>
       <td colspan="2" id="tos_agree">
         <b-form-checkbox v-model="tos_agree">
-        I agree to the <router-link to="/terms">Terms of Service</router-link>
+        I agree to the <router-link to="/terms" target="_blank">Terms of Service</router-link>
         </b-form-checkbox>
       </td>
     </tr>
