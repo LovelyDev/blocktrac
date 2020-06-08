@@ -25,13 +25,6 @@
       <li>And anything else!</li>
     </ul>
 
-    <b-alert show variant="warning" id="top_level_wrapper_note">
-    <span><b>Note</b>:</span>
-    <span style="margin-left: 10px">
-      Before processing, Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying:<br/><b>{ transaction : &lt;actual transaction&gt; }</b>
-    </span>
-    </b-alert>
-
     <p>
     For example the following are valid JSONPath expressions:
     </p>
@@ -69,6 +62,12 @@
         View transactions which create new accounts
       </li>
     </ul>
+
+    <hr/>
+
+    <p>
+      See our <router-link to="/jsonpath">JSONPath</router-link> tutorial for specific details pertaining to creating your own expressions, as well as common <router-link to="/help/Filters">questions and answers</router-link>.
+    </p>
   </div>
 </template>
 
