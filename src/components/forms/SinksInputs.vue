@@ -30,6 +30,7 @@
                   placeholder="Select Email"
                   selectLabel=""
                 deselectLabel=""
+                  :searchable="false"
                     :multiple="true"
                         label="text"
                      track-by="value"
@@ -66,6 +67,7 @@
                   placeholder="Select Phone Number"
                   selectLabel=""
                 deselectLabel=""
+                  :searchable="false"
                     :multiple="true"
                         label="text"
                      track-by="value"
@@ -94,6 +96,7 @@
                   placeholder="Select URL"
                   selectLabel=""
                 deselectLabel=""
+                  :searchable="false"
                     :multiple="true"
                         label="text"
                      track-by="value"
@@ -126,6 +129,8 @@
 import CreateSinkModal from '../modals/CreateSink'
 import Authentication  from '../../mixins/authentication'
 import ServerAPI       from '../../mixins/server_api'
+
+// TODO mobile rendering, create email on mobile
 
 import util from '../../util'
 
