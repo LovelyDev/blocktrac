@@ -7,7 +7,7 @@
 <template>
   <MainLayout section="jsonpath">
     <div id="jsonpath">
-      <h1 id="jsonpath">JSONPath</h1>
+      <h1 id="jsonpath_title">JSONPath</h1>
 
       <div id="jsonpath_content">
         <h3>Syntax</h3>
@@ -19,8 +19,8 @@
         <p>
 
          <p>
-           Expressions can use <b>dot-notation</b> (<i>$.transaction.Paths[0][0].currency</i>)
-           or <b>bracket-notation</b> (<i>$['transaction']['Paths'][0][0]['currency']</i>)
+           Expressions can use <b>dot-notation</b> (<i>$.transaction.transaction.Paths[0][0].currency</i>)
+           or <b>bracket-notation</b> (<i>$['transaction']['transaction']['Paths'][0][0]['currency']</i>)
            for input paths.
          </p>
 
@@ -29,12 +29,12 @@
          </p>
 
          <p>
-           <b>Script expressions</b> can be used as an alternative to explicit names or indices as in: <i>$.transaction.Paths[(@.length-1)][0].issuer</i>,
+           <b>Script expressions</b> can be used as an alternative to explicit names or indices as in: <i>$.transaction.transaction.Paths[(@.length-1)][0].issuer</i>,
            using the symbol <b>@</b> for the current object.
          </p>
 
          <p>
-           Filter expressions are supported via the syntax <b>?(&lt;boolean expr&gt;)</b> as in: <i>$.transaction.TakerGets[?(@.currency == 'CNY')]</i>
+           Filter expressions are supported via the syntax <b>?(&lt;boolean expr&gt;)</b> as in: <i>$.transaction.transaction.TakerGets[?(@.currency == 'CNY')]</i>
          </p>
 
         <h3>Structure</h3>
@@ -98,15 +98,18 @@
          </p>
 
          <b-alert show variant="warning" id="top_level_wrapper_note">
-         <span><b>Note</b>:</span>
-         <span style="margin-left: 10px">
-         Before processing, Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying: <b>{ transaction : &lt;actual transaction&gt; }</b>
-         </span>
+           Before processing, Zerp Tracker wraps all XRP transactions in the following top level object:
+
+           <br v-if="mq_xs" />
+
+           <span id="transaction_wrapper_text">
+             <b>{ transaction : &lt;actual transaction&gt; }</b>
+           </span>
          </b-alert>
 
          <renderjson :data="tx" level="4" />
 
-         <table>
+         <table id="example_table">
          <tr>
            <th>JSONPath</th><th>Result</th>
          </tr>
@@ -142,6 +145,14 @@
 
         <br/>
 
+        <h3 id="gotchyas">Common Gotchyas</h3>
+
+        <ul>
+          <li>Zerp Tracker wraps transactions in a top level <b>transaction</b> object. Make sure to incoporate this into your JSONPath expression and/or use the recursive descent operatior: <b>..</b></li>
+          <li>Transactions returned by a XRPL server are in different formats depending on context. Transactions which are sent to clients in the <b>transaction stream</b> have <b>transaction</b> and <b>meta</b> objects (see the example above) whereas those returned by the <a href="https://xrpl.org/tx.html#response-format"><b>tx command</b></a> embed the <b>meta</b> object but and transaction fields in a top level <b>result</b> object. <b>Zerp tracker runs filter expressions against transaction stream transcations</b></li>
+          <li>Make sure to check for typos and structural inconsistencies against actual XRPL data</li>
+        </ul>
+
         <h3>Testing Expressions</h3>
 
         <p>
@@ -149,7 +160,7 @@
         </p>
 
         <p>
-        Saved filter expressions can be tested against a variety of pre-captured expressions by navigation to the <b>Filter Details Page</b> and clicking <b>Test Filter</b>.
+        Saved filter expressions can be tested against a variety of pre-captured transactions by navigating to the <b>Filter Details Page</b> and clicking <b>Test Filter</b>.
         </p>
       </div>
     </div>
@@ -302,16 +313,22 @@ export default {
   border: 1px solid #ededed;
   border-radius: 5px;
   background-color: white;
+  font-family: var(--theme-font1);
 }
 
 #main_layout.md #jsonpath_content,
 #main_layout.sm #jsonpath_content,
 #main_layout.xs #jsonpath_content{
-  padding: 5px;
+  padding: 10px;
 }
 
 table{
   width: 100%;
+}
+
+#main_layout.sm table,
+#main_layout.xs table{
+  word-break: break-word;
 }
 
 tr{
@@ -324,6 +341,17 @@ th, td{
 
 #top_level_wrapper_note{
   font-size: 1.1rem;
-  display: flex;
+}
+
+#main_layout.xs #top_level_wrapper_note{
+  font-size: 0.8rem;
+}
+
+#transaction_wrapper_text{
+  white-space: pre;
+}
+
+#main_layout.xs #transaction_wrapper_text{
+  white-space: unset;
 }
 </style>

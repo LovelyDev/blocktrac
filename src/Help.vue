@@ -163,6 +163,11 @@ export default {
             },
 
             {
+              title : "Why isn't my expression working?",
+              value : "Make sure you are building expressions for the correct transaction structure, account for the wrapping of transactions in the top level <b>transaction</b> object, and do not have any typos or other mistakes. See the <a href='/jsonpath#gotchyas'>gotchyas</a> in our JSONPath guide for more details."
+            },
+
+            {
               title : "Is filter history retained?",
               value : "Currently Zerp Tracker retains the latest " + ziti.filter_transaction_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
             },

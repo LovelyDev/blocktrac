@@ -88,11 +88,6 @@ export default {
   color: var(--theme-color2);
 }
 
-#top_level_wrapper_note{
-  font-size: 1.1rem;
-  display: flex;
-}
-
 #filter_help_examples{
   padding-left: 15px;
   list-style-type: none;
