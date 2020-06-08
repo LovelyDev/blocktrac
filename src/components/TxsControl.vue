@@ -16,15 +16,22 @@
       <img src="../assets/trash-red.svg" />
     </span>
 
-    <span v-if="mq_lte_md" class="txs_icon" style="margin-left: 5px;" v-b-modal.settings_modal>
+    <span v-if="logged_in && mq_lte_md"
+          class="txs_icon"
+          style="margin-left: 5px;"
+          v-b-modal.settings_modal>
       <img src="../assets/gear-gray.svg" />
     </span>
   </span>
 </template>
 
 <script>
+import Authentication from '../mixins/authentication'
+
 export default {
   name: 'TxsControl',
+
+  mixins : [Authentication],
 
   computed : {
     paused : function(){
