@@ -18,12 +18,13 @@
 
         <input type="text"
                placeholder="Account ID"
-               v-model="account" /> </div>
+               v-model="account" />
+      </div>
 
-        <div id="account_monitor_error"
-             v-if="have_account && !is_valid_account">
-          Invalid Account
-        </div>
+      <div id="account_monitor_error"
+           v-if="have_account && !is_valid_account">
+        Invalid Account
+      </div>
     </div>
   </div>
 </template>
