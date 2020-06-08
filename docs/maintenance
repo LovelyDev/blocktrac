@@ -8,6 +8,7 @@ Twice Daily
 - Ensure transactions are not accumulating w/out processing
 - Ensure matched transactions are not accumulating w/out notification
 - Ensure systems are not under strain, and disk usage is normal
+  - Ensure database isn't reporting errors
 - Check emails for contacts, complaints
 
 Twice weekly
