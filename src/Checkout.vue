@@ -135,6 +135,14 @@
           </tr>
 
           <tr>
+            <td colspan="2" id="tos_agree">
+              <b-form-checkbox v-model="tos_agree">
+              I agree to the <router-link to="/terms" target="_blank">Terms of Service</router-link>
+              </b-form-checkbox>
+            </td>
+          </tr>
+
+          <tr>
             <td v-if="mq_gte_md"></td>
             <td style="text-align: right">
               <b-button id="place_order"
@@ -183,7 +191,8 @@ export default {
       use_existing_credit_card : true,
       card_number : '',
       expiration_date : '',
-      security_code : ''
+      security_code : '',
+      tos_agree : false
     }
   },
 
@@ -228,12 +237,16 @@ export default {
       return renewal.toLocaleDateString()
     },
 
-    is_valid: function(){
+    credit_card_valid: function(){
       return (this.has_credit_card && this.use_existing_credit_card) ||
              (this.have_credit_card_number &&
              !this.invalid_credit_card_number &&
               this.have_credit_card_cvc &&
              !this.invalid_credit_card_cvc);
+    },
+
+    is_valid: function(){
+      return this.credit_card_valid && this.tos_agree;
     },
 
     plan_params : function(){
@@ -433,6 +446,11 @@ export default {
 #credit_card_year{
   width: 100px;
   text-align: right;
+}
+
+#tos_agree{
+  text-align: right;
+  padding-bottom: 10px;
 }
 
 #place_order{
