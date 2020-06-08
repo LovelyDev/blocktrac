@@ -10,7 +10,7 @@
       <h1 id="jsonpath_title">JSONPath</h1>
 
       <div id="jsonpath_content">
-        <h3>Syntax</h3>
+        <h3 id="syntax">Syntax</h3>
 
         <p>The following is a brief overview of the JSONPath expression syntax.</p>
 
@@ -37,7 +37,7 @@
            Filter expressions are supported via the syntax <b>?(&lt;boolean expr&gt;)</b> as in: <i>$.transaction.transaction.TakerGets[?(@.currency == 'CNY')]</i>
          </p>
 
-        <h3>Structure</h3>
+        <h3 id="structure">Structure</h3>
 
          <p>
            Here is a complete overview of the JSONPath syntax elements:
@@ -91,7 +91,7 @@
 
          <br/>
 
-         <h3>JSONPath example</h3>
+         <h3 id="example">JSONPath example</h3>
 
          <p>
          The following is a transaction from the XRP transaction stream
@@ -153,7 +153,7 @@
           <li>Make sure to check for typos and structural inconsistencies against actual XRPL data</li>
         </ul>
 
-        <h3>Testing Expressions</h3>
+        <h3 id="testing">Testing Expressions</h3>
 
         <p>
         On the <router-link to="/txs">Live Transactions</router-link> page you can build and test JSONPath expressions which are evaluated in real-time against the live transaction stream. Once you have an expression that meets your criteria, click the <b>Save Filter</b> button to be notified of matches.
