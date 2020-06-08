@@ -11,12 +11,16 @@
 
       <div id="profile_content">
         <ProfileForm      ref="form"
-                     @editing="enable_save = true"
-                 @not_editing="enable_save = false"
+                     @editing="enable_controls = true"
+                 @not_editing="enable_controls = false"
                    @validated="validate($event)"/>
 
-        <div v-show="enable_save"
-             id="save_wrapper">
+        <div v-show="enable_controls"
+                id="controls_wrapper">
+          <b-button @click="reset_form">
+            Cancel
+          </b-button>
+
           <b-button :disabled="!is_valid"
                     @click="save_profile">
             Save
@@ -54,11 +58,15 @@ export default {
 
   data : function(){
     return {
-      enable_save : false
+      enable_controls : false
     }
   },
 
   methods : {
+    reset_form : function(){
+      this.$refs.form.reset()
+    },
+
     save_profile : function(){
       var params = {}
 
@@ -87,7 +95,7 @@ export default {
             if(editing_email)
               msg += 'Confirmation code was sent to your new email'
 
-            this.$refs.form.reset()
+            this.reset_form()
 
             alert(msg)
 
@@ -142,8 +150,12 @@ export default {
   padding: 10px;
 }
 
-#save_wrapper{
+#controls_wrapper{
   margin: 10px;
   text-align: right;
+}
+
+#controls_wrapper button{
+  margin: 5px;
 }
 </style>
