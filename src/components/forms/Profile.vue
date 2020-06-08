@@ -25,7 +25,8 @@
 
       <b-col v-else>
         <input class="form_input" type="text"
-               v-model="auth_email" />
+               :value="auth_email"
+               @input="evnt=> auth_email = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="invalid_email">Invalid Email</span>
@@ -60,7 +61,8 @@
 
       <b-col v-else>
         <input class="form_input" type="password"
-               v-model="auth_password" />
+               :value="auth_password"
+               @input="evnt=> auth_password = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="weak_password">Weak password</span>
@@ -91,7 +93,8 @@
 
       <b-col>
         <input class="form_input" type="password"
-               v-model="auth_password_confirm" />
+               :value="auth_password_confirm"
+               @input="evnt=> auth_password_confirm = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="password_mismatch">Passwords do not match</span>
@@ -207,7 +210,8 @@
                type="text"
                maxlength="3"
                size="3"
-               v-model="credit_card_cvc" />
+               :value="credit_card_cvc"
+               @input="evnt=> credit_card_cvc = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="invalid_credit_card_cvc">Must be 3 digits</span>

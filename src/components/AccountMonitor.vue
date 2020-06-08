@@ -18,7 +18,8 @@
 
         <input type="text"
                placeholder="Account ID"
-               v-model="account" />
+               :value="account"
+               @input="evnt=> account = evnt.target.value" />
       </div>
 
       <div id="account_monitor_error"

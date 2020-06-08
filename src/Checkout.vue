@@ -98,7 +98,8 @@
                        maxlength="3"
                        size="3"
                        :disabled="has_credit_card && use_existing_credit_card"
-                       v-model="credit_card_cvc" />
+                       :value="credit_card_cvc"
+                       @input="evnt=> credit_card_cvc = evnt.target.value" />
 
                 <div class="form_text form_error">
                   <span v-if="invalid_credit_card_cvc">Must be 3 digits</span>

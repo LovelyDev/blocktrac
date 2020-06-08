@@ -54,8 +54,9 @@
                       caused more styling issues than it's worth, just convert below -->
             <input class="form_input"
                    type="text"
-                   v-model="params[p-1]"
-                   :disabled="editing_filter" />
+                   :disabled="editing_filter"
+                   :value="params[p-1]"
+                   @input="evnt=> params[p-1] = evnt.target.value" />
 
             <div class="form_text form_error">
               <span v-if="is_template_filter &&
@@ -78,7 +79,8 @@
                  type="text"
                  title="expression"
                  placeholder="JSONPath Expression..."
-                 v-model="jsonpath" />
+                 :value="jsonpath"
+                 @input="evnt=> jsonpath = evnt.target.value" />
 
           <div class="form_text form_error">
             <span v-if="is_expression_filter && !has_expression">
@@ -101,7 +103,8 @@
         <td>
           <input class="form_input"
                  type="text"
-                 v-model="name" />
+                 :value="name"
+                 @input="evnt=> name = evnt.target.value" />
 
           <div class="form_text form_error">
             <span v-if="!has_name">Name required</span>

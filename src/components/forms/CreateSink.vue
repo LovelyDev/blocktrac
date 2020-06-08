@@ -12,7 +12,8 @@
         <input class="form_input"
                type="text"
                autocapitalize="none"
-               v-model="target" />
+               :value="target"
+               @input="evnt=> target = evnt.target.value" />
 
         <div v-if="!have_target"
              class="form_text form_error">

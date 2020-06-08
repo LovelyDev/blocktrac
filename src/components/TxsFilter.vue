@@ -15,8 +15,9 @@
         <span class="text">}</span>
       </span>
 
-      <input v-model="expression"
-             placeholder="JSONPath Expression..." />
+      <input placeholder="JSONPath Expression..."
+             :value="expression"
+             @input="evnt=> expression = evnt.target.value" />
 
       <TxsFilterControls v-if="mq_gt_md" />
 

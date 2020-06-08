@@ -13,7 +13,8 @@
     <div>
       <input type="text"
              @keyup.enter="submit"
-             v-model="email" />
+             :value="email"
+             @input="evnt=> email = evnt.target.value" />
     </div>
 
     <div v-if="have_email && !is_email_valid" id="email_invalid">

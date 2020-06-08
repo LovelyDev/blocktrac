@@ -14,7 +14,8 @@
                type="text"
                autocapitalize="none"
                @keyup.enter="$emit('submit')"
-               v-model="auth_email" />
+               :value="auth_email"
+               @input="evnt=> auth_email = evnt.target.value" />
       </td>
     </tr>
 
@@ -24,7 +25,8 @@
         <input class="form_input"
                type="password"
                @keyup.enter="$emit('submit')"
-               v-model="auth_password" />
+               :value="auth_password"
+               @input="evnt=> auth_password = evnt.target.value" />
       </td>
     </tr>
 

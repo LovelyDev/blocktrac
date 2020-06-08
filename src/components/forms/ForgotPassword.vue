@@ -13,7 +13,8 @@
                class="form_input"
                type="text"
                @keyup.enter="$emit('submit')"
-               v-model="auth_email" />
+               :value="auth_email"
+               @input="evnt=> auth_email = evnt.target.value" />
       </td>
     </tr>
   </table>

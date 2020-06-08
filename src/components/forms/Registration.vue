@@ -14,7 +14,8 @@
                type="text"
                autocapitalize="none"
                @keyup.enter="$emit('submit')"
-               v-model="auth_email" />
+               :value="auth_email"
+               @input="evnt=> auth_email = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="invalid_email">Invalid Email</span>
@@ -29,7 +30,8 @@
         <input class="form_input"
                type="password"
                @keyup.enter="$emit('submit')"
-               v-model="auth_password" />
+               :value="auth_password"
+               @input="evnt=> auth_password = evnt.target.value" />
 
         <div class="form_text form_error">
           <span v-if="weak_password">Weak password</span>
@@ -44,7 +46,8 @@
         <input class="form_input"
                type="password"
                @keyup.enter="$emit('submit')"
-               v-model="auth_password_confirm" />
+               :value="auth_password_confirm"
+               @input="evnt=> auth_password_confirm = evnt.target.value" />
         <div class="form_text form_error">
           <span v-if="password_mismatch">Passwords do not match</span>
           <span v-else class="placeholder" />
