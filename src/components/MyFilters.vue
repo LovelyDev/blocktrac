@@ -50,7 +50,6 @@
     </div>
 
     <CreateFilterModal @created="$refs.filter_list.load_filters()" />
-    <SettingsModal />
   </div>
 </template>
 
@@ -59,7 +58,6 @@ import Authentication    from '../mixins/authentication'
 import HasFilters        from '../mixins/has_filters'
 import FilterList        from './FilterList'
 import CreateFilterModal from './modals/CreateFilter'
-import SettingsModal     from './modals/Settings'
 
 export default {
   name: 'MyFilters',
@@ -68,8 +66,7 @@ export default {
 
   components : {
     FilterList,
-    CreateFilterModal,
-    SettingsModal
+    CreateFilterModal
   }
 }
 </script>

@@ -15,6 +15,10 @@
     <span id="clear_txs" class="txs_icon" v-on:click="clear_txs">
       <img src="../assets/trash-red.svg" />
     </span>
+
+    <span v-if="mq_lte_md" class="txs_icon" style="margin-left: 5px;" v-b-modal.settings_modal>
+      <img src="../assets/gear-gray.svg" />
+    </span>
   </span>
 </template>
 

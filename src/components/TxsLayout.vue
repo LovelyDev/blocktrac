@@ -29,6 +29,8 @@
         </div>
       </div>
     </div>
+
+    <SettingsModal />
   </MainLayout>
 </template>
 
@@ -37,13 +39,16 @@ import MainLayout from './MainLayout'
 import TxsControl from './TxsControl'
 import TxsSideBar from './TxsSideBar'
 
+import SettingsModal from './modals/Settings'
+
 export default {
   name: 'Txs',
 
   components: {
     MainLayout,
     TxsControl,
-    TxsSideBar
+    TxsSideBar,
+    SettingsModal
   },
 
   props : {
