@@ -12,16 +12,16 @@
       <div id="help_content">
         <div id="help_categories">
           <b-list-group v-if="mq_gt_md">
-            <b-list-group-item v-for="category in categories"
-                               :key="category"
+            <b-list-group-item v-for="cat in categories"
+                               :key="cat"
                                class="help_category"
-                               :class="{active : is_active(category)}"
-                               @click="set_active(category)">
+                               :class="{active : is_active(cat)}"
+                               @click="set_active(cat)">
               <div class="category_icon">
-                <img :src="icon_for(category)" />
+                <img :src="icon_for(cat)" />
               </div>
 
-              <span class="category_title">{{category}}</span>
+              <span class="category_title">{{cat}}</span>
 
               <div class="category_expand">
                 <img src="./assets/right-arrow.svg" />
@@ -69,8 +69,14 @@ const sinks_caps_text =
 
 export default {
   name: 'Help',
+
   components: {
     MainLayout
+  },
+
+
+  props : {
+    category : String
   },
 
   data : function(){
@@ -268,6 +274,11 @@ export default {
     icon_for : function(category){
       return require('./assets/' + this.data[category].icon + '.svg');
     }
+  },
+
+  created : function(){
+    if(this.category)
+      this.set_active(this.category)
   }
 }
 </script>
