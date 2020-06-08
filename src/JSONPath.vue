@@ -49,27 +49,27 @@
          </tr>
 
          <tr>
-         <td>$</td><td>the root object/element</td>
+         <td>$</td><td>The root object/element</td>
          </tr>
 
          <tr>
-         <td>@</td><td>the current object/element</td>
+         <td>@</td><td>The current object/element</td>
          </tr>
 
          <tr>
-         <td>. or []</td><td>child operator</td>
+         <td>. or []</td><td>Child operator</td>
          </tr>
 
          <tr>
-         <td>..</td><td>recursive descent.</td>
+         <td>..</td><td>Recursive descent.</td>
          </tr>
 
          <tr>
-         <td>*</td><td>wildcard. All objects/elements regardless their names.</td>
+         <td>*</td><td>Wildcard. All objects/elements regardless their names.</td>
          </tr>
 
          <tr>
-         <td>[]</td><td>subscript operator. In Javascript and JSON it is the native array operator.</td>
+         <td>[]</td><td>Subscript operator. In Javascript and JSON it is the native array operator.</td>
          </tr>
 
          <tr>
@@ -77,58 +77,34 @@
          </tr>
 
          <tr>
-         <td>[start:end:step]</td><td>array slice operator</td>
+         <td>[start:end:step]</td><td>Array slice operator</td>
          </tr>
 
          <tr>
-         <td>?()</td><td>applies a filter (script) expression.</td>
+         <td>?()</td><td>Applies a filter (script) expression.</td>
          </tr>
 
          <tr>
-         <td>()</td><td>script expression, using the underlying script engine.</td>
+         <td>()</td><td>Script expression, using the underlying script engine.</td>
          </tr>
          </table>
 
-         <!--<h3>JSONPath example</h3> TODO - replace this w/ an example transaction & expressions applicable to that
+         <br/>
+
+         <h3>JSONPath example</h3>
 
          <p>
-         The following is simple JSON structure representing a bookstore
+         The following is a transaction from the XRP transaction stream
          </p>
 
-         <pre>
-{
-  "store": {
-    "book": [
-      { "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      },
-      { "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      },
-      { "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      },
-      { "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  }
-}
-         </pre>
+         <b-alert show variant="warning" id="top_level_wrapper_note">
+         <span><b>Note</b>:</span>
+         <span style="margin-left: 10px">
+         Zerp Tracker wraps XRP transactions in the following top level object so that all attributes are accessible for querying: <b>{ transaction : &lt;actual transaction&gt; }</b>
+         </span>
+         </b-alert>
+
+         <renderjson :data="tx" level="4" />
 
          <table>
          <tr>
@@ -136,45 +112,33 @@
          </tr>
 
          <tr>
-           <td>$.store.book[*].author</td><td>the authors of all books in the store</td>
+           <td>$.transaction.transaction.TransactionType</td><td>The transaction type: <b>OfferCreate</b></td>
          </tr>
 
          <tr>
-           <td>$..author</td><td>all authors</td>
+           <td>$.transaction.transaction.Account</td><td>The sending account: <b>r3rhWeE31Jt5sWmi4QiGLMZnY3ENgqw96W</b></td>
          </tr>
 
          <tr>
-          <td>$.store.*</td><td>all things in store, which are some books and a red bicycle.</td>
+          <td>$.transaction.meta.AffectedNodes.*</td><td>All affected nodes</td>
          </tr>
 
          <tr>
-           <td>$.store..price</td><td>the price of everything in the store.</td>
+           <td>$..AffectedNodes[2]</td><td>The third node</td>
          </tr>
 
          <tr>
-           <td>$..book[2]</td><td>the third book</td>
+           <td>$..AffectedNodes[(@.length-1)] <b>-or-</b> $..AffectedNodes[-1:]</td><td>The last node</td>
          </tr>
 
          <tr>
-           <td>$..book[(@.length-1)] -or- $..book[-1:]</td><td>the last book in order.</td>
-         </tr>
-
-         <tr>
-           <td>$..book[0,1] -or- $..book[:2]</td><td>the first two books</td>
-         </tr>
-
-         <tr>
-           <td>$..book[?(@.isbn)]</td><td>filter all books with isbn number</td>
-         </tr>
-
-         <tr>
-           <td>$..book[?(@.price&lt;10)]</td><td>filter all books cheapier than 10</td>
+           <td>$[?(@.transaction.TransactionType == 'OfferCreate' && @.meta.TransactionResult == 'tesSUCCESS')]</td><td>Filter by transaction type and result</td>
          </tr>
 
          <tr>
            <td>$..*</td><td>All members of JSON structure.</td>
          </tr>
-        </table>-->
+        </table>
 
         <br/>
 
@@ -195,10 +159,128 @@
 <script>
 import MainLayout from './components/MainLayout'
 
+import renderjson from './vendor/renderjson/renderjson.vue'
+
 export default {
   name: 'JSONPath',
+
   components: {
-    MainLayout
+    MainLayout,
+    renderjson
+  },
+
+  data : function(){
+    return {
+      tx :
+      { transaction : {
+          "engine_result": "tesSUCCESS",
+          "engine_result_code": 0,
+          "engine_result_message": "The transaction was applied. Only final in a validated ledger.",
+          "ledger_hash": "BA4F0A7A39D7A456DEB07A2C480D0BE1342EDA83DD34C5FA3E9E0E970E81502B",
+          "ledger_index": 56006451,
+          "meta": {
+            "AffectedNodes": [
+              {
+                "CreatedNode": {
+                  "LedgerEntryType": "Offer",
+                  "LedgerIndex": "84080CB93CC9BFC32C5A0AF75F8D5F22E854E38061E5EDD65DCB7FEE9121C56D",
+                  "NewFields": {
+                    "Account": "r3rhWeE31Jt5sWmi4QiGLMZnY3ENgqw96W",
+                    "BookDirectory": "C83D47E70CDF44D0BB2868DA0CB61EC81DFB5D95E8BE7C62561A564228FD5B7F",
+                    "OwnerNode": "00000000000003B2",
+                    "Sequence": 4792223,
+                    "TakerGets": {
+                      "currency": "DSH",
+                      "issuer": "rcXY84C4g14iFp6taFXjjQGVeHqSCh9RX",
+                      "value": "0.5952440142519944"
+                    },
+                    "TakerPays": {
+                      "currency": "EUR",
+                      "issuer": "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+                      "value": "44.12657896640964"
+                    }
+                  }
+                }
+              },
+              {
+                "ModifiedNode": {
+                  "FinalFields": {
+                    "Flags": 0,
+                    "IndexPrevious": "00000000000003B1",
+                    "Owner": "r3rhWeE31Jt5sWmi4QiGLMZnY3ENgqw96W",
+                    "RootIndex": "FDE0DCA95589B07340A7D5BE2FD72AA8EEAC878664CC9B707308B4419333E551"
+                  },
+                  "LedgerEntryType": "DirectoryNode",
+                  "LedgerIndex": "877754995FA9A81BF87C8DECEFF066581563379F85DA9670261BB8DDDFD48E41"
+                }
+              },
+              {
+                "ModifiedNode": {
+                  "FinalFields": {
+                    "Account": "r3rhWeE31Jt5sWmi4QiGLMZnY3ENgqw96W",
+                    "Balance": "153695970347",
+                    "Flags": 0,
+                    "OwnerCount": 53,
+                    "Sequence": 4792224
+                  },
+                  "LedgerEntryType": "AccountRoot",
+                  "LedgerIndex": "B1B9AAC12B56B1CFC93DDC8AF6958B50E89509F377ED4825A3D970F249892CE3",
+                  "PreviousFields": {
+                    "Balance": "153695970357",
+                    "OwnerCount": 52,
+                    "Sequence": 4792223
+                  },
+                  "PreviousTxnID": "B2327A6287B6385B201298ED7ECCCA24CD3C36BB2C05D3AEF04819678F07CF5B",
+                  "PreviousTxnLgrSeq": 56006451
+                }
+              },
+              {
+                "CreatedNode": {
+                  "LedgerEntryType": "DirectoryNode",
+                  "LedgerIndex": "C83D47E70CDF44D0BB2868DA0CB61EC81DFB5D95E8BE7C62561A564228FD5B7F",
+                  "NewFields": {
+                    "ExchangeRate": "561A564228FD5B7F",
+                    "RootIndex": "C83D47E70CDF44D0BB2868DA0CB61EC81DFB5D95E8BE7C62561A564228FD5B7F",
+                    "TakerGetsCurrency": "0000000000000000000000004453480000000000",
+                    "TakerGetsIssuer": "06B80F0F1D98AEDA846ED981F741C398FB2C4FD1",
+                    "TakerPaysCurrency": "0000000000000000000000004555520000000000",
+                    "TakerPaysIssuer": "2ADB0B3959D60A6E6991F729E1918B7163925230"
+                  }
+                }
+              }
+            ],
+            "TransactionIndex": 32,
+            "TransactionResult": "tesSUCCESS"
+          },
+          "status": "closed",
+          "transaction": {
+            "Account": "r3rhWeE31Jt5sWmi4QiGLMZnY3ENgqw96W",
+            "Fee": "10",
+            "Flags": 0,
+            "LastLedgerSequence": 56006453,
+            "Sequence": 4792223,
+            "SigningPubKey": "03C48299E57F5AE7C2BE1391B581D313F1967EA2301628C07AC412092FDC15BA22",
+            "TakerGets": {
+              "currency": "DSH",
+              "issuer": "rcXY84C4g14iFp6taFXjjQGVeHqSCh9RX",
+              "value": "0.5952440142519944"
+            },
+            "TakerPays": {
+              "currency": "EUR",
+              "issuer": "rhub8VRN55s94qWKDv6jmDy1pUykJzF3wq",
+              "value": "44.12657896640964"
+            },
+            "TransactionType": "OfferCreate",
+            "TxnSignature": "304402205147BD78DDC60E9A9C5DA7A89747986F5B5108D7202369D2045AA434C8E9E77F0220289DF3D7C8FEE1EF0D714AB64C0D1F9792E85CBC79BC1D4A61B33724036501D5",
+            "date": 644918432,
+            "hash": "8E76EE6EAB5D36020240213071938EDFC7B32477D2FC9D14AD21AE2615F339CC",
+            "owner_funds": "1.856316345150129"
+          },
+          "type": "transaction",
+          "validated": true
+        }
+      }
+    }
   }
 }
 </script>
@@ -228,11 +310,20 @@ export default {
   padding: 5px;
 }
 
+table{
+  width: 100%;
+}
+
 tr{
   border: 1px solid black;
 }
 
 th, td{
   padding: 5px;
+}
+
+#top_level_wrapper_note{
+  font-size: 1.1rem;
+  display: flex;
 }
 </style>
