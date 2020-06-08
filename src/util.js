@@ -4,7 +4,10 @@
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
+var estraverse = require('estraverse')
+
 const jsonpath = require('./vendor/jsonpath')
+const aesprim  = require('./vendor/aesprim')
 
 // 'Smart' rounding, rounds given float
 // to specified number of decimals. If not
@@ -23,6 +26,53 @@ function round_value(value, decimals){
 
   value = Math.round(value * Math.pow(10, decimals)) / Math.pow(10, decimals);
   return value;
+}
+
+// XXX: Code and JSONPath safety methods copied from ziti util module (also is_jsonpath_unsafe below)
+
+function why_code_unsafe(code){
+  var reasons = {}
+  const ast = aesprim.parse(code)
+  estraverse.traverse(ast, {
+      enter: function (node, parent) {
+        if(node.type == 'FunctionExpression'      ||
+           node.type == 'ArrowFunctionExpression' ||
+           node.type == 'FunctionDeclaration')
+          reasons.has_function = true
+
+        else if(node.type == "DoWhileStatement" ||
+                node.type == "ForStatement"     ||
+                node.type == "ForInStatement"   ||
+                node.type == "ForOfStatement"   ||
+                node.type == "WhileStatement")
+          reasons.has_loop = true
+
+        else if(node.type == 'CallExpression'  &&
+                node.callee.name != "parseInt" &&
+                node.callee.name != "parseFloat")
+          reasons.has_call = true
+      }
+  });
+
+  return reasons
+}
+
+function why_jsonpath_unsafe (jp){
+  const parsed = jsonpath.parse(jp)
+  const expressions = parsed.filter(function(p){
+    return p.expression.type == 'filter_expression' ||
+           p.expression.type == 'script_expression'
+  }).map(function(p){
+    const begin = p.expression.type == 'filter_expression' ? 2 : 1
+    return p.expression.value.slice(begin, -1)
+  })
+
+  var reasons = {}
+  expressions.forEach(function(expression){
+    Object.assign(reasons, why_code_unsafe(expression))
+  })
+
+  return reasons
 }
 
 export default {
@@ -133,6 +183,16 @@ export default {
   // Return bool if input is valid credit card cvc
   is_valid_credit_card_cvc : function(test){
     return /^[0-9]{3}$/.test(test);
+  },
+
+  ///
+
+  why_jsonpath_unsafe : function(jsonpath){
+    return why_jsonpath_unsafe(jsonpath);
+  },
+
+  is_jsonpath_unsafe : function(jsonpath){
+    return Object.keys(why_jsonpath_unsafe(jsonpath)).length > 0
   },
 
   ///
