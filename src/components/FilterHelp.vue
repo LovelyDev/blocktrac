@@ -7,7 +7,7 @@
 <template>
   <div id="filter_help">
     <p>
-      <a href="https://www.toolsqa.com/rest-assured/jsonpath-and-query-json-using-jsonpath/">JSONPath</a> is a powerful path expression language that can be used to match and filter live transactions.
+      <router-link to="/jsonpath">JSONPath</router-link> is a powerful path expression language that can be used to match and filter live transactions.
     </p>
 
     <p>

@@ -36,6 +36,7 @@ import Tx             from './Tx'
 import Account        from './Account'
 import About          from './About'
 import Help           from './Help'
+import JSONPath       from './JSONPath'
 import TermsOfService from './TermsOfService'
 import FilterDetails  from './FilterDetails'
 import FilterTester   from './FilterTester'
@@ -80,6 +81,7 @@ const routes = [
                            props: true     },
   { path: '/about',    component: About    },
   { path: '/help',     component: Help     },
+  { path: '/jsonpath', component: JSONPath },
   { path: '/terms',
                  component: TermsOfService },
   { path: '/profile',  component: Profile  },
