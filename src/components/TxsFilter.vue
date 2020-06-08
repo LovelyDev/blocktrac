@@ -83,6 +83,11 @@ export default {
     store_filter : function(){
       this.expression = this.store_filter
     }
+  },
+
+  created : function(){
+    if(this.store_filter)
+      this.expression = this.store_filter
   }
 }
 </script>
