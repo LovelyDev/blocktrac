@@ -31,8 +31,15 @@ function round_value(value, decimals){
 // XXX: Code and JSONPath safety methods copied from ziti util module (also is_jsonpath_unsafe below)
 
 function why_code_unsafe(code){
+  var ast;
+
+  try{
+    ast = aesprim.parse(code)
+  }catch(err){
+    return {invalid_code : true}
+  }
+
   var reasons = {}
-  const ast = aesprim.parse(code)
   estraverse.traverse(ast, {
       enter: function (node, parent) {
         if(node.type == 'FunctionExpression'      ||
