@@ -130,8 +130,6 @@ import CreateSinkModal from '../modals/CreateSink'
 import Authentication  from '../../mixins/authentication'
 import ServerAPI       from '../../mixins/server_api'
 
-// TODO mobile rendering, create email on mobile
-
 import util from '../../util'
 
 export default {
