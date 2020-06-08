@@ -12,6 +12,7 @@
         <input ref="email"
                class="form_input"
                type="text"
+               autocapitalize="none"
                @keyup.enter="$emit('submit')"
                :value="auth_email"
                @input="evnt=> auth_email = evnt.target.value" />
