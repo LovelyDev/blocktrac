@@ -56,7 +56,7 @@
                    type="text"
                    :disabled="editing_filter"
                    :value="params[p-1]"
-                   @input="evnt=> params[p-1] = evnt.target.value" />
+                   @input="set_param($event, p-1)" />
 
             <div class="form_text form_error">
               <span v-if="is_template_filter &&
@@ -341,6 +341,10 @@ export default {
   methods : {
     set_filter_type : function(type){
       this.filter_type = type;
+    },
+
+    set_param : function(evnt, param){
+      this.$set(this.params, param, evnt.target.value)
     },
 
     is_template_param_valid : function(param, template_param){
