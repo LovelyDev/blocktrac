@@ -128,7 +128,7 @@ export default {
 
             {
               title : "How am I notified of new transactions?",
-              value : "You can setup sinks (notification endpoints) to be notified of transactions via email, text message, and webhooks. These can all be configured via the <b>Filter Settings</b> on the left-hand sidebar once logged in. Note certain sink types are only available to users signed up for premium plans."
+              value : "You can setup sinks (notification endpoints) to be notified of transactions via email, text message, and webhooks. These can all be configured via the <b>Filter Settings</b> once logged in. Note certain sink types are only available to users signed up for premium plans."
             },
 
             {
@@ -143,12 +143,12 @@ export default {
           topics : [
             {
               title : "How do I create new filters?",
-              value : "Filters may be created by clicking <b>Add New Filter</b> on the left hand sidebar. Note you will only be able to create a certain amount of filters depending on your subscription level."
+              value : "Filters may be created by clicking <b>Add New Filter</b>. Note you will only be able to create a certain amount of filters depending on your subscription level."
             },
 
             {
               title : "What is this JSONPath business?",
-              value : "JSONPath is a powerful expression matching language that is used when inspecting each and every transaction in the live transaction stream. There are many online resources with JSONPath documentation and examples, we encourage all users to explore the powerful deep-inspection capabilities that this syntax supports."
+              value : "JSONPath is a powerful expression matching language that is used when inspecting each and every transaction in the live transaction stream. We offer a introductory guide to building your own expressions <a href='/jsonpath'>here</a>. There are many online resources with JSONPath documentation and examples, we encourage all users to explore the powerful deep-inspection capabilities that this syntax supports."
             },
 
             {
@@ -198,7 +198,7 @@ export default {
 
             {
               title : "Can I control how often I receive notifications?",
-              value : "Yes! You may edit transaction batch sizes and notification times via the <b>Settings</b> control in the <b>Filters List</b>. You will receive a notification whichever comes first, a filter matches the number of transactions specified by batch size or the amount of time specified by notification time passes since the first matched transaction is detected."
+              value : "Yes! You may edit transaction batch sizes and notification times via the <b>Filter Settings</b> control. You will receive a notification whichever comes first, a filter matches the number of transactions specified by batch size or the amount of time specified by notification time passes since the first matched transaction is detected."
             },
 
             {
