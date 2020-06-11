@@ -159,3 +159,9 @@ export default {
   margin: 5px;
 }
 </style>
+
+<style>
+#main_layout.xs #main_subcontent.profile{
+  width: 100%;
+}
+</style>

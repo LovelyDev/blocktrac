@@ -272,9 +272,12 @@ export default {
 
 <style scoped>
 #plan{
-  width: 80%;
   margin: auto;
   margin-top: 20px;
+}
+
+#main_layout.xl #plan{
+  width: 80%;
 }
 
 #plan h3{

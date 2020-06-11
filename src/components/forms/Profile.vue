@@ -23,7 +23,7 @@
         {{email}}
       </b-col>
 
-      <b-col v-else>
+      <b-col v-else class="input">
         <input class="form_input" type="text"
                autocapitalize="none"
                :value="auth_email"
@@ -44,7 +44,7 @@
 
       <b-col v-else
              @click="editing_email = !editing_email"
-             class="action" cols="2">
+             class="action" :cols="mq_xs ? 1 : 2">
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -60,7 +60,7 @@
        *********
       </b-col>
 
-      <b-col v-else>
+      <b-col class="input" v-else>
         <input class="form_input" type="password"
                :value="auth_password"
                @input="evnt=> auth_password = evnt.target.value" />
@@ -80,7 +80,7 @@
 
       <b-col v-else
              @click="editing_password = !editing_password"
-             class="action" cols=2>
+             class="action" :cols="mq_xs ? 1 : 2">
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -92,7 +92,7 @@
         Confirm Password
       </b-col>
 
-      <b-col>
+      <b-col class="input">
         <input class="form_input" type="password"
                :value="auth_password_confirm"
                @input="evnt=> auth_password_confirm = evnt.target.value" />
@@ -136,7 +136,7 @@
       </b-col>
 
       <b-col v-else
-             class="action" cols=2>
+             class="action" :cols="mq_xs ? 1 : 2">
         <span v-if="!is_basic_member">
           <img src="../../assets/red-x.svg"
                style="width: 15px; margin-right: 10px"
@@ -169,6 +169,7 @@
       </b-col>
 
       <b-col v-else
+             class="input"
              id="credit_card_number_wrapper">
         <input id="credit_card_number"
                class="form_input"
@@ -193,7 +194,7 @@
 
       <b-col v-else
              @click="editing_credit_card = !editing_credit_card"
-             class="action" cols=2>
+             class="action" :cols="mq_xs ? 1 : 2">
         <img src="../../assets/pencil-blue.svg" />
       </b-col>
     </b-row>
@@ -205,7 +206,7 @@
         CVC
       </b-col>
 
-      <b-col id="credit_card_cvc_wrapper">
+      <b-col id="credit_card_cvc_wrapper" class="input">
         <input id="credit_card_cvc"
                class="form_input"
                type="text"
@@ -220,7 +221,7 @@
         </div>
       </b-col>
 
-      <b-col :cols="mq_gt_md ? 3 : 2">
+      <b-col class="action" :cols="mq_gt_md ? 3 : mq_xs ? 1 : 2">
         &nbsp;
       </b-col>
     </b-row>
@@ -232,17 +233,18 @@
         Expiration
       </b-col>
 
-      <b-col id="credit_card_expiration_wrapper">
+      <b-col id="credit_card_expiration_wrapper" class="input">
         <b-form-select id="credit_card_month"
                        v-model="credit_card_month"
                        :options="credit_card_months" />
+        <br v-if="mq_xs" />
 
         <b-form-select id="credit_card_year"
                        v-model="credit_card_year"
                        :options="credit_card_years" />
       </b-col>
 
-      <b-col :cols="mq_gt_md ? 3 : 2">
+      <b-col class="action" :cols="mq_gt_md ? 3 : mq_xs ? 1 : 2">
         &nbsp;
       </b-col>
     </b-row>
@@ -253,6 +255,8 @@
 import Authentication from '../../mixins/authentication'
 import HasCreditCard  from '../../mixins/has_credit_card'
 import Validator      from '../../mixins/validator'
+
+// TODO credit card mobile styling
 
 export default {
   name: 'Profile',
@@ -341,8 +345,14 @@ export default {
   max-width: unset;
 }
 
+#main_layout.xs #profile_form{
+  max-width: unset;
+  padding: 0;
+}
+
 .label,
-.value{
+.value,
+.input{
   padding: 0;
 }
 
@@ -391,6 +401,7 @@ export default {
 }
 
 .action{
+  min-width: 25px;
   color: blue;
   cursor: pointer;
   padding: 0;
@@ -415,7 +426,6 @@ export default {
 
 #credit_card_number{
   text-align: right;
-  width: unset;
 }
 
 #credit_card_cvc_wrapper{
@@ -432,9 +442,14 @@ export default {
 }
 
 #credit_card_month{
-  width: 125px;
+  width: 102px;
   margin-right: 5px;
   text-align: right;
+}
+
+#main_layout.xs #credit_card_month{
+  margin-right: unset;
+  margin-bottom: 5px;
 }
 
 #credit_card_year{
