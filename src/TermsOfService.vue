@@ -44,6 +44,10 @@
           </li>
 
           <li>
+          Dev Null Productions may also change premium feature pricing in the future. For existing plans, new prices will take effect on renewal and/or the purchase of additional features.
+          </li>
+
+          <li>
           Your use of this website and any dispute arising out of such use of the website is subject to the laws of the state of New York, United States of America
           </li>
         </ul>
