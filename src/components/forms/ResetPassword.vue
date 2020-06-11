@@ -9,6 +9,9 @@
   <table id="reset_password_form">
     <tr>
       <td class="form_text">New Password:</td>
+    </tr>
+
+    <tr>
       <td>
         <input class="form_input"
                type="password"
@@ -25,6 +28,9 @@
 
     <tr>
       <td class="form_text">Confirm Password:</td>
+    </tr>
+
+    <tr>
       <td>
         <input class="form_input"
                type="password"

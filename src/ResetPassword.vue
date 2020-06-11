@@ -86,8 +86,20 @@ export default {
 <style scoped>
 #reset{
   width: 70%;
+  max-width: 500px;
   margin: auto;
   margin-top: 20px;
+}
+
+#main_layout.md #reset,
+#main_layout.sm #reset,
+#main_layout.xs #reset{
+  width: unset;
+}
+
+#reset h1{
+  font-family: var(--theme-font3);
+  text-align: center;
 }
 
 #reset_content{
@@ -95,6 +107,7 @@ export default {
   border: 1px solid var(--theme-color3);
   border-radius: 15px;
   padding: 25px;
+  font-family: var(--theme-font1);
 }
 
 #reset_wrapper{
