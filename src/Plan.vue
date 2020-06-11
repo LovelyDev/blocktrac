@@ -69,7 +69,9 @@
                    :class="{selected : (!period || period == 1)}"
                    @click="set_period(1)">
                 <div><b>1 month</b></div>
-                <div><b>${{details.cost}}</b></div>
+                <div class="plan_period_cost">
+                  <b>${{details.cost}}</b>
+                </div>
               </div>
 
               <div v-for="(cost, month) in details.monthly_costs"
@@ -78,7 +80,9 @@
                    :class="{selected : (period == month)}"
                    @click="set_period(month)">
                 <div><b>{{month}} months</b></div>
-                <div><span class="orig_cost">${{month * details.cost}}</span> <b>${{cost}}</b></div>
+                <div class="plan_period_cost">
+                  <span class="orig_cost">${{month * details.cost}}</span> <b>${{cost}}</b>
+                </div>
               </div>
             </div>
           </div>
@@ -489,6 +493,12 @@ export default {
 .plan_period.selected{
   background-color: var(--theme-color1);
   color: white;
+}
+
+
+#main_layout.xs .plan_period_cost{
+  display: flex;
+  flex-direction: column;
 }
 
 .orig_cost{
