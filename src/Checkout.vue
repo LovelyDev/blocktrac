@@ -467,7 +467,7 @@ export default {
 
 #place_order_wrapper{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 #place_order{
