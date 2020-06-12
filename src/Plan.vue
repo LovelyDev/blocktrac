@@ -226,6 +226,8 @@ export default {
       if(this.enable_additional && this.selected_additional_sinks)
         cost += this.selected_additional_sinks * ziti.additions_cost.sinks * period;
 
+      cost = parseFloat(cost.toFixed(2))
+
       return cost;
     },
   },

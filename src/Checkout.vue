@@ -231,6 +231,8 @@ export default {
                 ziti.additions_cost.sinks *
                 period;
 
+      cost = parseFloat(cost.toFixed(2))
+
       return cost;
     },
 

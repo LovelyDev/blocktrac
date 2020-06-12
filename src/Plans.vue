@@ -168,6 +168,8 @@ export default {
                if(this.enable_additional[level] && this.selected_additional_sinks[level])
                  cost[level] += this.selected_additional_sinks[level] * this.additions_cost.sinks;
 
+              cost[level] = parseFloat(cost[level].toFixed(2))
+
                return cost;
              }.bind(this), {});
     },
