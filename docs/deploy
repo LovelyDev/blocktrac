@@ -25,12 +25,12 @@ Startup linodes for each of the servers
 - ziti_db      (Linode 4GB - $20/mo)
   - enable linode backups    ($5/mo)
 - ziti_api     (Linode 4GB - $20/mo)
-- ziti_worker1 (Linode 8GB - $40/mo)
-- ziti_worker2 (Linode 8GB - $40/mo)
+- ziti_worker1 (Linode 4GB - $20/mo)
+- ziti_worker2 (Linode 4GB - $20/mo)
 - zitui        (Linode 2GB - $10/mo)
 - zitz1        (Linode 2GB - $10/mo)
                              ------
-                           ($145/mo)
+                           ($105/mo)
 
 Edit DNS:
 - point zerptracker.com A and AAAA records at zitui
