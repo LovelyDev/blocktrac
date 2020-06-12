@@ -145,9 +145,11 @@
 
           <tr>
             <td v-if="mq_gte_md"></td>
-            <td style="text-align: right">
+            <td id="place_order_wrapper">
+              <b-spinner type="grow" v-if="order_submitted" />
+
               <b-button id="place_order"
-                        :disabled="!is_valid"
+                        :disabled="!is_valid || order_submitted"
                         @click="submit">
                 Place Order
               </b-button>
@@ -193,7 +195,8 @@ export default {
       card_number : '',
       expiration_date : '',
       security_code : '',
-      tos_agree : false
+      tos_agree : false,
+      order_submitted : false
     }
   },
 
@@ -269,6 +272,8 @@ export default {
 
   methods : {
     submit : function(){
+      this.order_submitted = true
+
       if(!this.use_existing_credit_card){
         // store new credit card
         this.update_user({credit_card : this.credit_card_params})
@@ -278,7 +283,9 @@ export default {
             }.bind(this)).catch(function(err){
               const msg = util.capitalize(err.body.error)
               alert("Could not process credit card: " + msg)
-            })
+
+              this.order_submitted = false
+            }.bind(this))
 
       }else
         this.purchase_plan_()
@@ -292,7 +299,9 @@ export default {
           }.bind(this)).catch(function(err){
             const msg = util.capitalize(err.body.error)
             alert("Problem processing payment: " + msg)
-          })
+
+            this.order_submitted = false
+          }.bind(this))
     }
   },
 
@@ -452,6 +461,11 @@ export default {
 #tos_agree{
   text-align: right;
   padding-bottom: 10px;
+}
+
+#place_order_wrapper{
+  display: flex;
+  justify-content: end;
 }
 
 #place_order{
