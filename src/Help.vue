@@ -169,7 +169,7 @@ export default {
 
             {
               title : "Is filter history retained?",
-              value : "Currently Zerp Tracker retains the latest " + ziti.filter_transaction_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
+              value : "Currently Zerp Tracker retains the latest " + ziti.filter_match_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
             },
 
             {
