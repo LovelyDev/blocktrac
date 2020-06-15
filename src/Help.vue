@@ -169,6 +169,11 @@ export default {
             },
 
             {
+              title : "Why am I getting the error 'Filter is too complex'?",
+              value : "Filter expressions are validated for safety and complexity before being saved to Zerp Tracker. Loops, function definitions, and function calls (outside of <i>parseInt</i> and <i>parseFloat</i>) are not permitted. Expressions may not contain more than " + ziti.max_jsonpath_complexity.binary + " logical operations (<b>&&</b> and <b>||</b>) and no more than " + ziti.max_jsonpath_complexity.logical + " binary operations (<b>==</b>, <b>+</b>, <b>-</b>, <b>*</b>, <b>/</b>)."
+            },
+
+            {
               title : "Is filter history retained?",
               value : "Currently Zerp Tracker retains the latest " + ziti.filter_match_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
             },
@@ -176,7 +181,7 @@ export default {
             {
               title : "Are there limits to filter matches?",
               value : "Currently Zerp Tracker imposes the a limit of " + ziti.filter_interval_cap + " matches every " + (ziti.timeouts.filter_reset/1000) + " seconds for every filter. Once a filter has exceeded the limit excess matches will be discard."
-            },
+            }
           ]
         },
 
