@@ -11,6 +11,7 @@
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.4.4",
     "estraverse": "^5.1.0",
+    "jsonpath-complexity": "^1.0.7",
     "moment-timezone": "^0.5.27",
     "ripple-lib": "^1.6.5",
     "vue": "^2.6.10",

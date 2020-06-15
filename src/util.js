@@ -6,8 +6,12 @@
 
 var estraverse = require('estraverse')
 
+const jsonpath_complexity = require('jsonpath-complexity')
+
 const jsonpath = require('./vendor/jsonpath')
 const aesprim  = require('./vendor/aesprim')
+
+const ziti = require('./ziti')
 
 // 'Smart' rounding, rounds given float
 // to specified number of decimals. If not
@@ -28,7 +32,8 @@ function round_value(value, decimals){
   return value;
 }
 
-// XXX: Code and JSONPath safety methods copied from ziti util module (also is_jsonpath_unsafe below)
+// XXX: Code and JSONPath safety methods copied from ziti util module
+//      (also is_jsonpath_unsafe and is_jsonpath_complex below)
 
 function why_code_unsafe(code){
   var ast;
@@ -200,6 +205,13 @@ export default {
 
   is_jsonpath_unsafe : function(jsonpath){
     return Object.keys(why_jsonpath_unsafe(jsonpath)).length > 0
+  },
+
+  is_jsonpath_complex : function(jsonpath){
+    const complexity = jsonpath_complexity.complexity(jsonpath)
+    return (complexity.unary   > ziti.max_jsonpath_complexity.unary)  ||
+           (complexity.binary  > ziti.max_jsonpath_complexity.binary) ||
+           (complexity.logical > ziti.max_jsonpath_complexity.logical);
   },
 
   ///

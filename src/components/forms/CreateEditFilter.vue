@@ -82,7 +82,7 @@
                  :value="jsonpath"
                  @input="evnt=> jsonpath = evnt.target.value" />
 
-          <div class="form_text form_error">
+          <div id="expression_error" class="form_text form_error">
             <span v-if="is_expression_filter && !has_expression">
               Expression required
             </span>
@@ -91,6 +91,9 @@
             </span>
             <span v-else-if="is_expression_filter && !safe_expression">
               {{unsafety_reasons}}
+            </span>
+            <span v-else-if="is_expression_filter && complex_expression">
+              Too <router-link to="/help/filters" target="_blank">complex</router-link>
             </span>
             <span v-else class="placeholder" />
           </div>
@@ -208,6 +211,12 @@ export default {
       return this.has_expression &&
              this.valid_expression &&
             !util.is_jsonpath_unsafe(this.jsonpath);
+    },
+
+    complex_expression : function(){
+      return this.has_expression &&
+             this.valid_expression &&
+             util.is_jsonpath_complex(this.jsonpath);
     },
 
     unsafety_reasons : function(){
@@ -461,6 +470,11 @@ export default {
 #by_expression{
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+
+#expression_error a{
+  color: red;
+  text-decoration: underline;
 }
 
 #send_me{
