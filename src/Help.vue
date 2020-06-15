@@ -60,6 +60,7 @@
 <script>
 import MainLayout from './components/MainLayout'
 
+import util from './util'
 import ziti from './ziti'
 
 const sinks_caps_text =
@@ -282,8 +283,11 @@ export default {
   },
 
   created : function(){
-    if(this.category)
-      this.set_active(this.category)
+    if(this.category){
+      const category = util.capitalize(this.category)
+      if(this.categories.includes(category))
+        this.set_active(category)
+    }
   }
 }
 </script>
