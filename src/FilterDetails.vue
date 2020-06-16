@@ -41,8 +41,8 @@
             <img src="./assets/info.svg" />
             <span>
               The following are transactions which your filter has matched.
-              <template v-if="active_filter.total_matches > transaction_history">
-                Only the last {{transaction_history}} matches are shown.
+              <template v-if="active_filter.total_matches > match_history">
+                Only the last {{match_history}} matches are shown.
               </template>
             </span>
           </b-list-group-item>
@@ -99,8 +99,8 @@ export default {
              }).join(", ")
     },
 
-    transaction_history : function(){
-      return ziti.filter_transaction_history
+    match_history : function(){
+      return ziti.filter_match_history
     }
   },
 
