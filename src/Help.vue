@@ -169,8 +169,8 @@ export default {
             },
 
             {
-              title : "Why am I getting the error 'Filter is too complex'?",
-              value : "Filter expressions are validated for safety and complexity before being saved to Zerp Tracker. Loops, function definitions, and function calls (outside of <i>parseInt</i> and <i>parseFloat</i>) are not permitted. Expressions may not contain more than " + ziti.max_jsonpath_complexity.binary + " logical operations (<b>&&</b> and <b>||</b>) and no more than " + ziti.max_jsonpath_complexity.logical + " binary operations (<b>==</b>, <b>+</b>, <b>-</b>, <b>*</b>, <b>/</b>)."
+              title : "Why am I getting the error 'Filter is too complex' or 'Filter is invalid'?",
+              value : "Filter expressions are validated for safety and complexity before being saved to Zerp Tracker. Loops, function definitions, and function calls (outside of <i>parseInt</i> and <i>parseFloat</i>) are not permitted. Expressions may not contain more than " + ziti.max_jsonpath_complexity.binary + " logical operations (<b>&&</b> and <b>||</b>) and no more than " + ziti.max_jsonpath_complexity.logical + " binary operations (<b>==</b>, <b>+</b>, <b>-</b>, <b>*</b>, <b>/</b>).<br/>Filter parameters cannot contain the string \"<b>)]</b>\" due to parsing restrictions"
             },
 
             {
