@@ -43,6 +43,17 @@
       </tr>
 
       <template v-if="is_template_filter && template_has_params">
+        <tr v-if="!valid_template_expression">
+          <td></td>
+
+          <td>
+            <div id="template_expression_error"
+                 class="form_text form_error">
+              Filter is invalid <router-link to="/help/filters" target="_blank">(help)</router-link>
+            </div>
+          </td>
+        </tr>
+
         <tr v-for="p in template_params.length"
             :key="'param' + p">
           <td>
@@ -234,8 +245,27 @@ export default {
                    }).join(", ")
     },
 
+    valid_template_expression : function(){
+      if(!this.template_has_params)
+        return true;
+
+      if(this.params.length != this.template_params.length)
+        return true;
+
+      if(!this.params_are_valid)
+        return true;
+
+      const matcher = util.filter_matcher({
+        Template : this.selected_template,
+          params : this.params
+      })
+
+      return util.is_valid_jsonpath(matcher);
+    },
+
     params_are_valid : function(){
-      if(!this.template_has_params) return true;
+      if(!this.template_has_params)
+        return true;
 
       if(this.params.length != this.template_params.length)
         return false;
@@ -257,6 +287,7 @@ export default {
              this.safe_expression)     ||
 
             (this.is_template_filter   &&
+             this.valid_template_expression &&
              this.params_are_valid))
     },
 
@@ -273,7 +304,7 @@ export default {
     },
 
     template_params : function(){
-      if(!this.selected_template) return[];
+      if(!this.selected_template) return [];
 
       return this.selected_template.params
     },
@@ -472,6 +503,7 @@ export default {
   border-bottom-right-radius: 20px;
 }
 
+#template_expression_error a,
 #expression_error a{
   color: red;
   text-decoration: underline;
