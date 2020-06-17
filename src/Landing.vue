@@ -13,7 +13,7 @@
           <div id="main_title">Zerp Tracker</div>
 
           <ul class="main_features" v-if="mq_gte_md">
-            <li>Monitor your account</li>
+            <li>Monitor your XRP account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
@@ -36,7 +36,7 @@
 
         <div id="section1_subsection3" v-if="mq_lt_md">
           <ul class="main_features">
-            <li>Monitor your account</li>
+            <li>Monitor your XRP account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
