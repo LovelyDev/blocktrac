@@ -154,6 +154,11 @@ export default {
     }
   },
 
+  // Return boolean indicating if jsonpath is too long
+  is_valid_jsonpath_length : function(test){
+    return test.length <= ziti.max_jsonpath_length;
+  },
+
   // Return bool if input is valid email
   is_valid_email : function(email){
     return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(test);

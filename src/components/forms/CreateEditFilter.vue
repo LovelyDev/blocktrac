@@ -100,6 +100,9 @@
             <span v-else-if="is_expression_filter && !valid_expression">
               Invalid expression
             </span>
+            <span v-else-if="is_expression_filter && expression_too_long">
+              Expression too long
+            </span>
             <span v-else-if="is_expression_filter && !safe_expression">
               {{unsafety_reasons}}
             </span>
@@ -216,6 +219,12 @@ export default {
     valid_expression : function(){
       return this.has_expression &&
              util.is_valid_jsonpath(this.jsonpath);
+    },
+
+    expression_too_long : function(){
+      return this.has_expression &&
+             this.valid_expression &&
+             !util.is_valid_jsonpath_length(this.jsonpath);
     },
 
     safe_expression : function(){
