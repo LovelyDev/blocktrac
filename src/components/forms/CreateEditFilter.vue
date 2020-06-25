@@ -293,6 +293,7 @@ export default {
       return this.name &&
            ((this.is_expression_filter &&
              this.valid_expression     &&
+            !this.expression_too_long  &&
              this.safe_expression)     ||
 
             (this.is_template_filter   &&
