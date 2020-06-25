@@ -156,7 +156,7 @@ export default {
 
   // Return bool if input is valid email
   is_valid_email : function(email){
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(test);
   },
 
   // Return bool if input is valid sms phone number
