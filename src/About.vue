@@ -33,7 +33,7 @@
           <h4>JSONPath Expressions</h4>
 
           <p>
-            Transactions that are propagated across the XRP network are expressed in JSON, a structured lanugage that allows users to specify the exact intent of the action they are executing. <span class="zt">Zerp Tracker</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
+            Transactions that are propagated across the XRP network are expressed in JSON, a structured language that allows users to specify the exact intent of the action they are executing. <span class="zt">Zerp Tracker</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
           </p>
 
           <p>
