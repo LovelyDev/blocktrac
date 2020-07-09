@@ -4,6 +4,7 @@ Zerp Tracker Maintenance Checklist
 Twice Daily
 - 10AM & 10PM of every day
 - Ensure all services are running
+  - db, api, site, filters, sinks, users, status
 - Ensure site and api is accessible
 - Ensure transactions are not accumulating w/out processing
 - Ensure matched transactions are not accumulating w/out notification
