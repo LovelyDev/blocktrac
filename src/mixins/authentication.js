@@ -54,6 +54,10 @@ export default {
       return this.$store.state.user.has_credit_card;
     },
 
+    privileges : function(){
+      return this.$store.state.user.privileges;
+    },
+
     membership_level : function(){
       return this.$store.state.user.membership_level;
     },
@@ -77,7 +81,9 @@ export default {
     authorized_filters : function(){
       if(!this.membership_level) return 0;
 
-      return this.membership_features.filters + this.additional_filters;
+      return this.membership_features.filters +
+             this.additional_filters          +
+             this.privilege('additional_filters', 'integer');
     },
 
     additional_sinks : function(){
@@ -87,7 +93,16 @@ export default {
     authorized_sinks : function(){
       if(!this.membership_level) return 0;
 
-      return this.membership_features.sinks + this.additional_sinks;
+      return this.membership_features.sinks +
+             this.additional_sinks          +
+             this.privilege('additional_sinks', 'integer');
+    },
+
+    advanced_sinks : function(){
+      if(!this.membership_level) return false;
+
+      return this.membership_features.advanced_sinks ||
+             this.privilege('advanced_sinks', 'boolean');
     },
 
     ///
@@ -131,6 +146,31 @@ export default {
   },
 
   methods : {
+    // XXX: copied from ziti (models/User#privilege)
+    privilege : function(type, convert){
+      const privileges = this.privileges || [];
+      const privilege = privileges.find(function(p){
+        return p.type == type
+      })
+
+      if(!privilege){
+        if(convert == 'integer')
+          return 0;
+
+        else if(convert == 'boolean')
+          return false;
+
+        return null;
+      }
+
+      if(convert == 'integer')
+        return parseInt(privilege.value);
+      else if(convert == 'boolean')
+        return ['true', 't'].includes(privilege.value.toLowerCase())
+
+      return privilege.value;
+    },
+
     not_authenticated : function(err){
       return err.status == 401;
     },

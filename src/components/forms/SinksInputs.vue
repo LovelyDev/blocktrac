@@ -38,7 +38,7 @@
       </td>
     </tr>
 
-    <tr v-if="advanced_sinks_disabled">
+    <tr v-if="!advanced_sinks">
       <td></td>
 
       <td id="available_with_pro">
@@ -52,7 +52,7 @@
                          v-model="enable_sms"
                          class="form_switch"
                          switch
-                         :disabled="advanced_sinks_disabled">
+                         :disabled="!advanced_sinks">
           Text Message
         </b-form-checkbox>
 
@@ -81,7 +81,7 @@
                          v-model="enable_webhook"
                          class="form_switch"
                          switch
-                         :disabled="advanced_sinks_disabled">
+                         :disabled="!advanced_sinks">
           URL
         </b-form-checkbox>
 
@@ -164,12 +164,6 @@ export default {
   },
 
   computed : {
-    advanced_sinks_disabled : function(){
-      return !this.logged_in || !this.membership_features.advanced_sinks
-    },
-
-    ///
-
     remaining_sinks : function(){
       return this.authorized_sinks - this.sinks.length;
     },
@@ -340,8 +334,8 @@ export default {
   created : function(){
     if(this.no_toggle){
       this.enable_email = true
-      this.enable_sms = this.membership_features.advanced_sinks
-      this.enable_webhook = this.membership_features.advanced_sinks
+      this.enable_sms = this.advanced_sinks;
+      this.enable_webhook = this.advanced_sinks;
     }
 
     this.load_sinks()
