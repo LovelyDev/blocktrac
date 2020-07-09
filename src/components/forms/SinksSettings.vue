@@ -27,12 +27,6 @@ export default {
 
   components : {
     SinksInputs
-  },
-
-  computed : {
-    advanced_sinks_disabled : function(){
-      return !this.membership_features.advanced_sinks
-    }
   }
 }
 </script>
