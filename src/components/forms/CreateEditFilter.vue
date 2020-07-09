@@ -73,8 +73,7 @@
               <span v-if="is_template_filter &&
                          !is_template_param_valid(params[p-1],
                                          template_params[p-1])">
-                Must be a{{template_params[p-1]['type'] == 'Integer' ? 'n' : ''}}
-                {{template_params[p-1]['type'].toLowerCase()}}
+                {{template_param_error(template_params[p-1]['name'], template_params[p-1]['type'])}}
               </span>
               <span v-else class="placeholder" />
             </div>
@@ -414,6 +413,19 @@ export default {
         return false;
 
       return true;
+    },
+
+    template_param_error : function(param, type){
+      if(type == 'String')
+        return param + ' Required';
+
+      else if(type == 'Integer')
+        return 'Number required';
+
+      else if(type == 'Float')
+        return 'Decimal required';
+
+      return null;
     },
 
     ///
