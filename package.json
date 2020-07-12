@@ -9,14 +9,19 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
+    "@vue/test-utils": "^1.0.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.1.0",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.4.4",
     "estraverse": "^5.1.0",
     "jest": "^26.1.0",
+    "jest-transform-stub": "^2.0.0",
     "jsonpath-complexity": "^1.0.7",
     "moment-timezone": "^0.5.27",
     "ripple-lib": "^1.6.5",
     "vue": "^2.6.10",
+    "vue-jest": "^3.0.6",
     "vue-moment": "^4.1.0",
     "vue-mq": "^1.0.1",
     "vue-multiselect": "^2.1.6",
@@ -35,6 +40,20 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.vue$": "vue-jest"
+    },
+    "moduleNameMapper": {
+      "^.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+    }
   },
   "eslintConfig": {
     "root": true,

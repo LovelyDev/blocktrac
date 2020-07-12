@@ -1,3 +1,6 @@
+import setup from './setup'
+import ConfirmEmail from '../src/ConfirmEmail.vue'
+
 describe("ConfirmEmail page", () => {
   describe("methods", () => {
     describe("#send_request", () => {
