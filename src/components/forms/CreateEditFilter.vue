@@ -93,19 +93,19 @@
                  @input="evnt=> jsonpath = evnt.target.value" />
 
           <div id="expression_error" class="form_text form_error">
-            <span v-if="is_expression_filter && !has_expression">
+            <span v-if="!has_expression">
               Expression required
             </span>
-            <span v-else-if="is_expression_filter && !valid_expression">
+            <span v-else-if="!valid_expression">
               Invalid expression
             </span>
-            <span v-else-if="is_expression_filter && expression_too_long">
+            <span v-else-if="expression_too_long">
               Expression too long
             </span>
-            <span v-else-if="is_expression_filter && !safe_expression">
+            <span v-else-if="!safe_expression">
               {{unsafety_reasons}}
             </span>
-            <span v-else-if="is_expression_filter && complex_expression">
+            <span v-else-if="complex_expression">
               Too <router-link to="/help/filters" target="_blank">complex</router-link>
             </span>
             <span v-else class="placeholder" />
