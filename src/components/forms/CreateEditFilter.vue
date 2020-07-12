@@ -149,7 +149,9 @@
       </tr>
     </table>
 
-    <SinksInputs v-if="logged_in" ref="sinks_inputs" />
+    <SinksInputs v-if="logged_in"
+                 ref="sinks_inputs"
+                :preselected="existing_sinks" />
   </div>
 </template>
 
@@ -203,6 +205,18 @@ export default {
 
     is_expression_filter : function(){
       return this.filter_type == 'expression';
+    },
+
+    ///
+
+    existing_sinks : function(){
+      if(this.edit_filter)
+        return this.edit_filter.Sinks;
+
+      else if(this.duplicate_filter)
+        this.duplicate_filter.Sinks;
+
+      return null;
     },
 
     ///

@@ -179,6 +179,18 @@ describe("CreateEditFilter", () => {
       })
     })
 
+    describe("#existing_sinks", () => {
+      describe("edit_filter is not null", () => {
+        test.todo("is edit_filter.Sinks")
+      })
+
+      describe("duplicate_filter is not null", () => {
+        test.todo("is duplicate_filter.Sinks")
+      })
+
+      test.todo("is null")
+    })
+
     describe("#has_name", () => {
       describe("name != ''", () => {
         test.todo("is true")

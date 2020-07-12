@@ -146,7 +146,10 @@ export default {
     no_toggle : Boolean,
 
     // tie selected sinks to sink lifecycle
-    selected_lifecycle : Boolean
+    selected_lifecycle : Boolean,
+
+    // sinks to preselect
+    preselected : Array
   },
 
   data : function(){
@@ -332,10 +335,24 @@ export default {
   },
 
   created : function(){
+    if(this.preselected){
+      this.preselected.forEach(function(preselected){
+        this.selected[preselected.type].push({
+          text : preselected.target,
+          value : preselected.id
+        })
+      }.bind(this))
+    }
+
     if(this.no_toggle){
       this.enable_email = true
       this.enable_sms = this.advanced_sinks;
       this.enable_webhook = this.advanced_sinks;
+
+    }else{
+      this.enable_email   = this.selected.email.length   != 0;
+      this.enable_sms     = this.selected.sms.length     != 0;
+      this.enable_webhook = this.selected.webhook.length != 0;
     }
 
     this.load_sinks()
