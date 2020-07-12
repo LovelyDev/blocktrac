@@ -33,10 +33,8 @@ export default {
     },
 
     account : {
-       text : {
-         type : String,
-         required : true
-       }
+       type : String,
+       required : true
     }
   }
 }
