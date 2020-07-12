@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.4.4",
     "estraverse": "^5.1.0",
+    "jest": "^26.1.0",
     "jsonpath-complexity": "^1.0.7",
     "moment-timezone": "^0.5.27",
     "ripple-lib": "^1.6.5",
