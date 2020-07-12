@@ -132,6 +132,11 @@ import ServerAPI       from '../../mixins/server_api'
 
 import util from '../../util'
 
+// FIXME: limit sinks created by sinks_per_filter (incorporating privileges)
+// FIXME: need to refresh filters associated with sink on various events:
+//        - delete_sink
+//        - add/remove sink to/from filter
+
 export default {
   name: 'SinksInputs',
 
