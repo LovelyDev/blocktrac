@@ -15,6 +15,15 @@
           <p>
             <span class="zt">Zerp Tracker</span> allows you to monitor XRP transactions in real time and setup alerts to be notified of ledger activity via email, text message, and more. By leveraging a rich and powerful pattern matching system, <span class="zt">Zerp Tracker</span> facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
           </p>
+
+          <div style="text-align: center">
+            <iframe :width="mq_lte_sm ? 300 : 560" :height="mq_lte_sm ? 170 : 315"
+                    src="https://www.youtube.com/embed/n0LcPuyFY6o"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+          </div>
         </div>
 
         <div id="about_section2" class="about_section">
