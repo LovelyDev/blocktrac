@@ -65,6 +65,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 ///
 
+// TODO new user guide
+
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 

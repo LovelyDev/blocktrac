@@ -8,6 +8,8 @@
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
+
+<!-- TODO slide control to connect txs list to testnet (and test filter against it) -->
 <template>
   <div>
     <TxsFilter />

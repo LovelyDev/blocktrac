@@ -163,6 +163,8 @@ import Validator      from '../../mixins/validator'
 
 import util           from '../../util'
 
+// TODO add explanations for categories
+
 export default {
   name: 'CreateEditFilterForm',
 

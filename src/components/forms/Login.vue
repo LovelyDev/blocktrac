@@ -42,6 +42,8 @@
 </template>
 
 <script>
+// TODO autofill email suggestion
+
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 
