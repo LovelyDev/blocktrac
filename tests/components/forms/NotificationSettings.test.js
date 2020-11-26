@@ -15,6 +15,7 @@ describe("NotificationSettings", () => {
   describe("computed", () => {
     describe("#notification_times", () => {
       test.todo("maps membership_features notification_times")
+      test.todo("contains notification_time privilege")
     })
   })
 

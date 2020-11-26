@@ -11,6 +11,7 @@ describe("BatchSettings", () => {
   describe("computed", () => {
     describe("batch_sizes", () => {
       test.todo("is membership_features batch_sizes")
+      test.todo("contains batch_size privilege")
     })
   })
 

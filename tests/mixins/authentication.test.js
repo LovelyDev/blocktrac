@@ -204,6 +204,8 @@ describe("authentication", () => {
       test.todo("converts privilege to boolean")
 
       describe("privilege not found", () => {
+        test.todo("returns default_value")
+
         test.todo("returns null")
 
         test.todo("returns integer 0")
