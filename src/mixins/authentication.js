@@ -147,14 +147,17 @@ export default {
 
   methods : {
     // XXX: copied from ziti (models/User#privilege)
-    privilege : function(type, convert){
+    privilege : function(type, convert, default_value){
       const privileges = this.privileges || [];
       const privilege = privileges.find(function(p){
         return p.type == type
       })
 
       if(!privilege){
-        if(convert == 'integer')
+        if(default_value)
+          return default_value
+
+        else if(convert == 'integer')
           return 0;
 
         else if(convert == 'boolean')
