@@ -1,5 +1,5 @@
 <!--
-  * Batch Settings Form
+  * Notification Settings Form
   * Allows the user to set the notification time, the amount of
   * time to wait after a matched transaction before sending a
   *
