@@ -7,7 +7,7 @@
 <template>
   <div id="main_title_container">
     <router-link to="/txs">
-      <h2 id="main_title">
+      <h2 id="main_title" v-if="is_xrp">
         <span id="main_title1">
           Zerp
         </span>
@@ -16,13 +16,21 @@
           XRP Transaction Tracker
         </span>
       </h2>
+
+      <h2 id="main_title" v-else-if="is_xlm">
+      <span id="main_title1">S</span><span id="main_title2">tracker</span>
+      </h2>
     </router-link>
   </div>
 </template>
 
 <script>
+import Network from '../mixins/network'
+
 export default {
-  name: 'MainTitle'
+  name: 'MainTitle',
+
+  mixins : [Network]
 }
 </script>
 

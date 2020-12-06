@@ -11,6 +11,10 @@ module.exports = {
   BACKEND_URL : "http://localhost:3000",
   //BACKEND_URL : "https://api.zerptracker.com",
 
+  // Network to connect to.
+  // Supported: xrp_mainnet, xlm_mainnet
+  NETWORK : 'xlm_mainnet',
+
   // Ripple Websocket URI
   RIPPLE_WS : "wss://s2.ripple.com:443",
 

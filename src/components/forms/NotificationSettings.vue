@@ -46,6 +46,7 @@ export default {
   },
 
   computed : {
+    // TODO also add privilege notification time if set
     notification_times : function(){
       return this.membership_features.notification_times.map(function(nt){
         return {

@@ -59,6 +59,7 @@
 
 <script>
 import MainLayout from './components/MainLayout'
+import Network    from './mixins/network'
 
 import util from './util'
 import ziti from './ziti'
@@ -70,6 +71,8 @@ const sinks_caps_text =
 
 export default {
   name: 'Help',
+
+  mixins : [Network],
 
   components: {
     MainLayout
@@ -83,29 +86,33 @@ export default {
   data : function(){
     return {
       active : 'General',
+    }
+  },
 
-      data : {
+  computed : {
+    data : function(){
+      return {
         "General" : {
           icon : "gear-gray",
           topics : [
             {
-              title : "What is Zerp Tracker?",
-              value : "Zerp Tracker is a persistent transaction tracker for the XRP Blockchain. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
+              title : "What is " + this.app_name + "?",
+              value : this.app_name + " is a persistent transaction tracker for the " + this.network_upper + " Blockchain. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
             },
 
             {
-               title : "What is XRP?",
-               value : "XRP is a popular Blockchain technology being adopted by banks and financial institutions worldwide for cross border remittances."
+               title : "What is " + this.network_upper + "?",
+               value : this.network_description,
             },
 
             {
                title : "Why should I care about transactions?",
-               value : "Transactions are a core component of the XRP Ledger, allowing users to send and receive currencies and tokens representing value over the Internet."
+               value : "Transactions are a core component of the " + this.network_upper + " Ledger, allowing users to send and receive currencies and tokens representing value over the Internet."
             },
 
             {
                title : "Where can I find out more?",
-               value : "Many resources are avaiable online pertaining to XRP technologies. See the <a href='https://xrpl.org'>XRPL.org</a> portal for example."
+               value : "Many resources are avaiable online pertaining to " + this.network_upper + " technologies. See the <a href='" + this.network_moreinfo.url + "'>" + this.network_moreinfo.title + "</a> portal for example."
             },
 
             {
@@ -120,7 +127,7 @@ export default {
           topics : [
             {
               title : "How do I sign up?",
-              value : "You may sign up for a new Zerp Tracker account by clicking <b>Register</b> in the upper right corner. You will be prompted to supply a valid email and password. We will send you an email containing a confirmation link, one confirmed you are good to go!"
+              value : "You may sign up for a new " + this.app_name + " account by clicking <b>Register</b> in the upper right corner. You will be prompted to supply a valid email and password. We will send you an email containing a confirmation link, one confirmed you are good to go!"
             },
 
             {
@@ -160,7 +167,7 @@ export default {
 
             {
               title : "What if I am a non-technical person?",
-              value : "Zerp Tracker also provides an extensive library of pre-built expressions for you to use in lieu of writing your own JSONPath filters. Each expression is parameterized with placeholders allowing you to customize them to match exactly the type of transactions you are looking for. Create a new filter and select the <b>Category</b> option to see all the ones that are available!"
+              value : this.app_name + " also provides an extensive library of pre-built expressions for you to use in lieu of writing your own JSONPath filters. Each expression is parameterized with placeholders allowing you to customize them to match exactly the type of transactions you are looking for. Create a new filter and select the <b>Category</b> option to see all the ones that are available!"
             },
 
             {
@@ -170,17 +177,17 @@ export default {
 
             {
               title : "Why am I getting the error 'Filter is too complex' or 'Filter is invalid'?",
-              value : "Filter expressions are validated for safety and complexity before being saved to Zerp Tracker. Loops, function definitions, and function calls (outside of <i>parseInt</i> and <i>parseFloat</i>) are not permitted. Expressions may not contain more than " + ziti.max_jsonpath_complexity.binary + " logical operations (<b>&&</b> and <b>||</b>) and no more than " + ziti.max_jsonpath_complexity.logical + " binary operations (<b>==</b>, <b>+</b>, <b>-</b>, <b>*</b>, <b>/</b>).<br/>Filter parameters cannot contain the string \"<b>)]</b>\" due to parsing restrictions"
+              value : "Filter expressions are validated for safety and complexity before being saved to " + this.app_name + ". Loops, function definitions, and function calls (outside of <i>parseInt</i> and <i>parseFloat</i>) are not permitted. Expressions may not contain more than " + ziti.max_jsonpath_complexity.binary + " logical operations (<b>&&</b> and <b>||</b>) and no more than " + ziti.max_jsonpath_complexity.logical + " binary operations (<b>==</b>, <b>+</b>, <b>-</b>, <b>*</b>, <b>/</b>).<br/>Filter parameters cannot contain the string \"<b>)]</b>\" due to parsing restrictions"
             },
 
             {
               title : "Is filter history retained?",
-              value : "Currently Zerp Tracker retains the latest " + ziti.filter_match_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
+              value : "Currently " + this.app_name + " retains the latest " + ziti.filter_match_history + " transactions matched by a filter. After this transactions are removed on a first-in first-out basis. These transactions are accessible on the <b>Filter Details</b> page."
             },
 
             {
               title : "Are there limits to filter matches?",
-              value : "Currently Zerp Tracker imposes the a limit of " + ziti.filter_interval_cap + " matches every " + (ziti.timeouts.filter_reset/1000) + " seconds for every filter. Once a filter has exceeded the limit excess matches will be discard."
+              value : "Currently " + this.app_name + " imposes the a limit of " + ziti.filter_interval_cap + " matches every " + (ziti.timeouts.filter_reset/1000) + " seconds for every filter. Once a filter has exceeded the limit excess matches will be discard."
             }
           ]
         },
@@ -200,17 +207,17 @@ export default {
 
             {
               title : "Are there limits to notifications?",
-              value : "Currently Zerp Tracker imposes the following base caps on the following notification types: " + sinks_caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " SMS notifications.<br/>Once you have exceeded the limit for a particular type, notifications will not be sent via that channel until your subscription is renewed."
+              value : "Currently " + this.app_name + " imposes the following base caps on the following notification types: " + sinks_caps_text + ". For multi-month subscriptions, multiply the number of months by the base cap to determine the total cap. For example for a 3 month subscription, you are allowed up to " + (ziti.monthly_sink_caps.sms * 3) + " SMS notifications.<br/>Once you have exceeded the limit for a particular type, notifications will not be sent via that channel until your subscription is renewed."
             },
 
             //{
             //  title : "Can I limit the rate of notifications?",
-            //  value : "Yes! You may edit the number of notifications of each type you receive per hour via the <b>Settings</b> control in the <b>Filters List</b>. Once Zerp Tracker has exceed the limit configured for a particular type, notifications will not be sent via that channel until the next hour."
+            //  value : "Yes! You may edit the number of notifications of each type you receive per hour via the <b>Settings</b> control in the <b>Filters List</b>. Once " + this.app_name + " has exceed the limit configured for a particular type, notifications will not be sent via that channel until the next hour."
             //},
 
             {
               title : "What happens if my email, sms, url is unavailable when a notification is sent?",
-              value : "At the current time we only send notifications once when Zerp Tracker detects matching transactions. Please make sure the target destination is online and accessible to ensure you receive notifications. In the future we may offer the ability to retry notification attempts."
+              value : "At the current time we only send notifications once when " + this.app_name + " detects matching transactions. Please make sure the target destination is online and accessible to ensure you receive notifications. In the future we may offer the ability to retry notification attempts."
             },
 
             {
@@ -258,12 +265,10 @@ export default {
               value : "Unfortunately we are not able to offer refunds at the current time. If you wish to cancel, please do so before your subscription is renewed to avoid unintended charges. In the future we will explore offering prorated refunds for unused portions of subscriptions."
             }
           ]
-        },
+        }
       }
-    }
-  },
+    },
 
-  computed : {
     categories : function(){
       return Object.keys(this.data);
     },

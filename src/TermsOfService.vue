@@ -11,16 +11,16 @@
 
       <div id="terms_content">
         <p>
-        Welcome to <b>Zerp Tracker</b>. By using this website and/or service, you implicity agree to comply with and be bound by the following terms and conditions of use. If you disagree with any part of these terms and conditions, please immediately cease using the Zerp Tracker website and service.
+        Welcome to <b>{{app_name}}</b>. By using this website and/or service, you implicity agree to comply with and be bound by the following terms and conditions of use. If you disagree with any part of these terms and conditions, please immediately cease using the {{app_name}} website and service.
         </p>
 
         <p>
-        The use of this <b>Zerp Tracker</b> is subject to the following terms of use:
+        The use of this <b>{{app_name}}</b> is subject to the following terms of use:
         </p>
 
         <ul id="terms_list">
           <li>
-          Neither Dev Null Productions nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website or from the Zerp Tracker service for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
+          Neither Dev Null Productions nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials found or offered on this website or from the {{app_name}} service for any particular purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.
           </li>
 
           <li>
@@ -58,9 +58,13 @@
 
 <script>
 import MainLayout from './components/MainLayout'
+import Network from './mixins/network'
 
 export default {
   name: 'TermsOfService',
+
+  mixins : [Network],
+
   components: {
     MainLayout
   }

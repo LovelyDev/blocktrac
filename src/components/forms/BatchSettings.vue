@@ -42,6 +42,7 @@ export default {
   },
 
   computed : {
+    // TODO also add privilege batch size if set
     batch_sizes : function(){
       return this.membership_features.batch_sizes.map(function(bs){
         return {

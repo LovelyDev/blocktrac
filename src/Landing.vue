@@ -10,10 +10,10 @@
     <div id="landing_container">
       <div id="section1" class="section">
         <div id="section1_subsection1">
-          <div id="main_title">Zerp Tracker</div>
+          <div id="main_title">{{app_name}}</div>
 
           <ul class="main_features" v-if="mq_gte_md">
-            <li>Monitor your XRP account</li>
+            <li>Monitor your {{network_upper}} account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
@@ -36,7 +36,7 @@
 
         <div id="section1_subsection3" v-if="mq_lt_md">
           <ul class="main_features">
-            <li>Monitor your XRP account</li>
+            <li>Monitor your {{network_upper}} account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
@@ -61,7 +61,7 @@
           <img id="section2_img" src="./assets/landing/section2.png" />
 
           <div id="section2_content">
-            <p>Monitor XRP Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
+            <p>Monitor {{network_upper}} Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
 
             <router-link to="/txs">
               <b-button id="setup_notifications" variant="primary">
@@ -76,7 +76,7 @@
         <div class="sub_title">Filtering</div>
 
         <div id="section3_content">
-          With Zerp Tracker you can setup powerful filtering expressions to hone in on exactly the type of activity that you are interested in...
+          With {{app_name}} you can setup powerful filtering expressions to hone in on exactly the type of activity that you are interested in...
         </div>
 
         <img id="section3_img" src="./assets/landing/section3.png" />
@@ -119,9 +119,12 @@
 
 <script>
 import MainLayout from './components/MainLayout'
+import Network from './mixins/network'
 
 export default {
   name: 'Landing',
+
+  mixins : [Network],
 
   components: {
     MainLayout

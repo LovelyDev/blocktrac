@@ -165,6 +165,11 @@ Vue.prototype.$rippleAPI = new RippleAPI({
 
 ///
 
+import DocVars from './doc-vars.js';
+Vue.use(DocVars)
+
+///
+
 new Vue({
   router : router,
   store  : store
