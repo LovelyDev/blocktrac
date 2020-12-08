@@ -15,8 +15,11 @@ module.exports = {
   // Supported: xrp_mainnet, xlm_mainnet
   NETWORK : 'xlm_mainnet',
 
-  // Ripple Websocket URI
-  RIPPLE_WS : "wss://s2.ripple.com:443",
+  // Network Endpoints
+  NETWORK_URIS : {
+    'xrp_mainnet' : "wss://s2.ripple.com:443",
+    'xlm_mainnet' : "https://horizon.stellar.org"
+  },
 
   // Enable to disable site functionaily,
   // display maintenance page
@@ -27,6 +30,9 @@ module.exports = {
 
   // From the XRP Protocol
   DROPS_PER_XRP : 1000000,
+
+  // From the XLM Protocol
+  STROOPS_PER_XLM : 10000000,
 
   // List of currency icons
   currency_icons : currency_icons,

@@ -216,62 +216,6 @@ export const store = new Vuex.Store({
     // Clear the in progress filter
     clear_in_progress_filter(state){
       state.in_progress_filter = {};
-    },
-
-    ///
-
-    // Rippled websocket related callbacks
-
-    on_open_socket(state, cb) {
-      if(state.socket.isConnected){
-        cb();
-        return;
-      }
-
-      state.callbacks.socket_open.push(cb);
-    },
-
-    on_socket_message(state, cb){
-      state.callbacks.socket_msg.push(cb);
-    },
-
-    rm_socket_message_cb(state, cb){
-      const index = state.callbacks.socket_msg.indexOf(cb);
-      if(index == -1) return;
-
-      state.callbacks.socket_msg.splice(index, 1);
-    },
-
-    SOCKET_ONOPEN (state) {
-      state.socket.isConnected = true
-      state.callbacks.socket_open.forEach(function(cb){
-        cb();
-      });
-    },
-
-    SOCKET_ONCLOSE (state, ) {
-      state.socket.isConnected = false
-    },
-
-    SOCKET_ONERROR ()  {
-    },
-
-    SOCKET_ONMESSAGE (state, message)  {
-      if(message.id && state.callbacks.commands[message.id]){
-        state.callbacks.commands[message.id](message["result"]);
-        delete state.callbacks.commands[message.id];
-      }
-
-      state.callbacks.socket_msg.forEach(function(cb){
-        cb(message);
-      });
-    },
-
-    SOCKET_RECONNECT() {
-    },
-
-    SOCKET_RECONNECT_ERROR(state) {
-      state.socket.reconnectError = true;
     }
   }
 });

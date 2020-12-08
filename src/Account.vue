@@ -23,14 +23,8 @@
           <tr>
             <td class="label">Balance</td>
             <td class="value">
-              {{balance | round | delim}} <img src="./assets/currencies/XRP.svg" width="15px" />
-            </td>
-          </tr>
-
-          <tr>
-            <td class="label">Flags</td>
-            <td class="value">
-              {{flags}}
+              {{balance | round | delim}}
+              <img :src="network_icon" width="15px" />
             </td>
           </tr>
 
@@ -56,13 +50,14 @@
 <script>
 import TxsLayout         from './components/TxsLayout'
 import CommandDispatcher from './mixins/command_dispatcher'
+import Network           from './mixins/network'
 
 import config from "./config"
 
 export default {
   name: 'Account',
 
-  mixins : [CommandDispatcher],
+  mixins : [CommandDispatcher, Network],
 
   components: {
     TxsLayout
@@ -75,38 +70,21 @@ export default {
   data : function(){
     return {
        balance : 0,
-         flags : 0,
       sequence : 0,
       previous_txn : ''
     }
   },
 
   methods : {
-    msg_cb : function(message){
-      if(!message["result"]) return;
-
-      const account_data = message["result"].account_data
-           this.balance = parseInt(account_data.Balance)/config.DROPS_PER_XRP
-             this.flags = account_data.Flags
-          this.sequence = account_data.Sequence
-      this.previous_txn = account_data.PreviousTxnID
+    on_account : function(account){
+      this.balance      = account.balance;
+      this.sequence     = account.sequence;
+      this.previous_txn = account.previous_txn;
     }
   },
 
   created : function(){
-    this.$store.commit('on_socket_message', this.msg_cb);
-    this.$store.commit('on_open_socket', function(){
-      var cmd = {
-        'command' : 'account_info',
-        'account' : this.id
-      };
-
-      this.sendCmd(cmd);
-    }.bind(this));
-  },
-
-  destroyed : function(){
-    this.$store.commit('rm_socket_message_cb', this.msg_cb);
+    this.network.account(this.id, this.on_account)
   }
 }
 </script>

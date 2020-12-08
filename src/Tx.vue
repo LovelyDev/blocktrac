@@ -67,31 +67,13 @@ export default {
   },
 
   methods : {
-    msg_cb : function(message){
-      if(!message["result"] || !message["result"]["meta"]) return;
-
-      // XXX: transaction returned by tx command is in different
-      //       format than that in transaction stream, convert
-      this.tx = {transaction : message["result"]};
-      this.tx.meta = this.tx.transaction.meta;
-      delete this.tx.transaction.meta;
+    on_tx : function(tx){
+      this.tx = tx;
     }
   },
 
   created : function(){
-    this.$store.commit('on_socket_message', this.msg_cb);
-    this.$store.commit('on_open_socket', function(){
-      var cmd = {
-        'command' : 'tx',
-        'transaction' : this.hash
-      };
-
-      this.sendCmd(cmd);
-    }.bind(this));
-  },
-
-  destroyed : function(){
-    this.$store.commit('rm_socket_message_cb', this.msg_cb);
+    this.network.tx(this.hash, this.on_tx)
   }
 }
 </script>

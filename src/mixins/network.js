@@ -8,8 +8,8 @@
 import config  from '../config'
 
 // XXX: define & use external helpers as this mixin's computed module
-//      is used directly in the doc-vars plugin where 'this' properties
-//      are not available.
+//      is used directly in the doc-vars and network-connection plugin
+//      where 'this' properties are not available.
 
 function is_xrp(){
   return config.NETWORK.substring(0, 3) == 'xrp';
@@ -29,14 +29,14 @@ export default {
       return is_xlm()
     },
 
-    network : function(){
+    network_id : function(){
       return is_xrp() ? 'xrp' :
              is_xlm() ? 'xlm' :
                            '' ;
     },
 
     network_upper : function(){
-      return this.network.toUpperCase();
+      return this.network_id.toUpperCase();
     },
 
     network_description : function(){
@@ -49,6 +49,10 @@ export default {
       return is_xrp() ? {url : 'https://xrpl.org',         title : 'xrpl.org'   } :
              is_xlm() ? {url : 'https://www.stellar.org/', title : 'stellar.org'} :
                         {} ;
+    },
+
+    network_icon : function(){
+      return require('../assets/currencies/' + this.network_upper + '.svg');
     },
 
     // XXX: Also set in MainTitle component and affects favicon

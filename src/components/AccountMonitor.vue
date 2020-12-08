@@ -48,7 +48,7 @@ export default {
     },
 
     is_valid_account : function(){
-      return this.$rippleAPI.isValidAddress(this.account);
+      return this.network.is_valid_address(this.account);
     }
   },
 

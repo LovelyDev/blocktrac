@@ -51,7 +51,7 @@ import Checkout       from './Checkout'
 
 import("../public/common.css")
 import("../public/fonts.css")
-import("./filters")
+require("./filters")
 
 Vue.config.productionTip = false
 
@@ -144,27 +144,21 @@ const router = new VueRouter({
 import config    from './config'
 import { store } from './store'
 
+///
+
+// Vue HTTP Client
 import VueResource   from 'vue-resource'
-import VueNativeSock from 'vue-native-websocket'
-
-// Automatically connect to websocket on startup
 Vue.use(VueResource)
-Vue.use(VueNativeSock, config.RIPPLE_WS,
-                       { format: 'json',
-                          store: store,
-                    reconnection: true,
-               reconnectionDelay: config.RETRY_SECONDS * 1000});
 
 ///
 
-// We also use various methods in the ripple api
-const RippleAPI = require('ripple-lib').RippleAPI;
-Vue.prototype.$rippleAPI = new RippleAPI({
-  server: config.RIPPLE_WS
-});
+// Connection to the blockchain server
+import NetworkConnection from './network-connection'
+Vue.use(NetworkConnection)
 
 ///
 
+// Global document configuration
 import DocVars from './doc-vars.js';
 Vue.use(DocVars)
 
