@@ -1,12 +1,12 @@
 <!--
-  * Tx Container
+  * XLM Tx Container
   * Wrapping container encapsulation every transaction, providing
   * slot for tx-type specific rendering.
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <div class="tx_container">
+  <div class="xlm_tx_container">
     <div class="tx_icon"
          @click="nav_to_tx">
       <div class="tx_icon_wrapper"
@@ -21,26 +21,30 @@
       </div>
 
       <div class="tx_type">
-        {{tx_short_type}}
+        <div>{{short_operation_type}}</div>
+        <div v-if="multiple_operations">
+          (+{{operations.length - 1}} operation<span v-if="operations.length > 2">s</span>)
+        </div>
       </div>
     </div>
 
     <AccountDetail v-if="mq_gte_md"
                    :account="account"
-                   text="Account" />
+                   text="Account"
+                   :shorten="42" />
 
     <slot></slot>
   </div>
 </template>
 
 <script>
-import AccountDetail from './AccountDetail'
-import HasTx         from '../mixins/has_tx'
+import AccountDetail from '../../AccountDetail'
+import Meta          from './meta'
 
 export default {
-  name: 'TxContainer',
+  name: 'XLMTxContainer',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
     AccountDetail
@@ -54,7 +58,7 @@ export default {
                          .toLowerCase() +
                     '-' + color + '.svg';
 
-      return require('../assets/txs/' + asset);
+      return require('../../../assets/txs/' + asset);
     }
   },
 
@@ -67,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-.tx_container{
+.xlm_tx_container{
   display: flex;
 }
 

@@ -4,26 +4,27 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <div class="currency_amount">
-      <CurrencyAmount :amount="amount" />
+      <XRPCurrencyAmount :amount="amount" />
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer    from '../TxContainer'
-import CurrencyAmount from '../CurrencyAmount'
-import HasTx          from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import XRPCurrencyAmount from '../../currency_amount/XRP'
 
 export default {
   name   : 'EscrowCreateTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
-    CurrencyAmount
+    XRPTxContainer,
+    XRPCurrencyAmount
   },
 
   computed : {

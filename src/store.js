@@ -52,20 +52,6 @@ export const store = new Vuex.Store({
 
     active_filter : {},
     in_progress_filter : {},
-
-    // Callbacks registered on various socket-related events
-    callbacks : {
-      socket_open : [],
-      socket_msg  : [],
-         commands : {}
-    },
-
-    // Socket status variables
-    socket: {
-      isConnected: false,
-      message: '',
-      reconnectError: false,
-    }
   },
 
   mutations: {

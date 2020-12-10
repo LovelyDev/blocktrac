@@ -21,6 +21,11 @@ module.exports = {
     'xlm_mainnet' : "https://horizon.stellar.org"
   },
 
+  // Network Identifier
+  network_id : function(){
+    return this.NETWORK.split("_")[0];
+  },
+
   // Enable to disable site functionaily,
   // display maintenance page
   MAINTENANCE_MODE : false,
@@ -60,29 +65,41 @@ module.exports = {
   // General TX category for each ledger type
   tx_category_for_type : function(t){
     switch(t){
-      case "Payment":
+      case "Payment":                  // XRP
+      case "payment":                  // XLM
+      case "paymentPathStringSend":    // XLM
+      case "paymentPathStringReceive": // XLM
         return "PAYMENTS";
   
-      case "OfferCreate":
-      case "OfferCancel":
+      case "OfferCreate":              // XRP
+      case "OfferCancel":              // XRP
+      case "manageBuyOffer":           // XLM
+      case "manageSellOffer":          // XLM
+      case "createPassiveSellOffer":   // XLM
         return "OFFERS";
 
-      case "TrustSet":
+      case "TrustSet":                 // XRP
+      case "changeTrust":              // XLM
+      case "allowTrust":               // XLM
         return "TRUST LINES";
 
-      case "AccountSet":
-      case "AccountDelete":
-      case "SignerListSet":
+      case "AccountSet":               // XRP
+      case "AccountDelete":            // XRP
+      case "SignerListSet":            // XRP
+      case "setOptions":               // XLM
+      case "accountMerge":             // XLM
+      case "manageData":               // XLM
+      case "bumpSequence":             // XLM
         return "ACCOUNT SETS";
   
-      case "EscrowCreate":
-      case "EscrowFinish":
-      case "EscrowCancel":
+      case "EscrowCreate":             // XRP
+      case "EscrowFinish":             // XRP
+      case "EscrowCancel":             // XRP
         return "ESCROWS";
   
-      case "PaymentChannelCreate":
-      case "PaymentChannelClaim":
-      case "PaymentChannelFund":
+      case "PaymentChannelCreate":     // XRP
+      case "PaymentChannelClaim":      // XRP
+      case "PaymentChannelFund":       // XRP
         return "PAYMENT CHANNELS";
   
       default:

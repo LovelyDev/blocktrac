@@ -18,7 +18,7 @@ export default {
 
   props : {
     account : String,
-    shorten : Boolean,
+    shorten : [Boolean, Number],
   },
 
   computed : {
@@ -27,8 +27,13 @@ export default {
     },
 
     text : function(){
-      if(this.shorten)
-        return this.account.substr(0, 7) + "...";
+      if(this.shorten){
+        if(Number.isInteger(this.shorten))
+          return this.account.substr(0, this.shorten) + "...";
+
+        else
+          return this.account.substr(0, 7) + "...";
+      }
       return this.account;
     },
   }

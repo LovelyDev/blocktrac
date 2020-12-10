@@ -4,7 +4,7 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <div class="amount" v-if="amount">
       <span>
         {{amount}}
@@ -16,22 +16,23 @@
       <div class="tx_detail_label">Sequence</div>
       <div>{{sequence}}</div>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer  from '../TxContainer'
-import CurrencyIcon from '../CurrencyIcon'
-import HasTx        from '../../mixins/has_tx'
-import config       from '../../config'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import CurrencyIcon from '../../CurrencyIcon'
+import config       from '../../../config'
 
 export default {
   name   : 'EscrowFinishTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
+    XRPTxContainer,
     CurrencyIcon
   },
 

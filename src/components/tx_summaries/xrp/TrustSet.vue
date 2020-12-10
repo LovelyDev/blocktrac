@@ -4,33 +4,34 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <AccountDetail v-if="mq_gte_md"
                    :account="issuer"
                    text="Issuer" />
 
     <div class="currency_amount">
-      <CurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
+      <XRPCurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
       <span style="color: red" v-else>Revoked</span>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer    from '../TxContainer'
-import AccountDetail  from '../AccountDetail'
-import CurrencyAmount from '../CurrencyAmount'
-import HasTx          from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import AccountDetail  from '../../AccountDetail'
+import XRPCurrencyAmount from '../../currency_amount/XRP'
 
 export default {
   name   : 'TrustSetTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
+    XRPTxContainer,
     AccountDetail,
-    CurrencyAmount
+    XRPCurrencyAmount
   },
 
   computed : {

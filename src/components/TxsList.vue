@@ -68,13 +68,12 @@ import FilterListDropdown    from './FilterListDropdown'
 import CreateFilterModal     from './modals/CreateFilter'
 
 import Authentication        from '../mixins/authentication'
-import CommandDispatcher     from '../mixins/command_dispatcher'
 import HasFilters            from '../mixins/has_filters'
 
 export default {
   name: 'TxsList',
 
-  mixins : [Authentication, CommandDispatcher, HasFilters],
+  mixins : [Authentication, HasFilters],
 
   components : {
     TxsFilter,

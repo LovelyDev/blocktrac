@@ -35,14 +35,11 @@
 <script>
 import TxsLayout         from './components/TxsLayout'
 import TxSummary         from './components/TxSummary'
-import CommandDispatcher from './mixins/command_dispatcher'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
 
 export default {
   name: 'Tx',
-
-  mixins : [CommandDispatcher],
 
   components: {
     TxsLayout,

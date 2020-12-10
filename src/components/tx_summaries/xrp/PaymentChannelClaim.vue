@@ -4,7 +4,7 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <div class="balance_amount">
       <div class="tx_detail_label">
         <span v-if="has_amount">Amount</span>
@@ -21,20 +21,20 @@
       <span v-if="renewed"     style="color: green">Renewed</span>
       <span v-else-if="closed" style="color: red">Closed</span>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer from '../TxContainer'
-import HasTx       from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
 
 export default {
   name   : 'PaymentChannelClaimTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
+    XRPTxContainer,
   },
 
   computed : {

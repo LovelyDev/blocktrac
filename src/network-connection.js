@@ -4,9 +4,7 @@ import Network from './mixins/network'
 const xdr_to_json = require('json-xdr').toJSON
 const jsonpath = require('./vendor/jsonpath')
 
-var connected = false;
 var connect_callbacks = []
-
 function call_connected_callbacks(){
   connect_callbacks.forEach(function(cb){
     cb();
@@ -70,7 +68,7 @@ function convert_xlm_tx(tx, StellarSdk){
 
 export default {
   install(Vue, options) {
-    Vue.prototype.network = {}
+    Vue.prototype.network = {connected : false}
 
     // Initialize XRP Connection
     if(is_xrp()){
@@ -81,14 +79,16 @@ export default {
       });
 
       Vue.prototype.network.ripple_api.on("error", function(err){
-        connected = false;
+        Vue.prototype.network.connected = false;
+
+        // FIXME: auto-reconnect
       });
 
       Vue.prototype.network
                    .ripple_api
                    .connect()
                    .then(function(){
-                     connected = true;
+                     Vue.prototype.network.connected = true;
                      call_connected_callbacks();
                    })
     }
@@ -100,8 +100,10 @@ export default {
       Vue.prototype.network.stellar_server =
         new StellarSdk.Server(config.NETWORK_URIS[config.NETWORK]);
 
-      connected = true;
+      Vue.prototype.network.connected = true;
       call_connected_callbacks();
+
+      // TODO periodically test stellar connection, disconnect if not available, auto-reconnect
     }
 
     Vue.prototype.network.is_valid_address = function(id){
@@ -113,7 +115,7 @@ export default {
     }
 
     Vue.prototype.network.on_connection = function(cb){
-      if(connected)
+      if(Vue.prototype.network.connected)
         cb();
 
       else

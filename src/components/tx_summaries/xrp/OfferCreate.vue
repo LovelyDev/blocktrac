@@ -4,13 +4,13 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <template v-if="mq_gte_md">
       <div class="buy_amount">
         <div class="tx_detail_label">Buying</div>
 
         <span class="currency_amount">
-          <CurrencyAmount :amount="pays" no_issuer />
+          <XRPCurrencyAmount :amount="pays" no_issuer />
         </span>
       </div>
 
@@ -18,7 +18,7 @@
         <div class="tx_detail_label">Selling</div>
 
         <span class="currency_amount">
-          <CurrencyAmount :amount="gets" no_issuer />
+          <XRPCurrencyAmount :amount="gets" no_issuer />
         </span>
       </div>
     </template>
@@ -28,26 +28,27 @@
       <div class="tx_detail_label">Buying/Selling</div>
 
       <span class="currencies">
-        <CurrencyAmount :amount="pays" no_amount no_issuer /> /
-        <CurrencyAmount :amount="gets" no_amount no_issuer />
+        <XRPCurrencyAmount :amount="pays" no_amount no_issuer /> /
+        <XRPCurrencyAmount :amount="gets" no_amount no_issuer />
       </span>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer    from '../TxContainer'
-import CurrencyAmount from '../CurrencyAmount'
-import HasTx          from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import XRPCurrencyAmount from '../../currency_amount/XRP'
 
 export default {
   name   : 'OfferCreateTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
-    CurrencyAmount
+    XRPTxContainer,
+    XRPCurrencyAmount
   },
 
   computed : {

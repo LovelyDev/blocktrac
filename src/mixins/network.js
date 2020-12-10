@@ -12,11 +12,11 @@ import config  from '../config'
 //      where 'this' properties are not available.
 
 function is_xrp(){
-  return config.NETWORK.substring(0, 3) == 'xrp';
+  return config.network_id() == 'xrp';
 }
 
 function is_xlm(){
-  return config.NETWORK.substring(0, 3) == 'xlm';
+  return config.network_id() == 'xlm';
 }
 
 export default {

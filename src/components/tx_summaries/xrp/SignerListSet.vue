@@ -4,7 +4,7 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <div class="signers">
       <div class="tx_detail_label">Signers</div>
       <span>{{num}}</span>
@@ -14,20 +14,20 @@
       <div class="tx_detail_label">Quorum</div>
       <span>{{quorum}}</span>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer from '../TxContainer'
-import HasTx       from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
 
 export default {
   name   : 'SignerListSetTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer
+    XRPTxContainer
   },
 
   computed : {

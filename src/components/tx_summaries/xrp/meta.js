@@ -1,15 +1,15 @@
 /*
- * Helper providing access to a local transaction specified as
+ * Helper providing access to a local xrp transaction specifics as
  * a property param to the component including this mixin.
  *
- * Used by all components rendered for a single transaction
+ * Used by all components rendered for a single xrp transaction
  * including the tx_type summaries.
  *
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
-import util   from '../util'
-import config from '../config'
+import util   from '../../../util'
+import config from '../../../config'
 
 export default {
   props : {

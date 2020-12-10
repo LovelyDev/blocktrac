@@ -4,28 +4,29 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <div class="domain" v-if="domain">
       <div class="tx_detail_label">Domain</div>
       <div>{{domain}}</div>
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer from '../TxContainer'
-import HasTx       from '../../mixins/has_tx'
-import util        from '../../util'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import util           from '../../../util'
 
 // TODO: also SetFlag, ClearFlag, EmailHash, MessageKey, TransferRate, TickSize
 
 export default {
   name   : 'AccountSet',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer
+    XRPTxContainer
   },
 
   computed : {

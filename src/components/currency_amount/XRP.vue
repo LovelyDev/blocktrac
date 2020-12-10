@@ -1,5 +1,5 @@
 <!--
-  * Currency Amount Component
+  * XRP Currency Amount Component
   * Renders a currency with icon and optional issuer as specified
   * by the given params.
   *
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import AccountLink  from './AccountLink'
-import CurrencyIcon from './CurrencyIcon'
+import AccountLink  from '../AccountLink'
+import CurrencyIcon from '../CurrencyIcon'
 
-import config       from '../config.js'
+import config       from '../../config.js'
 
 export default {
-  name: 'CurrencyAmount',
+  name: 'XRPCurrencyAmount',
 
   props : {
     amount : {

@@ -1,83 +1,37 @@
 <!--
-  * Txs Summary Component
-  * Enapsulates tx-type specific component.
+  * Tx Summary Component
+  * Dispatches to Network Specific Tx Summary Component
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <div class="tx_summary"
-      :class="success ? 'success' : 'failed'"
-      :title="title">
-    <PaymentTx              :tx="tx"      v-if="tx_type == 'Payment'"              />
-    <OfferCreateTx          :tx="tx" v-else-if="tx_type == 'OfferCreate'"          />
-    <OfferCancelTx          :tx="tx" v-else-if="tx_type == 'OfferCancel'"          />
-    <EscrowCreateTx         :tx="tx" v-else-if="tx_type == 'EscrowCreate'"         />
-    <EscrowCancelTx         :tx="tx" v-else-if="tx_type == 'EscrowCancel'"         />
-    <EscrowFinishTx         :tx="tx" v-else-if="tx_type == 'EscrowFinish'"         />
-    <TrustSetTx             :tx="tx" v-else-if="tx_type == 'TrustSet'"             />
-    <SignerListSetTx        :tx="tx" v-else-if="tx_type == 'SignerListSet'"        />
-    <AccountSetTx           :tx="tx" v-else-if="tx_type == 'AccountSet'"           />
-    <AccountDeleteTx        :tx="tx" v-else-if="tx_type == 'AccountDelete'"        />
-    <PaymentChannelClaimTx  :tx="tx" v-else-if="tx_type == 'PaymentChannelClaim'"  />
-    <PaymentChannelCreateTx :tx="tx" v-else-if="tx_type == 'PaymentChannelCreate'" />
-    <PaymentChannelFundTx   :tx="tx" v-else-if="tx_type == 'PaymentChannelFund'"   />
+  <div>
+    <XRPTxSummary :tx="tx" v-if="is_xrp" />
+    <XLMTxSummary :tx="tx" v-if="is_xlm" />
   </div>
 </template>
 
 <script>
-import PaymentTx              from './tx_types/Payment'
-import OfferCreateTx          from './tx_types/OfferCreate'
-import OfferCancelTx          from './tx_types/OfferCancel'
-import EscrowCreateTx         from './tx_types/EscrowCreate'
-import EscrowCancelTx         from './tx_types/EscrowCancel'
-import EscrowFinishTx         from './tx_types/EscrowFinish'
-import TrustSetTx             from './tx_types/TrustSet'
-import SignerListSetTx        from './tx_types/SignerListSet'
-import AccountSetTx           from './tx_types/AccountSet'
-import AccountDeleteTx        from './tx_types/AccountDelete'
-import PaymentChannelClaimTx  from './tx_types/PaymentChannelClaim'
-import PaymentChannelCreateTx from './tx_types/PaymentChannelCreate'
-import PaymentChannelFundTx   from './tx_types/PaymentChannelFund'
-import HasTx                  from '../mixins/has_tx'
+import XRPTxSummary from './tx_summaries/XRP'
+import XLMTxSummary from './tx_summaries/XLM'
 
-// TODO: test all tx type edge cases, capture txs representing all possibilities
+import Network      from '../mixins/network'
 
 export default {
   name: 'TxSummary',
 
-  mixins : [HasTx],
+  mixins : [Network],
 
   components : {
-    PaymentTx,
-    OfferCreateTx,
-    OfferCancelTx,
-    EscrowCreateTx,
-    EscrowCancelTx,
-    EscrowFinishTx,
-    TrustSetTx,
-    SignerListSetTx,
-    AccountSetTx,
-    AccountDeleteTx,
-    PaymentChannelClaimTx,
-    PaymentChannelCreateTx,
-    PaymentChannelFundTx
+    XRPTxSummary,
+    XLMTxSummary
   },
 
-  computed : {
-    title : function(){
-      return this.tx_type + " @ " + this.formatted_date;
+  props : {
+    tx : {
+      type : Object,
+      required : true
     }
-  }
+  },
 }
 </script>
-
-<style scoped>
-.tx_summary{
-  padding: 10px;
-  font-family: var(--theme-font1);
-}
-
-.tx_summary.failed{
-  background-color: #faf2f1;
-}
-</style>

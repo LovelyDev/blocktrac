@@ -12,7 +12,7 @@
       <span>{{text}}</span>
     </div>
 
-    <AccountLink :account="account" />
+    <AccountLink :account="account" :shorten="shorten" />
   </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
     account : {
        type : String,
        required : true
+    },
+
+    shorten : {
+      type : [Boolean, Number],
+      default : false
     }
   }
 }

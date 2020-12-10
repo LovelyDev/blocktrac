@@ -1,45 +1,46 @@
 <!--
-  * Account Delete Transaction Details
+  * Payment Channel Create Transaction Details
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <AccountDetail v-if="mq_gte_md"
                    :account="dst"
                    text="Destination" />
 
-    <div v-if="delivered" class="currency_amount">
-      <CurrencyAmount :amount="delivered" />
+    <div class="currency_amount">
+      <XRPCurrencyAmount :amount="amount" />
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer    from '../TxContainer'
-import AccountDetail  from '../AccountDetail'
-import CurrencyAmount from '../CurrencyAmount'
-import HasTx          from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import AccountDetail  from '../../AccountDetail'
+import XRPCurrencyAmount from '../../currency_amount/XRP'
 
 export default {
-  name   : 'AccountDeleteTx',
+  name   : 'PaymentChannelCreateTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
+    XRPTxContainer,
     AccountDetail,
-    CurrencyAmount,
+    XRPCurrencyAmount
   },
 
   computed : {
+    amount : function(){
+      return this.tx_obj["Amount"];
+    },
+
     dst : function(){
       return this.tx_obj["Destination"];
     },
-
-    delivered : function(){
-      return this.tx_meta["DeliveredAmount"]
-    }
   }
 }
 </script>

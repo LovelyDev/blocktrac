@@ -1,50 +1,45 @@
 <!--
-  * Payment Channel Fund Transaction Details
+  * Payment Transaction Details
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <TxContainer :tx="tx">
+  <XRPTxContainer :tx="tx">
     <AccountDetail v-if="mq_gte_md"
                    :account="dst"
                    text="Destination" />
 
     <div class="currency_amount">
-      <CurrencyAmount :amount="amount" />
+      <XRPCurrencyAmount :amount="amount" no_issuer />
     </div>
-  </TxContainer>
+  </XRPTxContainer>
 </template>
 
 <script>
-import TxContainer    from '../TxContainer'
-import AccountDetail  from '../AccountDetail'
-import CurrencyAmount from '../CurrencyAmount'
-import HasTx          from '../../mixins/has_tx'
+import XRPTxContainer from './Container'
+import Meta           from './meta'
+
+import XRPCurrencyAmount from '../../currency_amount/XRP'
+import AccountDetail  from '../../AccountDetail'
 
 export default {
-  name   : 'PaymentChannelFundTx',
+  name   : 'PaymentTx',
 
-  mixins : [HasTx],
+  mixins : [Meta],
 
   components : {
-    TxContainer,
-    AccountDetail,
-    CurrencyAmount
+    XRPTxContainer,
+    XRPCurrencyAmount,
+    AccountDetail
   },
 
   computed : {
-    paychan : function(){
-      return this.modified_fields("PayChannel");
+    dst : function(){
+      return this.tx_obj["Destination"];
     },
 
     amount : function(){
       return this.tx_obj["Amount"];
-    },
-
-    dst : function(){
-      if(!this.paychan) return null
-
-      return this.paychan["Destination"];
     }
   }
 }

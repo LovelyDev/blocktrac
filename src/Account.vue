@@ -48,16 +48,15 @@
 </template>
 
 <script>
-import TxsLayout         from './components/TxsLayout'
-import CommandDispatcher from './mixins/command_dispatcher'
-import Network           from './mixins/network'
+import TxsLayout from './components/TxsLayout'
+import Network   from './mixins/network'
 
 import config from "./config"
 
 export default {
   name: 'Account',
 
-  mixins : [CommandDispatcher, Network],
+  mixins : [Network],
 
   components: {
     TxsLayout
