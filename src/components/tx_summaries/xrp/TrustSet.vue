@@ -10,8 +10,12 @@
                    text="Issuer" />
 
     <div class="currency_amount">
-      <XRPCurrencyAmount :amount="limit_amount" no_issuer  v-if="!revoked" />
-      <span style="color: red" v-else>Revoked</span>
+      <XRPCurrencyAmount :amount="limit_amount"
+                         no_issuer
+                         v-if="!revoked" />
+      <span style="color: red" v-else>
+        Revoked
+      </span>
     </div>
   </XRPTxContainer>
 </template>
