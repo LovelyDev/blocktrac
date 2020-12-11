@@ -5,7 +5,7 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
-    CreatePassiveSellOffer
+    <!-- TODO -->
   </XLMTxContainer>
 </template>
 

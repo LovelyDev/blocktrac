@@ -8,7 +8,9 @@
 <template>
   <span>
     <span v-if="is_native">
-      <b v-if="!no_amount">{{amount | abbrev}}</b>
+      <b v-if="have_amount && !no_amount">
+        {{amount | abbrev}}
+      </b>
 
       <span class="currency">
         <CurrencyIcon currency="XLM" />
@@ -16,13 +18,14 @@
     </span>
 
     <span v-else>
-      <b v-if="!no_amount">{{amount | abbrev}}</b>
+      <b v-if="have_amount && !no_amount">
+        {{amount | abbrev}}
+      </b>
 
-      <CurrencyIcon :currency="currency.alphaNum4.assetCode" />
+      <CurrencyIcon :currency="asset_code" />
 
       <sup v-if="!no_issuer">
-        <AccountLink :account="currency.alphaNum4.issuer.ed25519"
-                     shorten />
+        <AccountLink :account="issuer" shorten />
       </sup>
     </span>
   </span>
@@ -42,13 +45,12 @@ export default {
 
   props : {
     currency : {
-      type : Object,
+      type : [Object, String],
       required : true
     },
 
     amount : {
       type : Number,
-      required : true
     },
 
     no_amount : Boolean,
@@ -56,8 +58,22 @@ export default {
   },
 
   computed : {
+    have_amount : function(){
+      return !!this.amount || this.amount == 0;
+    },
+
     is_native : function(){
       return this.currency._type == "assetTypeNative";
+    },
+
+    asset_code : function(){
+      return typeof(this.currency) === 'string' ?
+             this.currency :
+             this.currency.alphaNum4.assetCode;
+    },
+
+    issuer : function(){
+      return this.currency.alphaNum4.issuer.ed25519;
     }
   }
 }

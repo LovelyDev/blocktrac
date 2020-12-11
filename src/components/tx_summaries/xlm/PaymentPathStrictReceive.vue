@@ -5,7 +5,7 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
-    PaymentPathStrictReceive
+    <!-- TODO -->
   </XLMTxContainer>
 </template>
 

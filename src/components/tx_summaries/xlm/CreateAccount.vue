@@ -5,13 +5,17 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
-    CreateAccount
+    <AccountDetail :account="created"
+                   text="Created"
+                   :shorten="42" />
   </XLMTxContainer>
 </template>
 
 <script>
 import XLMTxContainer from './Container'
 import Meta           from './meta'
+
+import AccountDetail    from '../../AccountDetail'
 
 export default {
   name : 'CreateAccountTx',
@@ -20,9 +24,13 @@ export default {
 
   components : {
     XLMTxContainer,
+    AccountDetail
   },
 
   computed : {
+    created : function(){
+      return this.operation.createAccountOp.destination.ed25519;
+    }
   }
 }
 </script>

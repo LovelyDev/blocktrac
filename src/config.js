@@ -86,6 +86,7 @@ module.exports = {
       case "AccountSet":               // XRP
       case "AccountDelete":            // XRP
       case "SignerListSet":            // XRP
+      case "createAccount":            // XLM
       case "setOptions":               // XLM
       case "accountMerge":             // XLM
       case "manageData":               // XLM

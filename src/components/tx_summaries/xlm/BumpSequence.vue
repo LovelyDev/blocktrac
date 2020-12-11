@@ -5,7 +5,15 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
-    BumpSequence
+    <div class="bump_sequence">
+      <div class="tx_detail_label">
+        Bumped To
+      </div>
+
+      <div class="bumped_to">
+        {{bumped_to}}
+      </div>
+    </div>
   </XLMTxContainer>
 </template>
 
@@ -23,9 +31,25 @@ export default {
   },
 
   computed : {
+    bumped_to : function(){
+      return this.operation.bumpSequenceOp.bumpTo;
+    }
   }
 }
 </script>
 
 <style scoped>
+.bump_sequence{
+  font-size: 0.8rem;
+  flex-basis: 46%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#main_layout.sm .bump_sequence,
+#main_layout.xs .bump_sequence{
+  flex-basis: 78%;
+}
 </style>

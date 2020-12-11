@@ -73,6 +73,7 @@ export default {
 <style scoped>
 .xlm_tx_container{
   display: flex;
+  align-items: center;
 }
 
 .tx_icon{

@@ -5,6 +5,10 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
+    <div v-if="deleted" class="deleted">
+      Deleted
+    </div>
+
     <template v-if="mq_gte_md">
       <div class="buy_amount">
         <div class="tx_detail_label">Buying</div>
@@ -31,8 +35,12 @@
       <div class="tx_detail_label">Buying/Selling</div>
 
       <span class="currencies">
-        <XLMCurrencyAmount :amount="buying"  no_amount no_issuer /> /
-        <XLMCurrencyAmount :amount="selling" no_amount no_issuer />
+        <XLMCurrencyAmount :currency="buying"
+                           :amount="buying_amount"
+                           no_amount no_issuer /> /
+        <XLMCurrencyAmount :currency="selling"
+                           :amount="amount"
+                           no_amount no_issuer />
       </span>
     </div>
   </XLMTxContainer>
@@ -73,6 +81,10 @@ export default {
       return parseInt(this.op.amount) / config.STROOPS_PER_XLM;
     },
 
+    deleted : function(){
+      return this.amount == 0;
+    },
+
     price : function(){
       return this.op.price.n / this.op.price.d;
     },
@@ -85,6 +97,20 @@ export default {
 </script>
 
 <style scoped>
+.deleted{
+  flex-basis: 46%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+#main_layout.sm .deleted,
+#main_layout.xs .deleted{
+  flex-basis: 78%;
+}
+
 .buy_amount,
 .sell_amount{
   flex-basis: 23%;
