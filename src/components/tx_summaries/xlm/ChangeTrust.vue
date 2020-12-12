@@ -50,7 +50,7 @@ export default {
     },
 
     issuer : function(){
-      return this.op.line.alphaNum4.issuer.ed25519;
+      return this.alpha_num.issuer.ed25519;
     },
 
     limit : function(){

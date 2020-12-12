@@ -24,7 +24,7 @@
 
       <CurrencyIcon :currency="asset_code" />
 
-      <sup v-if="!no_issuer">
+      <sup v-if="!simple_currency && !no_issuer">
         <AccountLink :account="issuer" shorten />
       </sup>
     </span>
@@ -66,19 +66,23 @@ export default {
       return this.currency._type == "assetTypeNative";
     },
 
+    simple_currency : function(){
+      return typeof(this.currency) === 'string';
+    },
+
     alpha_num : function(){
       return this.currency.alphaNum4 ||
              this.currency.alphaNum12;
     },
 
     asset_code : function(){
-      return typeof(this.currency) === 'string' ?
+      return this.simple_currency ?
              this.currency :
              this.alpha_num.assetCode;
     },
 
     issuer : function(){
-      return this.currency.alphaNum4.issuer.ed25519;
+      return this.alpha_num.issuer.ed25519;
     }
   }
 }
