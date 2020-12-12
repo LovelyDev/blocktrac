@@ -63,9 +63,9 @@ function convert_xlm_tx(tx, StellarSdk){
   jsonpath.apply(tx.result_meta, "$..alphaNum4.assetCode",  (c) => StellarSdk.xdr.AssetCode4.fromXDR(c,  'base64').toString().replace(/\0/g, ''))
   jsonpath.apply(tx.result,      "$..alphaNum4.assetCode",  (c) => StellarSdk.xdr.AssetCode4.fromXDR(c,  'base64').toString().replace(/\0/g, ''))
 
-  jsonpath.apply(tx.envelope,    "$..assetCode12", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result_meta, "$..assetCode12", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result,      "$..assetCode12", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
+  jsonpath.apply(tx.envelope,    "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
+  jsonpath.apply(tx.result_meta, "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
+  jsonpath.apply(tx.result,      "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
 
   // XXX: covert ED25519 keys to common addresses
   jsonpath.apply(tx.envelope,    "$..ed25519", (c) => (new StellarSdk.Keypair({type: "ed25519", publicKey: Buffer.from(c, 'base64')})).publicKey())
@@ -214,7 +214,9 @@ export default {
     var txs_cb = null;
 
     // Stream transactions, registering callback to be invoked w/ each.
-    // Freeze transaction objects to improve performance
+    // Wrap / Convert transactions in same fashion as ziti.
+    // Set fields used internally in zitui.
+    // Freeze transaction objects to improve performance.
     Vue.prototype.network.stream_txs = function(cb){
       this.on_connection(function(){
         if(is_xrp()){
