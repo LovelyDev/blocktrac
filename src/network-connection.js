@@ -4,7 +4,13 @@ import Network from './mixins/network'
 const xdr_to_json = require('json-xdr').toJSON
 const jsonpath = require('./vendor/jsonpath')
 
+// XXX: import XLM meta mixin to access operation helpers below
+const XLMMeta = require("./components/tx_summaries/xlm/meta")
+
+///
+
 var connect_callbacks = []
+
 function call_connected_callbacks(){
   connect_callbacks.forEach(function(cb){
     cb();
@@ -69,6 +75,12 @@ function convert_xlm_tx(tx, StellarSdk){
   return tx;
 }
 
+// Wrap transaction in similar manner as ziti/workers/run_filters_workers
+
+function wrap_tx(tx){
+  return {transaction : tx};
+}
+
 ///
 
 export default {
@@ -111,6 +123,7 @@ export default {
       // TODO periodically test stellar connection, disconnect if not available, auto-reconnect
     }
 
+    // Validate network address
     Vue.prototype.network.is_valid_address = function(id){
       if(is_xrp())
         return this.ripple_api.isValidAddress(id);
@@ -119,6 +132,7 @@ export default {
         return this.StellarSdk.StrKey.isValidEd25519PublicKey(id);
     }
 
+    // Register connection callback, invoke immediate if already connected
     Vue.prototype.network.on_connection = function(cb){
       if(Vue.prototype.network.connected)
         cb();
@@ -127,6 +141,7 @@ export default {
         connect_callbacks.push(cb);
     }
 
+    // Retrieve account specified id, invoking callback w/ result
     Vue.prototype.network.account = function(id, cb){
       this.on_connection(function(){
         if(is_xrp()){
@@ -169,6 +184,7 @@ export default {
       }.bind(this))
     }
 
+    // Retrieve transaction specified id, invoking callback w/ result
     Vue.prototype.network.tx = function(id, cb){
       this.on_connection(function(){
         if(is_xrp()){
@@ -176,7 +192,7 @@ export default {
               .request('tx', {
                 'transaction' : id
               }).then(function(tx){
-                cb(convert_xrp_tx(tx))
+                cb(wrap_tx(convert_xrp_tx(tx)))
               })
         }
 
@@ -186,10 +202,80 @@ export default {
               .transaction(id)
               .call()
               .then(function(tx){
-                cb(convert_xlm_tx(tx, this.StellarSdk))
+                cb(wrap_tx(convert_xlm_tx(tx, this.StellarSdk)))
               }.bind(this))
         }
 
+      }.bind(this))
+    }
+
+    // Transactions stream callback,
+    // See usage in stream_txs / stop_streaming_txs below
+    var txs_cb = null;
+
+    // Stream transactions, registering callback to be invoked w/ each.
+    // Freeze transaction objects to improve performance
+    Vue.prototype.network.stream_txs = function(cb){
+      this.on_connection(function(){
+        if(is_xrp()){
+          txs_cb = cb;
+
+          this.ripple_api
+              .connection
+              .on('transaction', function(tx){
+                var wrapped = wrap_tx(tx);
+                const type = wrapped.transaction.transaction.TransactionType;
+                wrapped.category = config.tx_category_for_type(type);
+                wrapped.hash = wrapped.transaction.transaction.hash;
+
+                Object.freeze(wrapped);
+                cb(wrapped)
+              })
+
+          this.ripple_api
+              .request('subscribe', {
+                'streams' : ['transactions']
+              })
+        }
+
+        if(is_xlm()){
+          txs_cb =
+            this.stellar_server
+                .transactions()
+                .cursor('now')
+            .stream({
+              onmessage : function(tx){
+                var wrapped = wrap_tx(convert_xlm_tx(tx, this.StellarSdk));
+                const meta = Object.assign({tx : wrapped.transaction}, XLMMeta)
+                wrapped.category = config.tx_category_for_type(meta.operation_type)
+                wrapped.hash = wrapped.transaction.hash;
+
+                Object.freeze(wrapped);
+                cb(wrapped)
+              }.bind(this)
+            })
+        }
+      }.bind(this))
+    }
+
+    // Stop streaming transactions, removes registered stream callback
+    Vue.prototype.network.stop_streaming_txs = function(){
+      this.on_connection(function(){
+        if(is_xrp()){
+          this.ripple_api.off('transaction', txs_cb);
+
+          this.ripple_api
+              .request('unsubscribe', {
+                'stream' : ['transactions']
+              })
+        }
+
+        if(is_xlm()){
+          // Call method returned by stream to stop streaming
+          txs_cb();
+        }
+
+        txs_cb = null;
       }.bind(this))
     }
   }

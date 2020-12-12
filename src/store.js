@@ -108,29 +108,23 @@ export const store = new Vuex.Store({
     add_tx(state, tx){
       if(state.paused_txs) return;
 
-      const wrapped = { transaction : tx }
-
       if(state.tx_filter)
-        if(jsonpath.query(wrapped, state.tx_filter).length == 0)
+        if(jsonpath.query(tx, state.tx_filter).length == 0)
           return;
 
-      var category = config.tx_category_for_type(wrapped["transaction"]["transaction"]["TransactionType"]);
       if(state.tx_categories.length != 0 &&
-        !state.tx_categories.includes(category))
+        !state.tx_categories.includes(tx.category))
         return;
 
       state.loading_txs = false;
 
-      // making message reactive slows down perf
-      Object.freeze(wrapped);
-
       // Add to txs list and cap number
-      state.txs.unshift(wrapped);
+      state.txs.unshift(tx);
       state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
 
       // Update tallies
       state.tx_category_tallies['ALL']    += 1;
-      state.tx_category_tallies[category] += 1;
+      state.tx_category_tallies[tx.category] += 1;
     },
 
     // Reset tx categories to initial state

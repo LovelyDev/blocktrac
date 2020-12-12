@@ -21,7 +21,7 @@
 
       <div v-if="has_tx" id="tx_details">
         <div>
-          <TxSummary :tx="tx" />
+          <TxSummary :tx="tx.transaction" />
         </div>
 
         <div id="rendered_tx">

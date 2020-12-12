@@ -44,7 +44,7 @@
 
       <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
-                           :key="tx.transaction.transaction.hash"
+                           :key="tx.hash"
                            class="tx_summary_container">
           <TxSummary :tx="tx.transaction" />
         </b-list-group-item>
@@ -101,33 +101,17 @@ export default {
   },
 
   methods : {
-    msg_cb : function(message){
-      if(!message["transaction"]) return;
-      this.$store.commit('add_tx', message);
+    msg_cb : function(tx){
+      this.$store.commit('add_tx', tx);
     }
   },
 
   created : function(){
-    this.$store.commit('on_socket_message', this.msg_cb);
-    this.$store.commit('on_open_socket', function(){
-      var cmd = {
-        'command' : 'subscribe',
-        'streams' : ['transactions']
-      };
-
-      this.sendCmd(cmd);
-    }.bind(this));
+    this.network.stream_txs(this.msg_cb);
   },
 
   destroyed : function(){
-    this.$store.commit('rm_socket_message_cb', this.msg_cb);
-
-    var cmd = {
-      'command' : 'unsubscribe',
-      'streams' : ['transactions']
-    };
-
-    this.sendCmd(cmd);
+    this.network.stop_streaming_txs();
   }
 }
 </script>
