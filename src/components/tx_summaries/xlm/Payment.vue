@@ -49,7 +49,7 @@ export default {
     },
 
     amount : function(){
-      return this.op.amount;
+      return parseInt(this.op.amount);
     }
   }
 }

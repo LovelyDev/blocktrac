@@ -4,8 +4,8 @@ import Network from './mixins/network'
 const xdr_to_json = require('json-xdr').toJSON
 const jsonpath = require('./vendor/jsonpath')
 
-// XXX: import XLM meta mixin to access operation helpers below
-const XLMMeta = require("./components/tx_summaries/xlm/meta")
+// XXX: import XLM operations helper for use below
+const XLMOperations = require("./components/tx_summaries/xlm/operations").default;
 
 ///
 
@@ -248,8 +248,8 @@ export default {
             .stream({
               onmessage : function(tx){
                 var wrapped = wrap_tx(convert_xlm_tx(tx, this.StellarSdk));
-                const meta = Object.assign({tx : wrapped.transaction}, XLMMeta)
-                wrapped.category = config.tx_category_for_type(meta.operation_type)
+                const operation = XLMOperations.prioritized(XLMOperations.all(tx))._type;
+                wrapped.category = config.tx_category_for_type(operation);
                 wrapped.hash = wrapped.transaction.hash;
 
                 Object.freeze(wrapped);

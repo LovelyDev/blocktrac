@@ -11,6 +11,7 @@
 var Inflector = require('inflector-js')
 
 import config from '../../../config'
+import operations from './operations'
 
 export default {
   props : {
@@ -38,20 +39,11 @@ export default {
     },
 
     operations : function(){
-      return this.tx
-                 .envelope
-                 .v1
-                 .tx
-                 .operations
-                 .map(function(op){
-                   return op.body;
-                 });
+      return operations.all(this.tx)
     },
 
     operation_types : function(){
-      return this.operations.map(function(op){
-               return op._type;
-             });
+      return operations.types(this.operations);
     },
 
     humanized_operation_types : function(){
@@ -61,41 +53,9 @@ export default {
                  })
     },
 
-    first_operation : function(){
-      return this.operations[0];
-    },
-
-    first_operation_type : function(){
-      return this.operation_types[0];
-    },
-
     // Proritize operation to highlight
     operation : function(){
-      if(this.operation_types.includes("payment"))
-        return this.first_operation_of_type("payment");
-
-      else if(this.operation_types.includes("paymentPathStrictSend"))
-        return this.first_operation_of_type("paymentPathStrictSend");
-
-      else if(this.operation_types.includes("paymentPathStrictReceive"))
-        return this.first_operation_of_type("paymentPathStrictReceive");
-
-      else if(this.operation_types.includes("manageBuyOffer"))
-        return this.first_operation_of_type("manageBuyOffer");
-
-      else if(this.operation_types.includes("manageSellOffer"))
-        return this.first_operation_of_type("manageSellOffer");
-
-      else if(this.operation_types.includes("createPassiveSellOffer"))
-        return this.first_operation_of_type("createPassiveSellOffer");
-
-      else if(this.operation_types.includes("allowTrust"))
-        return this.first_operation_of_type("allowTrust");
-
-      else if(this.operation_types.includes("changeTrust"))
-        return this.first_operation_of_type("changeTrust");
-
-      return this.first_operation;
+      return operations.prioritized(this.operations)
     },
 
     operation_type : function(){
@@ -127,14 +87,6 @@ export default {
 
     formatted_date : function(){
       return this.$options.filters.moment(this.created_at, "YYYY-MM-DD HH:mm:ss");
-    }
-  },
-
-  methods : {
-    first_operation_of_type : function(type){
-      return this.operations.find(function(op){
-        return op._type == type;
-      })
     }
   }
 }

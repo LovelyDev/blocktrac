@@ -144,9 +144,8 @@ export const store = new Vuex.Store({
 
       // Filter txs by category
       state.txs = state.txs.filter(function(tx){
-        var category = config.tx_category_for_type(tx["transaction"]["transaction"]["TransactionType"]);
         return(state.tx_categories.length == 0 ||
-               state.tx_categories.includes(category))
+               state.tx_categories.includes(tx.category))
       })
     },
 
