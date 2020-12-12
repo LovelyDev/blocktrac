@@ -40,8 +40,13 @@ export default {
       return this.operation.changeTrustOp;
     },
 
+    alpha_num : function(){
+      return this.op.line.alphaNum4 ||
+             this.op.line.alphaNum12;
+    },
+
     asset : function(){
-      return this.op.line.alphaNum4.assetCode;
+      return this.alpha_num.assetCode;
     },
 
     issuer : function(){

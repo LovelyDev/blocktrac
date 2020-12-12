@@ -66,10 +66,15 @@ export default {
       return this.currency._type == "assetTypeNative";
     },
 
+    alpha_num : function(){
+      return this.currency.alphaNum4 ||
+             this.currency.alphaNum12;
+    },
+
     asset_code : function(){
       return typeof(this.currency) === 'string' ?
              this.currency :
-             this.currency.alphaNum4.assetCode;
+             this.alpha_num.assetCode;
     },
 
     issuer : function(){
