@@ -107,14 +107,14 @@
            </span>
          </b-alert>
 
-         <renderjson :data="txs[network]" level="4" />
+         <renderjson :data="txs[network_id]" level="4" />
 
          <table id="example_table">
          <tr>
            <th>JSONPath</th><th>Result</th>
          </tr>
 
-         <tr v-for="example in examples[network]" :key="example.id">
+         <tr v-for="example in examples[network_id]" :key="example.id">
            <td v-html="example.syntax"></td>
            <td v-html="example.description"></td>
          </tr>
