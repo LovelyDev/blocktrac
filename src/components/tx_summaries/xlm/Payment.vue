@@ -5,13 +5,24 @@
   -->
 <template>
   <XLMTxContainer :tx="tx">
-    Payment
+    <AccountDetail v-if="mq_gte_md"
+                   :account="dst"
+                   text="Destination" />
+
+    <div class="currency_amount">
+      <XLMCurrencyAmount :currency="asset"
+                         :amount="amount"
+                         no_issuer />
+    </div>
   </XLMTxContainer>
 </template>
 
 <script>
 import XLMTxContainer from './Container'
 import Meta           from './meta'
+
+import XLMCurrencyAmount from '../../currency_amount/XLM'
+import AccountDetail  from '../../AccountDetail'
 
 export default {
   name : 'PaymentTx',
@@ -20,12 +31,42 @@ export default {
 
   components : {
     XLMTxContainer,
+    XLMCurrencyAmount,
+    AccountDetail
   },
 
   computed : {
+    op : function(){
+      return this.operation.paymentOp;
+    },
+
+    dst : function(){
+      return this.op.destination.ed25519;
+    },
+
+    asset : function(){
+      return this.op.asset;
+    },
+
+    amount : function(){
+      return this.op.amount;
+    }
   }
 }
 </script>
 
 <style scoped>
+.currency_amount{
+  flex-basis: 14%;
+  font-size: 0.8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#main_layout.sm .currency_amount,
+#main_layout.xs .currency_amount{
+  flex-basis: 78%;
+}
 </style>
