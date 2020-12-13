@@ -37,9 +37,13 @@ function is_xlm(){
 
 ///
 
-// XXX: Only used in the one-off transaction retrieval,
-//      streamed xrp transactions are in a different format
-//      and wrapped but not converted in this manner.
+// XXX: Only used in the one-off transaction retrieval.
+// FIXME: In ziti ledgers are streamed and transactions read
+//        through those, facilitating a need to convert.
+//        Here transactions are streamed directly and converting
+//        the resulting format would result in incorrect structure.
+//        We should unify this and stream ledgers here in a similar
+//        manner to ziti.
 function convert_xrp_tx(tx){
   tx = {transaction : tx};
   tx.meta = tx.transaction.meta;
