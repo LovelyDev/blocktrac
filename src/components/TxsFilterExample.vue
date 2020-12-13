@@ -25,18 +25,21 @@
 
 <script>
 import FilterHelpModal from './modals/TxsFilterHelp'
+import Network from '../mixins/network'
 
 export default {
   name: 'TxFilterExample',
+
+  mixins : [Network],
 
   components : {
     FilterHelpModal
   },
 
-  data : function(){
-    return {
-      example : '$.transaction[?(parseInt(@.Amount) > 500000000)]'
-    };
+  computed : {
+    example : function(){
+      return this.network_jsonpath_examples[0].expression;
+    }
   },
 
   methods : {

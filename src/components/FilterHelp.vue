@@ -30,36 +30,14 @@
     </p>
 
     <ul id="filter_help_examples">
-      <li class="filter_help_example">
-        <b class="json_example" v-on:click="set_filter">
-          $.transaction[?(parseInt(@.Amount) > 500000000)]
+      <li v-for="example in network_jsonpath_examples"
+          :key="example.id"
+          class="filter_help_example">
+        <b class="json_example" @click="set_filter">
+          {{example.expression}}
         </b>
         <br/>
-        Filter out payments &lt; 500M Drops (500 XRP)
-      </li>
-
-      <li class="filter_help_example">
-        <b class="json_example" v-on:click="set_filter">
-          $.transaction[?(@.TransactionType && @.TransactionType != 'OfferCreate')]
-        </b>
-        <br/>
-        Filter out OfferCreate Transactions
-      </li>
-
-      <li class="filter_help_example">
-        <b class="json_example" v-on:click="set_filter">
-          $.transaction[?(@.TransactionResult == 'tesSUCCESS')]
-        </b>
-        <br/>
-        Filter Transactions by specific result type
-      </li>
-
-      <li class="filter_help_example">
-        <b class="json_example" v-on:click="set_filter">
-          $.transaction.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
-        </b>
-        <br/>
-        View transactions which create new accounts
+        {{example.desc}}
       </li>
     </ul>
 
@@ -72,8 +50,12 @@
 </template>
 
 <script>
+import Network from '../mixins/network'
+
 export default {
   name: 'FilterHelp',
+
+  mixins : [Network],
 
   methods : {
     set_filter : function(e){

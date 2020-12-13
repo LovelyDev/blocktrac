@@ -55,6 +55,54 @@ export default {
       return require('../assets/currencies/' + this.network_upper + '.svg');
     },
 
+    network_jsonpath_examples : function(){
+      if(is_xrp())
+        return [{
+          id : "payments_gt_500xrp",
+          expression : "$.transaction[?(parseInt(@.Amount) > 500000000)]",
+          desc : "Filter out payments < 500M Drops (500 XRP)"
+
+        }, {
+          id : "no_offercreates",
+          expression : "$.transaction[?(@.TransactionType && @.TransactionType != 'OfferCreate')]",
+          desc : "Filter out OfferCreate Transactions"
+
+        }, {
+          id : "only_success",
+          expression : "$.transaction[?(@.TransactionResult == 'tesSUCCESS')]",
+          desc : "Filter Transactions by specific result type"
+
+        }, {
+          id : "create_new_accounts",
+          expression : "$.transaction.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]",
+          desc : "View transactions which create new accounts"
+        }];
+
+      if(is_xlm())
+        return [{
+          id : "payments_gt_500xlm",
+          expression : "$..[?(@.paymentOp.asset._type == 'assetTypeNative' && parseInt(@.paymentOp.amount) > 5000000000)]",
+          desc : "Filter out payments < 5B STROOPS (500 XLM)"
+
+        }, {
+          id : "no_offers",
+          expression : "$..[?(@.body._type != 'manageBuyOffer' && @.body._type != 'manageSellOffer')]",
+          desc : "Filter out offers"
+
+        }, {
+          id : "only_success",
+          expression : "$..[?(@.result._type == 'txSuccess')]",
+          desc : "Filter Transactions by specific result type"
+
+        }, {
+          id : "create_new_accounts",
+          expression : "$..createAccountOp",
+          desc : "View transactions which create new accounts"
+        }];
+
+      return [];
+    },
+
     // XXX: Also set in MainTitle component and affects favicon
     app_name : function() {
       return is_xrp() ? 'Zerp Tracker' :
