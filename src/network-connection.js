@@ -9,14 +9,20 @@ const XLMOperations = require("./components/tx_summaries/xlm/operations").defaul
 
 ///
 
+var connected = false;
 var connect_callbacks = []
+var disconnect_callbacks = []
 
 function call_connected_callbacks(){
   connect_callbacks.forEach(function(cb){
     cb();
   });
+}
 
-  connect_callbacks = [];
+function call_disconnect_callbacks(){
+  disconnect_callbacks.forEach(function(cb){
+    cb();
+  });
 }
 
 ///
@@ -85,10 +91,10 @@ function wrap_tx(tx){
 
 export default {
   install(Vue, options) {
-    Vue.prototype.network = {connected : false}
+    Vue.prototype.network = {}
 
-    // Initialize XRP Connection
-    if(is_xrp()){
+    // Initialize XRP API
+    function init_xrp(){
       const RippleAPI = require('ripple-lib').RippleAPI;
       Vue.prototype.network.RippleAPI = RippleAPI;
       Vue.prototype.network.ripple_api = new RippleAPI({
@@ -96,32 +102,105 @@ export default {
       });
 
       Vue.prototype.network.ripple_api.on("error", function(err){
-        Vue.prototype.network.connected = false;
-
-        // FIXME: auto-reconnect
+        connected = false;
+        call_disconnect_callbacks();
+        throttle_xrp_connection();
       });
+    }
 
+    // Initiate XRP Connection
+    function connect_to_xrp(){
       Vue.prototype.network
                    .ripple_api
                    .connect()
                    .then(function(){
-                     Vue.prototype.network.connected = true;
+                     connected = true;
                      call_connected_callbacks();
+                   }).catch(function(){
+                     throttle_xrp_connection();
                    })
     }
 
-    // Initialize XLM Connection
-    if(is_xlm()){
+    // Throttle XRP Connection Initialization
+    var xrp_connecting = false;
+    function throttle_xrp_connection(){
+      if(xrp_connecting) return;
+      xrp_connecting = true;
+
+      setTimeout(function(){
+        xrp_connecting = false;
+        connect_to_xrp();
+      }, 1000);
+    }
+
+    ///
+
+    // Initiate XLM Connection
+    function connect_to_xlm(){
       const StellarSdk = require('stellar-sdk')
       Vue.prototype.network.StellarSdk = StellarSdk;
       Vue.prototype.network.stellar_server =
         new StellarSdk.Server(config.NETWORK_URIS[config.NETWORK]);
 
-      Vue.prototype.network.connected = true;
-      call_connected_callbacks();
-
-      // TODO periodically test stellar connection, disconnect if not available, auto-reconnect
+      // Start testing XLM connection
+      test_xlm_connection();
+      setInterval(test_xlm_connection, 5000);
     }
+
+    // Periodically poll server, handle connection failures
+    function test_xlm_connection(){
+      Vue.prototype.network.stellar_server.fetchBaseFee()
+         .then(function(fee){
+           if(!connected){
+             connected = true;
+             call_connected_callbacks();
+           }
+
+         }).catch(function(){
+           if(connected){
+             connected = false;
+             call_disconnect_callbacks();
+           }
+         })
+    }
+
+    ///
+
+    // Connect to appropriate network
+
+    if(is_xrp()){
+      init_xrp();
+      connect_to_xrp();
+    }
+
+    if(is_xlm()){
+      connect_to_xlm();
+    }
+
+    ///
+
+    // Connected accessor
+    Vue.prototype.network.is_connected = function(){
+      return connected;
+    }
+
+    // Register connection callback, invoke immediate if already connected
+    Vue.prototype.network.on_connection = function(cb){
+      connect_callbacks.push(cb);
+
+      if(connected)
+        cb();
+    }
+
+    // Register disconnection callback, invoke immediate if already connected
+    Vue.prototype.network.on_disconnection = function(cb){
+      disconnect_callbacks.push(cb);
+
+      if(!connected)
+        cb();
+    }
+
+    ///
 
     // Validate network address
     Vue.prototype.network.is_valid_address = function(id){
@@ -130,15 +209,6 @@ export default {
 
       if(is_xlm())
         return this.StellarSdk.StrKey.isValidEd25519PublicKey(id);
-    }
-
-    // Register connection callback, invoke immediate if already connected
-    Vue.prototype.network.on_connection = function(cb){
-      if(Vue.prototype.network.connected)
-        cb();
-
-      else
-        connect_callbacks.push(cb);
     }
 
     // Retrieve account specified id, invoking callback w/ result
@@ -220,19 +290,24 @@ export default {
     Vue.prototype.network.stream_txs = function(cb){
       this.on_connection(function(){
         if(is_xrp()){
-          txs_cb = cb;
+          if(txs_cb)
+            this.ripple_api
+                .connection
+                .off('transaction', txs_cb);
+
+          txs_cb = function(tx){
+            var wrapped = wrap_tx(tx);
+            const type = wrapped.transaction.transaction.TransactionType;
+            wrapped.category = config.tx_category_for_type(type);
+            wrapped.hash = wrapped.transaction.transaction.hash;
+
+            Object.freeze(wrapped);
+            cb(wrapped)
+          }
 
           this.ripple_api
               .connection
-              .on('transaction', function(tx){
-                var wrapped = wrap_tx(tx);
-                const type = wrapped.transaction.transaction.TransactionType;
-                wrapped.category = config.tx_category_for_type(type);
-                wrapped.hash = wrapped.transaction.transaction.hash;
-
-                Object.freeze(wrapped);
-                cb(wrapped)
-              })
+              .on('transaction', txs_cb)
 
           this.ripple_api
               .request('subscribe', {
@@ -241,6 +316,9 @@ export default {
         }
 
         if(is_xlm()){
+          if(txs_cb)
+            txs_cb();
+
           txs_cb =
             this.stellar_server
                 .transactions()
@@ -264,7 +342,9 @@ export default {
     Vue.prototype.network.stop_streaming_txs = function(){
       this.on_connection(function(){
         if(is_xrp()){
-          this.ripple_api.off('transaction', txs_cb);
+          this.ripple_api
+              .connection
+              .off('transaction', txs_cb);
 
           this.ripple_api
               .request('unsubscribe', {

@@ -10,6 +10,7 @@ module.exports = {
   // Backend URL to get/set data
   BACKEND_URL : "http://localhost:3000",
   //BACKEND_URL : "https://api.zerptracker.com",
+  //BACKEND_URL : "https://api.stracker.io",
 
   // Network to connect to.
   // Supported: xrp_mainnet, xlm_mainnet

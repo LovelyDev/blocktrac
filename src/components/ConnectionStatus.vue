@@ -22,19 +22,30 @@
 export default {
   name: 'ConnectionStatus',
 
-  computed : {
-    connected : function(){
-      return this.$store.state.socket.isConnected;
+  methods : {
+    on_connection : function(){
+      this.$bvToast.hide('connection_status');
+    },
+
+    on_disconnection : function(){
+      this.$bvToast.show('connection_status');
+    },
+
+    register_connection : function(){
+      this.network.on_connection(this.on_connection);
+    },
+
+    register_disconnection : function(){
+      this.network.on_disconnection(this.on_disconnection);
     }
   },
 
-  watch : {
-    connected : function(){
-      if(!this.connected)
-        this.$bvToast.show('connection_status');
-      else
-        this.$bvToast.hide('connection_status');
-    }
+  mounted : function(){
+    this.register_connection();
+    this.register_disconnection();
+  },
+
+  destroyed : function(){
   }
 }
 </script>
