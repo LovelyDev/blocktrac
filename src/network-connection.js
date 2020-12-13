@@ -37,8 +37,9 @@ function is_xlm(){
 
 ///
 
-// XXX: Conversion functions copied from ziti/workers/listen_to_txs/*
-
+// XXX: Only used in the one-off transaction retrieval,
+//      streamed xrp transactions are in a different format
+//      and wrapped but not converted in this manner.
 function convert_xrp_tx(tx){
   tx = {transaction : tx};
   tx.meta = tx.transaction.meta;
@@ -46,6 +47,7 @@ function convert_xrp_tx(tx){
   return tx
 }
 
+// XXX: XLM conversion function copied from ziti/workers/listen_to_txs/*
 function convert_xlm_tx(tx, StellarSdk){
   delete tx._links;
 
