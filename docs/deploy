@@ -56,6 +56,11 @@ base setup:
 - passwd ziti
 
 postgrsql setup:
+- yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  - If postgresql dependency is insuffiecent (>= 9.6 required)
+  - If so replace:
+    - postgresql in commands below with postgresql-96 and
+    - /var/lib/pgsql/data with /var/lib/pgsql/9.6/data
 - dnf install postgresql-server
 - postgresql-setup initdb
 - vi /var/lib/pgsql/data/pg_hba.conf
@@ -64,6 +69,7 @@ postgrsql setup:
   - <add>: hostssl all             all                    <ZITI_WORKER1 IP ADDR>/32 md5 clientcert=1
   - <add>: hostssl all             all                    <ZITI_WORKER2 IP ADDR>/32 md5 clientcert=1
   - <add>: hostssl all             all                    <ZITZ1 IP ADDR>/32        md5 clientcert=1
+- cd /var/lib/pgsql/data
 - openssl genrsa -des3 -out server.key 2048 # any passphrase
 - openssl rsa -in server.key -out server.key # removes passphrase
 - chmod 400 server.key
@@ -72,7 +78,7 @@ postgrsql setup:
 - chmod 400 server.crt
 - chown postgres.postgres server.crt
 - cp server.crt root.crt
-- chown postgres.postgres server.crt
+- chown postgres.postgres server.crt root.crt
 - vi /var/lib/pgsql/data/postgresql.conf
   - <make following changes>:
     listen_addresses = '<IPs SERVER WILL LISTEN ON>'
@@ -128,10 +134,12 @@ postgresql setup:
 
 ziti setup:
 - <as root>
+- curl --silent --location https://rpm.nodesource.com/setup_12.x | sudo bash -
+  - Only if stock nodejs dependency is insufficient (>=10.22.0 required)
 - curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 - rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 - dnf install epel-release
-- dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
+- dnf install git nodejs yarn python2 make gcc-c++ libtool redhat-rpm-config postgresql-devel
 - <as ziti>
 - ssh-keygen (defaults)
   - Copy .ssh/id_rsa.pub to Bitbucket > Ziti > Repo Settings > Access Keys > Add Key
@@ -139,8 +147,9 @@ ziti setup:
 - cd ziti
 - CXXFLAGS="-Wno-cast-function-type" yarn install
 - edit config/config.js to point to db & set password (production)
-- edit config/ziti.js to set uri
-- edit config/auth_config.js to set email, twilio, stripe config
+- edit config/ziti.js to set uri, logfile
+- edit config/auth.js to set email, stripe config
+- edit config/network.js to set network
 - NODE_ENV='production' yarn db:migrate
 - NODE_ENV='production' yarn db:seed
 - <as root>
@@ -150,8 +159,6 @@ ziti setup:
 - systemctl enable ziti-api
 - systemctl start ziti-txs
 - systemctl enable ziti-txs
-- systemctl start ziti-sinks
-- systemctl enable ziti-sinks
 - systemctl start ziti-users
 - systemctl enable ziti-users
 - Optionally:
@@ -167,6 +174,7 @@ network setup:
 - firewall-cmd --reload
 
 letsencrypt setup:
+- <as ziti>
 - mkdir /home/ziti/letsencrypt
 - mkdir /home/ziti/letsencrypt/certs
 - mkdir /home/ziti/letsencrypt/private
@@ -184,7 +192,7 @@ letsencrypt setup:
 - chmod 640 /home/ziti/letsencrypt/private/apizerptrackercom.csr
 - vi /home/ziti/renew_cert.sh
   - <add>
-  python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/ziti/.well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
+  python2 /home/ziti/acme_tiny.py --account-key /home/ziti/letsencrypt/private/account.key --csr /home/ziti/letsencrypt/private/apizerptrackercom.csr --acme-dir /home/ziti/well-known/acme-challenge/ > /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt || exit
   curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem
   cat /home/ziti/letsencrypt/certs/signed-apizerptrackercom.crt /home/ziti/letsencrypt/certs/intermediate-apizerptrackercom.pem > /home/ziti/letsencrypt/certs/chained_cert-apizerptrackercom.pem
 - chmod 750 /home/ziti/renew_cert.sh
@@ -223,10 +231,11 @@ postgresql setup:
 
 ziti setup:
 - <as root>
+- See nodejs installation in ziti_api
 - curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 - rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 - dnf install epel-release
-- dnf install git nodejs yarn python2 make gcc-c++ redhat-rpm-config postgresql-devel
+- dnf install git nodejs yarn python2 make gcc-c++ libtool redhat-rpm-config postgresql-devel
 - <as ziti>
 - ssh-keygen (defaults)
   - Copy .ssh/id_rsa.pub to Bitbucket > Ziti > Repo Settings > Access Keys > Add Key
@@ -235,6 +244,7 @@ ziti setup:
 - CXXFLAGS="-Wno-cast-function-type" yarn install
 - edit config/config.js to point to db & set password (production)
 - edit config/auth.js to set email and twilio credentials (production, worker2 only)
+- edit config/network.js to set network
 - <as root>
 - ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
 - systemctl daemon-reload
@@ -259,9 +269,11 @@ httpd/zitui setup:
 - mkdir /var/www/zitui
 - <on local machine>
 - scp httpd.conf root@zitui:/etc/httpd/conf.d/zerptrackercom.conf # comment out mod_ssl / 443 sections / https redirects for now
+  - edit if necessary
 - Edit src/config.js to reference BACKEND_URL
 - Copy latest config/ziti.js from ziti to src/
 - ./deploy
+  - edit before running if necessary
 - <on zitui>
 - chown -R ziti.ziti /var/www/zitui
 - service httpd start
@@ -281,19 +293,17 @@ letsencrypt certificate:
 - chmod 750 /etc/letsencrypt/
 - chmod 775 /etc/letsencrypt/certs
 - chmod 750 /etc/letsencrypt/private
-- usermod -a -G letsencrypt rippled
-- mkdir -p /var/www/<COMPACT_HOSTNAME>/.well-known/acme-challenge
+- mkdir -p /var/www/zitui/.well-known/acme-challenge
 - chown -R letsencrypt.letsencrypt /var/www/zitui/.well-known/
 - curl https://raw.githubusercontent.com/diafygi/acme-tiny/master/acme_tiny.py > /home/letsencrypt/acme_tiny.py
 - chown root.letsencrypt /home/letsencrypt/acme_tiny.py
 - chmod 750 /home/letsencrypt/acme_tiny.py
 - openssl genrsa 4096 > /etc/letsencrypt/private/account.key
 - openssl genrsa 4096 > /etc/letsencrypt/private/zerptrackercom.key
-- openssl dhparam -out /etc/letsencrypt/certs/dhparam.pem 4096 # general locally then scp to zitui (is dhparam needed? not referenced anywhere)
 - openssl req -new -sha256 -key /etc/letsencrypt/private/zerptrackercom.key -subj "/CN=zerptracker.com" > /etc/letsencrypt/private/zerptrackercom.csr
 - su letsencrypt
 - cd
-- vi /home/letencrypt/renew_cert.sh
+- vi /home/letsencrypt/renew_cert.sh
   - <add>
   python3 /home/letsencrypt/acme_tiny.py --account-key /etc/letsencrypt/private/account.key --csr /etc/letsencrypt/private/zerptrackercom.csr --acme-dir /var/www/zitui/.well-known/acme-challenge/ > /etc/letsencrypt/certs/signed-zerptrackercom.crt || exit
   curl https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.pem > /etc/letsencrypt/certs/intermediate-zerptrackercom.pem
@@ -306,11 +316,9 @@ letsencrypt certificate:
 - chown root:letsencrypt /etc/letsencrypt/private/account.key
 - chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.csr
 - chown root:letsencrypt /etc/letsencrypt/private/zerptrackercom.key
-- chown letsencrypt.letsencrypt /etc/letsencrypt/certs/dhparam.pem
 - chmod 640 /etc/letsencrypt/private/account.key
 - chmod 640 /etc/letsencrypt/private/zerptrackercom.csr
 - chmod 640 /etc/letsencrypt/private/zerptrackercom.key
-- chmod 640 /etc/letsencrypt/certs/dhparam.pem
 - vi /etc/httpd/conf.d/zerptrackercom.conf
   - uncomment ssl / 443 sections / https redirect
 - vi /etc/httpd/conf.d/ssl.conf
