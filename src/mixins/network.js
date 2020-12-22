@@ -104,6 +104,7 @@ export default {
     },
 
     // XXX: Also set in MainTitle component and affects favicon
+    // XXX: synchronize w/ appname in ziti/util
     app_name : function() {
       return is_xrp() ? 'Zerp Tracker' :
              is_xlm() ? 'Stracker'     :
