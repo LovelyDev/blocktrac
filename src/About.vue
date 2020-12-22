@@ -96,7 +96,7 @@
             But if you do not want to build these expressions, fear not! <span class="zt">{{app_name}}</span> bundles a <b>library of pre-built expressions</b>, allowing you to quickly setup the filters you are interested in. Each of these pre-built expressions are fully parameterized allowing you to plugin the transaction type, currencies, payment ranges that you are interested in and much more!
           </p>
 
-          <img :src="'./assets/landing/' + network_id + 'section4a.png'" />
+          <img :src="require('./assets/landing/' + network_id + '/section4a.png')" />
         </div>
 
         <div id="about_section4" class="about_section">
