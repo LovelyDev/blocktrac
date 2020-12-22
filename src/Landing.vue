@@ -31,7 +31,7 @@
         </div>
 
         <div id="section1_subsection2">
-          <img id="section1_img" src="./assets/landing/section1.png" />
+          <img id="section1_img" :src="img_src('section1')" />
         </div>
 
         <div id="section1_subsection3" v-if="mq_lt_md">
@@ -58,7 +58,7 @@
         <div class="sub_title">Alert Notifications</div>
 
         <div id="section2_subsection">
-          <img id="section2_img" src="./assets/landing/section2.png" />
+          <img id="section2_img" :src="img_src('section2')" />
 
           <div id="section2_content">
             <p>Monitor {{network_upper}} Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
@@ -79,7 +79,7 @@
           With {{app_name}} you can setup powerful filtering expressions to hone in on exactly the type of activity that you are interested in...
         </div>
 
-        <img id="section3_img" src="./assets/landing/section3.png" />
+        <img id="section3_img" :src="img_src('section3')" />
       </div>
 
       <div id="section4" class="section">
@@ -89,19 +89,19 @@
           Use pre-existing templates to setup alerts for many types of common patterns
         </div>
 
-        <img id="section4_img1" src="./assets/landing/section4a.png" />
+        <img id="section4_img1" :src="img_src('section4a')" />
 
         <div id="section4_subsection">
           <img v-if="mq_gte_md"
                class="section4_img2"
-               src="./assets/landing/section4b.png" />
+               :src="img_src('section4b')" />
 
           <div id="section4_content2">
             <div class="sub_sub_title">Create your first filter</div>
 
             <img v-if="mq_lt_md"
                  class="section4_img2"
-                 src="./assets/landing/section4b.png" />
+                 :src="img_src('section4b')" />
 
             <p>Get notified when an interesting offer appears</p>
 
@@ -128,6 +128,12 @@ export default {
 
   components: {
     MainLayout
+  },
+
+  methods : {
+    img_src : function(img){
+      return require('./assets/landing/' + this.network_id + "/" + img + '.png')
+    }
   }
 }
 </script>
