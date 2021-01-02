@@ -43,9 +43,6 @@ export default {
   mounted : function(){
     this.register_connection();
     this.register_disconnection();
-  },
-
-  destroyed : function(){
   }
 }
 </script>
