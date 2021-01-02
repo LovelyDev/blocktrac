@@ -65,22 +65,15 @@ describe("TxsList", () => {
 
   describe("methods", () => {
     describe("message callback", () => {
-      describe("message does not have transaction", () => {
-        test.todo("does not add tx")
-      })
-
       test.todo("adds tx")
     })
   })
 
   describe("#created", () => {
-    test.todo("registers socket message callback")
-    test.todo("registers open socket callback")
-    test.todo("sends subscribe transactions command")
+    test.todo("streams txs")
   })
 
   describe("#destroyed", () => {
-    test.todo("unregisters socket message callback")
-    test.todo("sends unsubscribe transactions command")
+    test.todo("stops streaming txs")
   })
 })

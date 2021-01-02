@@ -1,4 +1,4 @@
-describe("AccountDetail", () => {
+describe("XRPCurrencyAmount", () => {
   describe("dom", () => {
     describe("drops", () => {
       test.todo("renders xrp amount")

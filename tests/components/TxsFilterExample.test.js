@@ -15,6 +15,10 @@ describe("TxsFilterExample", () => {
     })
   })
 
+  describe("computed", () => {
+    test.todo("is network json path example")
+  })
+
   describe("methods", () => {
     describe("set_filter", () => {
       test.todo("updates tx filter")

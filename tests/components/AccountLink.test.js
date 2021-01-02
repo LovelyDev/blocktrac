@@ -17,6 +17,10 @@ describe("AccountLink", () => {
       describe("shorten is true", () => {
         test.todo("is shortened account")
       })
+
+      describe("shorten is length", () => {
+        test.todo("is shortens account to specified length")
+      })
     })
   })
 })

@@ -1,19 +1,24 @@
 describe("ConnectionStatus", () => {
-  describe("computed", () => {
-    describe("connected", () => {
-      test.todo("returns store.socket.isConnected")
+  describe("methods", () => {
+    describe("on_connection", () => {
+      test.todo("hides connection_status toast")
+    })
+
+    describe("on_disconnection", () => {
+      test.todo("shows connection_status toast")
+    })
+
+    describe("register_connection", () => {
+      test.todo("registers connection callback")
+    })
+
+    describe("register_disconnection", () => {
+      test.todo("registers disconnection callback")
     })
   })
 
-  describe("watch", () => {
-    describe("connected", () => {
-      describe("is connected", () => {
-        test.todo("shows connection_status toast")
-      })
-
-      describe("is not connected", () => {
-        test.todo("hides connection_status toast")
-      })
-    })
+  describe("mounted", () => {
+    test.todo("registers connection callback")
+    test.todo("registers disconnection callback")
   })
 })

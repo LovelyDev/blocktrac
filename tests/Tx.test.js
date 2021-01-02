@@ -41,24 +41,12 @@ describe("Tx Page", () => {
   })
 
   describe("methods", () => {
-    describe("msg_cb", () => {
-      describe("message result is not set", () => {
-        test.todo("does nothing, just returns")
-      })
-
-      describe("message result meta is not set", () => {
-        test.todo("does nothing, just returns")
-      })
+    describe("on_tx", () => {
+      test.todo("sets tx")
     })
   })
 
   describe("#created", () => {
-    test.todo("registers socket message callback")
-    test.todo("registers socket open callback")
-    test.todo("sends tx command")
-  })
-
-  describe("#destroyed", () => {
-    test.todo("unregisters socket message callback")
+    test.todo("retrieves network tx")
   })
 })
