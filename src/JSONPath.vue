@@ -94,11 +94,11 @@
          <h3 id="example">JSONPath example</h3>
 
          <p>
-         The following is a transaction from the XRP transaction stream
+         The following is a transaction from the {{network_upper}} transaction stream
          </p>
 
          <b-alert show variant="warning" id="top_level_wrapper_note">
-           Before processing, {{app_name}} wraps all XRP transactions in the following top level object:
+           Before processing, {{app_name}} wraps all {{network_upper}} transactions in the following top level object:
 
            <br v-if="mq_xs" />
 
