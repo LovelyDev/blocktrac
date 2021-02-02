@@ -1,8 +1,7 @@
 import config  from './config'
 import Network from './mixins/network'
 
-const xdr_to_json = require('json-xdr').toJSON
-const jsonpath = require('./vendor/jsonpath')
+const {simplify} = require("ezxlm")
 
 // XXX: import XLM operations helper for use below
 const XLMOperations = require("./components/tx_summaries/xlm/operations").default;
@@ -53,38 +52,7 @@ function convert_xrp_tx(tx){
 
 // XXX: XLM conversion function copied from ziti/workers/listen_to_txs/*
 function convert_xlm_tx(tx, StellarSdk){
-  delete tx._links;
-
-  // these are functions:
-  delete tx.ledger;
-  delete tx.self;
-  delete tx.account;
-  delete tx.operations;
-  delete tx.effects;
-  delete tx.precedes;
-  delete tx.succeeds;
-  delete tx.transaction;
-
-  // Convert envelope, result_meta, result from xdr to json
-  tx.envelope    = xdr_to_json(StellarSdk.xdr.TransactionEnvelope.fromXDR(tx.envelope_xdr, 'base64'));
-  tx.result_meta = xdr_to_json(StellarSdk.xdr.TransactionMeta.fromXDR(tx.result_meta_xdr,  'base64'));
-  tx.result      = xdr_to_json(StellarSdk.xdr.TransactionResult.fromXDR(tx.result_xdr,     'base64'));
-
-  // XXX: convert assetCodes from xdr to strings
-  jsonpath.apply(tx.envelope,    "$..alphaNum4.assetCode",  (c) => StellarSdk.xdr.AssetCode4.fromXDR(c,  'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result_meta, "$..alphaNum4.assetCode",  (c) => StellarSdk.xdr.AssetCode4.fromXDR(c,  'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result,      "$..alphaNum4.assetCode",  (c) => StellarSdk.xdr.AssetCode4.fromXDR(c,  'base64').toString().replace(/\0/g, ''))
-
-  jsonpath.apply(tx.envelope,    "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result_meta, "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
-  jsonpath.apply(tx.result,      "$..alphaNum12.assetCode", (c) => StellarSdk.xdr.AssetCode12.fromXDR(c, 'base64').toString().replace(/\0/g, ''))
-
-  // XXX: covert ED25519 keys to common addresses
-  jsonpath.apply(tx.envelope,    "$..ed25519", (c) => (new StellarSdk.Keypair({type: "ed25519", publicKey: Buffer.from(c, 'base64')})).publicKey())
-  jsonpath.apply(tx.result_meta, "$..ed25519", (c) => (new StellarSdk.Keypair({type: "ed25519", publicKey: Buffer.from(c, 'base64')})).publicKey())
-  jsonpath.apply(tx.result,      "$..ed25519", (c) => (new StellarSdk.Keypair({type: "ed25519", publicKey: Buffer.from(c, 'base64')})).publicKey())
-
-  return tx;
+  return simplify(tx);
 }
 
 // Wrap transaction in similar manner as ziti/workers/run_filters_workers
