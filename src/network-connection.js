@@ -300,7 +300,7 @@ export default {
             .stream({
               onmessage : function(tx){
                 var wrapped = wrap_tx(convert_xlm_tx(tx));
-                const operation = XLMOperations.prioritized(XLMOperations.all(wrapped.transaction)).__type;
+                const operation = XLMOperations.prioritized(XLMOperations.all(wrapped.transaction))._type;
                 wrapped.category = config.tx_category_for_type(operation);
                 wrapped.hash = wrapped.transaction.hash;
 
