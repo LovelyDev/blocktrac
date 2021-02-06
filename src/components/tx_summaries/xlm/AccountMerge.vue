@@ -28,7 +28,7 @@ export default {
 
   computed : {
     destination : function(){
-      return this.operation.destination.ed25519;
+      return this.operation.destination;
     }
   }
 }

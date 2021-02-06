@@ -66,7 +66,7 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.manageSellOfferOp;
+      return this.operation;
     },
 
     selling : function(){
@@ -86,7 +86,7 @@ export default {
     },
 
     price : function(){
-      return this.op.price.n / this.op.price.d;
+      return this.op.price;
     },
 
     buying_amount : function(){

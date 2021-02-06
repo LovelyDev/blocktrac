@@ -30,7 +30,7 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.setOptionsOp;
+      return this.operation;
     },
 
     options : function(){

@@ -37,20 +37,19 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.changeTrustOp;
+      return this.operation;
     },
 
-    alpha_num : function(){
-      return this.op.line.alphaNum4 ||
-             this.op.line.alphaNum12;
+    line : function(){
+      return this.op.line;
     },
 
     asset : function(){
-      return this.alpha_num.assetCode;
+      return this.line.assetCode;
     },
 
     issuer : function(){
-      return this.alpha_num.issuer.ed25519;
+      return this.line.issuer;
     },
 
     limit : function(){

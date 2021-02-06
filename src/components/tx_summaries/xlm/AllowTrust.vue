@@ -34,15 +34,15 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.allowTrustOp;
+      return this.operation;
     },
 
     asset : function(){
-      return this.op.asset.assetCode12;
+      return this.op.asset;
     },
 
     trustor : function(){
-      return this.op.trustor.ed25519;
+      return this.op.trustor;
     }
   }
 }

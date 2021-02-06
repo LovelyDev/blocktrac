@@ -63,26 +63,21 @@ export default {
     },
 
     is_native : function(){
-      return this.currency._type == "assetTypeNative";
+      return this.currency == "assetTypeNative";
     },
 
     simple_currency : function(){
       return typeof(this.currency) === 'string';
     },
 
-    alpha_num : function(){
-      return this.currency.alphaNum4 ||
-             this.currency.alphaNum12;
-    },
-
     asset_code : function(){
       return this.simple_currency ?
              this.currency :
-             this.alpha_num.assetCode;
+             this.currency.assetCode;
     },
 
     issuer : function(){
-      return this.alpha_num.issuer.ed25519;
+      return this.currency.issuer;
     }
   }
 }

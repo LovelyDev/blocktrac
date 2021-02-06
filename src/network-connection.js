@@ -51,7 +51,7 @@ function convert_xrp_tx(tx){
 }
 
 // XXX: XLM conversion function copied from ziti/workers/listen_to_txs/*
-function convert_xlm_tx(tx, StellarSdk){
+function convert_xlm_tx(tx){
   return simplify(tx);
 }
 
@@ -246,7 +246,7 @@ export default {
               .transaction(id)
               .call()
               .then(function(tx){
-                cb(wrap_tx(convert_xlm_tx(tx, this.StellarSdk)))
+                cb(wrap_tx(convert_xlm_tx(tx)))
               }.bind(this))
         }
 
@@ -299,8 +299,8 @@ export default {
                 .cursor('now')
             .stream({
               onmessage : function(tx){
-                var wrapped = wrap_tx(convert_xlm_tx(tx, this.StellarSdk));
-                const operation = XLMOperations.prioritized(XLMOperations.all(tx))._type;
+                var wrapped = wrap_tx(convert_xlm_tx(tx));
+                const operation = XLMOperations.prioritized(XLMOperations.all(wrapped.transaction)).__type;
                 wrapped.category = config.tx_category_for_type(operation);
                 wrapped.hash = wrapped.transaction.hash;
 

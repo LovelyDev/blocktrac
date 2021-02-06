@@ -29,7 +29,7 @@ export default {
 
   computed : {
     created : function(){
-      return this.operation.createAccountOp.destination.ed25519;
+      return this.operation.destination;
     }
   }
 }

@@ -7,12 +7,8 @@
 
 function all(tx){
   return tx.envelope
-           .v1
            .tx
-           .operations
-           .map(function(op){
-             return op.body;
-           });
+           .operations || [];
 }
 
 function types(operations){

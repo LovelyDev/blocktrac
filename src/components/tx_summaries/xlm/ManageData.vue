@@ -37,7 +37,7 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.manageDataOp;
+      return this.operation;
     },
 
     name : function(){

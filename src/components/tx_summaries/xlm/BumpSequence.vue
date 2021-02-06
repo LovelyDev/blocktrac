@@ -32,7 +32,7 @@ export default {
 
   computed : {
     bumped_to : function(){
-      return this.operation.bumpSequenceOp.bumpTo;
+      return this.operation.bumpTo;
     }
   }
 }

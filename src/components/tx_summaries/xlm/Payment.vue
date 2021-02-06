@@ -37,11 +37,11 @@ export default {
 
   computed : {
     op : function(){
-      return this.operation.paymentOp;
+      return this.operation;
     },
 
     dst : function(){
-      return this.op.destination.ed25519;
+      return this.op.destination;
     },
 
     asset : function(){
