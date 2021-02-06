@@ -81,13 +81,13 @@ export default {
       if(is_xlm())
         return [{
           id : "payments_gt_500xlm",
-          expression : "$..[?(@.paymentOp.asset == 'assetTypeNative' && parseInt(@.paymentOp.amount) > 5000000000)]",
+          expression : "$..[?(@._type == 'payment' && @.asset == 'assetTypeNative' && parseInt(@.amount) > 5000000000)]",
           desc : "Filter out payments < 5B STROOPS (500 XLM)"
 
         }, {
-          id : "no_offers",
-          expression : "$..[?(@._type != 'manageBuyOffer' && @._type != 'manageSellOffer')]",
-          desc : "Filter out offers"
+          id : "btc_usd_offers",
+          expression : "$..[?(@.selling.assetCode == 'BTC' && @.buying == 'assetTypeNative')]",
+          desc : "Offers selling BTC and buying XLM"
 
         }, {
           id : "only_success",
@@ -96,7 +96,7 @@ export default {
 
         }, {
           id : "create_new_accounts",
-          expression : "$..createAccountOp",
+          expression : "$..operations..[?(@._type == 'createAccount')]",
           desc : "View transactions which create new accounts"
         }];
 
