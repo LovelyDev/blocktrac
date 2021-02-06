@@ -81,12 +81,12 @@ export default {
       if(is_xlm())
         return [{
           id : "payments_gt_500xlm",
-          expression : "$..[?(@.paymentOp.asset._type == 'assetTypeNative' && parseInt(@.paymentOp.amount) > 5000000000)]",
+          expression : "$..[?(@.paymentOp.asset == 'assetTypeNative' && parseInt(@.paymentOp.amount) > 5000000000)]",
           desc : "Filter out payments < 5B STROOPS (500 XLM)"
 
         }, {
           id : "no_offers",
-          expression : "$..[?(@.body._type != 'manageBuyOffer' && @.body._type != 'manageSellOffer')]",
+          expression : "$..[?(@._type != 'manageBuyOffer' && @._type != 'manageSellOffer')]",
           desc : "Filter out offers"
 
         }, {

@@ -359,25 +359,25 @@ export default {
   computed : {
     dot_notation: function(){
       return this.is_xrp ? "$.transaction.transaction.Paths[0][0].currency"  :
-             this.is_xlm ? "$.transaction.envelope.v1.tx.operations[0].body._type" :
+             this.is_xlm ? "$.transaction.envelope.tx.operations[0]._type" :
                            "" ;
     },
 
     bracket_notation: function(){
       return this.is_xrp ? "$['transaction']['transaction']['Paths'][0][0]['currency']" :
-             this.is_xlm ? "$['transaction']['envelope']['v1']['tx']['operations'][0]['body']['_type']" :
+             this.is_xlm ? "$['transaction']['envelope']['tx']['operations'][0]['_type']" :
                            "" ;
     },
 
     script_expression: function(){
       return this.is_xrp ? "$.transaction.transaction.Paths[(@.length-1)][0].issuer" :
-             this.is_xlm ? "$.transaction.envelope.v1.tx.operations[(@.length-1)].body._type" :
+             this.is_xlm ? "$.transaction.envelope.tx.operations[(@.length-1)]._type" :
                            "" ;
     },
 
     filter_expression: function(){
       return this.is_xrp ? "$.transaction.transaction.TakerGets[?(@.currency == 'CNY')]" :
-             this.is_xlm ? "$.transaction.envelope.v1.tx[?(@.operations.length > 1)]" :
+             this.is_xlm ? "$.transaction.envelope.tx[?(@.operations.length > 1)]" :
                            "" ;
     },
 
@@ -422,22 +422,22 @@ export default {
 
         }, {
                    id : "operations",
-               syntax : "$.transaction.envelope.v1.tx.operations",
+               syntax : "$.transaction.envelope.tx.operations",
           description : "All operations"
 
         }, {
                    id : "third_operation",
-               syntax : "$.transaction.envelope.v1.tx.operations[2]",
+               syntax : "$.transaction.envelope.tx.operations[2]",
           description : "The third operation"
 
         }, {
                    id : "last_operation",
-               syntax : "$.transaction.envelope.v1.tx.operations[(@.length-1)] <b>-or-</b> $.transaction.envelope.v1.tx.operations[-1:]",
+               syntax : "$.transaction.envelope.tx.operations[(@.length-1)] <b>-or-</b> $.transaction.envelope.tx.operations[-1:]",
           description : "The last operation"
 
         }, {
                    id : "usd_payments",
-               syntax : "$.transaction.envelope.v1.tx.operations..[?(@._type == 'payment' && @.paymentOp.asset.alphaNum4.assetCode == 'USD')]",
+               syntax : "$.transaction.envelope.tx.operations..[?(@._type == 'payment' && @.paymentOp.asset.assetCode == 'USD')]",
           description : "Payments in USD"
       }]
     },
