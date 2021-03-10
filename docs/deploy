@@ -9,7 +9,7 @@ Setup 5 servers:
   - ziti web API
   - workers:
     - listen_for_txs
-    - manage_users
+    - maint
     - scripts/status
 - ziti_worker1
   - run_filters worker
@@ -159,8 +159,8 @@ ziti setup:
 - systemctl enable ziti-api
 - systemctl start ziti-txs
 - systemctl enable ziti-txs
-- systemctl start ziti-users
-- systemctl enable ziti-users
+- systemctl start ziti-maint
+- systemctl enable ziti-maint
 - Optionally:
   - NODE_ENV='production' /home/ziti/ziti/scripts/status.js
 

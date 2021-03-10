@@ -37,7 +37,7 @@ Services:
 - systemctl start|stop|enable|disable|status <service name>
 - ziti-api
 - ziti-txs
-- ziti-users
+- ziti-maint
 - scripts/status (optional)
 
 System:
