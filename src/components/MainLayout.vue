@@ -35,11 +35,15 @@ import MainFooter       from './MainFooter'
 import ConnectionStatus from './ConnectionStatus'
 
 import Authentication   from '../mixins/authentication'
+import Blockchain       from '../mixins/blockchain'
+import Network          from '../mixins/network'
+
+import network_config   from '../network-config'
 
 export default {
   name: 'MainLayout',
 
-  mixins : [Authentication],
+  mixins : [Authentication, Blockchain, Network],
 
   components : {
     MainHeader,
@@ -55,6 +59,13 @@ export default {
   },
 
   created : function(){
+    if(this.no_blockchain_configured)
+      this.$store.commit('set_selected_blockchain', network_config.DEFAULT_BLOCKCHAIN)
+
+    // Initialize and connect to network
+    this.network_init();
+    this.network.connect();
+
     // If logged in, always load user to
     // verify user session is still active
     if(this.auth_token)

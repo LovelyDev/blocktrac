@@ -153,13 +153,13 @@ Vue.use(VueResource)
 ///
 
 // Connection to the blockchain server
-import NetworkConnection from './network-connection'
+import NetworkConnection from './plugins/network-connection'
 Vue.use(NetworkConnection)
 
 ///
 
 // Global document configuration
-import DocVars from './doc-vars.js';
+import DocVars from './plugins/doc-vars.js';
 Vue.use(DocVars)
 
 ///

@@ -151,14 +151,14 @@
 
 <script>
 import MainLayout from './components/MainLayout'
-import Network    from './mixins/network'
+import Blockchain from './mixins/blockchain'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
 
 export default {
   name: 'JSONPath',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     MainLayout,

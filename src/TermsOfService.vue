@@ -58,12 +58,12 @@
 
 <script>
 import MainLayout from './components/MainLayout'
-import Network from './mixins/network'
+import Blockchain from './mixins/blockchain'
 
 export default {
   name: 'TermsOfService',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     MainLayout

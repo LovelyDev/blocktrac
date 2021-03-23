@@ -59,7 +59,7 @@
 
 <script>
 import MainLayout from './components/MainLayout'
-import Network    from './mixins/network'
+import Blockchain from './mixins/blockchain'
 
 import util from './util'
 import ziti from './ziti'
@@ -72,7 +72,7 @@ const sinks_caps_text =
 export default {
   name: 'Help',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     MainLayout

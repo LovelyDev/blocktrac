@@ -50,12 +50,12 @@
 </template>
 
 <script>
-import Network from '../mixins/network'
+import Blockchain from '../mixins/blockchain'
 
 export default {
   name: 'FilterHelp',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   methods : {
     set_filter : function(e){

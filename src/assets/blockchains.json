@@ -1,0 +1,55 @@
+{
+  "descriptions" : {
+    "xrp" : "XRP is a popular Blockchain technology being adopted by banks and financial institutions worldwide for cross border remittances.",
+    "xlm" : "XLM is a popular Blockchain technology being adopted worldwide for equitable access to the global financial system."
+  },
+
+  "moreinfo_links" : {
+    "xrp" : {"url" : "https://xrpl.org",         "title" : "xrpl.org"    },
+    "xlm" : {"url" : "https://www.stellar.org/", "title" : "stellar.org" }
+  },
+
+  "jsonpath_examples" : {
+    "xrp" : [{
+      "id" : "payments_gt_500xrp",
+      "expression" : "$.transaction[?(parseInt(@.Amount) > 500000000)]",
+      "desc" : "Filter out payments < 500M Drops (500 XRP)"
+
+    }, {
+      "id" : "no_offercreates",
+      "expression" : "$.transaction[?(@.TransactionType && @.TransactionType != 'OfferCreate')]",
+      "desc" : "Filter out OfferCreate Transactions"
+
+    }, {
+      "id" : "only_success",
+      "expression" : "$.transaction[?(@.TransactionResult == 'tesSUCCESS')]",
+      "desc" : "Filter Transactions by specific result type"
+
+    }, {
+      "id" : "create_new_accounts",
+      "expression" : "$.transaction.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]",
+      "desc" : "View transactions which create new accounts"
+    }],
+
+    "xlm" : [{
+      "id" : "payments_gt_500xlm",
+      "expression" : "$..[?(@._type == 'payment' && @.asset == 'assetTypeNative' && parseInt(@.amount) > 5000000000)]",
+      "desc" : "Filter out payments < 5B STROOPS (500 XLM)"
+
+    }, {
+      "id" : "btc_usd_offers",
+      "expression" : "$..[?(@.selling.assetCode == 'BTC' && @.buying == 'assetTypeNative')]",
+      "desc" : "Offers selling BTC and buying XLM"
+
+    }, {
+      "id" : "only_success",
+      "expression" : "$..[?(@.result._type == 'txSuccess')]",
+      "desc" : "Filter Transactions by specific result type"
+
+    }, {
+      "id" : "create_new_accounts",
+      "expression" : "$..operations..[?(@._type == 'createAccount')]",
+      "desc" : "View transactions which create new accounts"
+    }]
+  }
+}

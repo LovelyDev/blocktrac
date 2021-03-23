@@ -129,13 +129,13 @@
 <script>
 import MainLayout  from './components/MainLayout'
 import ContactForm from './components/forms/Contact'
-import Network     from './mixins/network'
+import Blockchain  from './mixins/blockchain'
 import config      from './config'
 
 export default {
   name: 'About',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     MainLayout,

@@ -48,15 +48,15 @@
 </template>
 
 <script>
-import TxsLayout from './components/TxsLayout'
-import Network   from './mixins/network'
+import TxsLayout  from './components/TxsLayout'
+import Blockchain from './mixins/blockchain'
 
 import config from "./config"
 
 export default {
   name: 'Account',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     TxsLayout

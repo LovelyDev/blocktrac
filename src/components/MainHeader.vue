@@ -7,6 +7,9 @@
 <template>
   <div id="main_header">
     <MainTitle />
+    <BlockchainSelector v-if="!is_landing && no_network" />
+
+    <div id="main_header_spacer" />
 
     <HamburgerNav v-if="mq_lt_lg" />
     <MainNav      v-else />
@@ -20,6 +23,7 @@
 
 <script>
 import MainTitle           from './MainTitle'
+import BlockchainSelector  from './BlockchainSelector'
 
 import MainNav             from './MainNav'
 import HamburgerNav        from './HamburgerNav'
@@ -29,11 +33,16 @@ import ForgotPasswordModal from './modals/ForgotPassword'
 import RegistrationModal   from './modals/Registration'
 import RegisterFilterModal from './modals/RegisterFilter'
 
+import Blockchain          from '../mixins/blockchain'
+
 export default {
   name: 'MainHeader',
 
+  mixins : [Blockchain],
+
   components : {
     MainTitle,
+    BlockchainSelector,
 
     MainNav,
     HamburgerNav,
@@ -42,6 +51,12 @@ export default {
     ForgotPasswordModal,
     RegistrationModal,
     RegisterFilterModal
+  },
+
+  computed : {
+    is_landing : function(){
+      return this.$route.path == '/';
+    }
   }
 }
 </script>
@@ -54,5 +69,9 @@ export default {
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+}
+
+#main_header_spacer{
+  flex-grow: 1;
 }
 </style>

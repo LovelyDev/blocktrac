@@ -17,6 +17,9 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
+    // Selected blockchain
+    selected_blockchain : null,
+
     // Logged in user
     user : {
       email : '',
@@ -50,11 +53,19 @@ export const store = new Vuex.Store({
       filter_matches : [],
        notifications : [],
 
+    // Filter user selected & is viewing
     active_filter : {},
+
+    // Temporary filter stored until registration/login is complete
     in_progress_filter : {},
   },
 
   mutations: {
+    // set selected blockchain
+    set_selected_blockchain(state, blockchain){
+      state.selected_blockchain = blockchain;
+    },
+
     // set logged in user
     set_user(state, user) {
       state.user.email = user.email;

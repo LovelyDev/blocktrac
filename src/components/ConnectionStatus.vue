@@ -37,12 +37,25 @@ export default {
 
     register_disconnection : function(){
       this.network.on_disconnection(this.on_disconnection);
+    },
+
+    unregister_connection : function(){
+      this.network.off_connection(this.on_connection);
+    },
+
+    unregister_disconnection : function(){
+      this.network.off_disconnection(this.on_disconnection);
     }
   },
 
   mounted : function(){
     this.register_connection();
     this.register_disconnection();
+  },
+
+  destroyed : function(){
+    this.unregister_connection();
+    this.unregister_disconnection();
   }
 }
 </script>

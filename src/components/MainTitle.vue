@@ -7,38 +7,42 @@
 <template>
   <div id="main_title_container">
     <router-link to="/txs">
-      <h2 id="main_title" v-if="is_xrp">
-        <span id="main_title1">
-          Zerp
-        </span>
+      <h2 id="main_title">
+        <span id="main_title1">{{main_title1}}</span>
 
-        <span id="main_title2">
-          XRP Transaction Tracker
-        </span>
-      </h2>
-
-      <h2 id="main_title" v-else-if="is_xlm">
-      <span id="main_title1">S</span><span id="main_title2">tracker</span>
+        <span id="main_title2">{{main_title2}}</span>
       </h2>
     </router-link>
   </div>
 </template>
 
 <script>
-import Network from '../mixins/network'
+import network_config from '../network-config'
 
 export default {
   name: 'MainTitle',
 
-  mixins : [Network]
+  computed : {
+    app_name : function(){
+      return network_config.APP_NAME;
+    },
+
+    app_name_emphasis : function(){
+      return network_config.APP_NAME_EMPHASIS;
+    },
+
+    main_title1 : function(){
+      return this.app_name.slice(0, this.app_name_emphasis)
+    },
+
+    main_title2 : function(){
+      return this.app_name.slice(this.app_name_emphasis)
+    }
+  }
 }
 </script>
 
 <style scoped>
-#main_title_container{
-  flex-grow: 1;
-}
-
 #main_title_container a{
   text-decoration: none;
 }

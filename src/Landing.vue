@@ -13,7 +13,7 @@
           <div id="main_title">{{app_name}}</div>
 
           <ul class="main_features" v-if="mq_gte_md">
-            <li>Monitor your {{network_upper}} account</li>
+            <li>Monitor your {{blockchain_text}} account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
@@ -36,7 +36,7 @@
 
         <div id="section1_subsection3" v-if="mq_lt_md">
           <ul class="main_features">
-            <li>Monitor your {{network_upper}} account</li>
+            <li>Monitor your {{blockchain_text}} account</li>
             <li>Look for money flow/volume patterns</li>
             <li>Watch order book updates &amp; status</li>
             <li>Much more!</li>
@@ -61,7 +61,7 @@
           <img id="section2_img" :src="img_src('section2')" />
 
           <div id="section2_content">
-            <p>Monitor {{network_upper}} Blockchain transactions in real time and setup alerts to be delivered via email, text message, and more</p>
+            <p>Monitor {{blockchain_text}} transactions in real time and setup alerts to be delivered via email, text message, and more</p>
 
             <router-link to="/txs">
               <b-button id="setup_notifications" variant="primary">
@@ -119,20 +119,30 @@
 
 <script>
 import MainLayout from './components/MainLayout'
-import Network from './mixins/network'
+import Blockchain from './mixins/blockchain'
 
 export default {
   name: 'Landing',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components: {
     MainLayout
   },
 
+  computed : {
+    blockchain_text : function(){
+      return this.no_blockchain_configured ? 'Blockchain' : this.configured_blockchain_upper;
+    }
+  },
+
   methods : {
     img_src : function(img){
-      return require('./assets/landing/' + this.network_id + "/" + img + '.png')
+      return require('./assets/landing/' +
+          (this.no_blockchain_configured ?
+                            'blockchain' :
+             this.configured_blockchain) +
+                      "/" + img + '.png');
     }
   }
 }

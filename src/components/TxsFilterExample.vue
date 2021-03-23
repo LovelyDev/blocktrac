@@ -25,12 +25,12 @@
 
 <script>
 import FilterHelpModal from './modals/TxsFilterHelp'
-import Network from '../mixins/network'
+import Blockchain      from '../mixins/blockchain'
 
 export default {
   name: 'TxFilterExample',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components : {
     FilterHelpModal

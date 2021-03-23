@@ -32,7 +32,7 @@ export default {
 
   computed : {
     have_icon : function(){
-      return config.have_currency_icon(this.currency);
+      return config.CURRENCY_ICONS.includes(this.currency);
     },
 
     src : function(){

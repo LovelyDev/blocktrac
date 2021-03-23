@@ -4,28 +4,14 @@
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
-const currency_icons = require("./assets/currencies.json")
+const CURRENCY_ICONS = require("./assets/currencies.json")
 
 module.exports = {
   // Backend URL to get/set data
   BACKEND_URL : "http://localhost:3000",
+  //BACKEND_URL : "https://api.blocktr.ac",
   //BACKEND_URL : "https://api.zerptracker.com",
   //BACKEND_URL : "https://api.stracker.io",
-
-  // Network to connect to.
-  // Supported: xrp_mainnet, xlm_mainnet
-  NETWORK : 'xlm_mainnet',
-
-  // Network Endpoints
-  NETWORK_URIS : {
-    'xrp_mainnet' : "wss://s2.ripple.com:443",
-    'xlm_mainnet' : "https://horizon.stellar.org"
-  },
-
-  // Network Identifier
-  network_id : function(){
-    return this.NETWORK.split("_")[0];
-  },
 
   // Enable to disable site functionaily,
   // display maintenance page
@@ -41,12 +27,7 @@ module.exports = {
   STROOPS_PER_XLM : 10000000,
 
   // List of currency icons
-  currency_icons : currency_icons,
-
-  // Return bool indicating if we have currency icon
-  have_currency_icon : function(c){
-    return currency_icons.includes(c);
-  },
+  CURRENCY_ICONS : CURRENCY_ICONS,
 
   // Categories TXs fall in to
   TX_CATEGORIES : [

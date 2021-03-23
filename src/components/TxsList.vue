@@ -103,14 +103,19 @@ export default {
   methods : {
     msg_cb : function(tx){
       this.$store.commit('add_tx', tx);
+    },
+
+    stream_txs : function(){
+      this.network.stream_txs(this.msg_cb);
     }
   },
 
   created : function(){
-    this.network.stream_txs(this.msg_cb);
+    this.network.on_connection(this.stream_txs);
   },
 
   destroyed : function(){
+    this.network.off_connection(this.stream_txs);
     this.network.stop_streaming_txs();
   }
 }

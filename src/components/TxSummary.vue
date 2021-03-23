@@ -1,6 +1,6 @@
 <!--
   * Tx Summary Component
-  * Dispatches to Network Specific Tx Summary Component
+  * Dispatches to Blockchain Specific Tx Summary Component
   *
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
@@ -15,12 +15,12 @@
 import XRPTxSummary from './tx_summaries/XRP'
 import XLMTxSummary from './tx_summaries/XLM'
 
-import Network      from '../mixins/network'
+import Blockchain   from '../mixins/blockchain'
 
 export default {
   name: 'TxSummary',
 
-  mixins : [Network],
+  mixins : [Blockchain],
 
   components : {
     XRPTxSummary,
