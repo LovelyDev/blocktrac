@@ -5,7 +5,7 @@
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
-import network_config    from '../network-config'
+import network_config    from '../config/network'
 import blockchain_assets from '../assets/blockchains'
 
 export default {
@@ -77,11 +77,11 @@ export default {
     },
 
     blockchain_jsonpath_examples : function(){
-      return blockchain_assets.json_path_examples[this.active_blockchains];
+      return blockchain_assets.jsonpath_examples[this.active_blockchain];
     },
 
     blockchain_jsonpath_example : function(){
-      return this.network_jsonpath_examples[0];
+      return this.blockchain_jsonpath_examples[0];
     },
 
     app_name : function() {

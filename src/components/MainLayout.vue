@@ -38,7 +38,7 @@ import Authentication   from '../mixins/authentication'
 import Blockchain       from '../mixins/blockchain'
 import Network          from '../mixins/network'
 
-import network_config   from '../network-config'
+import network_config   from '../config/network'
 
 export default {
   name: 'MainLayout',
@@ -59,6 +59,7 @@ export default {
   },
 
   created : function(){
+    // Set default selected blockchain
     if(this.no_blockchain_configured)
       this.$store.commit('set_selected_blockchain', network_config.DEFAULT_BLOCKCHAIN)
 

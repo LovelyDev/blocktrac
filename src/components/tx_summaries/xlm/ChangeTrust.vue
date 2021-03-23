@@ -22,7 +22,7 @@ import Meta           from './meta'
 import AccountDetail  from '../../AccountDetail'
 import XLMCurrencyAmount from '../../currency_amount/XLM'
 
-import config from '../../../config'
+import config from '../../../config/config'
 
 export default {
   name : 'ChangeTrustTx',

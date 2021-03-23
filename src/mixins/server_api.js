@@ -4,7 +4,7 @@
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
-import config from '../config'
+import config from '../config/config'
 import util   from '../util'
 
 // NOTE: some of these methods/data require the auth_header

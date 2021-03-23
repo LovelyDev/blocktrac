@@ -10,7 +10,7 @@
 
 var Inflector = require('inflector-js')
 
-import config from '../../../config'
+import txs_config from '../../../config/txs'
 import operations from './operations'
 
 export default {
@@ -78,7 +78,7 @@ export default {
     },
 
     tx_category : function(){
-      return config.tx_category_for_type(this.operation_type);
+      return txs_config.tx_category_for_type(this.operation_type);
     },
 
     created_at : function(){

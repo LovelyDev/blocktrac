@@ -24,7 +24,7 @@ import XRPTxContainer from './Container'
 import Meta           from './meta'
 
 import CurrencyIcon from '../../CurrencyIcon'
-import config       from '../../../config'
+import config       from '../../../config/config'
 
 export default {
   name   : 'EscrowFinishTx',

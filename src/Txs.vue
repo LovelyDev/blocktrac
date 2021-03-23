@@ -14,7 +14,7 @@
 import TxsLayout from './components/TxsLayout'
 import TxsList   from './components/TxsList'
 
-import config    from './config'
+import config    from './config/config'
 
 export default {
   name: 'Txs',

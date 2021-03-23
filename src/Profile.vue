@@ -42,7 +42,7 @@ import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 import Validatable    from './mixins/validatable'
 
-import config from './config'
+import config from './config/config'
 import util   from './util'
 
 export default {

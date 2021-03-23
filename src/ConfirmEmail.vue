@@ -19,7 +19,7 @@ import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
 
 import util   from './util'
-import config from './config'
+import config from './config/config'
 
 export default {
   name: 'ConfirmEmail',

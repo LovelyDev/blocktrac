@@ -31,7 +31,7 @@
 import AccountLink  from '../AccountLink'
 import CurrencyIcon from '../CurrencyIcon'
 
-import config       from '../../config.js'
+import config       from '../../config/config.js'
 
 export default {
   name: 'XRPCurrencyAmount',

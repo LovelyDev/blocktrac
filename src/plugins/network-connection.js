@@ -12,7 +12,7 @@ const modules = {
 
 export default {
   install(Vue, options) {
-    // Global network variables
+    // Network variables
     Vue.prototype.network = {
       connected : false,
       callbacks : {
@@ -124,7 +124,7 @@ export default {
         this._module().stream_txs.bind(this)(cb);
       }.bind(this)
 
-      this.on_connection(connection_callback)
+      this.on_connection(connection_cb)
     }
 
     // Stop streaming transactions
@@ -134,7 +134,7 @@ export default {
         this._module().stop_streaming_txs.bind(this)();
       }.bind(this)
 
-      this.on_connection(connection_callback)
+      this.on_connection(connection_cb)
     }
   }
 }

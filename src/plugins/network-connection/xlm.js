@@ -1,7 +1,9 @@
-// XRP Network Connection Adapter Module
+// XLM Network Connection Adapter Module
 
 const StellarSdk = require('stellar-sdk')
 const {simplify} = require("ezxlm")
+
+const txs_config = require("../../config/txs")
 
 // XXX: import XLM operations helper for use below
 const XLMOperations = require("../../components/tx_summaries/xlm/operations").default;
@@ -19,7 +21,7 @@ function init(){
 // Initiate XLM Connection
 function connect(){
   this.stellar_server =
-    new StellarSdk.Server(config.NETWORK_URIS[config.NETWORK]);
+    new StellarSdk.Server(this.vue.active_network_uri);
 
   // Start testing XLM connection
   test_connection.bind(this)();
@@ -82,7 +84,7 @@ function retrieve_tx(id, cb){
       .transaction(id)
       .call()
       .then(function(tx){
-        cb(this.wrap_tx(convert_tx(tx)))
+        cb(this._wrap_tx(convert_tx(tx)))
       }.bind(this))
 }
 
@@ -102,11 +104,11 @@ function stream_txs(cb){
         .stream({
           onmessage : function(tx){
             // Wrap / Convert transactions in same fashion as ziti
-            var wrapped = this.wrap_tx(convert_tx(tx));
+            var wrapped = this._wrap_tx(convert_tx(tx));
 
             // Set fields used internally in zitui
             const operation = XLMOperations.prioritized(XLMOperations.all(wrapped.transaction))._type;
-            wrapped.category = config.tx_category_for_type(operation);
+            wrapped.category = txs_config.tx_category_for_type(operation);
             wrapped.hash = wrapped.transaction.hash;
 
             // Freeze transaction objects to improve performance

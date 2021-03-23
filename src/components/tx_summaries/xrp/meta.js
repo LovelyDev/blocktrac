@@ -8,8 +8,8 @@
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
-import util   from '../../../util'
-import config from '../../../config'
+import util       from '../../../util'
+import txs_config from '../../../config/txs'
 
 export default {
   props : {
@@ -49,7 +49,7 @@ export default {
     },
 
     tx_category : function(){
-      return config.tx_category_for_type(this.tx_type);
+      return txs_config.tx_category_for_type(this.tx_type);
     },
 
     tx_result : function(){

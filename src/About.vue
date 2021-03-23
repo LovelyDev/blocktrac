@@ -130,7 +130,7 @@
 import MainLayout  from './components/MainLayout'
 import ContactForm from './components/forms/Contact'
 import Blockchain  from './mixins/blockchain'
-import config      from './config'
+import config      from './config/config'
 
 export default {
   name: 'About',

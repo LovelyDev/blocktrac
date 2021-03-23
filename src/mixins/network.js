@@ -5,7 +5,7 @@
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
-import network_config from '../network-config'
+import network_config from '../config/network'
 
 export default {
   computed : {

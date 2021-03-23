@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import config from '../config'
+import config from '../config/config'
 
 export default {
   name: 'AccountLink',

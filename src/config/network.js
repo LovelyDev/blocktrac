@@ -8,7 +8,7 @@
 // Supported: null, xrp_mainnet, xlm_mainnet
 const NETWORK = null;
 //const NETWORK = 'xrp_mainnet';
-// const NETWORK = 'xlm_mainnet';
+//const NETWORK = 'xlm_mainnet';
 
 // Network Endpoints
 const NETWORK_URIS = {

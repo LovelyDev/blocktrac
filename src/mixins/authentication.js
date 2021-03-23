@@ -8,7 +8,7 @@
 
 import zxcvbn  from "zxcvbn"
 
-import config  from '../config'
+import config  from '../config/config'
 import util    from '../util'
 import ziti    from '../ziti'
 

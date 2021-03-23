@@ -4,12 +4,12 @@
  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
  */
 
-import config from '../config'
+import txs_config from '../config/txs'
 
 export default {
   data : function(){
     return {
-      all_categories : config.TX_CATEGORIES
+      all_categories : txs_config.TX_CATEGORIES
     };
   },
 
@@ -20,11 +20,11 @@ export default {
 
     primary_categories : function(){
       return this.all_categories.slice(0,
-        config.SECONDARY_TX_CATEGORIES_INDEX);
+        txs_config.SECONDARY_TX_CATEGORIES_INDEX);
     },
 
     secondary_categories : function(){
-      return this.all_categories.slice(config.SECONDARY_TX_CATEGORIES_INDEX,
+      return this.all_categories.slice(txs_config.SECONDARY_TX_CATEGORIES_INDEX,
         this.all_categories.length);
     },
 

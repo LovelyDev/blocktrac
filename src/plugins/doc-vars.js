@@ -1,6 +1,6 @@
 // Set various document properties from configuration
 
-import network_config from '../network-config'
+import network_config from '../config/network'
 
 export default {
   install(Vue, options) {

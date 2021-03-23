@@ -29,7 +29,7 @@ import ServerAPI           from './mixins/server_api'
 import TxsLayout           from './components/TxsLayout'
 import NotificationHeader  from './components/NotificationHeader'
 import NotificationSummary from './components/NotificationSummary'
-import config              from './config'
+import config              from './config/config'
 
 export default {
   name: 'Notifications',

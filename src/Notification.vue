@@ -37,7 +37,7 @@ import NotificationHeader  from './components/NotificationHeader'
 import NotificationSummary from './components/NotificationSummary'
 import TxSummary           from './components/TxSummary'
 
-import config from './config'
+import config from './config/config'
 
 export default {
   name: 'Notification',

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import config from '../config.js'
+const CURRENCY_ICONS = require("../assets/currencies.json")
 
 export default {
   name: 'CurrencyIcon',
@@ -32,7 +32,7 @@ export default {
 
   computed : {
     have_icon : function(){
-      return config.CURRENCY_ICONS.includes(this.currency);
+      return CURRENCY_ICONS.includes(this.currency);
     },
 
     src : function(){

@@ -38,7 +38,7 @@ export default {
 
   computed : {
     example : function(){
-      return this.network_jsonpath_examples[0].expression;
+      return this.blockchain_jsonpath_example.expression;
     }
   },
 

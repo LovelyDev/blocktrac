@@ -18,7 +18,7 @@
 import MainTitle from './components/MainTitle'
 import Blockchain from './mixins/blockchain'
 
-import config     from './config'
+import config     from './config/config'
 
 export default {
   name: 'Maintenance',

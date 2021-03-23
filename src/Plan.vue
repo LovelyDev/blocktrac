@@ -144,7 +144,7 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
-import config from './config'
+import config from './config/config'
 import ziti   from './ziti'
 
 export default {

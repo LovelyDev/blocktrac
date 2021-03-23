@@ -47,7 +47,7 @@
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 
-import config         from '../../config'
+import config         from '../../config/config'
 
 export default {
   name: 'LoginForm',

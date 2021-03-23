@@ -141,11 +141,6 @@ const router = new VueRouter({
 
 ///
 
-import config    from './config'
-import { store } from './store'
-
-///
-
 // Vue HTTP Client
 import VueResource   from 'vue-resource'
 Vue.use(VueResource)
@@ -163,6 +158,8 @@ import DocVars from './plugins/doc-vars.js';
 Vue.use(DocVars)
 
 ///
+
+import { store } from './store'
 
 new Vue({
   router : router,

@@ -59,10 +59,12 @@ import FilterHeader   from './components/FilterHeader'
 import TxSummary      from './components/TxSummary'
 
 import util           from './util'
-import config         from './config'
+import config         from './config/config'
 
 var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
+
+// FIXME: captured assets for other blockchains
 
 const captured_txs =
   require("./assets/captured_txs.json").reduce(function(ct, ctx){

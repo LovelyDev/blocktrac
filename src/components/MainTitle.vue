@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import network_config from '../network-config'
+import network_config from '../config/network'
 
 export default {
   name: 'MainTitle',

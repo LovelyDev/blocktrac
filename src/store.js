@@ -6,8 +6,8 @@
 import Vue  from 'vue'
 import Vuex from 'vuex'
 
-import config from './config'
-import util   from './util'
+import txs_config from './config/txs'
+import util       from './util'
 
 var jsonpath = require('./vendor/jsonpath')
 
@@ -40,7 +40,7 @@ export const store = new Vuex.Store({
 
     // Categories used to filter the TxsList
           tx_categories : [],
-    tx_category_tallies : config.TX_CATEGORIES
+    tx_category_tallies : txs_config.TX_CATEGORIES
                                 .reduce(function(tallies, category, i){
                             tallies[category] = 0;
                             return tallies;
@@ -131,7 +131,7 @@ export const store = new Vuex.Store({
 
       // Add to txs list and cap number
       state.txs.unshift(tx);
-      state.txs.splice(config.TX_HISTORY, state.txs.length - config.TX_HISTORY);
+      state.txs.splice(txs_config.TX_HISTORY, state.txs.length - txs_config.TX_HISTORY);
 
       // Update tallies
       state.tx_category_tallies['ALL']    += 1;

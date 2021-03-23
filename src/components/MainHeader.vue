@@ -7,7 +7,7 @@
 <template>
   <div id="main_header">
     <MainTitle />
-    <BlockchainSelector v-if="!is_landing && no_network" />
+    <BlockchainSelector v-if="!is_landing && no_blockchain_configured" />
 
     <div id="main_header_spacer" />
 

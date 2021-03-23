@@ -2,6 +2,8 @@
 
 const RippleAPI = require('ripple-lib').RippleAPI;
 
+const txs_config = require("../../config/txs")
+
 // XXX: Only used in the one-off transaction retrieval.
 // FIXME: In ziti ledgers are streamed and transactions read
 //        through those, facilitating a need to convert.
@@ -77,7 +79,7 @@ function retrieve_tx(id, cb){
   this.ripple_api
       .request('tx', { 'transaction' : id }
       ).then(function(tx){
-        cb(this.wrap_tx(convert_tx(tx)))
+        cb(this._wrap_tx(convert_tx(tx)))
       }.bind(this))
 }
 
@@ -94,17 +96,17 @@ function stream_txs(cb){
 
   txs_cb = function(tx){
     // Wrap / Convert transactions in same fashion as ziti
-    var wrapped = this.wrap_tx(tx);
+    var wrapped = this._wrap_tx(tx);
 
     // Set fields used internally in zitui
     const type = wrapped.transaction.transaction.TransactionType;
-    wrapped.category = config.tx_category_for_type(type);
+    wrapped.category = txs_config.tx_category_for_type(type);
     wrapped.hash = wrapped.transaction.transaction.hash;
 
     // Freeze transaction objects to improve performance
     Object.freeze(wrapped);
     cb(wrapped)
-  }
+  }.bind(this)
 
   this.ripple_api
       .connection

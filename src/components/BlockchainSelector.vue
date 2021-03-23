@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import config from '../config'
-import network_config from '../network-config'
+import config         from '../config/config'
+import network_config from '../config/network'
 
 export default {
   name: 'BlockchainSelector',
