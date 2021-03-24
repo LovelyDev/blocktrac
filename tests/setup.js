@@ -1,7 +1,7 @@
 import { createLocalVue } from "@vue/test-utils"
 import Vuex from 'vuex'
 import Multiselect from 'vue-multiselect'
-import NetworkConnection from '../src/network-connection'
+import NetworkConnection from '../src/plugins/network-connection'
 
 const localVue = createLocalVue();
 localVue.use(Vuex)
