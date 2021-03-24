@@ -34,14 +34,16 @@ export default {
 
     // Internal helper, invoke connected callbacks
     Vue.prototype.network._call_connected_callbacks = function(){
-      this.callbacks.connected.forEach(function(cb){
-        cb();
+      // Iterate over copy of callbacks array
+      this.callbacks.connected.slice().forEach(function(cb){
+        cb()
       });
     }
 
     // Internal helper, invoke disconnected callbacks
     Vue.prototype.network._call_disconnected_callbacks = function(){
-      this.callbacks.disconnected.forEach(function(cb){
+      // Iterate over copy of callbacks array
+      this.callbacks.disconnected.slice().forEach(function(cb){
         cb();
       });
     }

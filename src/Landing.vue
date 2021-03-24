@@ -15,7 +15,7 @@
           <ul class="main_features" v-if="mq_gte_md">
             <li>Monitor your {{blockchain_text}} account</li>
             <li>Look for money flow/volume patterns</li>
-            <li>Watch order book updates &amp; status</li>
+            <li>Watch DeFI / NFT updates &amp; status</li>
             <li>Much more!</li>
           </ul>
 
@@ -38,7 +38,7 @@
           <ul class="main_features">
             <li>Monitor your {{blockchain_text}} account</li>
             <li>Look for money flow/volume patterns</li>
-            <li>Watch order book updates &amp; status</li>
+            <li>Watch DeFI / NFT updates &amp; status</li>
             <li>Much more!</li>
           </ul>
 

@@ -15,7 +15,11 @@ export default {
     },
 
     configured_blockchain_upper : function(){
-      return network_config.BLOCKCHAIN.toUpperCase();
+      return this.configured_blockchain.toUpperCase();
+    },
+
+    blockchain_configured : function(){
+      return !!this.configured_blockchain;
     },
 
     no_blockchain_configured : function(){
@@ -83,6 +87,16 @@ export default {
     blockchain_jsonpath_example : function(){
       return this.blockchain_jsonpath_examples[0];
     },
+
+    blockchain_description : function(){
+      return blockchain_assets.descriptions[this.active_blockchain];
+    },
+
+    blockchain_moreinfo : function(){
+      return blockchain_assets.moreinfo_links[this.active_blockchain];
+    },
+
+    ///
 
     app_name : function() {
       return network_config.APP_NAME;

@@ -6,8 +6,8 @@
   -->
 <template>
   <div>
-    <XRPTxSummary :tx="tx" v-if="is_xrp" />
-    <XLMTxSummary :tx="tx" v-if="is_xlm" />
+    <XRPTxSummary :tx="tx" v-if="xrp_active" />
+    <XLMTxSummary :tx="tx" v-if="xlm_active" />
   </div>
 </template>
 

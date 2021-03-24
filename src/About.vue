@@ -10,10 +10,16 @@
     <div id="about">
       <div id="about_content">
         <div id="about_section1" class="about_section">
-          <h2>A Transaction Tracker for {{network_upper}}</h2>
+          <h2>
+            A Transaction Tracker for {{no_blockchain_configured ? 'The Blockchain' : configured_blockchain_upper}}
+          </h2>
 
           <p>
-            <span class="zt">{{app_name}}</span> allows you to monitor {{network_upper}} transactions in real time and setup alerts to be notified of ledger activity via email, text message, and more. By leveraging a rich and powerful pattern matching system, <span class="zt">{{app_name}}</span> facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
+            <span class="zt">{{app_name}}</span> allows you to monitor
+            {{no_blockchain_configured ? 'Blockchain' : configured_blockchain_upper}} transactions
+            in real time and setup alerts to be notified of ledger activity via email, text message, and more.
+            By leveraging a rich and powerful pattern matching system, <span class="zt">{{app_name}}</span>
+            facilitates the inclusion (and/or exclusion) of the exact transactions that you are interested in.
           </p>
 
           <div style="text-align: center">
@@ -22,7 +28,7 @@
                     frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
-                    v-if="is_xrp">
+                    v-if="xrp_active">
             </iframe>
 
             <!-- TODO: xlm video -->
@@ -33,11 +39,22 @@
           <h4>Filtering On Your Terms</h4>
 
           <p>
-            Let's say you are an {{network_upper}} account holder or you are responsible for managing the {{network_upper}} account for your institution. It is pertinent that you are aware of all activity pertaining to your account, whether it is transactions originating from it or funds being sent to it by others. With <span class="zt">{{app_name}}</span> you can receive notifications immediately when this type of activity is detected and more.
+            Let's say you are {{no_blockchain_configured ? 'a crypto' : 'an ' + configured_blockchain_upper}}
+            account owner  or you are responsible for managing the account
+            for your institution. It is pertinent that you are aware of all
+            activity pertaining to your account, whether it is transactions
+            originating from it or funds being sent to it by others.
+            With <span class="zt">{{app_name}}</span> you can receive notifications
+            immediately when this type of activity is detected and more.
           </p>
 
           <p>
-            <span class="zt">{{app_name}}</span> not only allows you to filter transactions by type, but also to <b>deep inspect</b> every single transaction to only match certain criteria. Lets say you want to only be notified about payments in a particular currency and/or above a certain threshold. Or be notified when an offer is created for a rare or unique currency pair. <span class="zt">{{app_name}}</span> will notify you immediately via your preferred communication channel!
+            <span class="zt">{{app_name}}</span> not only allows you to filter transactions by type,
+            but also to <b>deep inspect</b> every single transaction to only match certain criteria.
+            Lets say you want to only be notified about payments in a particular currency and/or above
+            a certain threshold. Or be notified when an offer is created for a rare or unique currency pair.
+            <span class="zt">{{app_name}}</span> will notify you immediately via your preferred
+            communication channel!
           </p>
         </div>
 
@@ -45,65 +62,81 @@
           <h4>JSONPath Expressions</h4>
 
           <p>
-            Transactions that are propagated across the {{network_upper}} network are expressed in JSON, a structured language that allows users to specify the exact intent of the action they are executing. <span class="zt">{{app_name}}</span> uses a powerful expression matching technology known as <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
+            Transactions that are propagated across the Blockchain are expressed in JSON,
+            a structured language that allows users to specify the exact intent of the action they are executing.
+            <span class="zt">{{app_name}}</span> uses a powerful expression matching technology known as
+            <b>JSONPath</b> to allow you to specify the exact content of the JSON transactions that you would like to match.
           </p>
 
           <p>
-          For example to only inspect transactions that create offers, the following expression can be used:
+            For example to only inspect {{active_blockchain_upper}} transactions that create offers,
+            the following expression can be used:
           </p>
 
-          <div id="expression_example1" class="expression_example" v-if="is_xrp">
+          <div id="expression_example1" class="expression_example" v-if="xrp_active">
             $..[?(@.TransactionType == 'OfferCreate')]
           </div>
 
-          <div id="expression_example2" class="expression_example" v-else-if="is_xlm">
+          <div id="expression_example2" class="expression_example" v-else-if="xlm_active">
             $..operations..[?(@._type == 'manageBuyOffer' || @._type == 'manageSellOffer')]
           </div>
 
           <p>
-            To specify <i>Payments</i> which transfer more than <i>500 {{network_upper}}</i>, you can use:
+            To specify <i>Payments</i> which transfer more than
+            <i>500 {{active_blockchain_upper}}</i>, you can use:
           </p>
 
-          <div id="expression_example2" class="expression_example" v-if="is_xrp">
+          <div id="expression_example2" class="expression_example" v-if="xrp_active">
             $..[?(@.TransactionType == 'Payment' && parseInt(@.Amount) > 500000000)]
           </div>
 
-          <div id="expression_example2" class="expression_example" v-else-if="is_xlm">
+          <div id="expression_example2" class="expression_example" v-else-if="xlm_active">
             $..operations..[?(@._type == 'payment' && parseInt(@.paymentOp.amount > 5000000000))]
           </div>
 
-          <p id="xrp_drops" v-if="is_xrp">
-            On the ledger XRP is expressed in drops, units equal to 1-millionth of an XRP, hence 500 XRP = 500Million drops, which we see above
+          <p id="xrp_drops" v-if="xrp_active">
+            On the ledger XRP is expressed in drops,
+            units equal to 1-millionth of an XRP,
+            hence 500 XRP = 500Million drops, which we see above
           </p>
 
-          <p id="xlm_stoops" v-if="is_xlm">
-            On the ledger XLM is expressed in stoops, units equal to 10-millionth of an XLM, hence 500 XLM = 5Billion stoops, which we see above
+          <p id="xlm_stoops" v-if="xlm_active">
+            On the ledger XLM is expressed in stoops,
+            units equal to 10-millionth of an XLM,
+            hence 500 XLM = 5Billion stoops, which we see above
           </p>
 
           <p>
           Or to only inspect transactions that create new accounts:
           </p>
 
-          <div id="expression_example3" class="expression_example" v-if="is_xrp">
+          <div id="expression_example3" class="expression_example" v-if="xrp_active">
             $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
           </div>
 
-          <div id="expression_example3" class="expression_example" v-else-if="is_xlm">
+          <div id="expression_example3" class="expression_example" v-else-if="xlm_active">
             $..operations..[?(@._type == 'createAccount')]
           </div>
 
           <p>
-            But if you do not want to build these expressions, fear not! <span class="zt">{{app_name}}</span> bundles a <b>library of pre-built expressions</b>, allowing you to quickly setup the filters you are interested in. Each of these pre-built expressions are fully parameterized allowing you to plugin the transaction type, currencies, payment ranges that you are interested in and much more!
+            But if you do not want to build these expressions, fear not!
+            <span class="zt">{{app_name}}</span> bundles a <b>library of pre-built expressions</b>,
+            allowing you to quickly setup the filters you are interested in.
+            Each of these pre-built expressions are fully parameterized allowing you to plugin the
+            transaction type, currencies, payment ranges that you are interested in and much more!
           </p>
 
-          <img :src="require('./assets/landing/' + network_id + '/section4a.png')" />
+          <img :src="require('./assets/landing/' + active_blockchain + '/section4a.png')" />
         </div>
 
         <div id="about_section4" class="about_section">
           <h4>Programmatic Integration</h4>
 
           <p>
-          With <span class="zt">{{app_name}}</span> you can receive alerts via email or text message, whichever you prefer. Advanced users can setup <b>webhooks</b> to be invoked on transaction activity. This means you can integrate the <span class="zt">{{app_name}}</span> notification system into any programatic environment including trading systems, auditing/forensics technologies, and much more!
+          With <span class="zt">{{app_name}}</span> you can receive alerts via email or text message,
+          whichever you prefer. Advanced users can setup <b>webhooks</b> to be invoked on transaction activity.
+          This means you can integrate the <span class="zt">{{app_name}}</span> notification system into any
+          programatic environment including trading systems, auditing/forensics technologies, and much more!
           </p>
 
           <p>

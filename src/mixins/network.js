@@ -1,6 +1,6 @@
 /*
- * Blockchain mixin providing helper methods pertaining to
- * blockchain selection and config
+ * Network mixin providing helper methods pertaining to
+ * network config
  *
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */

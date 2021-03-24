@@ -6,8 +6,9 @@
 import Vue  from 'vue'
 import Vuex from 'vuex'
 
-import txs_config from './config/txs'
-import util       from './util'
+import txs_config     from './config/txs'
+import network_config from './config/network'
+import util           from './util'
 
 var jsonpath = require('./vendor/jsonpath')
 
@@ -17,8 +18,11 @@ jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
 export const store = new Vuex.Store({
   state : {
-    // Selected blockchain
-    selected_blockchain : null,
+    // Network initialization state
+    network_initialized : false,
+
+    // Blockchain selected via control
+    selected_blockchain : network_config.DEFAULT_BLOCKCHAIN,
 
     // Logged in user
     user : {
@@ -61,6 +65,11 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    // set network initialization state
+    set_network_initialized(state, init){
+      state.network_initialized = init;
+    },
+
     // set selected blockchain
     set_selected_blockchain(state, blockchain){
       state.selected_blockchain = blockchain;

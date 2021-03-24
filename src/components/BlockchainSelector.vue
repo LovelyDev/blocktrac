@@ -7,7 +7,8 @@
 <template>
   <b-form-select v-model="selected">
     <b-form-select-option v-for="blockchain in blockchains"
-                          :key="blockchain">
+                          :key="blockchain"
+                          :value="blockchain">
       {{blockchain}}
     </b-form-select-option>
   </b-form-select>
@@ -28,7 +29,13 @@ export default {
 
   computed : {
     blockchains : function(){
-      return config.BLOCKCHAINS;
+      return network_config.BLOCKCHAINS;
+    }
+  },
+
+  watch : {
+    selected : function(){
+      this.$store.commit('set_selected_blockchain', this.selected);
     }
   }
 }

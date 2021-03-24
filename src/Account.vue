@@ -24,7 +24,7 @@
             <td class="label">Balance</td>
             <td class="value">
               {{balance | round | delim}}
-              <img :src="network_icon" width="15px" />
+              <img :src="blockchain_icon" width="15px" />
             </td>
           </tr>
 

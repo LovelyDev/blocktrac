@@ -30,7 +30,7 @@
     </p>
 
     <ul id="filter_help_examples">
-      <li v-for="example in network_jsonpath_examples"
+      <li v-for="example in blockchain_jsonpath_examples"
           :key="example.id"
           class="filter_help_example">
         <b class="json_example" @click="set_filter">

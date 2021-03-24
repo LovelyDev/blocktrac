@@ -59,13 +59,12 @@ export default {
   },
 
   created : function(){
-    // Set default selected blockchain
-    if(this.no_blockchain_configured)
-      this.$store.commit('set_selected_blockchain', network_config.DEFAULT_BLOCKCHAIN)
-
     // Initialize and connect to network
-    this.network_init();
-    this.network.connect();
+    if(!this.$store.state.network_initialized){
+      this.$store.commit('set_network_initialized', true);
+      this.network_init();
+      this.network.connect();
+    }
 
     // If logged in, always load user to
     // verify user session is still active

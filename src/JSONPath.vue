@@ -94,11 +94,11 @@
          <h3 id="example">JSONPath example</h3>
 
          <p>
-         The following is a transaction from the {{network_upper}} transaction stream
+         The following is a transaction from the {{active_blockchain_upper}} transaction stream
          </p>
 
          <b-alert show variant="warning" id="top_level_wrapper_note">
-           Before processing, {{app_name}} wraps all {{network_upper}} transactions in the following top level object:
+           Before processing, {{app_name}} wraps all {{active_blockchain_upper}} transactions in the following top level object:
 
            <br v-if="mq_xs" />
 
@@ -107,14 +107,14 @@
            </span>
          </b-alert>
 
-         <renderjson :data="txs[network_id]" level="4" />
+         <renderjson :data="txs[active_blockchain]" level="4" />
 
          <table id="example_table">
          <tr>
            <th>JSONPath</th><th>Result</th>
          </tr>
 
-         <tr v-for="example in examples[network_id]" :key="example.id">
+         <tr v-for="example in examples[active_blockchain]" :key="example.id">
            <td v-html="example.syntax"></td>
            <td v-html="example.description"></td>
          </tr>
@@ -130,9 +130,9 @@
 
         <ul>
           <li>{{app_name}} wraps transactions in a top level <b>transaction</b> object. Make sure to incoporate this into your JSONPath expression and/or use the recursive descent operator: <b>..</b></li>
-          <li v-if="is_xrp">Transactions returned by a XRPL server are in different formats depending on context. Transactions which are sent to clients in the <b>transaction stream</b> have <b>transaction</b> and <b>meta</b> objects (see the example above) whereas those returned by the <a href="https://xrpl.org/tx.html#response-format"><b>tx command</b></a> embed the <b>meta</b> object <b>and</b> transaction fields in a top level <b>result</b> object. <b>Zerp tracker runs filter expressions against transaction stream transcations</b></li>
-          <li v-if="is_xlm">Before being processed, all XLM transactions are transformed using the <a href="https://www.npmjs.com/package/ezxlm">EZ XLM library</a>. This faciliates higher throughput for improved performance but results in a different structure than stock XLM transactions. See that library for details on the transformation process and the new structure which transactions are transformed into.</li>
-          <li>Make sure to check for typos and structural inconsistencies against actual {{network_upper}} data</li>
+          <li v-if="xrp_active">Transactions returned by a XRPL server are in different formats depending on context. Transactions which are sent to clients in the <b>transaction stream</b> have <b>transaction</b> and <b>meta</b> objects (see the example above) whereas those returned by the <a href="https://xrpl.org/tx.html#response-format"><b>tx command</b></a> embed the <b>meta</b> object <b>and</b> transaction fields in a top level <b>result</b> object. <b>Zerp tracker runs filter expressions against transaction stream transcations</b></li>
+          <li v-if="xlm_active">Before being processed, all XLM transactions are transformed using the <a href="https://www.npmjs.com/package/ezxlm">EZ XLM library</a>. This faciliates higher throughput for improved performance but results in a different structure than stock XLM transactions. See that library for details on the transformation process and the new structure which transactions are transformed into.</li>
+          <li>Make sure to check for typos and structural inconsistencies against actual {{active_blockchain_upper}} data</li>
         </ul>
 
         <h3 id="testing">Testing Expressions</h3>
@@ -358,26 +358,26 @@ export default {
 
   computed : {
     dot_notation: function(){
-      return this.is_xrp ? "$.transaction.transaction.Paths[0][0].currency"  :
-             this.is_xlm ? "$.transaction.envelope.tx.operations[0]._type" :
+      return this.xrp_active ? "$.transaction.transaction.Paths[0][0].currency"  :
+             this.xlm_active ? "$.transaction.envelope.tx.operations[0]._type" :
                            "" ;
     },
 
     bracket_notation: function(){
-      return this.is_xrp ? "$['transaction']['transaction']['Paths'][0][0]['currency']" :
-             this.is_xlm ? "$['transaction']['envelope']['tx']['operations'][0]['_type']" :
+      return this.xrp_active ? "$['transaction']['transaction']['Paths'][0][0]['currency']" :
+             this.xlm_active ? "$['transaction']['envelope']['tx']['operations'][0]['_type']" :
                            "" ;
     },
 
     script_expression: function(){
-      return this.is_xrp ? "$.transaction.transaction.Paths[(@.length-1)][0].issuer" :
-             this.is_xlm ? "$.transaction.envelope.tx.operations[(@.length-1)]._type" :
+      return this.xrp_active ? "$.transaction.transaction.Paths[(@.length-1)][0].issuer" :
+             this.xlm_active ? "$.transaction.envelope.tx.operations[(@.length-1)]._type" :
                            "" ;
     },
 
     filter_expression: function(){
-      return this.is_xrp ? "$.transaction.transaction.TakerGets[?(@.currency == 'CNY')]" :
-             this.is_xlm ? "$.transaction.envelope.tx[?(@.operations.length > 1)]" :
+      return this.xrp_active ? "$.transaction.transaction.TakerGets[?(@.currency == 'CNY')]" :
+             this.xlm_active ? "$.transaction.envelope.tx[?(@.operations.length > 1)]" :
                            "" ;
     },
 

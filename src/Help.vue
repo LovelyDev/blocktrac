@@ -97,22 +97,27 @@ export default {
           topics : [
             {
               title : "What is " + this.app_name + "?",
-              value : this.app_name + " is a persistent transaction tracker for the " + this.network_upper + " Blockchain. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
-            },
-
-            {
-               title : "What is " + this.network_upper + "?",
-               value : this.network_description,
+              value : this.app_name + " is a persistent Blockchain transaction tracker. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
             },
 
             {
                title : "Why should I care about transactions?",
-               value : "Transactions are a core component of the " + this.network_upper + " Ledger, allowing users to send and receive currencies and tokens representing value over the Internet."
+               value : "Transactions are a core component of the Blockchain, allowing users to send and receive currencies and tokens representing value over the Internet."
             },
 
             {
-               title : "Where can I find out more?",
-               value : "Many resources are avaiable online pertaining to " + this.network_upper + " technologies. See the <a href='" + this.network_moreinfo.url + "'>" + this.network_moreinfo.title + "</a> portal for example."
+              title : "How do I select which Blockchain to monitor?",
+              value : "Use the control on the upper left to switch blockchains. Currently <b>" + this.active_blockchain_upper + "</b> is selected."
+            },
+
+            {
+               title : "What is " + this.active_blockchain_upper + "?",
+               value : this.blockchain_description,
+            },
+
+            {
+               title : "Where can I find out more about " + this.active_blockchain_upper + "?",
+               value : "Many resources are avaiable online pertaining to " + this.active_blockchain_upper + " technologies. See the <a href='" + this.blockchain_moreinfo.url + "'>" + this.blockchain_moreinfo.title + "</a> portal for example.",
             },
 
             {
