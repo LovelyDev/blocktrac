@@ -5,8 +5,9 @@
   * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <span class="account_link">
-    <a :href="href">{{text}}</a>
+  <span class="account_link"
+        @click="nav_to_account">
+    {{text}}
   </span>
 </template>
 
@@ -22,10 +23,6 @@ export default {
   },
 
   computed : {
-    href : function(){
-      return "/account/" + this.account;
-    },
-
     text : function(){
       if(this.shorten){
         if(Number.isInteger(this.shorten))
@@ -36,6 +33,12 @@ export default {
       }
       return this.account;
     },
+  },
+
+  methods : {
+    nav_to_account : function(){
+      this.$router.push("/account/" + this.account);
+    }
   }
 }
 </script>
@@ -43,5 +46,7 @@ export default {
 <style scoped>
 .account_link{
   font-size: 0.60rem;
+  cursor: pointer;
+  color: var(--theme-color1);
 }
 </style>
