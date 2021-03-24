@@ -31,6 +31,17 @@ function init(){
   }.bind(this));
 }
 
+// Reset module
+function reset(){
+  stop_streaming_txs.bind(this)()
+                    .then(function(){
+                      if(this.ripple_api)
+                        this.ripple_api.disconnect();
+                    });
+
+  this.connected = false;
+}
+
 // Initiate XRP Connection
 function connect(){
   this.ripple_api
@@ -124,19 +135,20 @@ function stop_streaming_txs(){
       .connection
       .off('transaction', txs_cb);
 
-  this.ripple_api
-      .request('unsubscribe', {
-        'stream' : ['transactions']
-      })
-
-  // Reset callbacks
+  // Reset callback
   txs_cb = null;
+
+  return this.ripple_api
+             .request('unsubscribe', {
+               'stream' : ['transactions']
+             })
 }
 
 ///
 
 module.exports = {
   init,
+  reset,
   connect,
   validate_address,
   retrieve_account,

@@ -22,8 +22,9 @@ export default {
     };
 
     // Internal helper, return module for active blockchain
-    Vue.prototype.network._module = function(){
-      return modules[this.vue.active_blockchain];
+    Vue.prototype.network._module = function(blockchain){
+      if(!blockchain) blockchain = this.vue.active_blockchain;
+      return modules[blockchain];
     }
 
     // Internal helper, wrap transaction in similar manner
@@ -54,6 +55,14 @@ export default {
     Vue.prototype.network_init = function(){
       this.network.vue = this;
       this.network._module().init.bind(this.network)();
+    }
+
+    // Reset module
+    Vue.prototype.network.reset = function(blockchain){
+      this.callbacks.connected    = [];
+      this.callbacks.disconnected = [];
+
+      this._module(blockchain).reset.bind(this)();
     }
 
     // Connect to blockchain network

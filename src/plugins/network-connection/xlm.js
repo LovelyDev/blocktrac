@@ -18,6 +18,12 @@ function init(){
   // Stubbed for module API compatability
 }
 
+// Reset module
+function reset(){
+  stop_streaming_txs.bind(this)();
+  this.connected = false;
+}
+
 // Initiate XLM Connection
 function connect(){
   this.stellar_server =
@@ -115,13 +121,14 @@ function stream_txs(cb){
             Object.freeze(wrapped);
             cb(wrapped)
           }.bind(this)
-        }.bind(this))
+        })
 }
 
 // Stop streaming XLM transactions
 function stop_streaming_txs(){
   // Call method returned by stream to stop streaming
-  txs_cb();
+  if(txs_cb)
+    txs_cb();
 
   // Reset callback
   txs_cb = null;
@@ -131,6 +138,7 @@ function stop_streaming_txs(){
 
 module.exports = {
   init,
+  reset,
   connect,
   validate_address,
   retrieve_account,

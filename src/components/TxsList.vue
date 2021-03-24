@@ -69,11 +69,12 @@ import CreateFilterModal     from './modals/CreateFilter'
 
 import Authentication        from '../mixins/authentication'
 import HasFilters            from '../mixins/has_filters'
+import Blockchain            from '../mixins/blockchain'
 
 export default {
   name: 'TxsList',
 
-  mixins : [Authentication, HasFilters],
+  mixins : [Authentication, HasFilters, Blockchain],
 
   components : {
     TxsFilter,
@@ -97,6 +98,14 @@ export default {
 
     have_txs : function(){
       return this.txs.length != 0;
+    }
+  },
+
+  watch : {
+    active_blockchain : function(){
+      this.$store.commit('clear_txs');
+      this.network.off_connection(this.stream_txs);
+      this.network.on_connection(this.stream_txs);
     }
   },
 

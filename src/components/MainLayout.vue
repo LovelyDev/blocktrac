@@ -58,6 +58,15 @@ export default {
     }
   },
 
+  watch : {
+    active_blockchain : function(_, orig){
+      // Reset network connection
+      this.network.reset(orig);
+      this.network_init();
+      this.network.connect();
+    }
+  },
+
   created : function(){
     // Initialize and connect to network
     if(!this.$store.state.network_initialized){
