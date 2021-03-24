@@ -26,6 +26,22 @@
         </td>
       </tr>
 
+      <tr v-if="no_blockchain_configured">
+        <td class="form_text">Blockchain</td>
+
+        <td>
+          <b-form-select v-model="blockchain"
+                         :disabled="editing_filter"
+                         class="form_text">
+            <b-form-select-option v-for="blockchain in blockchains"
+                                  :key="blockchain"
+                                  :value="blockchain">
+              {{blockchain}}
+            </b-form-select-option>
+          </b-form-select>
+        </td>
+      </tr>
+
       <tr v-if="is_template_filter">
         <td class="form_text">Category:</td>
 
@@ -33,7 +49,7 @@
           <b-form-select v-model="template"
                          :disabled="editing_filter"
                          class="form_text">
-            <b-form-select-option v-for="template in templates"
+            <b-form-select-option v-for="template in blockchain_templates"
                                  :key="'template' + template.id"
                                  :value="template.id">
               {{template.name}}
@@ -157,18 +173,25 @@
 
 <script>
 import SinksInputs    from './SinksInputs'
+import Blockchain     from '../../mixins/blockchain'
 import ServerAPI      from '../../mixins/server_api'
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 
 import util           from '../../util'
+import network_config from '../../config/network'
 
 // TODO add explanations for categories
 
 export default {
   name: 'CreateEditFilterForm',
 
-  mixins : [ServerAPI, Authentication, Validator],
+  mixins : [
+    Blockchain,
+    ServerAPI,
+    Authentication,
+    Validator
+  ],
 
   components : {
     SinksInputs
@@ -184,6 +207,7 @@ export default {
     return {
       filter_type : 'template',
 
+      blockchain : null,
       template : null,
       params : [],
       jsonpath : '',
@@ -222,6 +246,10 @@ export default {
     },
 
     ///
+
+    blockchains : function(){
+      return network_config.BLOCKCHAINS;
+    },
 
     has_name : function(){
       return this.name != '';
@@ -318,6 +346,12 @@ export default {
 
     ///
 
+    blockchain_templates : function(){
+      return this.templates.filter(function(t){
+               return t.blockchain == this.blockchain;
+             }.bind(this));
+    },
+
     selected_template : function(){
       return this.templates.find(function(t){
                return t.id == this.template;
@@ -359,6 +393,7 @@ export default {
     server_params : function(){
       var params = {
         name : this.name,
+        blockchain : this.blockchain
       }
 
       if(!this.editing_filter){
@@ -396,10 +431,20 @@ export default {
   },
 
   watch : {
-    templates : function(){
+    blockchain_templates : function(){
       // set initial template
       if(this.template == null)
-        this.template = this.templates[0].id;
+        this.template = this.blockchain_templates[0].id;
+
+      // reset template if no longer in blockchain templates
+      else{
+        const ids = this.blockchain_templates.map(function(t){
+                      return t.id;
+                    });
+
+        if(!ids.includes(this.template))
+          this.template = this.blockchain_templates[0].id;
+      }
     }
   },
 
@@ -448,6 +493,7 @@ export default {
 
     parse_edit_filter : function(){
       this.name = this.edit_filter.name;
+      this.blockchain = this.edit_filter.blockchain;
 
       if(this.edit_filter.Template){
         this.filter_type = 'template';
@@ -464,6 +510,7 @@ export default {
 
     parse_duplicate_filter : function(){
       this.name = this.duplicate_filter.name + " (copy)";
+      this.blockchain = this.duplicate_filter.blockchain;
 
       if(this.duplicate_filter.Template){
         this.filter_type = 'template';
@@ -485,6 +532,8 @@ export default {
   },
 
   created : function(){
+    this.blockchain = this.active_blockchain;
+
     if(this.edit_filter)
       this.parse_edit_filter();
 
