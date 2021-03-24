@@ -64,6 +64,11 @@ export default {
       this.network.reset(orig);
       this.network_init();
       this.network.connect();
+
+      // If on Account or TX page, redirect to TXs
+      if(this.$route.path.startsWith("/account/") ||
+         this.$route.path.startsWith("/tx/"))
+         this.$router.push({path : "/txs"})
     }
   },
 

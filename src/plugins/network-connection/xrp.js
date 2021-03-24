@@ -131,9 +131,10 @@ function stream_txs(cb){
 
 // Stop streaming XRP transactions
 function stop_streaming_txs(){
-  this.ripple_api
-      .connection
-      .off('transaction', txs_cb);
+  if(txs_cb)
+    this.ripple_api
+        .connection
+        .off('transaction', txs_cb);
 
   // Reset callback
   txs_cb = null;

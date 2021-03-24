@@ -124,6 +124,7 @@ export default {
   },
 
   destroyed : function(){
+    this.$store.commit('clear_txs');
     this.network.off_connection(this.stream_txs);
     this.network.stop_streaming_txs();
   }

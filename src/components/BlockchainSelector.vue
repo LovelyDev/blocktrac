@@ -23,7 +23,7 @@ export default {
 
   data : function(){
     return {
-      selected : network_config.DEFAULT_BLOCKCHAIN
+      selected : null
     }
   },
 
@@ -37,6 +37,10 @@ export default {
     selected : function(){
       this.$store.commit('set_selected_blockchain', this.selected);
     }
+  },
+
+  created : function(){
+    this.selected = this.$store.state.selected_blockchain;
   }
 }
 </script>
