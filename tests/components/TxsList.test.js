@@ -63,6 +63,14 @@ describe("TxsList", () => {
     })
   })
 
+  describe("watch", () => {
+    describe("active_blockchain", () => {
+      test.todo("clears txs")
+      test.todo("removes stream_txs connection callback")
+      test.todo("adds stream_txs connection callback")
+    })
+  })
+
   describe("methods", () => {
     describe("message callback", () => {
       test.todo("adds tx")
@@ -70,10 +78,11 @@ describe("TxsList", () => {
   })
 
   describe("#created", () => {
-    test.todo("streams txs")
+    test.todo("adds stream_txs connection callback")
   })
 
   describe("#destroyed", () => {
+    test.todo("removes stream_txs connection callback")
     test.todo("stops streaming txs")
   })
 })

@@ -1,4 +1,12 @@
 describe("store", () => {
+  describe("#set_network_initialize", () => {
+    test.todo("sets network_initialized variable")
+  })
+
+  describe("#set_selected_blockchain", () => {
+    test.todo("sets selected_blockchain variable")
+  })
+
   describe("#set_user", () => {
     test.todo("sets user properties")
   })

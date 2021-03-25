@@ -1,53 +1,27 @@
 describe("network mixin", () => {
   describe("computed", () => {
-    describe("#is_xrp", () => {
-      describe("network id == 'xrp'", () => {
-        test.todo("returns true")
+    describe("#no_network_configured", () => {
+      describe("configured network is null", () => {
+        test.todo("is true")
       })
 
-      describe("network id != 'xrp'", () => {
-        test.todo("returns false")
-      })
-    })
-
-    describe("#is_xlm", () => {
-      describe("network id == 'xlm'", () => {
-        test.todo("returns true")
-      })
-
-      describe("network id != 'xlm'", () => {
-        test.todo("returns false")
+      describe("configured network is not null", () => {
+        test.todo("is false")
       })
     })
 
-    describe("#network_id", () => {
-      describe("is_xrp", () => {
-        test.todo("returns 'xrp'")
+    describe("#active_network", () => {
+      describe("no network configured", () => {
+        test.todo("is default network for active blockchain")
       })
 
-      describe("is_xlm", () => {
-        test.todo("returns 'xlm'")
+      describe("network configured", () => {
+        test.todo("is configured network")
       })
     })
 
-    describe("#network_upper", () => {
-      test.todo("returns upper case network_id")
-    })
-
-    describe("#network_moreinfo", () => {
-      test.todo("return network specific moreinfo")
-    })
-
-    describe("#network_icon", () => {
-      test.todo("returns network specific icon")
-    })
-
-    describe("#network_json_examples", () => {
-      test.todo("returns network specific jsonpath examples")
-    })
-
-    describe("#app_name", () => {
-      test.todo("returns network specific app_name")
+    describe("#active_network_uri", () => {
+      test.todo("uri for the active network")
     })
   })
 })
