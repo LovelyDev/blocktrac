@@ -7,7 +7,7 @@ describe("AccountMerge", () => {
 
   describe("computed", () => {
     describe("#destination", () => {
-      test.todo("is operation.destination.ed25519")
+      test.todo("is operation.destination")
     })
   })
 })

@@ -5,7 +5,7 @@ describe("AccountMerge", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("is operation.setOptionsOp")
+      test.todo("is operation")
     })
 
     describe("#options", () => {

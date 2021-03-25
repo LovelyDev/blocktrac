@@ -7,20 +7,19 @@ describe("ChangeTrust", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("is operation.changeTrustOp")
+      test.todo("is operation")
     })
 
     describe("#alpha_num", () => {
-      test.todo("is op.line.alphaNum4")
-      test.todo("is op.line.alphaNum12")
+      test.todo("is op.line")
     })
 
     describe("#asset", () => {
-      test.todo("is alpha_num.assetCode")
+      test.todo("is line.assetCode")
     })
 
     describe("#issuer", () => {
-      test.todo("is alpha_num.issuer.ed25519")
+      test.todo("is line.issuer")
     })
 
     describe("#limit", () => {

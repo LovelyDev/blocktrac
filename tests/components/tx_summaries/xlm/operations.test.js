@@ -1,6 +1,9 @@
 describe("tx_summaries xlm operations helpers", () => {
   describe("#all", () => {
-    test.todo("returns all operation bodies")
+    test.todo("returns all operation")
+    describe("no operations", () => {
+      test.todo("returns an empty array")
+    })
   })
 
   describe("#types", () => {

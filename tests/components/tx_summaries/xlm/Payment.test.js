@@ -7,11 +7,11 @@ describe("AccountMerge", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("operation.paymentOp")
+      test.todo("operation")
     })
 
     describe("#dst", () => {
-      test.todo("is op.destination.ed25519")
+      test.todo("is op.destination")
     })
 
     describe("#asset", () => {

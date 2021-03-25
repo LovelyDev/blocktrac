@@ -5,7 +5,7 @@ describe("BumpSequence", () => {
 
   describe("computed", () => {
     describe("#bumped_to", () => {
-      test.todo("is operation.bumpSequenceOp.bumpTo")
+      test.todo("is operation.bumpTo")
     })
   })
 })

@@ -13,7 +13,7 @@ describe("AccountMerge", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("is operation.manageDataOp")
+      test.todo("is operation")
     })
 
     describe("#name", () => {

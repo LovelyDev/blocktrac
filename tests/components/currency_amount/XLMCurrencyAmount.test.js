@@ -41,11 +41,11 @@ describe("XLMCurrencyAmount", () => {
     })
 
     describe("#is_native", () => {
-      describe("currency type == assetTypeNative", () => {
+      describe("currency == assetTypeNative", () => {
         test.todo("is true")
       })
 
-      describe("currency type != assetTypeNative", () => {
+      describe("currency != assetTypeNative", () => {
         test.todo("is false")
       })
     })
@@ -60,32 +60,18 @@ describe("XLMCurrencyAmount", () => {
       })
     })
 
-    describe("#alpha_num", () => {
-      describe("currency.alphaNum4", () => {
-        test.todo("is true")
-      })
-
-      describe("currency.alphaNum12", () => {
-        test.todo("is true")
-      })
-
-      describe("!currency.alphaNum4 && !currency.alphaNum12", () => {
-        test.todo("is false")
-      })
-    })
-
     describe("#asset_code", () => {
       describe("simple_currency", () => {
         test.todo("is currency")
       })
 
       describe("!simple_currency", () => {
-        test.todo("is alpha_num.assetCode")
+        test.todo("is currency.assetCode")
       })
     })
 
     describe("#issuer", () => {
-      test.todo("is alpha_num.issuer.ed25519")
+      test.todo("is currency.issuer")
     })
   })
 })

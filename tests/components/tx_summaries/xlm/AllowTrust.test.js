@@ -7,15 +7,15 @@ describe("AllowTrust", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("is operation.allowTrustOp")
+      test.todo("is operation")
     })
 
     describe("#asset", () => {
-      test.todo("is op.asset.assetCode12")
+      test.todo("is op.asset")
     })
 
     describe("#trustor", () => {
-      test.todo("is op.trustor.ed25519")
+      test.todo("is op.trustor")
     })
   })
 })

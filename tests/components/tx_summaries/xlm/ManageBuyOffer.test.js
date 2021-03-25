@@ -16,7 +16,7 @@ describe("ManageBuyOffer", () => {
 
   describe("computed", () => {
     describe("#op", () => {
-      test.todo("is operation.manageBuyOfferOp")
+      test.todo("is operation")
     })
 
     describe("#selling", () => {
@@ -42,7 +42,7 @@ describe("ManageBuyOffer", () => {
     })
 
     describe("#price", () => {
-      test.todo("is op.price.n / op.price.d")
+      test.todo("is op.price")
     })
 
     describe("#selling_amount", () => {
