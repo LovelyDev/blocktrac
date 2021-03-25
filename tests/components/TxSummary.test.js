@@ -1,10 +1,10 @@
 describe("TxSummary", () => {
   describe("dom", () => {
-    describe("is_xrp", () => {
+    describe("xrp_active", () => {
       test.todo("renders XRPTxSummary")
     })
 
-    describe("is_xlm", () => {
+    describe("xlm_active", () => {
       test.todo("renders XLMTxSummary")
     })
   })

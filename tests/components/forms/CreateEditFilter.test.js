@@ -44,11 +44,19 @@ describe("CreateEditFilter", () => {
       })
     })
 
+    describe("no_blockchain_configured", () => {
+      test.todo("renders 'Blockchain'")
+
+      describe("blockchain select", () => {
+        test.todo("renders option for each blockchain")
+      })
+    })
+
     describe("is_template_filter", () => {
       test.todo("renders 'Category'")
 
       describe("category select", () => {
-        test.todo("renders option for each template")
+        test.todo("renders option for each blockchain_template")
       })
     })
 
@@ -359,6 +367,10 @@ describe("CreateEditFilter", () => {
       })
     })
 
+    describe("#blockchain_templates", () => {
+      test.todo("is templates for the blockchain")
+    })
+
     describe("#selected_template", () => {
       test.todo("is template with given id")
     })
@@ -385,6 +397,7 @@ describe("CreateEditFilter", () => {
 
     describe("#server_params", () => {
       test.todo("includes filter name")
+      test.todo("includes filter blockchain")
 
       describe("not editing filter", () => {
         describe("template filter", () => {
@@ -421,8 +434,12 @@ describe("CreateEditFilter", () => {
   })
 
   describe("watch", () => {
-    describe("templates", () => {
+    describe("blockchain_templates", () => {
       test.todo("sets initial template")
+
+      describe("blockchain_templates do not include template", () => {
+        test.todo("resets template")
+      })
     })
   })
 
@@ -477,6 +494,7 @@ describe("CreateEditFilter", () => {
 
     describe("#parse_edit_filter", () => {
       test.todo("sets name")
+      test.todo("sets blockchain")
 
       describe("edit_filter.Template is set", () => {
         test.todo("sets template filter_type")
@@ -494,6 +512,7 @@ describe("CreateEditFilter", () => {
 
     describe("#parse_duplicate_filter", () => {
       test.todo("sets name")
+      test.todo("sets blockchain")
 
       describe("duplicate_filter.Template is set", () => {
         test.todo("sets template filter_type")
@@ -516,6 +535,8 @@ describe("CreateEditFilter", () => {
   })
 
   describe("#created", () => {
+    test.todo("sets blockchain to active blockchain")
+
     describe("edit_filter is set", () => {
       test.todo("parses edit filter")
     })
