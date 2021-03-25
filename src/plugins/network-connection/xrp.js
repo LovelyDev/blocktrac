@@ -26,7 +26,7 @@ function init(){
 
   this.ripple_api.on("error", function(err){
     this.connected = false;
-    this._call_disconnect_callbacks();
+    this._call_disconnected_callbacks();
     throttle_connection.bind(this)();
   }.bind(this));
 }

@@ -46,7 +46,7 @@ function test_connection(){
       }.bind(this)).catch(function(){
         if(this.connected){
           this.connected = false;
-          this._call_disconnect_callbacks();
+          this._call_disconnected_callbacks();
         }
       })
 }
