@@ -55,15 +55,15 @@ export default {
     ///
 
     active_blockchain : function(){
-      return this.no_blockchain_configured ?
-             this.selected_blockchain :
-             this.configured_blockchain;
+      return this.blockchain_configured ?
+             this.configured_blockchain :
+               this.selected_blockchain ;
     },
 
     active_blockchain_upper : function(){
-      return this.no_blockchain_configured ?
-             this.selected_blockchain_upper :
-             this.configured_blockchain_upper;
+      return       this.blockchain_configured ?
+             this.configured_blockchain_upper :
+               this.selected_blockchain_upper ;
     },
 
     xrp_active : function(){
