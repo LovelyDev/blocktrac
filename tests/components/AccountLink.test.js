@@ -1,8 +1,11 @@
 describe("AccountLink", () => {
   describe("dom", () => {
     describe("link", () => {
-      test.todo("refers to href")
       test.todo("renders text")
+
+      describe("clicked", () => {
+        test.todo("nav_to_account")
+      })
     })
   })
 
@@ -21,6 +24,12 @@ describe("AccountLink", () => {
       describe("shorten is length", () => {
         test.todo("is shortens account to specified length")
       })
+    })
+  })
+
+  describe("methods", () => {
+    describe("#nav_to_account", () => {
+      test.todo("routes to account")
     })
   })
 })
