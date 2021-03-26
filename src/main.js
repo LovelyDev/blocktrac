@@ -4,8 +4,10 @@
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
-// Import Vue and initializers
+// Main Vue instance
 import Vue from 'vue'
+
+// Import Vue and initializers
 import { vue_init } from './init'
 
 import {

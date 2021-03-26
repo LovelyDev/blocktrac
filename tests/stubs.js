@@ -1,3 +1,9 @@
+/*
+ * Test suite stubbed methods
+ *
+ * Copyright (c) 2021 Dev Null Productions - All Rights Reserved
+ */
+
 import mediaQuery from "css-mediaquery";
 
 Object.defineProperty(window, "matchMedia", {
