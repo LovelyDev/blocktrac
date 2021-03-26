@@ -1,6 +1,21 @@
+import setup from './setup'
+import Help from '../src/Help.vue'
+import { mount } from '@vue/test-utils'
+
 describe("Help Page", () => {
   describe("dom", () => {
-    test.todo("renders categories")
+    it("renders categories", () => {
+      //global.innerWidth = 5000;
+      var help = mount(Help, {
+        localVue: setup.localVue,
+           store: setup.store,
+          router: setup.router
+      })
+
+      help.vm.$nextTick(() => {
+        const nav = help.findAll("#help_categories .list-group-item.help_category")
+      })
+    })
 
     describe("category active", () => {
       test.todo("sets active list-group-item")
