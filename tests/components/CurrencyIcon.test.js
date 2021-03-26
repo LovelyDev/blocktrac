@@ -1,3 +1,8 @@
+import {shallow_mount_vue} from '../setup'
+import CurrencyIcon from '../../src/components/CurrencyIcon.vue'
+
+const CURRENCY_ICONS = require("../../src/assets/currencies.json")
+
 describe("CurrencyIcon", () => {
   describe("dom", () => {
     describe("have icon", () => {
@@ -12,11 +17,27 @@ describe("CurrencyIcon", () => {
   describe("computed", () => {
     describe("#have_icon", () => {
       describe("have currency icon", () => {
-        test.todo("returns true")
+        it("returns true", () => {
+          const currency_icon = shallow_mount_vue(CurrencyIcon, {
+            propsData : {
+              currency : CURRENCY_ICONS[0]
+            }
+          });
+
+          expect(currency_icon.vm.have_icon).toBe(true)
+        })
       })
 
-      describe("do not have currency icon", () => {
-        test.todo("returns false")
+      describe("have invalid currency icon", () => {
+        it("returns false", () => {
+          const currency_icon = shallow_mount_vue(CurrencyIcon, {
+            propsData : {
+              currency : "FOOBAR"
+            }
+          });
+
+          expect(currency_icon.vm.have_icon).toBe(false)
+        })
       })
     })
 

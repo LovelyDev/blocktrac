@@ -1,4 +1,4 @@
-import setup from './setup'
+import {shallow_mount_vue} from './setup'
 import Tx from '../src/Tx.vue'
 
 describe("Tx Page", () => {
@@ -7,7 +7,7 @@ describe("Tx Page", () => {
   beforeEach(function(){
     hash = '0D580FBBBB57CB749C5872B180901A8DF7E42699D0BBDB446FC7B781C6E42B8F'
 
-    tx = setup.shallow_mount_vue(Tx, {
+    tx = shallow_mount_vue(Tx, {
       propsData: {hash : hash},
       data : function(){
         return {
