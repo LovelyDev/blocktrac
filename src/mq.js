@@ -7,25 +7,27 @@
 
 import VueMq from 'vue-mq'
 
+// From bootstrap:
+// xs - 0 on up
+// sm - 576 on up
+// md - 768 on up
+// lg - 992 on up
+// xl - 1200 on up
+//
+// vue-mq defines upper-bound of media-query
+// range hence levels are shifted
+export const breakpoints = {
+  xs: 576,
+  sm: 768,
+  md: 992,
+  lg: 1200,
+  xl: Infinity
+};
+
 // Media query initialization routine
 export function vue_init(Vue){
-  // From bootstrap:
-  // xs - 0 on up
-  // sm - 576 on up
-  // md - 768 on up
-  // lg - 992 on up
-  // xl - 1200 on up
-  //
-  // vue-mq defines upper-bound of media-query
-  // range hence levels are shifted
   Vue.use(VueMq, {
-    breakpoints: {
-      xs: 576,
-      sm: 768,
-      md: 992,
-      lg: 1200,
-      xl: Infinity
-    }
+    breakpoints
   })
 
   // Custom mixin to define mq helpers

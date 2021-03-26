@@ -1,5 +1,6 @@
 import setup from './setup'
 import Help from '../src/Help.vue'
+import {breakpoints} from '../src/mq'
 
 describe("Help Page", () => {
   describe("dom", () => {
@@ -21,7 +22,15 @@ describe("Help Page", () => {
     })
 
     describe("mq <= md", () => {
-      test.todo("renders multiselect categories")
+      it("renders multiselect categories", () => {
+        global.innerWidth = breakpoints.md - 1;
+
+        const help = setup.mount_vue(Help)
+
+        help.vm.$nextTick(() => {
+          expect(help.get(".multiselect"))
+        })
+      })
 
       describe("category active", () => {
         test.todo("selects category")
