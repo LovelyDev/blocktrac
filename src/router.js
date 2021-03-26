@@ -1,6 +1,8 @@
-import Vue  from 'vue'
-
-///
+/*
+ * Application route definitions and initialization
+ *
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
+ */
 
 import Landing        from './Landing'
 import Maintenance    from './Maintenance'
@@ -84,14 +86,17 @@ const routes = [
 ///
 
 import VueRouter from 'vue-router'
-Vue.use(VueRouter)
 
-export const router = new VueRouter({
-  mode : "history",
-  routes : routes,
+export function vue_init(Vue){
+  Vue.use(VueRouter)
 
-  // always scroll to top on nav
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
-})
+  return new VueRouter({
+    mode : "history",
+    routes : routes,
+  
+    // always scroll to top on nav
+    scrollBehavior (to, from, savedPosition) {
+      return { x: 0, y: 0 }
+    }
+  })
+}
