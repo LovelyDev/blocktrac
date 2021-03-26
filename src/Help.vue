@@ -90,7 +90,7 @@ export default {
   },
 
   computed : {
-    data : function(){
+    content : function(){
       return {
         "General" : {
           icon : "gear-gray",
@@ -275,11 +275,11 @@ export default {
     },
 
     categories : function(){
-      return Object.keys(this.data);
+      return Object.keys(this.content);
     },
 
     topics : function(){
-      return this.data[this.active].topics;
+      return this.content[this.active].topics;
     }
   },
 
@@ -293,7 +293,7 @@ export default {
     },
 
     icon_for : function(category){
-      return require('./assets/' + this.data[category].icon + '.svg');
+      return require('./assets/' + this.content[category].icon + '.svg');
     }
   },
 
