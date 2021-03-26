@@ -1,5 +1,6 @@
 /*
- * Test suite setup logic
+ * Test suite setup logic.
+ * Similar to that done in src/main.js
  *
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
@@ -7,16 +8,11 @@
 // Stub out methods before any application logic
 require('./stubs')
 
-// Synchronously initialize app after stubbing is done
-const {
-  localVue,
-  store,
-  router
-} = require('./init')
+// Load vue components
+// XXX: implemented as seperate module as we need to ensure
+//      synchronously loaded so that stubbed methods are
+//      in effect (for network components and such)
+const vue = require('./vue')
 
 // Export for use in tests
-export default {
-  localVue,
-  store,
-  router
-}
+module.exports = vue;

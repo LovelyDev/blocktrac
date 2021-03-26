@@ -1,18 +1,19 @@
 import setup from './setup'
 import Tx from '../src/Tx.vue'
 
-import { shallowMount } from '@vue/test-utils'
-
 describe("Tx Page", () => {
-  var tx, hash
+  var tx, hash;
 
-  beforeEach(() => {
+  beforeEach(function(){
     hash = '0D580FBBBB57CB749C5872B180901A8DF7E42699D0BBDB446FC7B781C6E42B8F'
 
-    tx = shallowMount(Tx, {
-      localVue: setup.localVue,
-      store: setup.store,
-      propsData: {hash : hash}
+    tx = setup.shallow_mount_vue(Tx, {
+      propsData: {hash : hash},
+      data : function(){
+        return {
+          tx : {transaction : {}}
+        }
+      }
     })
   })
 
@@ -28,13 +29,14 @@ describe("Tx Page", () => {
     describe("#has_tx", () => {
       describe("tx is set", () => {
         it("is true", () => {
-          expect(Tx.computed.has_tx.call({tx : {}})).toBe(true)
+          expect(tx.vm.has_tx).toBe(true)
         })
       })
 
       describe("tx is not set", () => {
         it("is false", () => {
-          expect(Tx.computed.has_tx.call({})).toBe(false)
+          tx.setData({tx : null})
+          expect(tx.vm.has_tx).toBe(false)
         })
       })
     })

@@ -1,19 +1,18 @@
 import setup from './setup'
 import Help from '../src/Help.vue'
-import { mount } from '@vue/test-utils'
 
 describe("Help Page", () => {
   describe("dom", () => {
     it("renders categories", () => {
-      //global.innerWidth = 5000;
-      var help = mount(Help, {
-        localVue: setup.localVue,
-           store: setup.store,
-          router: setup.router
-      })
+      const help = setup.mount_vue(Help)
 
       help.vm.$nextTick(() => {
         const nav = help.findAll("#help_categories .list-group-item.help_category")
+        expect(nav.length).toBe(help.vm.categories.length)
+
+        for(var n = 0; n < nav.length; n += 1){
+          expect(nav.at(n).find(".category_title").text()).toEqual(help.vm.categories[n])
+        }
       })
     })
 
