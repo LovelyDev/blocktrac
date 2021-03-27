@@ -1,20 +1,23 @@
-import {mount_vue} from './setup'
+import {
+  mount_vue,
+  next_tick
+} from './setup'
+
 import Help from '../src/Help.vue'
 import {breakpoints} from '../src/mq'
 
 describe("Help Page", () => {
   describe("dom", () => {
-    it("renders categories", () => {
+    it("renders categories", async () => {
       const help = mount_vue(Help)
 
-      help.vm.$nextTick(() => {
-        const nav = help.findAll("#help_categories .list-group-item.help_category")
-        expect(nav.length).toBe(help.vm.categories.length)
+      await next_tick(help)
+      const nav = help.findAll("#help_categories .list-group-item.help_category")
+      expect(nav.length).toBe(help.vm.categories.length)
 
-        for(var n = 0; n < nav.length; n += 1){
-          expect(nav.at(n).find(".category_title").text()).toEqual(help.vm.categories[n])
-        }
-      })
+      for(var n = 0; n < nav.length; n += 1){
+        expect(nav.at(n).find(".category_title").text()).toEqual(help.vm.categories[n])
+      }
     })
 
     describe("category active", () => {
@@ -22,14 +25,12 @@ describe("Help Page", () => {
     })
 
     describe("mq <= md", () => {
-      it("renders multiselect categories", () => {
+      it("renders multiselect categories", async () => {
         global.innerWidth = breakpoints.md - 1;
 
         const help = mount_vue(Help)
-
-        help.vm.$nextTick(() => {
-          expect(help.get(".multiselect"))
-        })
+        await next_tick(help)
+        expect(help.get(".multiselect"))
       })
 
       describe("category active", () => {

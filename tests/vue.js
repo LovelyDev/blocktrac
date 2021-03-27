@@ -57,11 +57,22 @@ function shallow_mount_vue(component, opts){
   }, opts))
 }
 
+// Return promise that is resolved
+// on component's next tick
+function next_tick(component){
+  return new Promise((resolve, reject) => {
+    component.vm.$nextTick(() => {
+      resolve();
+    })
+  });
+}
+
 ///
 
 // Export for use in tests
 module.exports = {
   create_vue,
   mount_vue,
-  shallow_mount_vue
+  shallow_mount_vue,
+  next_tick
 }
