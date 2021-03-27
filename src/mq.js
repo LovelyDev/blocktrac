@@ -42,7 +42,7 @@ export function vue_init(Vue){
       },
 
       mq_gt_xs : function(){
-        return this.$mq != 'xs;'
+        return this.$mq != 'xs';
       },
 
       mq_sm : function(){
