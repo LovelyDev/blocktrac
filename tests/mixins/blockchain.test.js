@@ -1,76 +1,199 @@
+import {shallow_mount_vue} from '../setup'
+import Blockchain from '../../src/mixins/blockchain'
+import network_config from '../../src/config/network'
+
+const Component = {
+  render() {},
+  mixins : [Blockchain]
+}
+
 describe("network mixin", () => {
   describe("computed", () => {
     describe("#configured_blockchain_upper", () => {
-      test.todo("upper case version of the configured blockchain")
+      it("upper case version of the configured blockchain", () => {
+        const component = shallow_mount_vue(Component, {
+          computed : {
+            configured_blockchain : function(){
+              return 'xrp';
+            }
+          }
+        })
+
+        expect(component.vm.configured_blockchain_upper).toEqual("XRP")
+      })
     })
 
     describe("#blockchain_configured", () => {
       describe("configured_blockchain is null", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return null;
+              }
+            }
+          })
+
+          expect(component.vm.blockchain_configured).toBe(false);
+        })
       })
 
       describe("configured_blockchain is not null", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.blockchain_configured).toBe(true);
+        })
       })
     })
 
     describe("#no_blockchain_configured", () => {
       describe("configured_blockchain is null", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return null;
+              }
+            }
+          })
+
+          expect(component.vm.no_blockchain_configured).toBe(true);
+        })
       })
 
       describe("configured_blockchain is not null", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.no_blockchain_configured).toBe(false);
+        })
       })
     })
 
     describe("#xrp_configured", () => {
       describe("configured_blockchain == 'xrp'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.xrp_configured).toBe(true);
+        })
       })
 
       describe("configured_blockchain != 'xrp'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.xrp_configured).toBe(false);
+        })
       })
     })
 
     describe("#xlm_configured", () => {
       describe("configured_blockchain == 'xlm'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.xlm_configured).toBe(true);
+        })
       })
 
       describe("configured_blockchain != 'xlm'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.xlm_configured).toBe(false);
+        })
       })
     })
 
     ///
 
     describe("#selected_blockchain", () => {
-      test.todo("selected blockchain from store")
+      it("is selected blockchain from store", () => {
+        const component = shallow_mount_vue(Component)
+        component.vm.$store.commit('set_selected_blockchain', 'xrp')
+        expect(component.vm.selected_blockchain).toEqual('xrp')
+      })
     })
 
     describe("#selected_blockchain_upper", () => {
-      test.todo("selected blockchain upper case")
+      it("is selected blockchain upper case", () => {
+        const component = shallow_mount_vue(Component)
+        component.vm.$store.commit('set_selected_blockchain', 'xrp')
+        expect(component.vm.selected_blockchain_upper).toEqual('XRP')
+      })
     })
 
     describe("#xrp_selected", () => {
       describe("selected_blockchain == 'xrp'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xrp')
+          expect(component.vm.xrp_selected).toEqual(true)
+        })
       })
 
       describe("selected_blockchain != 'xrp'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xlm')
+          expect(component.vm.xrp_selected).toEqual(false)
+        })
       })
     })
 
     describe("#xlm_selected", () => {
       describe("selected_blockchain == 'xlm'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xlm')
+          expect(component.vm.xlm_selected).toEqual(true)
+        })
       })
 
       describe("selected_blockchain != 'xlm'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xrp')
+          expect(component.vm.xlm_selected).toEqual(false)
+        })
       })
     })
 
@@ -78,35 +201,99 @@ describe("network mixin", () => {
 
     describe("#active_blockchain", () => {
       describe("blockchain configured", () => {
-        test.todo("configured blockchain")
+        it("is configured blockchain", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.active_blockchain).toEqual("xrp")
+        })
       })
 
       describe("no blockchain configured", () => {
-        test.todo("selected blockchain")
+        it("is selected blockchain", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xrp')
+          expect(component.vm.active_blockchain).toEqual('xrp')
+        })
       })
     })
 
     describe("#active_blockchain_upper", () => {
-      test.todo("active_blockchain upper case")
+      it("is active_blockchain upper case", () => {
+        const component = shallow_mount_vue(Component, {
+          computed : {
+            active_blockchain : function(){
+              return 'xrp';
+            }
+          }
+        })
+
+        expect(component.vm.active_blockchain_upper).toEqual("XRP")
+      })
     })
 
     describe("#xrp_active", () => {
       describe("active_blockchain == 'xrp'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.xrp_active).toEqual(true);
+        })
       })
 
       describe("active_blockchain != 'xrp'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.xrp_active).toEqual(false);
+        })
       })
     })
 
     describe("#xlm_active", () => {
       describe("active_blockchain == 'xlm'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.xlm_active).toEqual(true);
+        })
       })
 
       describe("active_blockchain != 'xlm'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xrp';
+              }
+            }
+          })
+
+          expect(component.vm.xlm_active).toEqual(false);
+        })
       })
     })
 
