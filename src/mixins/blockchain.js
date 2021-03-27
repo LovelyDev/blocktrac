@@ -61,9 +61,7 @@ export default {
     },
 
     active_blockchain_upper : function(){
-      return       this.blockchain_configured ?
-             this.configured_blockchain_upper :
-               this.selected_blockchain_upper ;
+      return this.active_blockchain.toUpperCase();
     },
 
     xrp_active : function(){
