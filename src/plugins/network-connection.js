@@ -1,4 +1,9 @@
-// Blockchain Network Connection operations
+/*
+ * Network Connection Plugin
+ * Blockchain Network Connection operations
+ *
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
+ */
 
 import xrp from './network-connection/xrp'
 import xlm from './network-connection/xlm'

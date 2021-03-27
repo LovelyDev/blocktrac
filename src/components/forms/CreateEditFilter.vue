@@ -3,7 +3,7 @@
   * Primary form used to create and edit jsonpath-based and
   * template-based filters.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <div>

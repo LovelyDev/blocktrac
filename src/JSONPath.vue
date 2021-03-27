@@ -2,7 +2,7 @@
   * JSONPath help Page
   * Explains jsonpath syntax
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="jsonpath">

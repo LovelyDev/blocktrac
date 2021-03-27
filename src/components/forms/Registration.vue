@@ -2,7 +2,7 @@
   * Create Sink Form
   * Allows the user to register / create a new application account.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <table class="form_table">

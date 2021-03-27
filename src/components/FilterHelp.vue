@@ -2,7 +2,7 @@
   * Filter Help Content
   * Help popup rendered on LiveTxs page when user clicks help link.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <div id="filter_help">

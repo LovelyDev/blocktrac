@@ -2,7 +2,7 @@
  * Helper providing access to XLM transaction operation
  * metadata.
  *
- * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
 function all(tx){

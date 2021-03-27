@@ -3,7 +3,7 @@
  * functions relating to user registration, state management
  * (login / logout), and other actions.
  *
- * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
 import zxcvbn  from "zxcvbn"

@@ -3,7 +3,7 @@
   * Renders graphical currency icon if it is available, else
   * just render currency text.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <span class="currency">

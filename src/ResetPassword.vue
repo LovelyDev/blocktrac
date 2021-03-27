@@ -3,7 +3,7 @@
   * Wrapse ResetPasswordForm allowing the user to reset their
   * password, sending a request to the server to complete the process.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="reset">

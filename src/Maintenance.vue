@@ -2,7 +2,7 @@
   * Maintenance Page
   * Displayed whenever the maintenance flag is set true in the config
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <div id="maintenance_container">

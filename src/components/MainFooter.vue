@@ -2,7 +2,7 @@
   * Main Site Footer
   * Rendered on all pages.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <b-row no-gutters id="main_footer">

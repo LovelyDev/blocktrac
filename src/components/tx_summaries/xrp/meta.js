@@ -5,7 +5,7 @@
  * Used by all components rendered for a single xrp transaction
  * including the tx_type summaries.
  *
- * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
 import util       from '../../../util'

@@ -3,7 +3,7 @@
   * Renders a currency with icon and optional issuer as specified
   * by the given params.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <span>

@@ -1,7 +1,7 @@
 /*
  * Helper to manage tx category operations / state.
  *
- * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
 import txs_config from '../config/txs'

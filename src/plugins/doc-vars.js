@@ -1,4 +1,10 @@
-// Set various document properties from configuration
+/*
+ * Doc Variables Plugin
+ * Set various document properties from configuration
+ *
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
+ */
+
 
 import network_config from '../config/network'
 

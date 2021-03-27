@@ -3,7 +3,7 @@
   * Final page in the checkout process, where user specifies
   * payment details and receives confirmation after being charged.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="checkout">

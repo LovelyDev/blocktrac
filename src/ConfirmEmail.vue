@@ -3,7 +3,7 @@
   * Issues a /confirm request to the server to confirm email and
   * reports result
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="confirm">

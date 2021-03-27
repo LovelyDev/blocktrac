@@ -2,7 +2,7 @@
   * Help Page
   * User friendly help topics w/ answers.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="help">

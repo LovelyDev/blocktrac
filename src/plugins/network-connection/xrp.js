@@ -1,4 +1,9 @@
-// XRP Network Connection Adapter Module
+/*
+ * Network Connection Plugin
+ * XRP Adapter Module
+ *
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
+ */
 
 const RippleAPI = require('ripple-lib').RippleAPI;
 

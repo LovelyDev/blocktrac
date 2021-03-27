@@ -4,7 +4,7 @@
   * additional addons. Once user selects plan they will be taken
   * to Plan page rendering overview and futhur customization.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="plans">

@@ -3,7 +3,7 @@
   * First page displayed to the user at the root of the application,
   * consists of high level features and screenshots.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="landing">

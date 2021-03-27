@@ -1,7 +1,7 @@
 <!--
   * Escrow Cancel Transaction Details
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <XRPTxContainer :tx="tx">

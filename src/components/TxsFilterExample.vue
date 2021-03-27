@@ -3,7 +3,7 @@
   * Clickable example displayed under Txs Filter, along with
   * modal containing TxsFilterHelp content
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <div id="txs_filter_example">

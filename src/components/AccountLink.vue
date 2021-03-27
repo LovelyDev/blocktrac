@@ -2,7 +2,7 @@
   * Account Link Component
   * Renders link to account page
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <span class="account_link"

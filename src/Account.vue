@@ -2,7 +2,7 @@
   * Account Page
   * Renders information about a single account, specified by ID
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <TxsLayout section="account">

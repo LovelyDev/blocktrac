@@ -6,7 +6,7 @@
   * Also encapsulates other components including TxsFilter,
   * TxsExample, and TxsCategories[Dropdown]
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 
 <!-- TODO slide control to connect txs list to testnet (and test filter against it) -->

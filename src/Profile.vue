@@ -2,7 +2,7 @@
   * Profile Page
   * Encapsulates the ProfileForm and allows user to update
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <MainLayout section="profile">

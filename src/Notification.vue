@@ -2,7 +2,7 @@
   * Notification Details Page
   * Renders a details about a particular notification sent to the user
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <TxsLayout section="notification">

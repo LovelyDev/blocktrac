@@ -4,7 +4,7 @@
   * Test transactions are precaptured live-transactions which serve
   * as a static database to test filters against.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <TxsLayout section="filter_tester">
