@@ -155,6 +155,8 @@ import Blockchain from './mixins/blockchain'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
 
+// FIXME: move alot of this content to assets/
+
 export default {
   name: 'JSONPath',
 
