@@ -1,37 +1,98 @@
+import {mount_vue}       from './setup'
+import {stubbed_network} from './stubs'
+
+import Account from '../src/Account.vue'
+
 describe("Account Page", () => {
+  var account
+
+  beforeEach(() => {
+    account = mount_vue(Account, {
+      propsData : {
+        id : 'account1'
+      },
+
+      data : function(){
+        return {
+               balance : 1001.23456789,
+              sequence : 2002,
+          previous_txn : 'tx0'
+        }
+      },
+
+      mocks : {
+        network : stubbed_network()
+      }
+    })
+  })
+
   describe("dom", () => {
     describe("#back_icon", () => {
       describe("clicked", () => {
-        test.todo("navigates back")
+        it("navigates back", async () => {
+          account.vm.$router.back = jest.fn()
+          await account.find("#back_icon").trigger("click")
+          expect(account.vm.$router.back).toHaveBeenCalledTimes(1)
+        })
       })
     })
 
     describe("#account_id", () => {
-      test.todo("contains id")
-    })
-
-    describe("#account_table > tr:nth-child(0) > .value", () => {
-      test.todo("contains rounded, deliminated balance")
+      it("contains id", () => {
+        const account_id = account.find("#account_id")
+        expect(account_id.text()).toEqual("account1")
+      })
     })
 
     describe("#account_table > tr:nth-child(1) > .value", () => {
-      test.todo("contains sequence")
+      it("contains rounded, deliminated balance", () => {
+        const balance = account.find("#account_table > tr:nth-child(1) > .value")
+        expect(balance.text()).toEqual("1,001.23457")
+      })
     })
 
     describe("#account_table > tr:nth-child(2) > .value", () => {
-      test.todo("contains link to previous txn")
+      it("contains sequence", () => {
+        const sequence = account.find("#account_table > tr:nth-child(2) > .value")
+        expect(sequence.text()).toEqual("2002")
+      })
+    })
+
+    describe("#account_table > tr:nth-child(3) > .value", () => {
+      it("contains link to previous txn", () => {
+        const txn = account.find("#account_table > tr:nth-child(3) > .value")
+        expect(txn.text()).toEqual("tx0")
+      })
     })
   })
 
   describe("methods", () => {
     describe("#on_account", () => {
-      test.todo("sets balance")
-      test.todo("sets sequence")
-      test.todo("sets previous_txn")
+      beforeEach(() => {
+        account.vm.on_account({
+               balance : 100,
+              sequence : 200,
+          previous_txn : 'tx1'
+        })
+      })
+
+      it("sets balance", () => {
+        expect(account.vm.balance).toEqual(100)
+      })
+
+      it("sets sequence", () => {
+        expect(account.vm.sequence).toEqual(200)
+      })
+
+      it("sets previous_txn", () => {
+        expect(account.vm.previous_txn).toEqual('tx1')
+      })
     })
   })
 
   describe("#created", () => {
-    test.todo("retrieves network account")
+    it("retrieves network account", () => {
+      expect(account.vm.network.account).toHaveBeenCalledTimes(1)
+    })
   })
 })
