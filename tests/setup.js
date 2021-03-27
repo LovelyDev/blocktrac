@@ -6,7 +6,7 @@
  */
 
 // Stub out methods before any application logic
-require('./stubs')
+require('./stubs').stub_defaults();
 
 // Load vue components
 // XXX: implemented as seperate module as we need to ensure
