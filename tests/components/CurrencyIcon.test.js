@@ -15,7 +15,7 @@ describe("CurrencyIcon", () => {
   })
 
   describe("computed", () => {
-    describe("#have_icon", () => {
+    describe("have_icon", () => {
       describe("have currency icon", () => {
         it("returns true", () => {
           const currency_icon = shallow_mount_vue(CurrencyIcon, {
@@ -41,7 +41,7 @@ describe("CurrencyIcon", () => {
       })
     })
 
-    describe("#src", () => {
+    describe("src", () => {
       test.todo("requires and returns currency icon")
     })
   })

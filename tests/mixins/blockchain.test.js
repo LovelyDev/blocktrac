@@ -9,7 +9,7 @@ const Component = {
 
 describe("network mixin", () => {
   describe("computed", () => {
-    describe("#configured_blockchain_upper", () => {
+    describe("configured_blockchain_upper", () => {
       it("upper case version of the configured blockchain", () => {
         const component = shallow_mount_vue(Component, {
           computed : {
@@ -23,7 +23,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#blockchain_configured", () => {
+    describe("blockchain_configured", () => {
       describe("configured_blockchain is null", () => {
         it("is false", () => {
           const component = shallow_mount_vue(Component, {
@@ -53,7 +53,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#no_blockchain_configured", () => {
+    describe("no_blockchain_configured", () => {
       describe("configured_blockchain is null", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component, {
@@ -83,7 +83,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xrp_configured", () => {
+    describe("xrp_configured", () => {
       describe("configured_blockchain == 'xrp'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component, {
@@ -113,7 +113,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xlm_configured", () => {
+    describe("xlm_configured", () => {
       describe("configured_blockchain == 'xlm'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component, {
@@ -145,7 +145,7 @@ describe("network mixin", () => {
 
     ///
 
-    describe("#selected_blockchain", () => {
+    describe("selected_blockchain", () => {
       it("is selected blockchain from store", () => {
         const component = shallow_mount_vue(Component)
         component.vm.$store.commit('set_selected_blockchain', 'xrp')
@@ -153,7 +153,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#selected_blockchain_upper", () => {
+    describe("selected_blockchain_upper", () => {
       it("is selected blockchain upper case", () => {
         const component = shallow_mount_vue(Component)
         component.vm.$store.commit('set_selected_blockchain', 'xrp')
@@ -161,7 +161,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xrp_selected", () => {
+    describe("xrp_selected", () => {
       describe("selected_blockchain == 'xrp'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component)
@@ -179,7 +179,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xlm_selected", () => {
+    describe("xlm_selected", () => {
       describe("selected_blockchain == 'xlm'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component)
@@ -199,7 +199,7 @@ describe("network mixin", () => {
 
     ///
 
-    describe("#active_blockchain", () => {
+    describe("active_blockchain", () => {
       describe("blockchain configured", () => {
         it("is configured blockchain", () => {
           const component = shallow_mount_vue(Component, {
@@ -223,7 +223,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#active_blockchain_upper", () => {
+    describe("active_blockchain_upper", () => {
       it("is active_blockchain upper case", () => {
         const component = shallow_mount_vue(Component, {
           computed : {
@@ -237,7 +237,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xrp_active", () => {
+    describe("xrp_active", () => {
       describe("active_blockchain == 'xrp'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component, {
@@ -267,7 +267,7 @@ describe("network mixin", () => {
       })
     })
 
-    describe("#xlm_active", () => {
+    describe("xlm_active", () => {
       describe("active_blockchain == 'xlm'", () => {
         it("is true", () => {
           const component = shallow_mount_vue(Component, {
@@ -299,23 +299,23 @@ describe("network mixin", () => {
 
     ///
 
-    describe("#blockchain_icon", () => {
+    describe("blockchain_icon", () => {
       test.todo("is ../assets/currencies/active_blockchain_upper.svg")
     })
 
-    describe("#blockchain_jsonpath_examples", () => {
+    describe("blockchain_jsonpath_examples", () => {
       test.todo("is jsonpath_examples for active_blockchain")
     })
 
-    describe("#blockchain_jsonpath_example", () => {
+    describe("blockchain_jsonpath_example", () => {
       test.todo("is first jsonpath_example for active_blockchain")
     })
 
-    describe("#blockchain_description", () => {
+    describe("blockchain_description", () => {
       test.todo("is description for active blockchain")
     })
 
-    describe("#blockchain_moreinfo", () => {
+    describe("blockchain_moreinfo", () => {
       test.todo("is moreinfo for active blockchain")
     })
   })

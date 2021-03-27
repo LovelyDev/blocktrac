@@ -1,6 +1,6 @@
 describe("Maintenance Page", () => {
   describe("computed", () => {
-    describe("#img", () => {
+    describe("img", () => {
       describe("no blockchain configured", () => {
         test.todo("is /assets/maintenance/blcokchain.svg")
       })

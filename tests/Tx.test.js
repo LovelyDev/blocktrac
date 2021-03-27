@@ -26,7 +26,7 @@ describe("Tx Page", () => {
   })
 
   describe("computed", () => {
-    describe("#has_tx", () => {
+    describe("has_tx", () => {
       describe("tx is set", () => {
         it("is true", () => {
           expect(tx.vm.has_tx).toBe(true)
