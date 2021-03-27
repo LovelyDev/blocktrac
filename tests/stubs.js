@@ -48,12 +48,13 @@ var ripplelib, rippleapi
 jest.mock("ripple-lib")
 ripplelib = require('ripple-lib')
 rippleapi = {
-     connect : jest.fn().mockImplementation(() => new Promise(() => {})),
-     request : jest.fn().mockImplementation(() => new Promise(() => {})),
-   getLedger : jest.fn(),
-          on : jest.fn(),
-  connection : {
-          on : jest.fn()
-  }
+         connect : jest.fn().mockImplementation(() => new Promise(() => {})),
+         request : jest.fn().mockImplementation(() => new Promise(() => {})),
+       getLedger : jest.fn(),
+  isValidAddress : jest.fn(),
+              on : jest.fn(),
+      connection : {
+              on : jest.fn()
+      }
 }
 ripplelib.RippleAPI.mockImplementation(() => rippleapi)
