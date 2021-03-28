@@ -30,10 +30,12 @@
         <td class="form_text">Blockchain</td>
 
         <td>
-          <b-form-select v-model="blockchain"
+          <b-form-select id="blockchain_select"
+                         v-model="blockchain"
                          :disabled="editing_filter"
                          class="form_text">
             <b-form-select-option v-for="blockchain in blockchains"
+                                  class="blockchain_select_option"
                                   :key="blockchain"
                                   :value="blockchain">
               {{blockchain}}
@@ -46,7 +48,8 @@
         <td class="form_text">Category:</td>
 
         <td>
-          <b-form-select v-model="template"
+          <b-form-select id="template_select"
+                         v-model="template"
                          :disabled="editing_filter"
                          class="form_text">
             <b-form-select-option v-for="template in blockchain_templates"
