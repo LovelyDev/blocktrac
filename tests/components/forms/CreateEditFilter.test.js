@@ -1,67 +1,198 @@
+import {
+  create_vue,
+  shallow_mount_vue
+} from '../../setup'
+
+import {
+  stubbed_templates
+} from '../../stubs'
+
+import CreateEditFilter from '../../../src/components/forms/CreateEditFilter'
+
 describe("CreateEditFilter", () => {
+  var vue;
+
+  beforeEach(() => {
+    // stub load_templates http call
+    vue = create_vue()
+    vue.localVue.http.get =
+      jest.fn().mockResolvedValue({body : stubbed_templates()})
+  })
+
   describe("dom", () => {
     describe("#by_category", () => {
       describe("!editing_filter && !saving_filter", () => {
-        test.todo("is rendered")
+        it("is rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          expect(create_edit_filter.find("#by_category").exists()).toBe(true)
+        })
       })
 
       describe("editing_filter", () => {
-        test.todo("is not rendered")
+        it("is not rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              editing_filter : function(){
+                return true;
+              },
+            }
+          })
+
+          expect(create_edit_filter.find("#by_category").exists()).toBe(false)
+        })
       })
 
       describe("saving_filter", () => {
-        test.todo("is not rendered")
+        it("is not rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              saving_filter : function(){
+                return true;
+              }
+            }
+          })
+
+          expect(create_edit_filter.find("#by_category").exists()).toBe(false)
+        })
       })
 
       describe("is_template_filter", () => {
-        test.todo("is .active")
+        it("is .active", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              is_template_filter : function(){
+                return true;
+              }
+            }
+          })
+
+          expect(create_edit_filter.find("#by_category").classes()).toContain('active')
+        })
       })
 
       describe("clicked", () => {
-        test.todo("sets template filter type")
+        it("sets template filter type", async () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          create_edit_filter.vm.set_filter_type('expression')
+          await create_edit_filter.find("#by_category").trigger("click")
+          expect(create_edit_filter.vm.filter_type).toEqual('template')
+        })
       })
     })
 
     describe("#by_expression", () => {
       describe("!editing_filter && !saving_filter", () => {
-        test.todo("is rendered")
+        it("is rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          expect(create_edit_filter.find("#by_expression").exists()).toBe(true)
+        })
       })
 
       describe("editing_filter", () => {
-        test.todo("is not rendered")
+        it("is not rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              editing_filter : function(){
+                return true;
+              },
+            }
+          })
+
+          expect(create_edit_filter.find("#by_expression").exists()).toBe(false)
+        })
       })
 
       describe("saving_filter", () => {
-        test.todo("is not rendered")
+        it("is not rendered", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              saving_filter : function(){
+                return true;
+              }
+            }
+          })
+
+          expect(create_edit_filter.find("#by_expression").exists()).toBe(false)
+        })
       })
 
       describe("is_expression_filter", () => {
-        test.todo("is .active")
+        it("is .active", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              is_expression_filter : function(){
+                return true;
+              }
+            }
+          })
+
+          expect(create_edit_filter.find("#by_expression").classes()).toContain('active')
+        })
       })
 
       describe("clicked", () => {
-        test.todo("sets expression filter type")
+        it("sets expression filter type", async () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          create_edit_filter.vm.set_filter_type('category')
+          await create_edit_filter.find("#by_expression").trigger("click")
+          expect(create_edit_filter.vm.filter_type).toEqual('expression')
+        })
       })
     })
 
     describe("no_blockchain_configured", () => {
-      test.todo("renders 'Blockchain'")
-
       describe("blockchain select", () => {
-        test.todo("renders option for each blockchain")
+        it("renders option for each blockchain", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            computed : {
+              no_blockchain_configured : function(){
+                return true;
+              }
+            }
+          })
+
+          const blockchains = create_edit_filter.vm.blockchains;
+          const options = create_edit_filter.findAll("#blockchain_select .blockchain_select_option")
+          expect(options.length).toEqual(blockchains.length)
+          for(var o = 0; o < options.length; o += 1){
+            const blockchain = blockchains[o];
+            const option = options.at(o);
+            expect(option.attributes('value')).toEqual(blockchain);
+            expect(option.text()).toEqual(blockchain);
+          }
+        })
+      })
+    })
+
+    describe("blockchain_configured", () => {
+      it("does not render blockchain select", () => {
+        const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+          vue : vue,
+          computed : {
+            no_blockchain_configured : function(){
+              return false;
+            }
+          }
+        })
+
+        expect(create_edit_filter.find("#blockchain_select").exists()).toBe(false)
       })
     })
 
     describe("is_template_filter", () => {
-      test.todo("renders 'Category'")
-
       describe("category select", () => {
         test.todo("renders option for each blockchain_template")
       })
     })
 
     describe("!is_template_filter", () => {
-      test.todo("does not render 'Category'")
       test.todo("does not render category select")
     })
 
@@ -90,8 +221,6 @@ describe("CreateEditFilter", () => {
     })
 
     describe("is_expression_filter", () => {
-      test.todo("renders 'Expression'")
-
       describe("expression input", () => {
         test.todo("is tied to jsonpath")
       })
@@ -147,47 +276,113 @@ describe("CreateEditFilter", () => {
   })
 
   describe("computed", () => {
-    describe("#editing_filter", () => {
+    describe("editing_filter", () => {
       describe("edit_filter is set", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            propsData : {
+              edit_filter : {blockchain : 'xrp'}
+            }
+          })
+          expect(create_edit_filter.vm.editing_filter).toBe(true)
+        })
       })
 
       describe("edit_filter is not set", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          expect(create_edit_filter.vm.editing_filter).toBe(false)
+        })
       })
     })
 
-    describe("#saving_filter", () => {
-      describe("saving_filter is set", () => {
-        test.todo("is true")
+    describe("saving_filter", () => {
+      describe("save_filter is set", () => {
+        it("is true", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            propsData : {
+              save_filter : {blockchain : 'xrp'}
+            }
+          })
+          expect(create_edit_filter.vm.saving_filter).toBe(true)
+        })
       })
 
       describe("saving_filter is not set", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
+          expect(create_edit_filter.vm.saving_filter).toBe(false)
+        })
       })
     })
 
-    describe("#is_template_filter", () => {
+    describe("is_template_filter", () => {
       describe("filter_type == 'template'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            data : function(){
+              return {
+                filter_type : 'template'
+              }
+            }
+          })
+
+          expect(create_edit_filter.vm.is_template_filter).toBe(true)
+        })
       })
 
       describe("filter_type != 'template'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            data : function(){
+              return {
+                filter_type : 'expression'
+              }
+            }
+          })
+
+          expect(create_edit_filter.vm.is_template_filter).toBe(false)
+        })
       })
     })
 
-    describe("#is_expression_filter", () => {
+    describe("is_expression_filter", () => {
       describe("filter_type == 'expression'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            data : function(){
+              return {
+                filter_type : 'expression'
+              }
+            }
+          })
+
+          expect(create_edit_filter.vm.is_expression_filter).toBe(true)
+        })
       })
 
       describe("filter_type != 'expression'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
+            vue : vue,
+            data : function(){
+              return {
+                filter_type : 'template'
+              }
+            }
+          })
+
+          expect(create_edit_filter.vm.is_expression_filter).toBe(false)
+        })
       })
     })
 
-    describe("#existing_sinks", () => {
+    describe("existing_sinks", () => {
       describe("edit_filter is not null", () => {
         test.todo("is edit_filter.Sinks")
       })
@@ -199,7 +394,7 @@ describe("CreateEditFilter", () => {
       test.todo("is null")
     })
 
-    describe("#has_name", () => {
+    describe("has_name", () => {
       describe("name != ''", () => {
         test.todo("is true")
       })
@@ -209,7 +404,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#has_expression", () => {
+    describe("has_expression", () => {
       describe("jsonpath != ''", () => {
         test.todo("is true")
       })
@@ -219,7 +414,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#valid_expression", () => {
+    describe("valid_expression", () => {
       describe("does not have expression", () => {
         test.todo("is false")
       })
@@ -233,7 +428,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#expression_too_long", () => {
+    describe("expression_too_long", () => {
       describe("does not have expression", () => {
         test.todo("is false")
       })
@@ -251,7 +446,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#safe_expression", () => {
+    describe("safe_expression", () => {
       describe("does not have expression", () => {
         test.todo("is false")
       })
@@ -269,7 +464,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#complex_expression", () => {
+    describe("complex_expression", () => {
       describe("does not have expression", () => {
         test.todo("is false")
       })
@@ -287,7 +482,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#unsafety_reasons", () => {
+    describe("unsafety_reasons", () => {
       describe("safe expression", () => {
         test.todo("returns undefined")
       })
@@ -295,7 +490,7 @@ describe("CreateEditFilter", () => {
       test.todo("returns unsafety reason")
     })
 
-    describe("#valid_template_expression", () => {
+    describe("valid_template_expression", () => {
       describe("template does not have params", () => {
         test.todo("is true")
       })
@@ -317,7 +512,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#params_are_valid", () => {
+    describe("params_are_valid", () => {
       describe("template does not have params", () => {
         test.todo("is true")
       })
@@ -333,7 +528,7 @@ describe("CreateEditFilter", () => {
       test.todo("is true")
     })
 
-    describe("#is_valid", () => {
+    describe("is_valid", () => {
       describe("name is falsey", () => {
         test.todo("is false")
       })
@@ -367,15 +562,15 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#blockchain_templates", () => {
+    describe("blockchain_templates", () => {
       test.todo("is templates for the blockchain")
     })
 
-    describe("#selected_template", () => {
+    describe("selected_template", () => {
       test.todo("is template with given id")
     })
 
-    describe("#template_has_params", () => {
+    describe("template_has_params", () => {
       describe("template params.length > 0", () => {
         test.todo("is true")
       })
@@ -385,17 +580,17 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#template_params", () => {
+    describe("template_params", () => {
       test.todo("is template params")
     })
 
-    describe("#converted_params", () => {
+    describe("converted_params", () => {
       test.todo("converts integer params")
       test.todo("converts float params")
       test.todo("does not convert other params")
     })
 
-    describe("#server_params", () => {
+    describe("server_params", () => {
       test.todo("includes filter name")
       test.todo("includes filter blockchain")
 
@@ -419,7 +614,7 @@ describe("CreateEditFilter", () => {
       })
     })
 
-    describe("#client_params", () => {
+    describe("client_params", () => {
       test.todo("includes filter name")
 
       describe("is_template_filter", () => {

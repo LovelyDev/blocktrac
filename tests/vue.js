@@ -37,7 +37,7 @@ function create_vue(){
 
 // Mount component
 function mount_vue(component, opts){
-  const vue = create_vue();
+  const vue = (opts || {}).vue || create_vue();
 
   return mount(component, Object.assign({
     localVue: vue.localVue,
@@ -48,7 +48,7 @@ function mount_vue(component, opts){
 
 // Shallow mount component
 function shallow_mount_vue(component, opts){
-  const vue = create_vue();
+  const vue = (opts || {}).vue || create_vue();
 
   return shallowMount(component, Object.assign({
     localVue: vue.localVue,
