@@ -79,54 +79,6 @@ function stub_ripple_api(){
 
 ///
 
-// Stubbed templates
-// TODO: move to fixtures (?)
-function stubbed_templates(){
-  return [
-    {
-      id : 1,
-      blockchain : "xrp",
-      name : "From Account",
-      jsonpath : "$..[?(@.Account == 'PARAM_1')]",
-      params : [{"name" : "Source Account",
-                 "type" : "String",
-                 "desc" : "Account Sending Transaction"}]
-    },
-
-    {
-      id : 2,
-      blockchain : "xrp",
-      name : "Payment Range",
-      jsonpath : "$..[?(@.TransactionType == 'Payment' && "+
-                       "@.Amount.currency == 'PARAM_1' && "+
-                 "parseFloat(@.Amount.value) > PARAM_2 && "+
-                 "parseFloat(@.Amount.value) < PARAM_3)]",
-      params : [{"name" : "Currency",
-                 "type" : "String",
-                 "desc" : "Payment Currency"},
-                {"name" : "Min Amount",
-                 "type" : "Float",
-                 "desc" : "Minumum Payment Amount"},
-                {"name" : "Max Amount",
-                 "type" : "Float",
-                 "desc" : "Maximum Payment Amount"}]
-    },
-
-    {
-      id : 3,
-      blockchain : "xlm",
-      name : "To Account",
-      jsonpath : "$..[?(@._type == 'payment' && " +
-                    "@.destination == 'PARAM_1')]",
-      params : [{"name" : "Destination Account",
-                 "type" : "String",
-                 "desc" : "Account Receiving Transaction"}]
-    }
-  ]
-}
-
-///
-
 // Stubbed network connection module
 
 function stubbed_network_module() {
@@ -165,6 +117,14 @@ function stubbed_network() {
 
 ///
 
+const fs = require('fs')
+
+// Load specified fixture
+function load_fixture(name){
+  return JSON.parse(fs.readFileSync("./tests/fixtures/" + name + ".json"))
+}
+
+
 // Default methods we stub
 function stub_defaults(){
   stub_match_media();
@@ -173,8 +133,8 @@ function stub_defaults(){
 
 // Export for use in tests
 module.exports = {
+  load_fixture,
   stub_defaults,
-  stubbed_templates,
   stubbed_network_module,
   stubbed_network
 }

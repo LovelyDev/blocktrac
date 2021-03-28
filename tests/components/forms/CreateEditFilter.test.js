@@ -4,19 +4,23 @@ import {
 } from '../../setup'
 
 import {
-  stubbed_templates
+  load_fixture
 } from '../../stubs'
 
 import CreateEditFilter from '../../../src/components/forms/CreateEditFilter'
 
 describe("CreateEditFilter", () => {
-  var vue;
+  var templates, vue;
+
+  beforeAll(() => {
+    templates = load_fixture('templates')
+  })
 
   beforeEach(() => {
     // stub load_templates http call
     vue = create_vue()
     vue.localVue.http.get =
-      jest.fn().mockResolvedValue({body : stubbed_templates()})
+      jest.fn().mockResolvedValue({body : templates})
   })
 
   describe("dom", () => {
