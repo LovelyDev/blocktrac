@@ -1,41 +1,43 @@
-import {
-  create_vue,
-  shallow_mount_vue
-} from '../../setup'
-
-import {
-  load_fixture
-} from '../../stubs'
+import {shallow_mount_vue} from '../../setup'
+import {load_fixture}      from '../../stubs'
 
 import CreateEditFilter from '../../../src/components/forms/CreateEditFilter'
 
+///
+
+// Templates 'retrieved' from the server
+const templates = load_fixture('templates');
+
+// Stub server_api call
+const server_api = {
+  methods : {
+    load_templates : function() { this.templates = templates; }
+  }
+};
+
+// Helper to setup the base component
+function create_edit_filter(opts){
+  // Create new options w/ the stubbed server api mixin
+  const mopts = Object.assign({}, { mixins : [server_api] }, opts)
+
+  // create and return the component
+  return shallow_mount_vue(CreateEditFilter, mopts)
+}
+
+///
+
 describe("CreateEditFilter", () => {
-  var templates, vue;
-
-  beforeAll(() => {
-    templates = load_fixture('templates')
-  })
-
-  beforeEach(() => {
-    // stub load_templates http call
-    vue = create_vue()
-    vue.localVue.http.get =
-      jest.fn().mockResolvedValue({body : templates})
-  })
-
   describe("dom", () => {
     describe("#by_category", () => {
       describe("!editing_filter && !saving_filter", () => {
         it("is rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          expect(create_edit_filter.find("#by_category").exists()).toBe(true)
+          expect(create_edit_filter().find("#by_category").exists()).toBe(true)
         })
       })
 
       describe("editing_filter", () => {
         it("is not rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               editing_filter : function(){
                 return true;
@@ -43,14 +45,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_category").exists()).toBe(false)
+          expect(cef.find("#by_category").exists()).toBe(false)
         })
       })
 
       describe("saving_filter", () => {
         it("is not rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               saving_filter : function(){
                 return true;
@@ -58,14 +59,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_category").exists()).toBe(false)
+          expect(cef.find("#by_category").exists()).toBe(false)
         })
       })
 
       describe("is_template_filter", () => {
         it("is .active", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               is_template_filter : function(){
                 return true;
@@ -73,16 +73,16 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_category").classes()).toContain('active')
+          expect(cef.find("#by_category").classes()).toContain('active')
         })
       })
 
       describe("clicked", () => {
         it("sets template filter type", async () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          create_edit_filter.vm.set_filter_type('expression')
-          await create_edit_filter.find("#by_category").trigger("click")
-          expect(create_edit_filter.vm.filter_type).toEqual('template')
+          const cef = create_edit_filter()
+          cef.vm.set_filter_type('expression')
+          await cef.find("#by_category").trigger("click")
+          expect(cef.vm.filter_type).toEqual('template')
         })
       })
     })
@@ -90,15 +90,13 @@ describe("CreateEditFilter", () => {
     describe("#by_expression", () => {
       describe("!editing_filter && !saving_filter", () => {
         it("is rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          expect(create_edit_filter.find("#by_expression").exists()).toBe(true)
+          expect(create_edit_filter().find("#by_expression").exists()).toBe(true)
         })
       })
 
       describe("editing_filter", () => {
         it("is not rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               editing_filter : function(){
                 return true;
@@ -106,14 +104,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_expression").exists()).toBe(false)
+          expect(cef.find("#by_expression").exists()).toBe(false)
         })
       })
 
       describe("saving_filter", () => {
         it("is not rendered", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               saving_filter : function(){
                 return true;
@@ -121,14 +118,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_expression").exists()).toBe(false)
+          expect(cef.find("#by_expression").exists()).toBe(false)
         })
       })
 
       describe("is_expression_filter", () => {
         it("is .active", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               is_expression_filter : function(){
                 return true;
@@ -136,16 +132,16 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.find("#by_expression").classes()).toContain('active')
+          expect(cef.find("#by_expression").classes()).toContain('active')
         })
       })
 
       describe("clicked", () => {
         it("sets expression filter type", async () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          create_edit_filter.vm.set_filter_type('category')
-          await create_edit_filter.find("#by_expression").trigger("click")
-          expect(create_edit_filter.vm.filter_type).toEqual('expression')
+          const cef = create_edit_filter()
+          cef.vm.set_filter_type('category')
+          await cef.find("#by_expression").trigger("click")
+          expect(cef.vm.filter_type).toEqual('expression')
         })
       })
     })
@@ -153,8 +149,7 @@ describe("CreateEditFilter", () => {
     describe("no_blockchain_configured", () => {
       describe("blockchain select", () => {
         it("renders option for each blockchain", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             computed : {
               no_blockchain_configured : function(){
                 return true;
@@ -162,8 +157,8 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          const blockchains = create_edit_filter.vm.blockchains;
-          const options = create_edit_filter.findAll("#blockchain_select .blockchain_select_option")
+          const blockchains = cef.vm.blockchains;
+          const options = cef.findAll("#blockchain_select .blockchain_select_option")
           expect(options.length).toEqual(blockchains.length)
           for(var o = 0; o < options.length; o += 1){
             const blockchain = blockchains[o];
@@ -177,8 +172,7 @@ describe("CreateEditFilter", () => {
 
     describe("blockchain_configured", () => {
       it("does not render blockchain select", () => {
-        const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-          vue : vue,
+        const cef = create_edit_filter({
           computed : {
             no_blockchain_configured : function(){
               return false;
@@ -186,7 +180,7 @@ describe("CreateEditFilter", () => {
           }
         })
 
-        expect(create_edit_filter.find("#blockchain_select").exists()).toBe(false)
+        expect(cef.find("#blockchain_select").exists()).toBe(false)
       })
     })
 
@@ -283,20 +277,18 @@ describe("CreateEditFilter", () => {
     describe("editing_filter", () => {
       describe("edit_filter is set", () => {
         it("is true", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             propsData : {
               edit_filter : {blockchain : 'xrp'}
             }
           })
-          expect(create_edit_filter.vm.editing_filter).toBe(true)
+          expect(cef.vm.editing_filter).toBe(true)
         })
       })
 
       describe("edit_filter is not set", () => {
         it("is false", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          expect(create_edit_filter.vm.editing_filter).toBe(false)
+          expect(create_edit_filter().vm.editing_filter).toBe(false)
         })
       })
     })
@@ -304,20 +296,18 @@ describe("CreateEditFilter", () => {
     describe("saving_filter", () => {
       describe("save_filter is set", () => {
         it("is true", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             propsData : {
               save_filter : {blockchain : 'xrp'}
             }
           })
-          expect(create_edit_filter.vm.saving_filter).toBe(true)
+          expect(cef.vm.saving_filter).toBe(true)
         })
       })
 
       describe("saving_filter is not set", () => {
         it("is false", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {vue})
-          expect(create_edit_filter.vm.saving_filter).toBe(false)
+          expect(create_edit_filter().vm.saving_filter).toBe(false)
         })
       })
     })
@@ -325,8 +315,7 @@ describe("CreateEditFilter", () => {
     describe("is_template_filter", () => {
       describe("filter_type == 'template'", () => {
         it("is true", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             data : function(){
               return {
                 filter_type : 'template'
@@ -334,14 +323,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.vm.is_template_filter).toBe(true)
+          expect(cef.vm.is_template_filter).toBe(true)
         })
       })
 
       describe("filter_type != 'template'", () => {
         it("is false", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             data : function(){
               return {
                 filter_type : 'expression'
@@ -349,7 +337,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.vm.is_template_filter).toBe(false)
+          expect(cef.vm.is_template_filter).toBe(false)
         })
       })
     })
@@ -357,8 +345,7 @@ describe("CreateEditFilter", () => {
     describe("is_expression_filter", () => {
       describe("filter_type == 'expression'", () => {
         it("is true", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             data : function(){
               return {
                 filter_type : 'expression'
@@ -366,14 +353,13 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.vm.is_expression_filter).toBe(true)
+          expect(cef.vm.is_expression_filter).toBe(true)
         })
       })
 
       describe("filter_type != 'expression'", () => {
         it("is false", () => {
-          const create_edit_filter = shallow_mount_vue(CreateEditFilter, {
-            vue : vue,
+          const cef = create_edit_filter({
             data : function(){
               return {
                 filter_type : 'template'
@@ -381,7 +367,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(create_edit_filter.vm.is_expression_filter).toBe(false)
+          expect(cef.vm.is_expression_filter).toBe(false)
         })
       })
     })
