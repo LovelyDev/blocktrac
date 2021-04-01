@@ -73,15 +73,15 @@ describe("Status Page", () => {
       test.todo("is non-benchmark metadata keys")
     })
 
-    decribe("txs_being_processed_str", () => {
+    describe("txs_being_processed_str", () => {
       test.todo("formatted txs_being_processed string")
     })
 
-    decribe("filters_being_notified_str", () => {
+    describe("filters_being_notified_str", () => {
       test.todo("formatted filters_being_notified string")
     })
 
-    decribe("filters_exceeding_batch_size_str", () => {
+    describe("filters_exceeding_batch_size_str", () => {
       test.todo("formatted filters_violating_batch_size string")
     })
 
