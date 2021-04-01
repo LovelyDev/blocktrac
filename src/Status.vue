@@ -12,7 +12,7 @@
                  id="status_container">
       <b-row>
         <b-col>
-          <u>{{date_str}}</u>
+          <u>{{(new Date()).toGMTString()}}</u>
         </b-col>
       </b-row>
 
@@ -39,8 +39,8 @@
           Transactions: {{server_status.txs | delim}}
         </b-col>
 
-        <b-col class="card">
-          Not processed: {{server_status.txs_to_process | delim}}
+        <b-col class="card" :class="{error : outages.txs_to_process}">
+          Not processed: {{txs_to_process | delim}}
         </b-col>
       </b-row>
 
@@ -63,8 +63,10 @@
           <h3>Benchmarks</h3>
           <b-list-group>
             <b-list-group-item v-for="benchmark in benchmarks"
-                                :key="benchmark">
-              {{benchmark}}: {{benchmark_str(meta[benchmark])}}
+                                :key="benchmark"
+                              :class="{error : benchmark_outage(benchmark)}">
+              <div style="float: left">{{benchmark}}:</div>
+              <div style="float: right">{{meta[benchmark].updated}}</div>
             </b-list-group-item>
           </b-list-group>
         </b-col>
@@ -76,7 +78,8 @@
           <b-list-group>
             <b-list-group-item v-for="ometa in other_meta"
                                 :key="ometa">
-              {{ometa}}: {{meta[ometa]}}
+              <div style="float: left">{{ometa}}:</div>
+              <div style="float: right">{{meta[ometa]}}</div>
             </b-list-group-item>
           </b-list-group>
         </b-col>
@@ -112,6 +115,7 @@ import ServerAPI      from './mixins/server_api'
 import MainLayout     from './components/MainLayout'
 
 import config         from './config/config'
+import ziti           from './config/ziti'
 
 export default {
   name: "Status",
@@ -123,16 +127,36 @@ export default {
   },
 
   computed : {
-    date_str : function(){
-      return (new Date()).toGMTString();
-    },
-
     have_server_status : function(){
       return Object.keys(this.server_status).length > 0;
     },
 
+    txs_to_process : function(){
+      return this.server_status.txs_to_process;
+    },
+
     meta : function(){
-      return this.server_status.meta;
+      // Copy metadata object
+      var _meta = Object.assign({}, this.server_status.meta);
+
+      // Iterate over instances
+      Object.keys(_meta).forEach(function(m){
+        // Set benchmark flag
+        const is_benchmark = m.match(/.*benchmark/);
+
+        // Parse and set JSON
+        if(is_benchmark){
+          _meta[m] = JSON.parse(_meta[m]);
+          _meta[m].benchmark = true;
+
+          if(_meta[m].started)
+            _meta[m].started = new Date(Date.parse(_meta[m].started))
+          if(_meta[m].updated)
+            _meta[m].updated = new Date(Date.parse(_meta[m].updated))
+        }
+      })
+
+      return _meta;
     },
 
     meta_keys : function(){
@@ -141,14 +165,14 @@ export default {
 
     benchmarks : function(){
       return this.meta_keys.filter(function(m){
-        return m.match(/.*benchmark/);
-      })
+        return this.meta[m].benchmark;
+      }.bind(this))
     },
 
     other_meta : function(){
       return this.meta_keys.filter(function(m){
-        return !m.match(/.*benchmark/);
-      })
+        return !this.meta[m].benchmark;
+      }.bind(this))
     },
 
     txs_being_processed_str : function(){
@@ -169,23 +193,68 @@ export default {
                  .map(function(f) {
                    return f.id + "(" + f.num + ")"
                  }).join(", ")
+    },
+
+    outages : function(){
+      // TODO: other outages
+      //   - individual listen_to_txs sync
+      //   - individual filters w/ excessive not notified
+      //   - log errors
+      return {
+        txs_to_process : (this.txs_to_process > ziti.outage_thresholds.txs_not_processed)
+      };
     }
   },
 
   methods : {
-    benchmark_str : function(benchmark){
-      const json = JSON.parse(benchmark);
+    // XXX: keep in sync with ziti workers
+    benchmark_outage_timeout : function(benchmark){
+      if(benchmark.match(/.*_listen_to_txs\.benchmark/))
+        return ziti.outage_timeouts.listen_to_txs;
 
-      var value_str = "Started: " + json.started +
-                    ", Updated: " + json.updated;
+      else if(benchmark.match(/.*_run_filters\.[0-9]+\.benchmark/))
+        return ziti.outage_timeouts.run_filters;
 
-      if(json.total)
-        value_str += ", Total " + json.total;
+      else if(benchmark.match(/.*_run_filters\.cleanup_transactions\.benchmark/))
+        return ziti.outage_timeouts.cleanup_txs;
 
-      if(json.avg)
-        value_str += ", Average " + json.avg;
+      else if(benchmark.match(/.*_run_filters\.reset_interval_tallies\.benchmark/))
+        return ziti.outage_timeouts.reset_interval_tallies;
 
-      return value_str;
+      else if(benchmark.match(/.*\.notify_sinks\.[0-9]+\.benchmark/))
+        return ziti.outage_timeouts.notify_sinks;
+
+      else if(benchmark.match(/.*\.notify_sinks\.cleanup_matches\.benchmark/))
+        return ziti.outage_timeouts.cleanup_matches;
+
+      else if(benchmark.match(/.*\.notify_sinks\.cleanup_notifications\.benchmark/))
+        return ziti.outage_timeouts.cleanup_notifications;
+
+      else if(benchmark.match(/.*\.maint\.register_users\.benchmark/))
+        return ziti.outage_timeouts.register_users;
+
+      else if(benchmark.match(/.*\.maint\.reset_passwords\.benchmark/))
+        return ziti.outage_timeouts.reset_passwords;
+
+      else if(benchmark.match(/.*\.maint\.billing\.benchmark/))
+        return ziti.outage_timeouts.billing;
+
+      else if(benchmark.match(/.*\.maint\.reset_privileges\.benchmark/))
+        return ziti.outage_timeouts.reset_privileges;
+
+      else if(benchmark.match(/.*\.maint\.notify_outages\.benchmark/))
+        return ziti.outage_timeouts.notify_outages;
+
+      else if(benchmark.match(/.*\.maint\.cleanup_logs\.benchmark/))
+        return ziti.outage_timeouts.cleanup_logs;
+
+      throw "unknown benchmark"
+    },
+
+    benchmark_outage : function(benchmark){
+      const now = new Date();
+      const timeout = this.benchmark_outage_timeout(benchmark);
+      return (now - this.meta[benchmark].updated) > timeout;
     }
   },
 
@@ -216,5 +285,11 @@ export default {
 #status_container .card{
   border: 1px solid var(--theme-color1);
   border-radius: 5px;
+}
+
+#status_container .error{
+  background-color: red;
+  color: yellow;
+  font-weight: bold;
 }
 </style>
