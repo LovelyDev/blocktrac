@@ -58,6 +58,7 @@ export function vue_init(Vue){
                filters : [],
         filter_matches : [],
          notifications : [],
+         server_status : {},
 
       // Filter user selected & is viewing
       active_filter : {},
@@ -201,6 +202,11 @@ export function vue_init(Vue){
       // Store notifications retrieved from server
       set_notifications(state, notifications){
         state.notifications = notifications
+      },
+
+      // Store server status retrieved from server
+      set_server_status(state, server_status){
+        state.server_status = server_status;
       },
 
       // Set the active filter which the user is interacting with

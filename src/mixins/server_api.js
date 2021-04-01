@@ -10,6 +10,11 @@ import util   from '../util'
 // NOTE: some of these methods/data require the auth_header
 //       provided by the 'authentication' mixin!
 
+// XXX: hacks around not_authenticated checks below relate to commit
+//      eeb5fed1252026eda17ab67e46a2f0dbf2e9124c
+//      To supress authentication errs on session timeout.
+//      Figure out workaround
+
 export default {
   computed : {
     backend_url : function(){
@@ -63,6 +68,16 @@ export default {
 
       get : function(){
         return this.$store.state.notifications;
+      }
+    },
+
+    server_status : {
+      set : function(server_status){
+        this.$store.commit('set_server_status', server_status);
+      },
+
+      get : function(){
+        return this.$store.state.server_status;
       }
     },
 
@@ -196,6 +211,20 @@ export default {
                   const msg = util.capitalize(err.body.error)
                   alert("Could not retrieve notifications: " + msg)
                 }.bind(this))
+    },
+
+    // Load server status, storing the result
+    load_server_status : function(){
+      this.$http.get(this.backend_url + "/status", this.auth_header)
+                .then(function(response){
+                  this.server_status = response.body;
+
+                }.bind(this)).catch(function(err){
+                  if(this.not_authenticated(err)) return; // XXX
+
+                  const msg = util.capitalize(err.body.error)
+                  alert("Could not retrieve status: " + msg)
+                })
     },
 
     ///

@@ -23,6 +23,7 @@ import ResetPassword  from './ResetPassword'
 import Plans          from './Plans'
 import Plan           from './Plan'
 import Checkout       from './Checkout'
+import Status         from './Status'
 
 // Application routes definition
 const routes = [
@@ -80,7 +81,9 @@ const routes = [
     props: function(route){
       return {id : parseInt(route.params.id) };
     }
-  }
+  },
+
+  { path: '/status', component: Status }
 ]
 
 ///
