@@ -113,7 +113,7 @@ import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 
 import config from './config/config'
-import ziti   from './ziti'
+import ziti   from './config/ziti'
 
 export default {
   name: 'Plans',

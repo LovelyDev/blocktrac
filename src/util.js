@@ -11,7 +11,7 @@ const jsonpath_complexity = require('jsonpath-complexity')
 const jsonpath = require('./vendor/jsonpath')
 const aesprim  = require('./vendor/aesprim')
 
-const ziti = require('./ziti')
+const ziti = require('./config/ziti')
 
 // 'Smart' rounding, rounds given float
 // to specified number of decimals. If not

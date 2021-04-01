@@ -170,7 +170,7 @@ import MainLayout     from './components/MainLayout'
 
 import util   from './util'
 import config from './config/config'
-import ziti   from './ziti'
+import ziti   from './config/ziti'
 
 export default {
   name: 'Checkout',

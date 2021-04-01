@@ -67,7 +67,7 @@ import FilterHeader   from './components/FilterHeader'
 import TxSummary      from './components/TxSummary'
 
 import config         from './config/config'
-import ziti           from './ziti'
+import ziti           from './config/ziti'
 
 export default {
   name: 'FilterDetails',

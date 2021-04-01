@@ -1,7 +1,7 @@
 import {mount_vue} from './setup'
 
 import Plans from '../src/Plans.vue'
-import ziti  from '../src/ziti'
+import ziti  from '../src/config/ziti'
 
 describe("Plans Page", () => {
   var plans;

@@ -62,7 +62,7 @@ import MainLayout from './components/MainLayout'
 import Blockchain from './mixins/blockchain'
 
 import util from './util'
-import ziti from './ziti'
+import ziti from './config/ziti'
 
 const sinks_caps_text =
   Object.keys(ziti.monthly_sink_caps).map(function(type){

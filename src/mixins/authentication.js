@@ -9,8 +9,8 @@
 import zxcvbn  from "zxcvbn"
 
 import config  from '../config/config'
+import ziti    from '../config/ziti'
 import util    from '../util'
-import ziti    from '../ziti'
 
 export default {
   data : function(){
