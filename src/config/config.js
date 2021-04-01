@@ -15,6 +15,9 @@ module.exports = {
   // display maintenance page
   MAINTENANCE_MODE : false,
 
+  // How often status is refreshed (in ms)
+  STATUS_REFRESH : 1500,
+
   // From the XRP Protocol
   DROPS_PER_XRP : 1000000,
 
