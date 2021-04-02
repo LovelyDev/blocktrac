@@ -25,6 +25,7 @@
 <script>
 import Authentication      from './mixins/authentication'
 import ServerAPI           from './mixins/server_api'
+import Maintenance         from './mixins/maintenance'
 
 import TxsLayout           from './components/TxsLayout'
 import NotificationHeader  from './components/NotificationHeader'
@@ -34,7 +35,7 @@ import config              from './config/config'
 export default {
   name: 'Notifications',
 
-  mixins : [Authentication, ServerAPI],
+  mixins : [Authentication, ServerAPI, Maintenance],
 
   components : {
     TxsLayout,
@@ -43,8 +44,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(!this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
 

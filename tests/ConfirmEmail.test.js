@@ -19,8 +19,8 @@ describe("ConfirmEmail page", () => {
   })
 
   describe("#created", () => {
-    describe("MAINTENANCE_MODE", () => {
-      test.todo("redirects to maintenance page")
+    describe("maintenance_mode", () => {
+      test.todo("navs to maintenance")
     })
 
     test.todo("sends request")

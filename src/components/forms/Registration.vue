@@ -79,13 +79,14 @@
 
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
+import Maintenance    from '../../mixins/maintenance'
 
 import config         from '../../config/config'
 
 export default {
   name: 'RegistrationForm',
 
-  mixins : [Authentication, Validator],
+  mixins : [Authentication, Validator, Maintenance],
 
   data : function(){
     return {
@@ -104,8 +105,9 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE && this.$route.path != '/maintenance')
-      this.$router.push({path : '/maintenance'});
+    if(this.maintenance_mode &&
+      !this.on_maintenance_page)
+       this.nav_to_maintenance();
   }
 }
 </script>

@@ -53,6 +53,7 @@
 <script>
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
+import Maintenance    from './mixins/maintenance'
 
 import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
@@ -75,7 +76,7 @@ const captured_txs =
 export default {
   name: 'FilterTester',
 
-  mixins : [Authentication, ServerAPI],
+  mixins : [Authentication, ServerAPI, Maintenance],
 
   components: {
     TxsLayout,
@@ -106,8 +107,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(!this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
 

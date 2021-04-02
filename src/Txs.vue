@@ -14,10 +14,12 @@
 import TxsLayout from './components/TxsLayout'
 import TxsList   from './components/TxsList'
 
-import config    from './config/config'
+import Maintenance from './mixins/maintenance'
 
 export default {
   name: 'Txs',
+
+  mixins : [Maintenance],
 
   components: {
     TxsLayout,
@@ -25,8 +27,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
   }

@@ -1,6 +1,6 @@
 <!--
   * Maintenance Page
-  * Displayed whenever the maintenance flag is set true in the config
+  * Displayed whenever the app is in maintenance mode
   *
   * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
@@ -15,15 +15,14 @@
 </template>
 
 <script>
-import MainTitle from './components/MainTitle'
-import Blockchain from './mixins/blockchain'
-
-import config     from './config/config'
+import MainTitle   from './components/MainTitle'
+import Blockchain  from './mixins/blockchain'
+import Maintenance from './mixins/maintenance'
 
 export default {
   name: 'Maintenance',
 
-  mixins : [Blockchain],
+  mixins : [Blockchain, Maintenance],
 
   components: {
     MainTitle
@@ -40,7 +39,7 @@ export default {
   },
 
   created : function(){
-    if(!config.MAINTENANCE_MODE)
+    if(!this.maintenance_mode)
       this.$router.push({path : '/txs'});
   }
 }

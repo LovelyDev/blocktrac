@@ -111,6 +111,7 @@
 <script>
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
+import Maintenance    from './mixins/maintenance'
 
 import config from './config/config'
 import ziti   from './config/ziti'
@@ -118,7 +119,7 @@ import ziti   from './config/ziti'
 export default {
   name: 'Plans',
 
-  mixins : [Authentication],
+  mixins : [Authentication, Maintenance],
 
   components: {
     MainLayout
@@ -240,8 +241,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
   }

@@ -2,7 +2,7 @@ describe("Maintenance Page", () => {
   describe("computed", () => {
     describe("img", () => {
       describe("no blockchain configured", () => {
-        test.todo("is /assets/maintenance/blcokchain.svg")
+        test.todo("is /assets/maintenance/blockchain.svg")
       })
 
       describe("blockchain configured", () => {
@@ -12,7 +12,7 @@ describe("Maintenance Page", () => {
   })
 
   describe("#created", () => {
-    describe("not MAINTENANCE_MODE", () => {
+    describe("not maintenance_mode", () => {
       test.todo("redirects to /txs")
     })
   })

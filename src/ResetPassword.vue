@@ -32,6 +32,7 @@ import ResetPasswordForm from './components/forms/ResetPassword'
 
 import Authentication    from './mixins/authentication'
 import ServerAPI         from './mixins/server_api'
+import Maintenance       from './mixins/maintenance'
 import Validatable       from './mixins/validatable'
 
 import config from './config/config'
@@ -40,7 +41,12 @@ import util   from './util'
 export default {
   name: 'ResetPassword',
 
-  mixins : [Authentication, ServerAPI, Validatable],
+  mixins : [
+    Authentication,
+    ServerAPI,
+    Maintenance,
+    Validatable
+  ],
 
   components: {
     MainLayout,
@@ -75,8 +81,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
   }

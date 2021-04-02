@@ -72,8 +72,8 @@ describe("Registration", () => {
   })
 
   describe("#created", () => {
-    describe("MAINTENANCE_MODE and not maintenance page", () => {
-      test.todo("redirects to maintenance page")
+    describe("maintenance_mode and not maintenance page", () => {
+      test.todo("navs to maintenance page")
     })
   })
 })

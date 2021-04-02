@@ -61,6 +61,7 @@
 <script>
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
+import Maintenance    from './mixins/server_api'
 
 import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
@@ -72,7 +73,7 @@ import ziti           from './config/ziti'
 export default {
   name: 'FilterDetails',
 
-  mixins : [Authentication, ServerAPI],
+  mixins : [Authentication, ServerAPI, Maintenance],
 
   components: {
     TxsLayout,
@@ -113,8 +114,8 @@ export default {
   },
 
   created : function(){
-    if(config.MAINTENANCE_MODE){
-      this.$router.push({path : '/maintenance'});
+    if(this.maintenance_mode){
+      this.nav_to_maintenance();
       return;
     }
 
