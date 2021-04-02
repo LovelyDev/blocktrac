@@ -99,6 +99,28 @@ function stub_ripple_api(){
 
 ///
 
+// Stub stellar-sdk
+function stub_stellar_sdk(){
+  jest.mock("stellar-sdk")
+  var stellarsdk = require("stellar-sdk")
+
+  var callbuilder = {
+    cursor : jest.fn().mockImplementation(() => callbuilder),
+    stream : jest.fn().mockImplementation(() => callbuilder)
+  }
+  var stellarserver = {
+    transactions : jest.fn().mockImplementation(() => callbuilder)
+  }
+  stellarsdk.Server.mockImplementation(() => stellarserver)
+
+  // XXX: original StellarSdk xdr and Keypair modules used
+  const orig_sdk = jest.requireActual("stellar-sdk")
+  stellarsdk.xdr = orig_sdk.xdr;
+  stellarsdk.Keypair = orig_sdk.Keypair;
+}
+
+///
+
 // Stubbed network connection module
 
 function stubbed_network_module() {
@@ -151,6 +173,7 @@ function stub_defaults(){
   stub_scroll_to();
   stub_window_alert();
   stub_ripple_api();
+  stub_stellar_sdk();
 }
 
 // Export for use in tests
