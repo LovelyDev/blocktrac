@@ -70,6 +70,14 @@ function stub_scroll_to(){
 
 ///
 
+// Define window.alert
+
+function stub_window_alert(){
+  window.alert = jest.fn()
+}
+
+///
+
 // Stub ripple-lib
 function stub_ripple_api(){
   jest.mock("ripple-lib")
@@ -141,6 +149,7 @@ function load_fixture(name){
 function stub_defaults(){
   stub_match_media();
   stub_scroll_to();
+  stub_window_alert();
   stub_ripple_api();
 }
 
