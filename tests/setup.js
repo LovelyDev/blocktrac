@@ -5,8 +5,20 @@
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
+// Including stubbing logic
+const stubs = require('./stubs')
+
 // Stub out methods before any application logic
-require('./stubs').stub_defaults();
+beforeEach(function(){
+  stubs.stub_defaults();
+})
+
+// Restore initial state after completion
+afterEach(function(){
+  jest.resetAllMocks();
+  jest.resetModules();
+  jest.restoreAllMocks();
+})
 
 // Load vue components
 // XXX: implemented as seperate module as we need to ensure
