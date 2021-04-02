@@ -1,3 +1,6 @@
+import {mount_vue} from './setup'
+import Checkout from '../src/Checkout.vue'
+
 describe("Checkout Page", () => {
   describe("dom", () => {
     describe("successful checkout", () => {
@@ -179,7 +182,22 @@ describe("Checkout Page", () => {
 
   describe("#created", () => {
     describe("maintenance_mode", () => {
-      test.todo("navs to maintenance")
+      it("navs to maintenance", () => {
+        var maintenance = {
+          computed : {
+            maintenance_mode : function(){
+              return true;
+            }
+          },
+
+          methods : {
+            nav_to_maintenance : jest.fn()
+          }
+        }
+
+        mount_vue(Checkout, {mixins : [maintenance]})
+        expect(maintenance.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+      })
     })
 
     describe("plan is not set", () => {
