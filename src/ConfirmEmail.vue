@@ -50,7 +50,7 @@ export default {
             const msg = util.capitalize(err.body.error)
             alert("Could not confirm email: " + msg)
             this.$router.push("/txs")
-          })
+          }.bind(this))
     }
   },
 
