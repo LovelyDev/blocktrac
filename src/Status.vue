@@ -66,7 +66,7 @@
                                 :key="benchmark"
                               :class="{error : benchmark_outage(benchmark)}">
               <div style="float: left">{{benchmark}}:</div>
-              <div style="float: right">{{meta[benchmark].updated}}</div>
+              <div style="float: right">{{meta[benchmark].updated.toGMTString()}}</div>
             </b-list-group-item>
           </b-list-group>
         </b-col>
