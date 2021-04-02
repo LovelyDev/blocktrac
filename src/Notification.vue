@@ -67,7 +67,7 @@ export default {
   },
 
   created : function(){
-    if(!this.maintenance_mode){
+    if(this.maintenance_mode){
       this.nav_to_maintenance();
       return;
     }
