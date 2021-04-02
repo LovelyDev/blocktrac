@@ -159,6 +159,25 @@ function stubbed_network() {
 
 ///
 
+// Stubbed maintenance mode mixin
+
+function stubbed_maintenance_mode(){
+  return {
+    computed : {
+      maintenance_mode : function(){
+        return true;
+      }
+    },
+
+    methods : {
+      nav_to_maintenance : jest.fn()
+    }
+  }
+}
+
+
+///
+
 const fs = require('fs')
 
 // Load specified fixture
@@ -181,5 +200,6 @@ module.exports = {
   load_fixture,
   stub_defaults,
   stubbed_network_module,
-  stubbed_network
+  stubbed_network,
+  stubbed_maintenance_mode
 }

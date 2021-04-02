@@ -1,4 +1,9 @@
 import {mount_vue} from './setup'
+
+import {
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
+
 import Checkout from '../src/Checkout.vue'
 
 describe("Checkout Page", () => {
@@ -183,20 +188,9 @@ describe("Checkout Page", () => {
   describe("#created", () => {
     describe("maintenance_mode", () => {
       it("navs to maintenance", () => {
-        var maintenance = {
-          computed : {
-            maintenance_mode : function(){
-              return true;
-            }
-          },
-
-          methods : {
-            nav_to_maintenance : jest.fn()
-          }
-        }
-
-        mount_vue(Checkout, {mixins : [maintenance]})
-        expect(maintenance.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+        const _maintenance_mode = maintenance_mode()
+        mount_vue(Checkout, {mixins : [_maintenance_mode]})
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
       })
     })
 

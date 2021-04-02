@@ -1,6 +1,11 @@
 import flushPromises from 'flush-promises'
 
 import {mount_vue}  from './setup'
+
+import {
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
+
 import ConfirmEmail from '../src/ConfirmEmail.vue'
 
 describe("ConfirmEmail page", () => {
@@ -103,23 +108,12 @@ describe("ConfirmEmail page", () => {
   describe("#created", () => {
     describe("maintenance_mode", () => {
       it("navs to maintenance", () => {
-        var maintenance = {
-          computed : {
-            maintenance_mode : function(){
-              return true;
-            }
-          },
-
-          methods : {
-            nav_to_maintenance : jest.fn()
-          }
-        }
-
+        const _maintenance_mode = maintenance_mode()
         mount_vue(ConfirmEmail, {
-          mixins : [server_api, maintenance],
+          mixins : [server_api, _maintenance_mode],
           propsData : {code : 'code'}
         })
-        expect(maintenance.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
       })
     })
 
