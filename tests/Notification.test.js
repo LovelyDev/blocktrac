@@ -50,10 +50,7 @@ describe("Notification Page", () => {
           }
         }
 
-        const notification = mount_vue(Notification, {
-          mixins : [server_api, maintenance]
-        })
-
+        mount_vue(Notification, {mixins : [server_api, maintenance]})
         expect(maintenance.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
       })
     })
