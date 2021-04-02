@@ -53,8 +53,7 @@
     ],
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.vue$": "vue-jest",
-      "^.+\\.svg$": "<rootDir>/svgTransform.js"
+      "^.+\\.vue$": "vue-jest"
     },
     "moduleNameMapper": {
       "^.+\\.(css|styl|less|sass|scss|png|svg|jpg|ttf|woff|woff2)$": "jest-transform-stub"
