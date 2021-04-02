@@ -90,11 +90,11 @@ const routes = [
 
 import VueRouter from 'vue-router'
 
-export function vue_init(Vue){
+export function vue_init(Vue, opts){
   Vue.use(VueRouter)
 
   return new VueRouter({
-    mode : "abstract",
+    mode : (opts || {}).mode || "history",
     routes : routes,
   
     // always scroll to top on nav

@@ -26,7 +26,7 @@ function create_vue(){
   // Initialize
   vue_init(localVue)
   const store  = store_vue_init(localVue)
-  const router = router_vue_init(localVue)
+  const router = router_vue_init(localVue, {mode : 'abstract'})
 
   return {
     localVue,
