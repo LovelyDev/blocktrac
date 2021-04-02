@@ -94,7 +94,7 @@ export function vue_init(Vue){
   Vue.use(VueRouter)
 
   return new VueRouter({
-    mode : "history",
+    mode : "abstract",
     routes : routes,
   
     // always scroll to top on nav
