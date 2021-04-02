@@ -1,3 +1,6 @@
+import {mount_vue} from './setup'
+import Maintenance from '../src/Maintenance.vue'
+
 describe("Maintenance Page", () => {
   describe("computed", () => {
     describe("img", () => {
@@ -13,7 +16,19 @@ describe("Maintenance Page", () => {
 
   describe("#created", () => {
     describe("not maintenance_mode", () => {
-      test.todo("redirects to /txs")
+      it("redirects to /txs", () => {
+        const maintenance = mount_vue(Maintenance, {
+          mixins : [{
+            computed : {
+              maintenance_mode : function(){
+                return false;
+              }
+            }
+          }]
+        })
+
+        expect(maintenance.vm.$route.path).toEqual("/txs")
+      })
     })
   })
 })
