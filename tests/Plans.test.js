@@ -1,6 +1,11 @@
 import {mount_vue} from './setup'
 
+import {
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
+
 import Plans from '../src/Plans.vue'
+
 import ziti  from '../src/config/ziti'
 
 describe("Plans Page", () => {
@@ -325,7 +330,11 @@ describe("Plans Page", () => {
 
   describe("#created", () => {
     describe("maintenance_mode", () => {
-      test.todo("navs to maintenance")
+      it("navs to maintenance", () => {
+        const _maintenance_mode = maintenance_mode()
+        mount_vue(Plans, {mixins : [_maintenance_mode]})
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+      })
     })
   })
 })

@@ -1,6 +1,5 @@
 import {shallow_mount_vue} from '../setup'
 import Blockchain from '../../src/mixins/blockchain'
-import network_config from '../../src/config/network'
 
 const Component = {
   render() {},

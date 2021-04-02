@@ -1,5 +1,7 @@
 [
   {
+    "id" : 1,
+
     "Filter" : {
       "name" : "filter1"
     },
@@ -33,6 +35,47 @@
              "meta" : {}
            },
           "date" : "2021-04-01T22:12:00Z"
+        }
+      }
+    ]
+  },
+
+  {
+    "id" : 2,
+
+    "Filter" : {
+      "name" : "filter2"
+    },
+
+    "Sink" : {
+      "type" : "email",
+      "value" : "e@ma.il"
+    },
+
+    "FilterMatches" : [
+      {
+        "Transaction" : {
+           "raw" : {
+             "transaction" : {
+               "id" : 3,
+               "hash" : "hash3"
+             },
+             "meta" : {}
+           },
+          "date" : "2021-04-02T11:04:01Z"
+        }
+      },
+
+      {
+        "Transaction" : {
+           "raw" : {
+             "transaction" : {
+               "id" : 4,
+               "hash" : "hash4"
+             },
+             "meta" : {}
+           },
+          "date" : "2021-03-01T00:00:00Z"
         }
       }
     ]

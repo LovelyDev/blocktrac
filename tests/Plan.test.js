@@ -1,3 +1,13 @@
+import {mount_vue} from './setup'
+
+import {
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
+
+import Plan from '../src/Plan.vue'
+
+import ziti  from '../src/config/ziti'
+
 describe("Plan Page", () => {
   describe("dom", () => {
     describe("#plan_name", () => {
@@ -228,21 +238,66 @@ describe("Plan Page", () => {
 
   describe("#created", () => {
     describe("maintenance_mode", () => {
-      test.todo("navs to maintenance")
+      it("navs to maintenance", () => {
+        const _maintenance_mode = maintenance_mode()
+        mount_vue(Plan, {mixins : [_maintenance_mode]})
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+      })
     })
 
     describe("plan is not set", () => {
-      test.todo("redirects to /plans")
+      it("redirects to /plans", () => {
+        const plan = mount_vue(Plan)
+        expect(plan.vm.$route.path).toEqual("/plans")
+      })
     })
 
     describe("filters set", () => {
-      test.todo("sets enable_additional to true")
-      test.todo("sets selected_additional_filters from filters")
+      it("sets enable_additional to true", () => {
+        const plan = mount_vue(Plan, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            filters : 2
+          }
+        })
+
+        expect(plan.vm.enable_additional).toBe(true)
+      })
+
+      it("sets selected_additional_filters from filters", () => {
+        const plan = mount_vue(Plan, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            filters : 2
+          }
+        })
+
+        expect(plan.vm.selected_additional_filters).toBe(2)
+      })
     })
 
     describe("sinks set", () => {
-      test.todo("sets enable_additional to true")
-      test.todo("sets selected_additional_sinks from sinks")
+      it("sets enable_additional to true", () => {
+        const plan = mount_vue(Plan, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            sinks : 2
+          }
+        })
+
+        expect(plan.vm.enable_additional).toBe(true)
+      })
+
+      it("sets selected_additional_sinks from sinks", () => {
+        const plan = mount_vue(Plan, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            sinks : 2
+          }
+        })
+
+        expect(plan.vm.selected_additional_sinks).toBe(2)
+      })
     })
   })
 })

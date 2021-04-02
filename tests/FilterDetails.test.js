@@ -1,5 +1,9 @@
 import {mount_vue}    from './setup'
-import {load_fixture} from './stubs'
+
+import {
+  load_fixture,
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
 
 import FilterDetails from '../src/FilterDetails.vue'
 
@@ -17,35 +21,31 @@ const filters_without_sinks = filters.filter((f) => !f.Sinks || f.Sinks.length =
 // Filter matches 'retrieved' from server
 const filter_matches = load_fixture('filter_matches');
 
-// Helper to setup the base component
-function filter_details(opts){
-  // Stub server_api call
-  const server_api= {
-    methods : {
-      load_filter : function() {
-        this.active_filter = (opts || {}).active_filter || filters[0]
-      },
-
-      load_filter_matches : function() {
-        this.filter_matches = (opts || {}).matches || []
-      },
-    }
-  };
-
-  // Create new options w/ the stubbed server api mixin
-  const mopts = Object.assign({}, { mixins : [server_api] }, opts)
-
-  // create and return the component
-  return mount_vue(FilterDetails, mopts)
-}
-
 ///
 
 describe("FilterDetails Page", () => {
+  var server_api
+
+  beforeEach(function(){
+    // Stub server_api call
+    server_api = {
+      methods : {
+        load_filter : jest.fn(function() {
+          this.active_filter = filters[0]
+        }),
+
+        load_filter_matches : jest.fn(function() {
+          this.filter_matches = []
+        }),
+      }
+    };
+  })
+
   describe("dom", () => {
     describe("no filter_matches", () => {
       it("renders no matches content", () => {
-        expect(filter_details().find("#no_matches_text").exists()).toBe(true)
+        const filter_details = mount_vue(FilterDetails, {mixins : [server_api]})
+        expect(filter_details.find("#no_matches").exists()).toBe(true)
       })
 
 
@@ -84,25 +84,26 @@ describe("FilterDetails Page", () => {
 
       describe("no active filter sinks (falsy)", () => {
         it("is false", () => {
-          const fd = filter_details();
-                fd.vm.active_filter = filters_without_sinks[0];
-          expect(fd.vm.have_sinks).toBe(false)
+          const filter_details = mount_vue(FilterDetails, {mixins : [server_api]})
+          filter_details.vm.active_filter = filters_without_sinks[0];
+          expect(filter_details.vm.have_sinks).toBe(false)
         })
       })
 
       describe("no active filter sinks (.length == 0)", () => {
         it("is false", () => {
-          const fd = filter_details();
-                fd.vm.active_filter = Object.assign({}, filters_with_sinks[0], {Sinks : []})
-          expect(fd.vm.have_sinks).toBe(false)
+          const filter_details = mount_vue(FilterDetails, {mixins : [server_api]})
+          filter_details.vm.active_filter =
+            Object.assign({}, filters_with_sinks[0], {Sinks : []})
+          expect(filter_details.vm.have_sinks).toBe(false)
         })
       })
 
       describe("active filter associated with sinks", () => {
         it("is true", () => {
-          const fd = filter_details();
-                fd.vm.active_filter = filters_with_sinks[0];
-          expect(fd.vm.have_sinks).toBe(true)
+          const filter_details = mount_vue(FilterDetails, {mixins : [server_api]})
+          filter_details.vm.active_filter = filters_with_sinks[0];
+          expect(filter_details.vm.have_sinks).toBe(true)
         })
       })
     })
@@ -125,10 +126,21 @@ describe("FilterDetails Page", () => {
 
   describe("#created", () => {
     describe("maintenance_mode", () => {
-      test.todo("navs to maintenance")
+      it("navs to maintenance", () => {
+        const _maintenance_mode = maintenance_mode()
+        mount_vue(FilterDetails, {mixins : [server_api, _maintenance_mode]})
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+      })
     })
 
-    test.todo("loads filter")
-    test.todo("loads filter matches")
+    it("loads filter", () => {
+      mount_vue(FilterDetails, {mixins : [server_api]})
+      expect(server_api.methods.load_filter).toHaveBeenCalledTimes(1);
+    })
+
+    it("loads filter matches", () => {
+      mount_vue(FilterDetails, {mixins : [server_api]})
+      expect(server_api.methods.load_filter_matches).toHaveBeenCalledTimes(1);
+    })
   })
 })

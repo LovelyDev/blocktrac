@@ -1,22 +1,35 @@
+import setup from './setup'
+import util  from '../src/util'
+
 describe("util", () => {
   describe("#round_value", () => {
-    test.todo("defaults to 0")
+    it("defaults to 0", () => {
+      expect(util.round_value()).toBe(0)
+    })
 
     describe("decimals == 0", () => {
-      test.todo("rounds value to integer")
+      it("rounds value to integer", () => {
+        expect(util.round_value(4.2, 0)).toBe(4)
+      })
     })
 
     describe("decimals is not set", () => {
       describe("value < 0.0001", () => {
-        test.todo("rounds value to 10 decimal places")
+        it("rounds value to 10 decimal places", () => {
+          expect(util.round_value(0.00001234567)).toBe(0.0000123457)
+        })
       })
 
       describe("value >= 0.0001", () => {
-        test.todo("rounds value to 5 decimal places")
+        it("rounds value to 5 decimal places", () => {
+          expect(util.round_value(0.123456)).toBe(0.12346)
+        })
       })
     })
 
-    test.todo("rounds value to specified number of decimal places")
+    it("rounds value to specified number of decimal places", () => {
+      expect(util.round_value(1.2345, 3)).toBe(1.235)
+    })
   })
 
   describe("#why_code_unsafe", () => {
@@ -84,11 +97,19 @@ describe("util", () => {
   })
 
   describe("#delim_value", () => {
-    test.todo("returns delimiated value")
+    it("returns delimiated value", () => {
+      expect(util.delim_value(123456789.123)).toBe("123,456,789.123")
+    })
   })
 
   describe("#abbrev", () => {
-    test.todo("returns abbreviated value")
+    it("returns abbreviated value", () => {
+      expect(util.abbrev(2345000000000)).toEqual("2.35T")
+      expect(util.abbrev(2345000000)).toEqual("2.35B")
+      expect(util.abbrev(2345000)).toEqual("2.35M")
+      expect(util.abbrev(2345)).toEqual("2.35K")
+      expect(util.abbrev(234.56)).toEqual("234.56")
+    })
   })
 
   describe("#ledger_time_to_unix", () => {
@@ -100,7 +121,9 @@ describe("util", () => {
   })
 
   describe("#capitalize", () => {
-    test.todo("returns capitalized string")
+    it("returns capitalized string", () => {
+      expect(util.capitalize("abc")).toEqual("Abc")
+    })
   })
 
   describe("#is_valid_jsonpath", () => {
@@ -155,31 +178,44 @@ describe("util", () => {
 
   describe("#is_valid_integer", () => {
     describe("integer is valid", () => {
-      test.todo("returns true")
+      it("returns true", () => {
+        expect(util.is_valid_integer(4)).toBe(true)
+      })
     })
 
     describe("integer is not valid", () => {
-      test.todo("returns false")
+      it("returns false", () => {
+        expect(util.is_valid_integer("4")).toBe(false)
+        expect(util.is_valid_integer(4.2)).toBe(false)
+      })
     })
   })
 
   describe("#is_valid_float", () => {
     describe("float is valid", () => {
-      test.todo("returns true")
+      it("returns true", () => {
+        expect(util.is_valid_float(4.2)).toBe(true)
+      })
     })
 
     describe("float is not valid", () => {
-      test.todo("returns false")
+      it("returns false", () => {
+        expect(util.is_valid_float("4.2")).toBe(false)
+      })
     })
   })
 
   describe("#is_valid_string", () => {
     describe("string is valid", () => {
-      test.todo("returns true")
+      it("returns true", () => {
+        expect(util.is_valid_string("abc")).toBe(true)
+      })
     })
 
     describe("string is not valid", () => {
-      test.todo("returns false")
+      it("returns false", () => {
+        expect(util.is_valid_string(4.2)).toBe(false)
+      })
     })
   })
 

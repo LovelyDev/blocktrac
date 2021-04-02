@@ -1,3 +1,11 @@
+import {mount_vue} from './setup'
+
+import {
+  stubbed_maintenance_mode as maintenance_mode
+} from './stubs'
+
+import ResetPassword from '../src/ResetPassword.vue'
+
 describe("ResetPassword Page", () => {
   describe("dom", () => {
     describe("reset password form", () => {
@@ -39,7 +47,14 @@ describe("ResetPassword Page", () => {
 
   describe("#created", () => {
     describe("maintenance_mode", () => {
-      test.todo("navs to maintenance")
+      it("navs to maintenance", () => {
+        const _maintenance_mode = maintenance_mode()
+        mount_vue(ResetPassword, {
+          mixins : [_maintenance_mode],
+          propsData : {code : 'code'}
+        })
+        expect(_maintenance_mode.methods.nav_to_maintenance).toHaveBeenCalledTimes(1);
+      })
     })
   })
 })

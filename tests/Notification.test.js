@@ -9,13 +9,14 @@ import {
 
 import Notification from '../src/Notification.vue'
 
+const notifications = load_fixture('notifications');
 
 describe("Notification Page", () => {
   var data, server_api;
 
   beforeEach(function(){
-    // Mocked notification
-    data = load_fixture('notifications')[0]
+    // Mocked notification (deep copy)
+    data = JSON.parse(JSON.stringify(notifications[0]))
 
     // Stubbed server_api call
     server_api = {
