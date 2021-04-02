@@ -116,10 +116,11 @@ export default {
     else if(value > 1000)
       return round_value(value/1000, 2) + "K"
 
-    return round_value(value)
+    return round_value(value) + "";
   },
 
   // Convert rippled time to unix time
+  // TODO rename to xrp_ledger_time_to_unix
   ledger_time_to_unix : function(t){
     return (t + 946684800)*1000;
   },

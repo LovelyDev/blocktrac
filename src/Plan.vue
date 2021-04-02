@@ -192,10 +192,14 @@ export default {
     },
 
     instant_alerts : function(){
+      if(!this.plan) return false;
+
       return this.details.notification_times.includes(0);
     },
 
     alert_time_text : function(){
+      if(!this.plan) return '';
+
       return this.instant_alerts ? 'Instant' : (this.details.notification_times[0] + ' min');
     },
 
@@ -258,8 +262,10 @@ export default {
     }
 
     // if no plan specified, nav to plans
-    if(!this.plan)
+    if(!this.plan){
       this.$router.push({path : '/plans'});
+      return;
+    }
 
     if(this.filters || this.sinks)
       this.enable_additional = true;
