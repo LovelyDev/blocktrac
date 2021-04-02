@@ -43,6 +43,7 @@
     "css-mediaquery": "^0.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "flush-promises": "^1.0.2",
     "vue-template-compiler": "^2.6.10"
   },
   "jest": {
