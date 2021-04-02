@@ -58,6 +58,18 @@ function stub_match_media(){
 
 ///
 
+// Define scrollTo to mitigate 'not implemented' error
+
+function scroll_to(x, y) {
+  document.documentElement.scrollTop = y;
+}
+
+function stub_scroll_to(){
+  window.scrollTo = jest.fn().mockImplementation(scroll_to)
+}
+
+///
+
 // Stub ripple-lib
 function stub_ripple_api(){
   jest.mock("ripple-lib")
@@ -128,6 +140,7 @@ function load_fixture(name){
 // Default methods we stub
 function stub_defaults(){
   stub_match_media();
+  stub_scroll_to();
   stub_ripple_api();
 }
 
