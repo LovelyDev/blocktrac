@@ -175,6 +175,17 @@ function stubbed_maintenance_mode(){
   }
 }
 
+///
+
+// Stubbed htttp module
+function stubbed_htttp(){
+  return {
+       get : jest.fn(),
+      post : jest.fn(),
+    delete : jest.fn(),
+       put : jest.fn()
+  };
+}
 
 ///
 
@@ -201,5 +212,6 @@ module.exports = {
   stub_defaults,
   stubbed_network_module,
   stubbed_network,
-  stubbed_maintenance_mode
+  stubbed_maintenance_mode,
+  stubbed_htttp
 }
