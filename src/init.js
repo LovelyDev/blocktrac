@@ -33,6 +33,9 @@ import { vue_init as filter_vue_init  } from "./filters"
 // Vue HTTP Client
 import VueResource from 'vue-resource'
 
+// Vue HTTP Mocker plugin
+import HTTTP from './plugins/htttp'
+
 // Connection to the blockchain server
 import NetworkConnection from './plugins/network-connection'
 
@@ -59,6 +62,8 @@ export function vue_init(Vue){
   Vue.use(BootstrapVue)
 
   Vue.use(VueResource)
+
+  Vue.use(HTTTP)
 
   Vue.use(NetworkConnection)
 

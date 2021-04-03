@@ -187,15 +187,15 @@ export default {
       if(this.$store.state.in_progress_filter.server)
         params.filter = this.$store.state.in_progress_filter.server
 
-      this.$http.post(this.backend_url + "/register", params)
-                .then(function(response){
-                  this.$store.commit('clear_in_progress_filter')
-                  alert("Please check your email to complete registration")
+      this.$htttp().post(this.backend_url + "/register", params)
+                   .then(function(response){
+                     this.$store.commit('clear_in_progress_filter')
+                     alert("Please check your email to complete registration")
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("There was a problem registering: " + msg)
-                })
+                   }.bind(this)).catch(function(err){
+                     const msg = util.capitalize(err.body.error)
+                     alert("There was a problem registering: " + msg)
+                   })
     },
 
     // Send login request to server.
@@ -207,58 +207,58 @@ export default {
       if(this.$store.state.in_progress_filter.server)
         params.filter = this.$store.state.in_progress_filter.server
 
-      this.$http.post(this.backend_url + "/login", params)
-                .then(function(response){
-                  this.$store.commit('clear_in_progress_filter')
-                  this.$setCookie("authToken", response.body.authToken);
-                  this.load_user();
+      this.$htttp().post(this.backend_url + "/login", params)
+                   .then(function(response){
+                     this.$store.commit('clear_in_progress_filter')
+                     this.$setCookie("authToken", response.body.authToken);
+                     this.load_user();
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not login: " + msg)
-                })
+                   }.bind(this)).catch(function(err){
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not login: " + msg)
+                   })
     },
 
     // Send request to get user from server.
     // Stores user information locally upon retrieval.
     // Delete user information on error and redirects to /txs on error.
     load_user : function(){
-      return this.$http.get(this.backend_url + "/user", this.auth_header)
-                       .then(function(response){
-                         this.$store.commit('set_user', response.body);
+      return this.$htttp().get(this.backend_url + "/user", this.auth_header)
+                          .then(function(response){
+                            this.$store.commit('set_user', response.body);
 
-                       }.bind(this)).catch(function(err){
-                          alert("Session timed out, you have been logged out");
+                          }.bind(this)).catch(function(err){
+                             alert("Session timed out, you have been logged out");
 
-                          // If user cannot be loaded, clear
-                          this.$removeCookie("authToken")
-                          this.$store.commit('clear_user')
+                             // If user cannot be loaded, clear
+                             this.$removeCookie("authToken")
+                             this.$store.commit('clear_user')
 
-                          if(this.$route.path != "/txs")
-                            this.$router.push("/txs");
-                       })
+                             if(this.$route.path != "/txs")
+                               this.$router.push("/txs");
+                          })
     },
 
     // Send logout request to server.
     // Deletes local user information and redirects to /txs
     // on completion or error.
     logout : function(){
-      this.$http.delete(this.backend_url + "/logout",
-                {headers : {authorization : this.auth_token}})
-                .then(function(response){
-                  this.$removeCookie("authToken")
-                  this.$store.commit('clear_user')
+      this.$htttp().delete(this.backend_url + "/logout",
+                   {headers : {authorization : this.auth_token}})
+                   .then(function(response){
+                     this.$removeCookie("authToken")
+                     this.$store.commit('clear_user')
 
-                  if(this.$route.path != "/txs")
-                    this.$router.push("/txs");
+                     if(this.$route.path != "/txs")
+                       this.$router.push("/txs");
 
-                }.bind(this)).catch(function(err){
-                  this.$removeCookie("authToken")
-                  this.$store.commit('clear_user')
+                   }.bind(this)).catch(function(err){
+                     this.$removeCookie("authToken")
+                     this.$store.commit('clear_user')
 
-                  if(this.$route.path != "/txs")
-                    this.$router.push("/txs");
-                }.bind(this))
+                     if(this.$route.path != "/txs")
+                       this.$router.push("/txs");
+                   }.bind(this))
 
     },
 
@@ -266,15 +266,14 @@ export default {
     // Displays instructions on completion.
     reset_password : function(){
       var params = {email : this.auth_email}
-      this.$http.put(this.backend_url + "/reset", params)
-                .then(function(response){
-                  alert("Please check your email for password reset instructions")
+      this.$htttp().put(this.backend_url + "/reset", params)
+                   .then(function(response){
+                     alert("Please check your email for password reset instructions")
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not reset password: " + msg)
-                })
-
+                   }.bind(this)).catch(function(err){
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not reset password: " + msg)
+                   })
     }
   }
 }

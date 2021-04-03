@@ -116,115 +116,115 @@ export default {
 
     // Loads templates from server, storing the result
     load_templates : function(){
-      this.$http.get(this.backend_url + "/templates")
-                .then(function(response){
-                    // set templates
-                    this.templates = response.body
+      this.$htttp().get(this.backend_url + "/templates")
+                   .then(function(response){
+                       // set templates
+                       this.templates = response.body
 
-                }.bind(this)).catch(function(err){
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve templates: " + msg)
-                }.bind(this))
+                   }.bind(this)).catch(function(err){
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve templates: " + msg)
+                   }.bind(this))
     },
 
     // Loads sinks from server, storing the result
     load_sinks : function(){
-      this.$http.get(this.backend_url + "/sinks", this.auth_header)
-                .then(function(response){
-                    // clear sinks
-                    this.sinks = [];
+      this.$http().get(this.backend_url + "/sinks", this.auth_header)
+                  .then(function(response){
+                      // clear sinks
+                      this.sinks = [];
 
-                    // parse and populate
-                    response.body.forEach(function(sink){
-                      this.sinks.push(sink)
-                    }.bind(this));
+                      // parse and populate
+                      response.body.forEach(function(sink){
+                        this.sinks.push(sink)
+                      }.bind(this));
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                  }.bind(this)).catch(function(err){
+                    if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve sinks: " + msg)
-                }.bind(this))
+                    const msg = util.capitalize(err.body.error)
+                    alert("Could not retrieve sinks: " + msg)
+                  }.bind(this))
     },
 
     // Loads filters from server, storing the result
     load_filters : function(){
-      this.$http.get(this.backend_url + "/filters", this.auth_header)
-                .then(function(response){
-                    // set filters
-                    this.filters = response.body
+      this.$htttp().get(this.backend_url + "/filters", this.auth_header)
+                   .then(function(response){
+                       // set filters
+                       this.filters = response.body
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                   }.bind(this)).catch(function(err){
+                     if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve filters: " + msg)
-                }.bind(this))
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve filters: " + msg)
+                   }.bind(this))
     },
 
     // Loads filter from server, storing the result
     load_filter : function(id){
-      this.$http.get(this.backend_url + "/filter/" + id, this.auth_header)
-                .then(function(response){
-                  this.active_filter = response.body;
+      this.$htttp().get(this.backend_url + "/filter/" + id, this.auth_header)
+                   .then(function(response){
+                     this.active_filter = response.body;
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                   }.bind(this)).catch(function(err){
+                     if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve filter: " + msg)
-                }.bind(this))
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve filter: " + msg)
+                   }.bind(this))
     },
 
     // Loads filter matches from server, storing the result
     load_filter_matches : function(id){
-      this.$http.get(this.backend_url + "/filter/" + id + "/matches",
-                                                    this.auth_header)
-                .then(function(response){
-                  // clear matches
-                  this.filter_matches = []
+      this.$htttp().get(this.backend_url + "/filter/" + id + "/matches",
+                                                       this.auth_header)
+                   .then(function(response){
+                     // clear matches
+                     this.filter_matches = []
 
-                  response.body.forEach(function(matched){
-                    var tx = matched.Transaction.raw
-                        tx.transaction.date = matched.Transaction.date;
-                    this.filter_matches.push(tx)
-                  }.bind(this))
+                     response.body.forEach(function(matched){
+                       var tx = matched.Transaction.raw
+                           tx.transaction.date = matched.Transaction.date;
+                       this.filter_matches.push(tx)
+                     }.bind(this))
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                   }.bind(this)).catch(function(err){
+                     if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve filter matches: " + msg)
-                }.bind(this))
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve filter matches: " + msg)
+                   }.bind(this))
     },
 
     // Loads notifications from server, storing the result
     load_notifications : function(){
-      this.$http.get(this.backend_url + "/notifications/", this.auth_header)
-                .then(function(response){
-                  // set notifications
-                  this.notifications = response.body
+      this.$htttp().get(this.backend_url + "/notifications/", this.auth_header)
+                   .then(function(response){
+                     // set notifications
+                     this.notifications = response.body
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                   }.bind(this)).catch(function(err){
+                     if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve notifications: " + msg)
-                }.bind(this))
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve notifications: " + msg)
+                   }.bind(this))
     },
 
     // Load server status, storing the result
     load_server_status : function(){
-      this.$http.get(this.backend_url + "/status", this.auth_header)
-                .then(function(response){
-                  this.server_status = response.body;
+      this.$htttp().get(this.backend_url + "/status", this.auth_header)
+                   .then(function(response){
+                     this.server_status = response.body;
 
-                }.bind(this)).catch(function(err){
-                  if(this.not_authenticated(err)) return; // XXX
+                   }.bind(this)).catch(function(err){
+                     if(this.not_authenticated(err)) return; // XXX
 
-                  const msg = util.capitalize(err.body.error)
-                  alert("Could not retrieve status: " + msg)
-                })
+                     const msg = util.capitalize(err.body.error)
+                     alert("Could not retrieve status: " + msg)
+                   })
     },
 
     ///
@@ -232,59 +232,60 @@ export default {
     // Return promise, handle these methods callbacks in invoker
 
     update_user : function(user){
-      return this.$http.put(this.backend_url + "/user",
-                                user, this.auth_header)
+      return this.$htttp().put(this.backend_url + "/user",
+                                   user, this.auth_header)
     },
 
     purchase_plan : function(plan){
-      return this.$http.post(this.backend_url + "/purchase",
-                                     plan, this.auth_header)
+      return this.$htttp().post(this.backend_url + "/purchase",
+                                        plan, this.auth_header)
     },
 
     cancel_subscription : function(){
-      return this.$http.post(this.backend_url + "/cancel",
-                                         this.auth_header)
+      return this.$htttp().post(this.backend_url + "/cancel",
+                                            this.auth_header)
     },
 
     reset_password : function(params){
-      return this.$http.put(this.backend_url + "/reset", params)
+      return this.$htttp().put(this.backend_url + "/reset", params)
     },
 
     confirm_email : function(params){
-      return this.$http.put(this.backend_url + "/confirm", params)
+      return this.$htttp().put(this.backend_url + "/confirm", params)
     },
 
     contact : function(params){
-      return this.$http.post(this.backend_url + "/contact", params)
+      return this.$htttp().post(this.backend_url + "/contact", params)
     },
 
     create_sink : function(params){
-      return this.$http.post(this.backend_url + "/sink",
-                               params, this.auth_header)
+      return this.$htttp().post(this.backend_url + "/sink",
+                                  params, this.auth_header)
     },
 
     delete_sink : function(id){
-      return this.$http.delete(this.backend_url + "/sink/" + id,
-                                               this.auth_header)
+      return this.$htttp().delete(this.backend_url + "/sink/" + id,
+                                                  this.auth_header)
     },
 
     create_filter : function(params){
-      return this.$http.post(this.backend_url + "/filter",
-                                 params, this.auth_header)
+      return this.$htttp().post(this.backend_url + "/filter",
+                                  params, this.auth_header)
     },
 
     update_filter : function(id, params){
-      return this.$http.put(this.backend_url + "/filter/" + id,
-                                      params, this.auth_header)
+      return this.$htttp().put(this.backend_url + "/filter/" + id,
+                                         params, this.auth_header)
     },
 
     delete_filter : function(id){
-      return this.$http.delete(this.backend_url + "/filter/" + id,
-                                                 this.auth_header)
+      return this.$htttp().delete(this.backend_url + "/filter/" + id,
+                                                    this.auth_header)
     },
 
     load_notification : function(id){
-      return this.$http.get(this.backend_url + "/notification/" + id, this.auth_header)
+      return this.$htttp().get(this.backend_url + "/notification/" + id,
+                                                       this.auth_header)
     }
   }
 }
