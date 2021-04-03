@@ -1,7 +1,7 @@
 # Zitui - Zerp Tracker Frontend Web UI
 
 ## Overview
-Zitui is the implementation of the Zerp Tracker frontend, a service used to register and run JSONPath filters against XRP blockchain transactions.
+Zitui is the implementation of the Zerp Tracker frontend, a service used to register and run JSONPath filters against blockchain transactions.
 
 Zitui requires a Ziti backend be deployed and is accessible for web API requests. Zitui handles user interface interaction and dispatches calls to the Ziti web API.
 
