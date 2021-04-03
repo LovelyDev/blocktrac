@@ -1,9 +1,12 @@
 /*
  * Test suite setup logic.
- * Similar to that done in src/main.js
  *
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
+
+// XXX: vue-reactive-cookie depends on js-cookie,
+//      use that to reset cookies below
+import Cookies from 'js-cookie';
 
 // Including stubbing logic
 const stubs = require('./stubs')
@@ -18,6 +21,13 @@ afterEach(function(){
   jest.resetAllMocks();
   jest.resetModules();
   jest.restoreAllMocks();
+
+  // XXX: reset cookies
+  const cookies = document.cookie.split("; ");
+  cookies.forEach(function(cookie){
+    const parts = cookie.split("=");
+    Cookies.remove(parts[0])
+  })
 })
 
 // Load vue components
