@@ -193,6 +193,11 @@ export default {
             {
               title : "Are there limits to filter matches?",
               value : "Currently " + this.app_name + " imposes the a limit of " + ziti.filter_interval_cap + " matches every " + (ziti.timeouts.filter_reset/1000) + " seconds for every filter. Once a filter has exceeded the limit excess matches will be discard."
+            },
+
+            {
+              title : "But I need more filter matches beyond the limit!",
+              value : "Contact Dev Null Productions using this <a href='/about#contact'>form</a> and we'll discuss increasing the your cap."
             }
           ]
         },
