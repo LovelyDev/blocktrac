@@ -236,7 +236,7 @@ export default {
 
                              if(this.$route.path != "/txs")
                                this.$router.push("/txs");
-                          })
+                          }.bind(this))
     },
 
     // Send logout request to server.
