@@ -88,10 +88,6 @@ export default {
   },
 
   computed : {
-    loading_txs : function(){
-      return this.$store.state.loading_txs;
-    },
-
     txs : function(){
       return this.$store.state.txs;
     },

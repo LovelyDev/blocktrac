@@ -40,7 +40,6 @@ export function vue_init(Vue){
 
       // Data pertaining to TxsList
               txs : [],
-      loading_txs : true,
        paused_txs : false,
         tx_filter : '',
 
@@ -138,8 +137,6 @@ export function vue_init(Vue){
         if(state.tx_categories.length != 0 &&
           !state.tx_categories.includes(tx.category))
           return;
-
-        state.loading_txs = false;
 
         // Add to txs list and cap number
         state.txs.unshift(tx);
