@@ -1,22 +1,79 @@
+import {shallow_mount_vue} from './setup'
+
+const Component = {
+  render() {}
+}
+
 describe("store", () => {
+  var component
+
+  beforeEach(() => {
+    component = shallow_mount_vue(Component)
+  })
+
   describe("#set_network_initialize", () => {
-    test.todo("sets network_initialized variable")
+    it("sets network_initialized variable", () => {
+      component.vm.$store.commit('set_network_initialized', true)
+      expect(component.vm.$store.state.network_initialized).toBe(true)
+    })
   })
 
   describe("#set_selected_blockchain", () => {
-    test.todo("sets selected_blockchain variable")
+    it("sets selected_blockchain variable", () => {
+      component.vm.$store.commit('set_selected_blockchain', 'xrp')
+      expect(component.vm.$store.state.selected_blockchain).toBe('xrp')
+    })
   })
 
   describe("#set_user", () => {
-    test.todo("sets user properties")
+    it("sets user properties", () => {
+      const now = new Date();
+
+      component.vm.$store.commit('set_user', {
+                     email : 'e@ma.il',
+          membership_level : 'standard',
+                   profile : {foo : 'bar'},
+              renewal_date : now,
+           has_credit_card : true,
+        additional_filters : 5,
+          additional_sinks : 3,
+                Privileges : ['p1', 'p2']
+      })
+
+      expect(component.vm.$store.state.user.email).toEqual('e@ma.il')
+      expect(component.vm.$store.state.user.membership_level).toEqual('standard')
+      expect(component.vm.$store.state.user.profile).toEqual({foo : 'bar'})
+      expect(component.vm.$store.state.user.renewal_date).toEqual(now)
+      expect(component.vm.$store.state.user.has_credit_card).toEqual(true)
+      expect(component.vm.$store.state.user.additional_filters).toEqual(5)
+      expect(component.vm.$store.state.user.additional_sinks).toEqual(3)
+      expect(component.vm.$store.state.user.privileges).toEqual(['p1', 'p2'])
+    })
   })
 
   describe("#clear_user", () => {
-    test.todo("clears user properties")
+    it("clears user properties", () => {
+      component.vm.$store.commit('clear_user')
+
+      expect(component.vm.$store.state.user.email).toEqual('')
+      expect(component.vm.$store.state.user.membership_level).toEqual('')
+      expect(component.vm.$store.state.user.profile).toEqual('')
+      expect(component.vm.$store.state.user.renewal_date).toEqual('')
+      expect(component.vm.$store.state.user.has_credit_card).toEqual(false)
+      expect(component.vm.$store.state.user.additional_filters).toEqual(0)
+      expect(component.vm.$store.state.user.additional_sinks).toEqual(0)
+      expect(component.vm.$store.state.user.privileges).toEqual([])
+    })
   })
 
   describe("#toggle_paused_txs", () => {
-    test.todo("toggles paused_txs property")
+    it("toggles paused_txs property", () => {
+      component.vm.$store.commit('toggle_paused_txs')
+      expect(component.vm.$store.state.paused_txs).toBe(true)
+
+      component.vm.$store.commit('toggle_paused_txs')
+      expect(component.vm.$store.state.paused_txs).toBe(false)
+    })
   })
 
   describe("#update_tx_filter", () => {
