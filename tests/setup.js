@@ -13,6 +13,7 @@ const stubs = require('./stubs')
 
 // Stub out methods before any application logic
 beforeEach(function(){
+  jest.useFakeTimers();
   stubs.stub_defaults();
 })
 
