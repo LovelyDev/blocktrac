@@ -1,4 +1,5 @@
 import {shallow_mount_vue} from './setup'
+import {stubbed_network}   from './stubs'
 import Tx from '../src/Tx.vue'
 
 describe("Tx Page", () => {
@@ -9,10 +10,15 @@ describe("Tx Page", () => {
 
     tx = shallow_mount_vue(Tx, {
       propsData: {hash : hash},
+
       data : function(){
         return {
           tx : {transaction : {}}
         }
+      },
+
+      mocks : {
+        network : stubbed_network()
       }
     })
   })
@@ -44,11 +50,19 @@ describe("Tx Page", () => {
 
   describe("methods", () => {
     describe("on_tx", () => {
-      test.todo("sets tx")
+      it("sets tx", () => {
+        const _tx = {transaction : {}}
+        tx.vm.on_tx(_tx)
+        expect(tx.vm.tx).toEqual(_tx)
+      })
     })
   })
 
   describe("#created", () => {
-    test.todo("retrieves network tx")
+    it("retrieves network tx", () => {
+      expect(tx.vm.network.tx).toHaveBeenCalledTimes(1)
+      expect(tx.vm.network.tx.mock.calls[0][0]).toEqual(hash)
+      expect(tx.vm.network.tx.mock.calls[0][1]).toEqual(tx.vm.on_tx)
+    })
   })
 })
