@@ -11,49 +11,50 @@
     <b-container v-if="have_server_status"
                  id="status_container">
       <b-row>
-        <b-col>
-          <u>{{(new Date()).toGMTString()}}</u>
+        <b-col id="date">
+          <u>{{(new Date(Date.now())).toGMTString()}}</u>
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col class="card">
+        <b-col id="users" class="card">
           Users: {{server_status.users | delim}}
         </b-col>
 
-        <b-col class="card">
+        <b-col id="filters" class="card">
           Filters: {{server_status.filters | delim}}
         </b-col>
 
-        <b-col class="card">
+        <b-col id="sinks" class="card">
           Sinks: {{server_status.sinks | delim}}
         </b-col>
 
-        <b-col class="card">
+        <b-col id="filter_sinks" class="card">
           Filter Sinks: {{server_status.filter_sinks | delim}}
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col class="card">
+        <b-col id="txs" class="card">
           Transactions: {{server_status.txs | delim}}
         </b-col>
 
-        <b-col class="card" :class="{error : outages.txs_to_process}">
+        <b-col id="txs_to_process" class="card"
+               :class="{error : outages.txs_to_process}">
           Not processed: {{txs_to_process | delim}}
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col class="card">
+        <b-col id="filter_matches" class="card">
           Filter Matches: {{server_status.filter_matches | delim}}
         </b-col>
 
-        <b-col class="card">
+        <b-col id="non_notified_filter_matches" class="card">
           Not Notified: {{server_status.non_notified_filter_matches | delim}}
         </b-col>
 
-        <b-col class="card">
+        <b-col id="notifications" class="card">
           Notifications: {{server_status.notifications | delim}}
         </b-col>
       </b-row>
@@ -62,9 +63,10 @@
         <b-col>
           <h3>Benchmarks</h3>
           <b-list-group>
-            <b-list-group-item v-for="benchmark in benchmarks"
-                                :key="benchmark"
-                              :class="{error : benchmark_outage(benchmark)}">
+            <b-list-group-item id="benchmarks"
+                            v-for="benchmark in benchmarks"
+                             :key="benchmark"
+                           :class="{error : benchmark_outage(benchmark)}">
               <div style="float: left">{{benchmark}}:</div>
               <div style="float: right">{{meta[benchmark].updated.toGMTString()}}</div>
             </b-list-group-item>
@@ -76,8 +78,9 @@
         <b-col>
           <h3>Meta</h3>
           <b-list-group>
-            <b-list-group-item v-for="ometa in other_meta"
-                                :key="ometa">
+            <b-list-group-item id="meta"
+                            v-for="ometa in other_meta"
+                             :key="ometa">
               <div style="float: left">{{ometa}}:</div>
               <div style="float: right">{{meta[ometa]}}</div>
             </b-list-group-item>
@@ -86,21 +89,21 @@
       </b-row>
 
       <b-row>
-        <b-col>
+        <b-col id="txs_being_processed">
           <h3>Transactions being processed</h3>
           {{txs_being_processed_str}}
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col>
+        <b-col id="filters_being_notified">
           <h3>Filters being notified</h3>
           {{filters_being_notified_str}}
         </b-col>
       </b-row>
 
       <b-row>
-        <b-col>
+        <b-col id="filters_exceeding_batch_size">
           <h3>Filters exceeding batch size</h3>
           {{filters_exceeding_batch_size_str}}
         </b-col>
