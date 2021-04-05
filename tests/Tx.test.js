@@ -2,6 +2,9 @@ import {shallow_mount_vue} from './setup'
 import {stubbed_network}   from './stubs'
 import Tx from '../src/Tx.vue'
 
+// TODO: s/shallow_mount_vue/mount_vue
+// (load transactions fixture & convert in same manner as network-connection module)
+
 describe("Tx Page", () => {
   var tx, hash;
 
