@@ -93,6 +93,10 @@ export default {
   },
 
   methods : {
+    not_authenticated : function(err){
+      return err.status == 401;
+    },
+
     set_active_filter : function(filter){
       this.active_filter = filter;
 
@@ -129,7 +133,7 @@ export default {
 
     // Loads sinks from server, storing the result
     load_sinks : function(){
-      this.$http().get(this.backend_url + "/sinks", this.auth_header)
+      this.$htttp().get(this.backend_url + "/sinks", this.auth_header)
                   .then(function(response){
                       // clear sinks
                       this.sinks = [];
@@ -200,7 +204,7 @@ export default {
 
     // Loads notifications from server, storing the result
     load_notifications : function(){
-      this.$htttp().get(this.backend_url + "/notifications/", this.auth_header)
+      this.$htttp().get(this.backend_url + "/notifications", this.auth_header)
                    .then(function(response){
                      // set notifications
                      this.notifications = response.body

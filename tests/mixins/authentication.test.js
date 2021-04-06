@@ -483,20 +483,6 @@ describe("authentication", () => {
       })
     })
 
-    describe("#not_authenticated", () => {
-      describe("status == 401", () => {
-        it("returns true", () => {
-          expect(component.vm.not_authenticated({status : 401})).toBe(true)
-        })
-      })
-
-      describe("status != 401", () => {
-        it("returns false", () => {
-          expect(component.vm.not_authenticated({status : 400})).toBe(false)
-        })
-      })
-    })
-
     describe("#register", () => {
       beforeEach(function(){
         component.setData({auth_email : 'e@ma.il', auth_password : 'password'})

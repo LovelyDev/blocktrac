@@ -1,4 +1,7 @@
+import flushPromises from 'flush-promises'
+
 import {shallow_mount_vue} from '../setup'
+import {stubbed_htttp} from '../stubs'
 
 import config from '../../src/config/config'
 
@@ -10,10 +13,15 @@ const Component = {
 }
 
 describe("server_api", () => {
-  var component
+  var component, htttp
 
   beforeEach(function(){
     component = shallow_mount_vue(Component)
+
+    htttp = stubbed_htttp();
+    component.vm.$htttp = function(){
+      return htttp;
+    }
   })
 
   describe("computed", () => {
@@ -79,91 +87,304 @@ describe("server_api", () => {
   })
 
   describe("methods", () => {
-    describe("#set_active_filter", () => {
-      describe("filters includes filter", () => {
-        test.todo("replaces filter")
+    describe("#not_authenticated", () => {
+      describe("status == 401", () => {
+        it("returns true", () => {
+          expect(component.vm.not_authenticated({status : 401})).toBe(true)
+        })
       })
 
-      test.todo("adds filter to filters")
+      describe("status != 401", () => {
+        it("returns false", () => {
+          expect(component.vm.not_authenticated({status : 400})).toBe(false)
+        })
+      })
+    })
 
-      test.todo("redirect to /filter/filter.id")
+    describe("#set_active_filter", () => {
+      it("sets active filter", () => {
+        const active_filter = {active : 'filter'}
+        component.vm.set_active_filter(active_filter)
+        expect(component.vm.active_filter).toEqual(active_filter)
+      })
+
+      describe("filters includes filter", () => {
+        it("replaces filter", () => {
+          const filter1 = {id : 1, name : 'filter1'}
+          const filter2 = {id : 1, name : 'filter2'}
+          component.vm.filters = [filter1]
+
+          component.vm.set_active_filter(filter2)
+          expect(component.vm.filters).toEqual([filter2])
+        })
+      })
+
+      it("adds filter to filters", () => {
+        const active_filter = {active : 'filter'}
+        component.vm.set_active_filter(active_filter)
+        expect(component.vm.filters).toEqual([active_filter])
+      })
+
+      it("redirects to /filter/filter.id", () => {
+        const active_filter = {id : 1, active : 'filter'}
+        component.vm.set_active_filter(active_filter)
+        expect(component.vm.$route.path).toEqual("/filter/1")
+      })
     })
 
     describe("#load_templates", () => {
-      test.todo("submits templates request")
+      it("submits templates request", () => {
+        htttp.get.mockResolvedValue({})
+        component.vm.load_templates();
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/templates")
+      })
 
       describe("success result", () => {
-        test.todo("sets templates")
+        it("sets templates", async () => {
+          const templates = ['t1', 't2']
+          htttp.get.mockResolvedValue({body : templates})
+
+          component.vm.load_templates();
+          await flushPromises();
+
+          expect(component.vm.templates).toEqual(templates)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_templates();
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve templates: Error1")
+        })
       })
     })
 
     describe("#load_sinks", () => {
-      test.todo("submits sinks request")
+      it("submits sinks request", () => {
+        htttp.get.mockResolvedValue({body : []})
+        component.vm.load_sinks();
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/sinks")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
 
       describe("success result", () => {
-        test.todo("sets sinks")
+        it("sets sinks", async () => {
+          const sinks = ['s1', 's2']
+          htttp.get.mockResolvedValue({body : sinks})
+
+          component.vm.load_sinks();
+          await flushPromises();
+
+          expect(component.vm.sinks).toEqual(sinks)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_sinks();
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve sinks: Error1")
+        })
       })
     })
 
     describe("#load_filters", () => {
-      test.todo("submits filters request")
+      it("submits filters request", () => {
+        htttp.get.mockResolvedValue({})
+        component.vm.load_filters();
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filters")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
 
       describe("success result", () => {
-        test.todo("sets filters")
+        it("sets filters", async () => {
+          const filters = ['f1', 'f2']
+          htttp.get.mockResolvedValue({body : filters})
+
+          component.vm.load_filters();
+          await flushPromises();
+
+          expect(component.vm.filters).toEqual(filters)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_filters();
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filters: Error1")
+        })
       })
     })
 
     describe("#load_filter", () => {
-      test.todo("submits filter request")
+      it("submits filter request", () => {
+        htttp.get.mockResolvedValue({})
+        component.vm.load_filter(1);
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filter/1")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
 
       describe("success result", () => {
-        test.todo("sets active filter")
+        it("sets active filter", async () => {
+          const filter = {fil : 'ter'}
+          htttp.get.mockResolvedValue({body : filter})
+
+          component.vm.load_filter(1);
+          await flushPromises();
+
+          expect(component.vm.active_filter).toEqual(filter)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_filter(1);
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filter: Error1")
+        })
       })
     })
 
     describe("#load_filter_matches", () => {
-      test.todo("submits filter_matches request")
+      it("submits filter_matches request", () => {
+        htttp.get.mockResolvedValue({body : []})
+        component.vm.load_filter_matches(1);
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filter/1/matches")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
 
       describe("success result", () => {
-        test.todo("sets converted filter_matches")
+        it("sets converted filter_matches", async () => {
+          const matches = [
+            {
+              Transaction : {
+                raw : {
+                  transaction : {tx : 1},
+                },
+                date : 'date1'}
+            },
+
+            {
+              Transaction : {
+                raw : {
+                  transaction : {tx : 2},
+                },
+                date : 'date2'
+              }
+            }
+          ]
+          htttp.get.mockResolvedValue({body : matches})
+
+          component.vm.load_filter_matches(1);
+          await flushPromises();
+
+          const expected = [
+            {
+              transaction : {
+                tx : 1,
+                date : 'date1'
+              },
+            },
+
+            {
+              transaction : {
+                tx : 2,
+                date : 'date2'
+              },
+            }
+          ]
+
+          expect(component.vm.filter_matches).toEqual(expected)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_filter_matches(1);
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filter matches: Error1")
+        })
       })
     })
 
     describe("#load_notifications", () => {
-      test.todo("submits notifications request")
+      it("submits notifications request", () => {
+        htttp.get.mockResolvedValue({})
+        component.vm.load_notifications(1);
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/notifications")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
 
       describe("success result", () => {
-        test.todo("sets notifications")
+        it("sets notifications", async () => {
+          const notifications = ['n1', 'n2']
+          htttp.get.mockResolvedValue({body : notifications})
+
+          component.vm.load_notifications();
+          await flushPromises();
+
+          expect(component.vm.notifications).toEqual(notifications)
+        })
       })
 
       describe("failed result", () => {
-        test.todo("alerts error")
+        it("alerts error", async () => {
+          htttp.get.mockRejectedValue({body : {error : 'error1'}})
+
+          component.vm.load_notifications(1);
+          await flushPromises();
+
+          expect(window.alert).toHaveBeenCalledTimes(1)
+          expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve notifications: Error1")
+        })
       })
     })
 
     describe("#update_user", () => {
-      test.todo("submits user request")
-      test.todo("returns request promise")
+      it("submits user request", () => {
+        const user = {us : 'er'}
+        component.vm.update_user(user);
+        expect(htttp.put).toHaveBeenCalledTimes(1)
+        expect(htttp.put.mock.calls[0][0]).toEqual(component.vm.backend_url + "/user")
+        expect(htttp.put.mock.calls[0][1]).toEqual(user)
+        expect(htttp.put.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.put.mockReturnValue(promise)
+
+        const user = {us : 'er'}
+        expect(component.vm.update_user(user)).toEqual(promise);
+      })
     })
 
     describe("#purchase_plan", () => {
