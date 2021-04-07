@@ -388,63 +388,198 @@ describe("server_api", () => {
     })
 
     describe("#purchase_plan", () => {
-      test.todo("submits purchase request")
-      test.todo("returns request promise")
+      it("submits purchase request", () => {
+        const plan = 'plan';
+        component.vm.purchase_plan(plan);
+        expect(htttp.post).toHaveBeenCalledTimes(1)
+        expect(htttp.post.mock.calls[0][0]).toEqual(component.vm.backend_url + "/purchase")
+        expect(htttp.post.mock.calls[0][1]).toEqual(plan)
+        expect(htttp.post.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.post.mockReturnValue(promise)
+
+        const plan = 'plan';
+        expect(component.vm.purchase_plan(plan)).toEqual(promise);
+      })
     })
 
     describe("#cancel_subscription", () => {
-      test.todo("submits cancel subscription request")
-      test.todo("returns request promise")
+      it("submits cancel subscription request", () => {
+        component.vm.cancel_subscription();
+        expect(htttp.post).toHaveBeenCalledTimes(1)
+        expect(htttp.post.mock.calls[0][0]).toEqual(component.vm.backend_url + "/cancel")
+        expect(htttp.post.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.post.mockReturnValue(promise)
+
+        expect(component.vm.cancel_subscription()).toEqual(promise);
+      })
     })
 
     describe("#reset_password", () => {
-      test.todo("submits reset password request")
-      test.todo("returns request promise")
+      it("submits reset password request", () => {
+        const params = {para : 'ms'}
+        component.vm.reset_password(params);
+        expect(htttp.put).toHaveBeenCalledTimes(1)
+        expect(htttp.put.mock.calls[0][0]).toEqual(component.vm.backend_url + "/reset")
+        expect(htttp.put.mock.calls[0][1]).toEqual(params)
+        expect(htttp.put.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.put.mockReturnValue(promise)
+
+        const params = {para : 'ms'}
+        expect(component.vm.reset_password(params)).toEqual(promise);
+      })
     })
 
     describe("#confirm_email", () => {
-      test.todo("submits confirm email request")
-      test.todo("returns request promise")
+      it("submits confirm email request", () => {
+        const params = {para : 'ms'}
+        component.vm.confirm_email(params);
+        expect(htttp.put).toHaveBeenCalledTimes(1)
+        expect(htttp.put.mock.calls[0][0]).toEqual(component.vm.backend_url + "/confirm")
+        expect(htttp.put.mock.calls[0][1]).toEqual(params)
+        expect(htttp.put.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.put.mockReturnValue(promise)
+
+        expect(component.vm.confirm_email()).toEqual(promise);
+      })
     })
 
     describe("#contact", () => {
-      test.todo("submits contact request")
-      test.todo("returns request promise")
+      it("submits contact request", () => {
+        const params = {para : 'ms'};
+        component.vm.contact(params);
+        expect(htttp.post).toHaveBeenCalledTimes(1)
+        expect(htttp.post.mock.calls[0][0]).toEqual(component.vm.backend_url + "/contact")
+        expect(htttp.post.mock.calls[0][1]).toEqual(params);
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.post.mockReturnValue(promise)
+
+        const params = {para : 'ms'}
+        expect(component.vm.contact(params)).toEqual(promise);
+      })
     })
 
     describe("#create_sink", () => {
-      test.todo("submits create sink request")
-      test.todo("returns request promise")
+      it("submits create sink request", () => {
+        const params = {para : 'ms'};
+        component.vm.create_sink(params);
+        expect(htttp.post).toHaveBeenCalledTimes(1)
+        expect(htttp.post.mock.calls[0][0]).toEqual(component.vm.backend_url + "/sink")
+        expect(htttp.post.mock.calls[0][1]).toEqual(params);
+        expect(htttp.post.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.post.mockReturnValue(promise)
+
+        const params = {para : 'ms'}
+        expect(component.vm.create_sink(params)).toEqual(promise);
+      })
     })
 
     describe("#delete_sink", () => {
-      test.todo("submits delete sink request")
-      test.todo("returns request promise")
+      it("submits delete sink request", () => {
+        component.vm.delete_sink(1);
+        expect(htttp.delete).toHaveBeenCalledTimes(1)
+        expect(htttp.delete.mock.calls[0][0]).toEqual(component.vm.backend_url + "/sink/1")
+        expect(htttp.delete.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.delete.mockReturnValue(promise)
+
+        expect(component.vm.delete_sink(1)).toEqual(promise);
+      })
     })
 
     describe("#create_filter", () => {
-      test.todo("submits create filter request")
-      test.todo("returns request promise")
-    })
+      it("submits create filter request", () => {
+        const params = {para : 'ms'};
+        component.vm.create_filter(params);
+        expect(htttp.post).toHaveBeenCalledTimes(1)
+        expect(htttp.post.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filter")
+        expect(htttp.post.mock.calls[0][1]).toEqual(params);
+        expect(htttp.post.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
 
-    describe("#delete_filter", () => {
-      test.todo("submits delete filter request")
-      test.todo("returns request promise")
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.post.mockReturnValue(promise)
+
+        const params = {para : 'ms'}
+        expect(component.vm.create_filter(params)).toEqual(promise);
+      })
     })
 
     describe("#update_filter", () => {
-      test.todo("submits update filter request")
-      test.todo("returns request promise")
+      it("submits update filter request", () => {
+        const params = {para : 'ms'};
+        component.vm.update_filter(1, params);
+        expect(htttp.put).toHaveBeenCalledTimes(1)
+        expect(htttp.put.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filter/1")
+        expect(htttp.put.mock.calls[0][1]).toEqual(params);
+        expect(htttp.put.mock.calls[0][2]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.put.mockReturnValue(promise)
+
+        const params = {para : 'ms'}
+        expect(component.vm.update_filter(params)).toEqual(promise);
+      })
     })
 
     describe("#delete_filter", () => {
-      test.todo("submits delete filter request")
-      test.todo("returns request promise")
+      it("submits delete filter request", () => {
+        component.vm.delete_filter(1);
+        expect(htttp.delete).toHaveBeenCalledTimes(1)
+        expect(htttp.delete.mock.calls[0][0]).toEqual(component.vm.backend_url + "/filter/1")
+        expect(htttp.delete.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.delete.mockReturnValue(promise)
+
+        expect(component.vm.delete_filter(1)).toEqual(promise);
+      })
     })
 
     describe("#load_notifications", () => {
-      test.todo("submits notification request")
-      test.todo("returns request promise")
+      it("submits notification request", () => {
+        component.vm.load_notification(1);
+        expect(htttp.get).toHaveBeenCalledTimes(1)
+        expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/notification/1")
+        expect(htttp.get.mock.calls[0][1]).toEqual(component.vm.auth_header)
+      })
+
+      it("returns request promise", () => {
+        const promise = new Promise((resolve, reject) => {})
+        htttp.get.mockReturnValue(promise)
+
+        expect(component.vm.load_notification(1)).toEqual(promise);
+      })
     })
   })
  })
