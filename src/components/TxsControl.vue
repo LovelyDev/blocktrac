@@ -12,7 +12,7 @@
       <img v-else        src="../assets/pause.svg" />
     </span>
 
-    <span id="clear_txs" class="txs_icon" v-on:click="clear_txs">
+    <span id="clear_txs" class="txs_icon" v-on:click="clear_txs()">
       <img src="../assets/trash-red.svg" />
     </span>
 
