@@ -1,4 +1,4 @@
-describe("AccountDetail", () => {
+describe("FilterSummary", () => {
   describe("dom", () => {
     describe(".filter_title", () => {
       test.todo("renders filter name")
