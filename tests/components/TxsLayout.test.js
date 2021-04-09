@@ -1,12 +1,60 @@
+import {
+  shallow_mount_vue,
+  next_tick
+} from '../setup'
+
+import TxsLayout     from '../../src/components/TxsLayout'
+import {breakpoints} from '../../src/mq'
+
 describe("TxsLayout", () => {
   describe("dom", () => {
     describe("#txs_title", () => {
-      test.todo("renders title")
+      it("renders title", () => {
+        var tl = shallow_mount_vue(TxsLayout, {
+          propsData : {
+            section : 'account'
+          },
+
+          computed : {
+            title : function(){
+              return 'ABC'
+            }
+          }
+        })
+
+        expect(tl.find("#txs_title").text()).toEqual("ABC")
+      })
     })
 
     describe("#txs_sidebar_container", () => {
       describe("mq > md", () => {
-        test.todo("is rendered")
+        it("is rendered", async () => {
+          global.innerWidth = breakpoints.md + 1;
+
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          await next_tick(tl);
+          expect(tl.find("#txs_sidebar_container").exists()).toBe(true);
+        })
+      })
+
+      describe("mq <= md", () => {
+        it("is not rendered", async () => {
+          global.innerWidth = breakpoints.md - 1;
+
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          await next_tick(tl);
+          expect(tl.find("#txs_sidebar_container").exists()).toBe(false);
+        })
       })
     })
   })
@@ -14,53 +62,141 @@ describe("TxsLayout", () => {
   describe("computed", () => {
     describe("#account", () => {
       describe("section == 'account'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          expect(tl.vm.account).toBe(true)
+        })
       })
 
       describe("section != 'account'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'notifications'
+            }
+          })
+
+          expect(tl.vm.account).toBe(false)
+        })
       })
     })
 
     describe("#notifications", () => {
       describe("section == 'notifications'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'notifications'
+            }
+          })
+
+          expect(tl.vm.notifications).toBe(true)
+        })
       })
 
       describe("section == 'notification'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'notification'
+            }
+          })
+
+          expect(tl.vm.notifications).toBe(true)
+        })
       })
 
       describe("section != 'notifications' && section != 'notification'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          expect(tl.vm.notifications).toBe(false)
+        })
       })
     })
 
-    describe("#account", () => {
+    describe("#live", () => {
       describe("section == 'txs'", () => {
-        test.todo("is true")
+        it("is true", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'txs'
+            }
+          })
+
+          expect(tl.vm.live).toBe(true)
+        })
       })
 
       describe("section != 'txs'", () => {
-        test.todo("is false")
+        it("is false", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          expect(tl.vm.live).toBe(false)
+        })
       })
     })
 
     describe("#title", () => {
       describe("account section", () => {
-        test.todo("is 'Accounts'")
+        it("is 'Accounts'", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'account'
+            }
+          })
+
+          expect(tl.vm.title).toEqual('Accounts')
+        })
       })
 
       describe("notifications section", () => {
-        test.todo("is 'Notifications'")
+        it("is 'Notifications'", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'notifications'
+            }
+          })
+
+          expect(tl.vm.title).toEqual('Notifications')
+        })
       })
 
       describe("live section", () => {
-        test.todo("is 'Live Transactions'")
+        it("is 'Live Transactions'", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'txs'
+            }
+          })
+
+          expect(tl.vm.title).toEqual('Live Transactions')
+        })
       })
 
       describe("other section", () => {
-        test.todo("is 'Transactions'")
+        it("is 'Transactions'", () => {
+          var tl = shallow_mount_vue(TxsLayout, {
+            propsData : {
+              section : 'foobar'
+            }
+          })
+
+          expect(tl.vm.title).toEqual('Transactions')
+        })
       })
     })
   })
