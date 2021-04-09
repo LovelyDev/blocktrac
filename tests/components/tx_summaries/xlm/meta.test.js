@@ -1,15 +1,44 @@
+import {shallow_mount_vue} from '../../../setup'
+
+import {load_streamed_tx_fixture} from '../../../fixtures'
+
+import Meta from '../../../../src/components/tx_summaries/xlm/meta'
+
+const Component = {
+  render() {},
+  mixins : [Meta]
+}
+
+const tx = load_streamed_tx_fixture('xlm')[0].transaction
+
 describe("tx_summaries xlm meta mixin", () => {
+  var meta
+
+  beforeEach(() => {
+    meta = shallow_mount_vue(Component, {
+      propsData : {
+        tx : tx
+      }
+    })
+  })
+
   describe("computed", () => {
     describe("#hash", () => {
-      test.todo("is tx.hash")
+      it("is tx.hash", () => {
+        expect(meta.vm.hash).toEqual(tx.hash)
+      })
     })
 
     describe("#account", () => {
-      test.todo("is tx.source_account")
+      it("is tx.source_account", () => {
+        expect(meta.vm.account).toEqual(tx.source_account)
+      })
     })
 
     describe("#tx_result", () => {
-      test.todo("is tx.result.result._type")
+      it("is tx.result.result._type", () => {
+        expect(meta.vm.tx_result).toEqual(tx.result.result._type)
+      })
     })
 
     describe("#success", () => {

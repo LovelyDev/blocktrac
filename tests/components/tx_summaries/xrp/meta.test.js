@@ -37,13 +37,17 @@ describe("tx_summaries xrp meta mixin", () => {
       })
     })
 
-    describe("#affected_notes", () => {
-      test.todo("is tx_meta['AffectedNodes']")
+    describe("#affected_nodes", () => {
+      it("is tx_meta['AffectedNodes']", () => {
+        expect(meta.vm.affected_nodes).toEqual(meta.vm.tx_meta['AffectedNodes'])
+        expect(meta.vm.affected_nodes).toEqual(tx.meta['AffectedNodes'])
+      })
     })
 
     describe("#tx_type", () => {
       it("is tx_obj['TransactionType']", () => {
         expect(meta.vm.tx_type).toEqual(meta.vm.tx_obj['TransactionType'])
+        expect(meta.vm.tx_type).toEqual(tx.transaction['TransactionType'])
       })
     })
 
@@ -54,12 +58,14 @@ describe("tx_summaries xrp meta mixin", () => {
     describe("#hash", () => {
       it("is tx_obj['hash']", () => {
         expect(meta.vm.hash).toEqual(meta.vm.tx_obj['hash'])
+        expect(meta.vm.hash).toEqual(tx.transaction['hash'])
       })
     })
 
     describe("#account", () => {
       it("is tx_obj['Account']", () => {
         expect(meta.vm.account).toEqual(meta.vm.tx_obj['Account'])
+        expect(meta.vm.account).toEqual(tx.transaction['Account'])
       })
     })
 
@@ -70,6 +76,7 @@ describe("tx_summaries xrp meta mixin", () => {
     describe("#tx_result", () => {
       it("is tx_meta['TransactionResult']", () => {
         expect(meta.vm.tx_result).toEqual(meta.vm.tx_meta['TransactionResult'])
+        expect(meta.vm.tx_result).toEqual(tx.meta['TransactionResult'])
       })
     })
 
