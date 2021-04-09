@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:id="id" />
+  <div :id="id" :ref="id" />
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
 
   watch : {
     data : function(){
-      var div = document.getElementById(this.id);
+      var div = this.$refs[this.id];
       var rendered = renderjson(this.data);
 
       div.innerHTML = "";
@@ -36,7 +36,7 @@ export default {
     if(this.level)
       renderjson.set_show_to_level(this.level);
 
-    var div = document.getElementById(this.id);
+    var div = this.$refs[this.id];
     var rendered = renderjson(this.data);
     div.appendChild(rendered)
   },
