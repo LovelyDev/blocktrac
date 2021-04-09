@@ -1,9 +1,14 @@
-import {shallow_mount_vue} from './setup'
+import {mount_vue} from './setup'
+
 import {stubbed_network}   from './stubs'
+
+import {load_static_tx_fixture} from './fixtures'
+
 import Tx from '../src/Tx.vue'
 
-// TODO: s/shallow_mount_vue/mount_vue
-// (load transactions fixture & convert in same manner as network-connection module)
+///
+
+const transaction = load_static_tx_fixture('xrp')[0];
 
 describe("Tx Page", () => {
   var tx, hash;
@@ -11,13 +16,11 @@ describe("Tx Page", () => {
   beforeEach(function(){
     hash = '0D580FBBBB57CB749C5872B180901A8DF7E42699D0BBDB446FC7B781C6E42B8F'
 
-    tx = shallow_mount_vue(Tx, {
+    tx = mount_vue(Tx, {
       propsData: {hash : hash},
 
       data : function(){
-        return {
-          tx : {transaction : {}}
-        }
+        return {tx : transaction}
       },
 
       mocks : {
@@ -54,9 +57,8 @@ describe("Tx Page", () => {
   describe("methods", () => {
     describe("on_tx", () => {
       it("sets tx", () => {
-        const _tx = {transaction : {}}
-        tx.vm.on_tx(_tx)
-        expect(tx.vm.tx).toEqual(_tx)
+        tx.vm.on_tx(transaction)
+        expect(tx.vm.tx).toEqual(transaction)
       })
     })
   })

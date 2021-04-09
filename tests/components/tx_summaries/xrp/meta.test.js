@@ -1,6 +1,6 @@
 import {shallow_mount_vue} from '../../../setup'
 
-import {load_fixture} from '../../../fixtures'
+import {load_streamed_tx_fixture} from '../../../fixtures'
 
 import Meta from '../../../../src/components/tx_summaries/xrp/meta'
 
@@ -9,7 +9,7 @@ const Component = {
   mixins : [Meta]
 }
 
-const tx = load_fixture('transactions/xrp')[0]
+const tx = load_streamed_tx_fixture('xrp')[0].transaction
 
 describe("tx_summaries xrp meta mixin", () => {
   var meta
