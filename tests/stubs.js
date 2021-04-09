@@ -189,14 +189,6 @@ function stubbed_htttp(){
 
 ///
 
-const fs = require('fs')
-
-// Load specified fixture
-function load_fixture(name){
-  return JSON.parse(fs.readFileSync("./tests/fixtures/" + name + ".json"))
-}
-
-
 // Default methods we stub
 function stub_defaults(){
   stub_match_media();
@@ -208,7 +200,6 @@ function stub_defaults(){
 
 // Export for use in tests
 module.exports = {
-  load_fixture,
   stub_defaults,
   stubbed_network_module,
   stubbed_network,

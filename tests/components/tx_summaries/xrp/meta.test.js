@@ -1,6 +1,6 @@
 import {shallow_mount_vue} from '../../../setup'
 
-import {load_fixture} from '../../../stubs'
+import {load_fixture} from '../../../fixtures'
 
 import Meta from '../../../../src/components/tx_summaries/xrp/meta'
 

@@ -1,5 +1,5 @@
 import {shallow_mount_vue} from '../../setup'
-import {load_fixture}      from '../../stubs'
+import {load_fixture}      from '../../fixtures'
 
 import CreateEditFilter from '../../../src/components/forms/CreateEditFilter'
 

@@ -3,9 +3,12 @@ import flushPromises from 'flush-promises'
 import {mount_vue}    from './setup'
 
 import {
-  load_fixture,
   stubbed_maintenance_mode as maintenance_mode
 } from './stubs'
+
+import {
+  load_fixture,
+} from './fixtures'
 
 import Notification from '../src/Notification.vue'
 

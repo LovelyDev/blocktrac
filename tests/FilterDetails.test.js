@@ -1,9 +1,12 @@
 import {mount_vue}    from './setup'
 
 import {
-  load_fixture,
   stubbed_maintenance_mode as maintenance_mode
 } from './stubs'
+
+import {
+  load_fixture
+} from './fixtures'
 
 import FilterDetails from '../src/FilterDetails.vue'
 
