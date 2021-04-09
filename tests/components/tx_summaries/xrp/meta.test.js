@@ -1,12 +1,40 @@
+import {shallow_mount_vue} from '../../../setup'
+
+import {load_fixture} from '../../../stubs'
+
+import Meta from '../../../../src/components/tx_summaries/xrp/meta'
+
+const Component = {
+  render() {},
+  mixins : [Meta]
+}
+
+const tx = load_fixture('transactions/xrp')[0]
+
 describe("tx_summaries xrp meta mixin", () => {
+  var meta
+
+  beforeEach(() => {
+    meta = shallow_mount_vue(Component, {
+      propsData : {
+        tx : tx
+      }
+    })
+  })
+
   describe("computed", () => {
     describe("#tx_obj", () => {
-      test.todo("is tx['transaction']")
+      it("is tx['transaction']", () => {
+        expect(meta.vm.tx_obj).toEqual(tx.transaction)
+      })
+
       test.todo("is tx['tx']")
     })
 
     describe("#tx_meta", () => {
-      test.todo("is tx['meta']")
+      it("is tx['meta']", () => {
+        expect(meta.vm.tx_meta).toEqual(tx.meta)
+      })
     })
 
     describe("#affected_notes", () => {
@@ -14,7 +42,9 @@ describe("tx_summaries xrp meta mixin", () => {
     })
 
     describe("#tx_type", () => {
-      test.todo("is tx_obj['TransactionType']")
+      it("is tx_obj['TransactionType']", () => {
+        expect(meta.vm.tx_type).toEqual(meta.vm.tx_obj['TransactionType'])
+      })
     })
 
     describe("#tx_short_type", () => {
@@ -22,11 +52,25 @@ describe("tx_summaries xrp meta mixin", () => {
     })
 
     describe("#hash", () => {
-      test.todo("is tx_obj['hash']")
+      it("is tx_obj['hash']", () => {
+        expect(meta.vm.hash).toEqual(meta.vm.tx_obj['hash'])
+      })
     })
 
     describe("#account", () => {
-      test.todo("is tx_meta['TransactionResult']")
+      it("is tx_obj['Account']", () => {
+        expect(meta.vm.account).toEqual(meta.vm.tx_obj['Account'])
+      })
+    })
+
+    describe("#tx_category", () => {
+      test.todo("is tx category for tx_type")
+    })
+
+    describe("#tx_result", () => {
+      it("is tx_meta['TransactionResult']", () => {
+        expect(meta.vm.tx_result).toEqual(meta.vm.tx_meta['TransactionResult'])
+      })
     })
 
     describe("#success", () => {
