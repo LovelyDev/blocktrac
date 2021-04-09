@@ -8,10 +8,6 @@ describe("network-connection plugin", () => {
     })
   })
 
-  describe("#_wrap_tx", () => {
-    test.todo("wraps tx in top level transaction object")
-  })
-
   describe("#_call_connected_callbacks", () => {
     test.todo("copies connected callbacks")
     test.todo("invokes callbacks")

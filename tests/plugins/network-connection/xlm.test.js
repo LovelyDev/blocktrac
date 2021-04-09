@@ -1,4 +1,14 @@
 describe("xlm network-connection module", () => {
+  describe("#prepare_static_tx", () => {
+    test.todo("converts and wraps tx")
+  })
+
+  describe("#prepare_streamed_tx", () => {
+    test.todo("converts and wraps tx")
+    test.todo("sets category on prepared tx")
+    test.todo("sets hash on prepared tx")
+  })
+
   describe("#reset", () => {
     test.todo("stops streaming transactions")
     test.todo("sets connected to false")
@@ -41,7 +51,7 @@ describe("xlm network-connection module", () => {
     describe("#retrieve_tx", () => {
       test.todo("retrieves tx from stellar server")
       describe("on retrieval", () => {
-        test.todo("invokes callback with wrapped converted tx")
+        test.todo("invokes callback with prepared tx")
       })
     })
 
@@ -49,11 +59,9 @@ describe("xlm network-connection module", () => {
       test.todo("calls txs callback to stop streaming")
       test.todo("streams transactions from stellar server")
       describe("message callback", () => {
-        test.todo("wraps and converts tx")
-        test.todo("sets category on wrapped tx")
-        test.todo("sets hash on wrapped tx")
-        test.todo("freezes wrapped tx")
-        test.todo("invokes callback with wrapped tx")
+        test.todo("prepares tx")
+        test.todo("freezes prepared tx")
+        test.todo("invokes callback with prepared tx")
       })
     })
 

@@ -16,6 +16,8 @@ const modules = {
 ///
 
 export default {
+  modules,
+
   install(Vue, options) {
     // Network variables
     Vue.prototype.network = {
@@ -30,12 +32,6 @@ export default {
     Vue.prototype.network._module = function(blockchain){
       if(!blockchain) blockchain = this.vue.active_blockchain;
       return modules[blockchain];
-    }
-
-    // Internal helper, wrap transaction in similar manner
-    // as ziti/workers/run_filters_workers
-    Vue.prototype.network._wrap_tx = function(tx){
-      return {transaction : tx};
     }
 
     // Internal helper, invoke connected callbacks

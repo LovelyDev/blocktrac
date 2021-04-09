@@ -7,6 +7,7 @@
 
 const RippleAPI = require('ripple-lib').RippleAPI;
 
+const {wrap_tx} = require("../../util").default
 const txs_config = require("../../config/txs")
 
 // XXX: Only used in the one-off transaction retrieval.
@@ -21,6 +22,24 @@ function convert_tx(tx){
   tx.meta = tx.transaction.meta;
   delete tx.transaction.meta;
   return tx
+}
+
+// Prepare statically received tx for internal processing
+function prepare_static_tx(tx){
+  return wrap_tx(convert_tx(tx))
+}
+
+// Prepare streamed tx for internal processing
+function prepare_streamed_tx(tx){
+  // Wrap transactions in same fashion as ziti
+  var prepared = wrap_tx(tx);
+
+  // Set fields used internally in zitui
+  const type = prepared.transaction.transaction.TransactionType;
+  prepared.category = txs_config.tx_category_for_type(type);
+  prepared.hash = prepared.transaction.transaction.hash;
+
+  return prepared;
 }
 
 // Initialize module
@@ -95,7 +114,7 @@ function retrieve_tx(id, cb){
   this.ripple_api
       .request('tx', { 'transaction' : id }
       ).then(function(tx){
-        cb(this._wrap_tx(convert_tx(tx)))
+        cb(prepare_static_tx(tx))
       }.bind(this))
 }
 
@@ -111,17 +130,12 @@ function stream_txs(cb){
         .off('transaction', txs_cb);
 
   txs_cb = function(tx){
-    // Wrap / Convert transactions in same fashion as ziti
-    var wrapped = this._wrap_tx(tx);
-
-    // Set fields used internally in zitui
-    const type = wrapped.transaction.transaction.TransactionType;
-    wrapped.category = txs_config.tx_category_for_type(type);
-    wrapped.hash = wrapped.transaction.transaction.hash;
+    const prepared = prepare_streamed_tx(tx);
 
     // Freeze transaction objects to improve performance
-    Object.freeze(wrapped);
-    cb(wrapped)
+    Object.freeze(prepared);
+
+    cb(prepared)
   }.bind(this)
 
   this.ripple_api
@@ -153,6 +167,9 @@ function stop_streaming_txs(){
 ///
 
 module.exports = {
+  prepare_static_tx,
+  prepare_streamed_tx,
+
   init,
   reset,
   connect,

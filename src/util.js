@@ -142,6 +142,14 @@ export default {
 
   ///
 
+  // Wrap received transaction
+  // XXX: copied from ziti/workers/run_filters_workers
+  wrap_tx : function(tx){
+    return {transaction : tx};
+  },
+
+  ///
+
   // XXX: validator methods copied from ziti util module
 
   // Return bool if input is valid jsonpath expression

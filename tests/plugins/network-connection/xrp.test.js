@@ -1,4 +1,14 @@
 describe("xrp network-connection module", () => {
+  describe("#prepare_static_tx", () => {
+    test.todo("converts and wraps tx")
+  })
+
+  describe("#prepare_streamed_tx", () => {
+    test.todo("wraps tx")
+    test.todo("sets category on prepared tx")
+    test.todo("sets hash on prepared tx")
+  })
+
   describe("#convert_tx", () => {
     test.todo("wraps tx in transaction object")
     test.todo("moves meta to the top level object and deletes it from transaction")
@@ -60,7 +70,7 @@ describe("xrp network-connection module", () => {
 
   describe("#retrieve_tx", () => {
     test.todo("invokes ripple_api.request('tx')")
-    test.todo("invokes callback w/ wrapped/converted tx")
+    test.todo("invokes callback w/ prepared tx")
   })
 
   describe("#stream_tx", () => {
@@ -68,11 +78,9 @@ describe("xrp network-connection module", () => {
     test.todo("sets transaction callback")
 
     describe("transaction callback", () => {
-      test.todo("wraps tx")
-      test.todo("sets category on wrapped tx")
-      test.todo("sets hash on wrapped tx")
-      test.todo("freezes wrapped tx")
-      test.todo("invokes callback with wrapped tx")
+      test.todo("prepared tx")
+      test.todo("freezes prepared tx")
+      test.todo("invokes callback with prepared tx")
     })
 
     test.todo("subscribes to ripple_api transaction stream")

@@ -126,6 +126,10 @@ describe("util", () => {
     })
   })
 
+  describe("#wrap_tx", () => {
+    test.todo("wraps tx in top level transaction object")
+  })
+
   describe("#is_valid_jsonpath", () => {
     describe("jsonpath can be parsed", () => {
       test.todo("returns true")
