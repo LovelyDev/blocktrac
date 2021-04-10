@@ -2,13 +2,15 @@
   {
     "id" : 1,
 
+    "timestamp" : "2021-04-10 17:10:00",
+
     "Filter" : {
       "name" : "filter1"
     },
 
     "Sink" : {
       "type" : "email",
-      "value" : "e@ma.il"
+      "target" : "e@ma.il"
     },
 
     "FilterMatches" : [
@@ -43,13 +45,15 @@
   {
     "id" : 2,
 
+    "timestamp" : "2021-04-10 17:11:50",
+
     "Filter" : {
       "name" : "filter2"
     },
 
     "Sink" : {
       "type" : "email",
-      "value" : "e@ma.il"
+      "target" : "e@ma.il"
     },
 
     "FilterMatches" : [
