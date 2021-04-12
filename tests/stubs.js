@@ -177,6 +177,18 @@ function stubbed_maintenance_mode(){
 
 ///
 
+// Stubbed validatable module
+
+function stubbed_validatable(){
+  return {
+    methods : {
+      validate : jest.fn()
+    }
+  }
+}
+
+///
+
 // Stubbed htttp module
 function stubbed_htttp(){
   return {
@@ -204,5 +216,6 @@ module.exports = {
   stubbed_network_module,
   stubbed_network,
   stubbed_maintenance_mode,
+  stubbed_validatable,
   stubbed_htttp
 }
