@@ -35,7 +35,7 @@ describe("FilterList", () => {
         const matches = link.find(".filter_matches")
 
         expect(link.attributes("to")).toEqual("/filter/" + filter.id)
-        expect(summary.exists()).toBe(true);
+        expect(summary).toExist()
         expect(matches.text()).toBe(filter.total_matches.toString())
       }
     })

@@ -34,7 +34,7 @@ describe("FilterTester Page", () => {
     describe("no matched_tests", () => {
       it("renders no matches content", () => {
         const filter_tester = mount_vue(FilterTester, {mixins : [server_api]})
-        expect(filter_tester.find("#no_matches").exists()).toBe(true)
+        expect(filter_tester.find("#no_matches")).toExist()
       })
 
       describe("#duplicate_link", () => {

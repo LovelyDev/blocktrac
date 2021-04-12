@@ -44,8 +44,8 @@ describe("FilterHeader", () => {
 
         const fh = shallow_mount_vue(FilterHeader)
         await next_tick(fh)
-        expect(fh.find('#filter_header > filteractions-stub').exists()).toBe(true)
-        expect(fh.find('#expand_actions > b-popover_stub > FilterActions-stub').exists()).toBe(false)
+        expect(fh.find('#filter_header > filteractions-stub')).toExist()
+        expect(fh.find('#expand_actions > b-popover_stub > FilterActions-stub')).not.toExist()
       })
     })
 
@@ -55,8 +55,8 @@ describe("FilterHeader", () => {
 
         const fh = shallow_mount_vue(FilterHeader)
         await next_tick(fh)
-        expect(fh.find('#filter_header > filteractions-stub').exists()).toBe(false)
-        expect(fh.find('#expand_actions > b-popover-stub > filteractions-stub').exists()).toBe(true)
+        expect(fh.find('#filter_header > filteractions-stub')).not.toExist()
+        expect(fh.find('#expand_actions > b-popover-stub > filteractions-stub')).toExist()
       })
     })
 

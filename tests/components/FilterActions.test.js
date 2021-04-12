@@ -14,7 +14,7 @@ describe("FilterActions", () => {
           }
         })
 
-        expect(fa.find("#live_link").exists()).toBe(true)
+        expect(fa.find("#live_link")).toExist()
       })
     })
 
@@ -28,7 +28,7 @@ describe("FilterActions", () => {
           }
         })
 
-        expect(fa.find("#test_link").exists()).toBe(true)
+        expect(fa.find("#test_link")).toExist()
       })
     })
 

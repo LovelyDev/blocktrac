@@ -38,7 +38,7 @@ describe("TxsLayout", () => {
           })
 
           await next_tick(tl);
-          expect(tl.find("#txs_sidebar_container").exists()).toBe(true);
+          expect(tl.find("#txs_sidebar_container")).toExist()
         })
       })
 
@@ -53,7 +53,7 @@ describe("TxsLayout", () => {
           })
 
           await next_tick(tl);
-          expect(tl.find("#txs_sidebar_container").exists()).toBe(false);
+          expect(tl.find("#txs_sidebar_container")).not.toExist()
         })
       })
     })

@@ -54,7 +54,7 @@ describe("TxsSideBar", () => {
             }
           })
 
-          expect(ts.find("#live_nav").exists()).toBe(false)
+          expect(ts.find("#live_nav")).not.toExist()
         })
       })
     })
@@ -69,7 +69,7 @@ describe("TxsSideBar", () => {
           }
         })
 
-        expect(ts.find('accountmonitor-stub').exists()).toBe(true)
+        expect(ts.find('accountmonitor-stub')).toExist()
       })
     })
 
@@ -83,7 +83,7 @@ describe("TxsSideBar", () => {
           }
         })
 
-        expect(ts.find('accountmonitor-stub').exists()).toBe(false)
+        expect(ts.find('accountmonitor-stub')).not.toExist()
       })
     })
   })

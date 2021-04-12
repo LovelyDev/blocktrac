@@ -48,7 +48,7 @@ describe("FilterDetails Page", () => {
     describe("no filter_matches", () => {
       it("renders no matches content", () => {
         const filter_details = mount_vue(FilterDetails, {mixins : [server_api]})
-        expect(filter_details.find("#no_matches").exists()).toBe(true)
+        expect(filter_details.find("#no_matches")).toExist()
       })
 
 

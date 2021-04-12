@@ -39,7 +39,7 @@ describe("MyFilters", () => {
             }
           })
 
-          expect(mf.find("#add_new_filter").exists()).toBe(true)
+          expect(mf.find("#add_new_filter")).toExist()
         })
       })
 
@@ -57,7 +57,7 @@ describe("MyFilters", () => {
             }
           })
 
-          expect(mf.find("#add_new_filter").exists()).toBe(false)
+          expect(mf.find("#add_new_filter")).not.toExist()
         })
       })
 

@@ -31,7 +31,7 @@ describe("CreateEditFilter", () => {
     describe("#by_category", () => {
       describe("!editing_filter && !saving_filter", () => {
         it("is rendered", () => {
-          expect(create_edit_filter().find("#by_category").exists()).toBe(true)
+          expect(create_edit_filter().find("#by_category")).toExist()
         })
       })
 
@@ -45,7 +45,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(cef.find("#by_category").exists()).toBe(false)
+          expect(cef.find("#by_category")).not.toExist()
         })
       })
 
@@ -59,7 +59,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(cef.find("#by_category").exists()).toBe(false)
+          expect(cef.find("#by_category")).not.toExist()
         })
       })
 
@@ -90,7 +90,7 @@ describe("CreateEditFilter", () => {
     describe("#by_expression", () => {
       describe("!editing_filter && !saving_filter", () => {
         it("is rendered", () => {
-          expect(create_edit_filter().find("#by_expression").exists()).toBe(true)
+          expect(create_edit_filter().find("#by_expression")).toExist()
         })
       })
 
@@ -104,7 +104,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(cef.find("#by_expression").exists()).toBe(false)
+          expect(cef.find("#by_expression")).not.toExist()
         })
       })
 
@@ -118,7 +118,7 @@ describe("CreateEditFilter", () => {
             }
           })
 
-          expect(cef.find("#by_expression").exists()).toBe(false)
+          expect(cef.find("#by_expression")).not.toExist()
         })
       })
 
@@ -180,7 +180,7 @@ describe("CreateEditFilter", () => {
           }
         })
 
-        expect(cef.find("#blockchain_select").exists()).toBe(false)
+        expect(cef.find("#blockchain_select")).not.toExist()
       })
     })
 
