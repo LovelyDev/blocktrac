@@ -15,6 +15,9 @@ module.exports = {
   // display maintenance page
   MAINTENANCE_MODE : false,
 
+  // Enable to disable registration
+  REGISTRATION_DISABLED : false, // TODO handle
+
   // How often status is refreshed (in ms)
   STATUS_REFRESH : 1500,
 
