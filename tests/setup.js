@@ -4,6 +4,9 @@
  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
+// custom matchers
+import './matchers'
+
 // XXX: vue-reactive-cookie depends on js-cookie,
 //      use that to reset cookies below
 import Cookies from 'js-cookie';
