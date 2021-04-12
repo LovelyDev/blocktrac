@@ -17,11 +17,13 @@
 
         <div v-show="enable_controls"
                 id="controls_wrapper">
-          <b-button @click="reset_form">
+          <b-button id="profile_cancel"
+                    @click="reset_form">
             Cancel
           </b-button>
 
-          <b-button :disabled="!is_valid"
+          <b-button id="profile_save"
+                    :disabled="!is_valid"
                     @click="save_profile">
             Save
           </b-button>

@@ -1,4 +1,9 @@
-import {mount_vue} from './setup'
+import {
+  mount_vue,
+  next_tick
+} from './setup'
+
+import {stubbed_validatable} from './stubs'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -7,40 +12,104 @@ import {
 import Profile from '../src/Profile.vue'
 
 describe("Profile Page", () => {
+  var profile
+
+  beforeEach(function(){
+    profile = mount_vue(Profile)
+  })
+
   describe("dom", () => {
     describe("profile form", () => {
       describe("editing", () => {
-        test.todo("enable_controls = true")
+        it("sets enable_controls = true", () => {
+          profile.find("#profile_form").vm.$emit('editing')
+          expect(profile.vm.enable_controls).toBe(true)
+        })
       })
 
       describe("not editing", () => {
-        test.todo("enable_controls = false")
+        it("enable_controls = false", () => {
+          profile.find("#profile_form").vm.$emit('editing')
+          profile.find("#profile_form").vm.$emit('not_editing')
+          expect(profile.vm.enable_controls).toBe(false)
+        })
       })
 
       describe("validated event", () => {
-        test.todo("validates")
+        it("validates", () => {
+          const validatable = stubbed_validatable()
+          profile = mount_vue(Profile, {
+            mixins : [validatable]
+          })
+
+          const evnt = {ev : 'nt'}
+          profile.find("#profile_form").vm.$emit('validated')
+          expect(profile.vm.enable_controls).toBe(false)
+          expect(validatable.methods.validate).toHaveBeenCalledTimes(1)
+        })
       })
     })
 
     describe("controls wrapper", () => {
       describe("controls are enabled", () => {
-        test.todo("is rendered")
+        it("is rendered", async () => {
+          profile.setData({enable_controls : true})
+          await next_tick(profile);
+          expect(profile.find("#controls_wrapper")).toBeVisible()
+        })
       })
 
       describe("controls are not enabled", () => {
-        test.todo("is not rendered")
-      })
-
-      describe("cancel button", () => {
-        describe("clicked", () => {
-          test.todo("resets form")
+        it("is not rendered", async () => {
+          profile.setData({enable_controls : false})
+          await next_tick(profile);
+          expect(profile.find("#controls_wrapper")).not.toBeVisible()
         })
       })
 
-      describe("save button", () => {
+      describe("#profile_cancel", () => {
+
         describe("clicked", () => {
-          test.todo("saves profile")
+          it("resets form", async () => {
+            const actions = {
+              methods : {
+                  reset_form : jest.fn()
+              }
+            }
+            profile = mount_vue(Profile, {
+              mixins : [actions]
+            })
+
+            profile.setData({enable_controls : true})
+            await next_tick(profile);
+            profile.find("#profile_cancel").trigger("click")
+            expect(actions.methods.reset_form).toHaveBeenCalledTimes(1)
+          })
         })
+      })
+
+      describe("#profile_save", () => {
+        describe("clicked", () => {
+          it("saves profile", async () => {
+            const actions = {
+              methods : {
+                  reset_form : jest.fn()
+              }
+            }
+            profile = mount_vue(Profile, {
+              mixins : [actions]
+            })
+
+            profile.find("#profile_cancel").trigger("click")
+            expect(actions.methods.reset_form).toHaveBeenCalledTimes(1)
+          })
+        })
+      })
+    })
+
+    describe("CancelSubscriptionModal", () => {
+      describe("cancelled", () => {
+        test.todo("calls load_user")
       })
     })
   })
