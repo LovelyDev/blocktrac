@@ -24,6 +24,7 @@ export function vue_init(Vue){
       network_initialized : false,
 
       // Blockchain selected via control
+      // FIXME: need to persist this through page reloads (reload on the /tx page for example)
       selected_blockchain : network_config.DEFAULT_BLOCKCHAIN,
 
       // Logged in user
