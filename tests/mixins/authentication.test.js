@@ -1,7 +1,10 @@
 import zxcvbn  from "zxcvbn"
-import flushPromises from 'flush-promises'
 
-import {shallow_mount_vue} from '../setup'
+import {
+  shallow_mount_vue,
+  flush_promises
+} from '../setup'
+
 import {stubbed_htttp} from '../stubs'
 import Authentication from '../../src/mixins/authentication'
 
@@ -522,7 +525,7 @@ describe("authentication", () => {
           htttp.post.mockResolvedValue({})
 
           component.vm.register();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.in_progress_filter).toEqual({})
         })
@@ -531,7 +534,7 @@ describe("authentication", () => {
           htttp.post.mockResolvedValue({})
 
           component.vm.register();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Please check your email to complete registration")
@@ -543,7 +546,7 @@ describe("authentication", () => {
           htttp.post.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.register();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("There was a problem registering: Error1")
@@ -591,7 +594,7 @@ describe("authentication", () => {
           htttp.post.mockResolvedValue({body : {authToken : 'token'}})
 
           component.vm.login();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.in_progress_filter).toEqual({})
         })
@@ -602,7 +605,7 @@ describe("authentication", () => {
           htttp.post.mockResolvedValue({body : {authToken : 'token'}})
 
           component.vm.login();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.auth_token).toEqual("token")
         })
@@ -613,7 +616,7 @@ describe("authentication", () => {
           htttp.post.mockResolvedValue({body : {authToken : 'token'}})
 
           component.vm.login();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.load_user).toHaveBeenCalledTimes(1)
         })
@@ -624,7 +627,7 @@ describe("authentication", () => {
           htttp.post.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.login();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not login: Error1")
@@ -637,7 +640,7 @@ describe("authentication", () => {
         htttp.get.mockResolvedValue({body : {}})
 
         component.vm.load_user();
-        await flushPromises();
+        await flush_promises();
 
         expect(htttp.get).toHaveBeenCalledTimes(1)
         expect(htttp.get.mock.calls[0][0]).toEqual(component.vm.backend_url + "/user")
@@ -649,7 +652,7 @@ describe("authentication", () => {
           htttp.get.mockResolvedValue({body : {email : 'e@ma.il'}})
 
           component.vm.load_user();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.user.email).toEqual('e@ma.il')
         })
@@ -660,7 +663,7 @@ describe("authentication", () => {
           htttp.get.mockRejectedValue({})
 
           component.vm.load_user();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
         })
@@ -670,7 +673,7 @@ describe("authentication", () => {
           htttp.get.mockRejectedValue({})
 
           component.vm.load_user();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.auth_token).toBe(undefined)
         })
@@ -680,7 +683,7 @@ describe("authentication", () => {
           htttp.get.mockRejectedValue({})
 
           component.vm.load_user();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.user.email).toEqual('');
         })
@@ -689,7 +692,7 @@ describe("authentication", () => {
           htttp.get.mockRejectedValue({})
 
           component.vm.load_user();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$route.path).toEqual('/txs');
         })
@@ -701,7 +704,7 @@ describe("authentication", () => {
         htttp.delete.mockResolvedValue({})
 
         component.vm.logout();
-        await flushPromises();
+        await flush_promises();
 
         expect(htttp.delete).toHaveBeenCalledTimes(1)
         expect(htttp.delete.mock.calls[0][0]).toEqual(component.vm.backend_url + "/logout")
@@ -713,7 +716,7 @@ describe("authentication", () => {
           htttp.delete.mockResolvedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.auth_token).toBe(undefined)
         })
@@ -723,7 +726,7 @@ describe("authentication", () => {
           htttp.delete.mockResolvedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.user.email).toEqual('');
         })
@@ -732,7 +735,7 @@ describe("authentication", () => {
           htttp.delete.mockResolvedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$route.path).toEqual('/txs');
         })
@@ -744,7 +747,7 @@ describe("authentication", () => {
           htttp.delete.mockRejectedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.auth_token).toBe(undefined)
         })
@@ -754,7 +757,7 @@ describe("authentication", () => {
           htttp.delete.mockRejectedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$store.state.user.email).toEqual('');
         })
@@ -763,7 +766,7 @@ describe("authentication", () => {
           htttp.delete.mockRejectedValue({})
 
           component.vm.logout();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.$route.path).toEqual('/txs');
         })
@@ -777,7 +780,7 @@ describe("authentication", () => {
         htttp.put.mockResolvedValue({})
 
         component.vm.reset_password();
-        await flushPromises();
+        await flush_promises();
 
         expect(htttp.put).toHaveBeenCalledTimes(1)
         expect(htttp.put.mock.calls[0][0]).toEqual(component.vm.backend_url + "/reset")
@@ -789,7 +792,7 @@ describe("authentication", () => {
           htttp.put.mockResolvedValue({})
 
           component.vm.reset_password();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Please check your email for password reset instructions")
@@ -801,7 +804,7 @@ describe("authentication", () => {
           htttp.put.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.reset_password();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not reset password: Error1")

@@ -1,3 +1,6 @@
+// Import / export for use in tests
+import flushPromises from 'flush-promises'
+
 // Vue initializers
 import { vue_init } from '../src/init'
 
@@ -74,5 +77,6 @@ module.exports = {
   create_vue,
   mount_vue,
   shallow_mount_vue,
-  next_tick
+  next_tick,
+  flush_promises : flushPromises
 }

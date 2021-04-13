@@ -1,6 +1,8 @@
-import flushPromises from 'flush-promises'
+import {
+  shallow_mount_vue,
+  flush_promises
+} from '../setup'
 
-import {shallow_mount_vue} from '../setup'
 import {stubbed_htttp} from '../stubs'
 
 import config from '../../src/config/config'
@@ -146,7 +148,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : templates})
 
           component.vm.load_templates();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.templates).toEqual(templates)
         })
@@ -157,7 +159,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_templates();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve templates: Error1")
@@ -180,7 +182,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : sinks})
 
           component.vm.load_sinks();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.sinks).toEqual(sinks)
         })
@@ -191,7 +193,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_sinks();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve sinks: Error1")
@@ -214,7 +216,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : filters})
 
           component.vm.load_filters();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.filters).toEqual(filters)
         })
@@ -225,7 +227,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_filters();
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filters: Error1")
@@ -248,7 +250,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : filter})
 
           component.vm.load_filter(1);
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.active_filter).toEqual(filter)
         })
@@ -259,7 +261,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_filter(1);
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filter: Error1")
@@ -299,7 +301,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : matches})
 
           component.vm.load_filter_matches(1);
-          await flushPromises();
+          await flush_promises();
 
           const expected = [
             {
@@ -326,7 +328,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_filter_matches(1);
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve filter matches: Error1")
@@ -349,7 +351,7 @@ describe("server_api", () => {
           htttp.get.mockResolvedValue({body : notifications})
 
           component.vm.load_notifications();
-          await flushPromises();
+          await flush_promises();
 
           expect(component.vm.notifications).toEqual(notifications)
         })
@@ -360,7 +362,7 @@ describe("server_api", () => {
           htttp.get.mockRejectedValue({body : {error : 'error1'}})
 
           component.vm.load_notifications(1);
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not retrieve notifications: Error1")

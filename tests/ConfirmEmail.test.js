@@ -1,6 +1,7 @@
-import flushPromises from 'flush-promises'
-
-import {mount_vue}  from './setup'
+import {
+  mount_vue,
+  flush_promises
+} from './setup'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -50,7 +51,7 @@ describe("ConfirmEmail page", () => {
             propsData : {code : 'code'}
           })
 
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Email successfully confirmed, you may now login")
@@ -62,7 +63,7 @@ describe("ConfirmEmail page", () => {
             propsData : {code : 'code'}
           })
 
-          await flushPromises();
+          await flush_promises();
 
           expect(confirm_email.vm.$route.path).toEqual("/txs")
         })
@@ -85,7 +86,7 @@ describe("ConfirmEmail page", () => {
             propsData : {code : 'code'}
           })
 
-          await flushPromises();
+          await flush_promises();
 
           expect(window.alert).toHaveBeenCalledTimes(1)
           expect(window.alert.mock.calls[0][0]).toEqual("Could not confirm email: Error")
@@ -97,7 +98,7 @@ describe("ConfirmEmail page", () => {
             propsData : {code : 'code'}
           })
 
-          await flushPromises();
+          await flush_promises();
 
           expect(confirm_email.vm.$route.path).toEqual("/txs")
         })

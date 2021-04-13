@@ -1,6 +1,7 @@
-import flushPromises from 'flush-promises'
-
-import {mount_vue}    from './setup'
+import {
+  mount_vue,
+  flush_promises
+} from './setup'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -36,7 +37,7 @@ describe("Notification Page", () => {
   describe("dom", () => {
     it("renders notification filter matches", async () => {
       const notification = mount_vue(Notification, { mixins : [server_api] })
-      await flushPromises()
+      await flush_promises()
 
       const matches = notification.findAll(".tx_summary_container")
       expect(matches.length).toEqual(data.FilterMatches.length)
@@ -54,7 +55,7 @@ describe("Notification Page", () => {
 
     it("loads notification", async() => {
       const notification = mount_vue(Notification, { mixins : [server_api] })
-      await flushPromises()
+      await flush_promises()
       expect(server_api.methods.load_notification).toHaveBeenCalledTimes(1)
     })
 
@@ -64,7 +65,7 @@ describe("Notification Page", () => {
         const orig = JSON.parse(JSON.stringify(data))
 
         const notification = mount_vue(Notification, { mixins : [server_api] })
-        await flushPromises()
+        await flush_promises()
 
         expect(notification.vm.notification.FilterMatches.length).toEqual(orig.FilterMatches.length)
         for(var fm = 0; fm < orig.FilterMatches.length; fm += 1){
