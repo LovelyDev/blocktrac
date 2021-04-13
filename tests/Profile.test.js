@@ -1,6 +1,7 @@
 import {
   mount_vue,
-  next_tick
+  next_tick,
+  flush_promises
 } from './setup'
 
 import {stubbed_validatable} from './stubs'
@@ -116,44 +117,126 @@ describe("Profile Page", () => {
 
   describe("methods", () => {
     describe("#reset_form", () => {
-      test.todo("resets form")
+      it("resets form", () => {
+        profile.vm.$refs.form.reset = jest.fn();
+        profile.vm.reset_form();
+        expect(profile.vm.$refs.form.reset).toHaveBeenCalledTimes(1)
+      })
     })
 
     describe("#save_profile", () => {
-      test.todo("submits update_user request")
+      var response, server_api;
+
+      beforeEach(function(){
+        response = {res : 'ponse'};
+
+        server_api = {
+          methods : {
+            update_user : jest.fn().mockResolvedValue(response)
+          }
+        }
+
+        profile = mount_vue(Profile, {
+          mixins : [server_api]
+        })
+      })
+
+      it("submits update_user request", () => {
+        profile.vm.save_profile()
+        expect(server_api.methods.update_user).toHaveBeenCalledTimes(1)
+        expect(server_api.methods.update_user.mock.calls[0][0]).toEqual({})
+      })
 
       describe("editing email", () => {
-        test.todo("specifies email")
+        it("specifies email", () => {
+          profile.vm.$refs.form.editing_email = true;
+          profile.vm.$refs.form.auth_email = 'em@ai.l';
+          profile.vm.save_profile()
+          expect(server_api.methods.update_user.mock.calls[0][0]).toEqual({email : 'em@ai.l'})
+        })
       })
 
       describe("editing password", () => {
-        test.todo("specifies password")
+        it("specifies password", () => {
+          profile.vm.$refs.form.editing_password = true;
+          profile.vm.$refs.form.auth_password = 'pass.word';
+          profile.vm.save_profile()
+          expect(server_api.methods.update_user.mock.calls[0][0]).toEqual({password : 'pass.word'})
+        })
       })
 
       describe("editing credit_card", () => {
-        test.todo("specifies credit_card")
+        it("specifies credit_card", () => {
+          profile.vm.$refs.form.credit_card_number = '12345';
+          profile.vm.$refs.form.editing_credit_card = true;
+          profile.vm.save_profile()
+          expect(server_api.methods.update_user.mock.calls[0][0]).toEqual({credit_card : profile.vm.$refs.form.credit_card_params})
+          expect(server_api.methods.update_user.mock.calls[0][0].credit_card.number).toEqual('12345')
+        })
       })
 
       describe("successful response", () => {
-        test.todo("alerts success")
+        it("resets form", async () => {
+          profile.vm.reset_form = jest.fn()
+          profile.vm.save_profile()
+          await flush_promises();
+          expect(profile.vm.reset_form).toHaveBeenCalledTimes(1)
+        })
+
+        it("alerts success", async () => {
+          profile.vm.save_profile()
+          await flush_promises();
+          expect(window.alert).toHaveBeenCalledTimes(1)
+        })
 
         describe("editing password", () => {
-          test.todo("alerts password success")
+          it("alerts password success", async () => {
+            profile.vm.$refs.form.editing_password = true;
+            profile.vm.save_profile()
+            await flush_promises();
+            expect(window.alert.mock.calls[0][0]).toEqual('Password was updated.\n')
+          })
         })
 
         describe("editing credit_card", () => {
-          test.todo("alerts credit_card success")
+          it("alerts credit_card success", async () => {
+            profile.vm.$refs.form.editing_credit_card = true;
+            profile.vm.save_profile()
+            await flush_promises();
+            expect(window.alert.mock.calls[0][0]).toEqual('Credit card was updated.\n')
+          })
         })
 
         describe("editing email", () => {
-          test.todo("alerts email success")
+          it("alerts email success", async () => {
+            profile.vm.$refs.form.editing_email = true;
+            profile.vm.save_profile()
+            await flush_promises();
+            expect(window.alert.mock.calls[0][0]).toEqual('Confirmation code was sent to your new email')
+          })
         })
-
-        test.todo("resets form")
       })
 
       describe("response failure", () => {
-        test.todo("alerts error")
+        var err;
+        it("alerts error", async () => {
+          err = {body : {error : 'error1'}}
+
+          server_api = {
+            methods : {
+              update_user : jest.fn().mockRejectedValue(err)
+            }
+          }
+
+          profile = mount_vue(Profile, {
+            mixins : [server_api]
+          })
+
+          profile.vm.save_profile()
+          await flush_promises();
+          expect(window.alert).toHaveBeenCalledTimes(1);
+          expect(window.alert.mock.calls[0][0]).toEqual('Could not save profile: Error1')
+        })
       })
     })
   })
