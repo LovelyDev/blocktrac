@@ -58,7 +58,7 @@ All servers prerequisites
 ziti_db
 -------
 base setup:
-- adduser ziti
+- adduser ziti (or other username)
 - passwd ziti
 
 postgrsql setup:
@@ -118,7 +118,7 @@ ziti_api
 --------
 base setup:
 - <Set ziti_db ip in /etc/hosts>
-- adduser ziti
+- adduser ziti (or other username)
 - passwd ziti
 - touch /var/log/ziti.log
 - chown ziti.ziti /var/log/ziti.log
@@ -162,7 +162,9 @@ ziti setup:
 - NODE_ENV='production' yarn db:migrate
 - NODE_ENV='production' yarn db:seed
 - <as root>
-- ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
+- cp /home/ziti/ziti/config/*.service /lib/systemd/system/
+  - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
+  - if monitoring multiple blockchains cp ziti-txs to ziti-txs-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately
 - systemctl daemon-reload
 - systemctl start ziti-api
 - systemctl enable ziti-api
@@ -218,7 +220,7 @@ ziti_worker1/ziti_worker2
 -------------------------
 base setup:
 - <Set ziti_db ip in /etc/hosts>
-- adduser ziti
+- adduser ziti (or other username)
 - passwd ziti
 - touch /var/log/ziti.log
 - chown ziti.ziti /var/log/ziti.log
@@ -259,7 +261,9 @@ ziti setup:
 - edit config/auth.js to set email and twilio credentials (production, worker2 only)
 - edit config/network.js to set network
 - <as root>
-- ln -s /home/ziti/ziti/config/*.service /lib/systemd/system/
+- cp /home/ziti/ziti/config/*.service /lib/systemd/system/
+  - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
+  - if monitoring multiple blockchains cp ziti-filters to ziti-filters-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately (worker1 only)
 - systemctl daemon-reload
 - worker1:
   - systemctl start ziti-filters
@@ -272,7 +276,7 @@ ziti setup:
 zitui
 -----
 base setup:
-- adduser ziti
+- adduser ziti (or other username)
 - passwd ziti
 - touch /var/log/ziti.log
 - chown ziti.ziti /var/log/ziti.log
@@ -355,7 +359,7 @@ letsencrypt certificate:
 zitz1
 -----------
 - <Set ziti_db ip in /etc/hosts>
-- adduser ziti
+- adduser ziti (or other username)
 - passwd ziti
 
 postgresql setup:
