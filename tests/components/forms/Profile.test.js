@@ -1,45 +1,192 @@
+import {
+  shallow_mount_vue,
+  mount_vue,
+  next_tick
+} from '../../setup'
+
+import {breakpoints} from '../../../src/mq'
+
+import Profile from '../../../src/components/forms/Profile'
+
 describe("Profile", () => {
   describe("dom", () => {
     describe("row[1]", () => {
       describe("!editing_email", () => {
-        test.todo("renders email")
+        it("renders email", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {
+                editing_email : false
+              }
+            },
+
+            computed : {
+              email : function(){
+                return 'emai.l'
+              }
+            }
+          })
+
+          expect(profile.find("#email_row b-col-stub:nth-child(2)").text()).toEqual(profile.vm.email)
+        })
       })
 
       describe("editing_email", () => {
         describe("input", () => {
-          test.todo("tied to auth_email")
+          it("is tied to auth_email", async () => {
+            const profile = shallow_mount_vue(Profile, {
+              data : function(){
+                return {
+                  editing_email : true
+                }
+              }
+            })
+
+            profile.setData({auth_email : 'foo@ba.r'})
+            await next_tick(profile)
+            expect(profile.find("#email_row input").element.value).toEqual('foo@ba.r')
+
+            profile.find("#email_row input").setValue('bar@fo.o')
+            await next_tick(profile)
+            expect(profile.vm.auth_email).toEqual('bar@fo.o')
+          })
         })
       })
 
-      describe("invalid_email", () => {
-        describe("form_error", () => {
-          test.todo("renders 'Invalid Email'")
+      describe("form_error", () => {
+        describe("invalid_email", () => {
+          it("renders 'Invalid Email'", () => {
+            const profile = shallow_mount_vue(Profile, {
+              data : function(){
+                return {
+                  editing_email : true
+                }
+              },
+
+              computed : {
+                invalid_email : function(){
+                  return true;
+                }
+              }
+            });
+
+            expect(profile.find("#email_row .form_error").text()).toEqual('Invalid Email')
+          })
+        })
+
+        describe("!invalid_email", () => {
+          it('does not render anything', () => {
+            const profile = shallow_mount_vue(Profile, {
+              data : function(){
+                return {
+                  editing_email : true
+                }
+              },
+
+              computed : {
+                invalid_email : function(){
+                  return false;
+                }
+              }
+            });
+
+            expect(profile.find("#email_row .form_error").text()).toEqual('')
+          })
         })
       })
 
       describe("mq > md", () => {
+        beforeEach(function(){
+          global.innerWidth = breakpoints.md + 1;
+        })
+
         describe("!editing email", () => {
-          test.todo("render 'Update' email")
+          var profile;
+
+          beforeEach(async function(){
+            // XXX: fully mount required to trigger click
+            profile = mount_vue(Profile, {
+              data : function(){
+                return {
+                  editing_email : false
+                }
+              }
+            })
+
+            await next_tick(profile);
+          })
+
+          it("render 'Update' email", () => {
+            expect(profile.find("#email_row .action").text()).toEqual('Update')
+          })
 
           describe("clicked", () => {
-            test.todo("editing_email = true")
+            it("sets editing_email = true", async () => {
+              await profile.find("#email_row .action").trigger("click")
+              expect(profile.vm.editing_email).toBe(true)
+            })
           })
         })
 
         describe("editing email", () => {
-          test.todo("render 'Cancel' email update")
+          var profile;
+
+          beforeEach(async function(){
+            // XXX: fully mount required to trigger click
+            profile = mount_vue(Profile, {
+              data : function(){
+                return {
+                  editing_email : true
+                }
+              }
+            })
+
+            await next_tick(profile);
+          })
+
+          it("render 'Cancel' email update", () => {
+            expect(profile.find("#email_row .action").text()).toEqual('Cancel')
+          })
 
           describe("clicked", () => {
-            test.todo("editing_email = false")
+            it("sets editing_email = false", async () => {
+              await profile.find("#email_row .action").trigger("click")
+              expect(profile.vm.editing_email).toBe(false)
+            })
           })
         })
       })
 
       describe("mq <= md", () => {
-        test.todo("render pencil blue")
+        var profile;
+
+        beforeEach(async function(){
+          global.innerWidth = breakpoints.md - 1;
+
+          // XXX: fully mount required to trigger click
+          profile = mount_vue(Profile, {
+            data : function(){
+              return {
+                editing_email : true
+              }
+            }
+          })
+
+          await next_tick(profile);
+        })
+
+        it("renders pencil blue", () => {
+          expect(profile.find("#email_row .action img").attributes('src')).toEqual('../../assets/pencil-blue.svg')
+        })
 
         describe("clicked", () => {
-          test.todo("editing_email = !editing_email")
+          it("editing_email = !editing_email", async () => {
+            await profile.find("#email_row .action").trigger("click")
+            expect(profile.vm.editing_email).toBe(false)
+
+            await profile.find("#email_row .action").trigger("click")
+            expect(profile.vm.editing_email).toBe(true)
+          })
         })
       })
     })
