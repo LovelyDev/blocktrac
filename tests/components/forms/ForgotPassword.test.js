@@ -22,10 +22,8 @@ describe("ForgotPassword", () => {
 
       describe("enter event", () => {
         it("emits submit event", () => {
-          fp.vm.$emit = jest.fn()
           input.trigger('keyup.enter')
-          expect(fp.vm.$emit).toHaveBeenCalledTimes(1)
-          expect(fp.vm.$emit.mock.calls[0][0]).toEqual('submit')
+          expect(fp.emitted().submit).toBeTruthy()
         })
       })
 

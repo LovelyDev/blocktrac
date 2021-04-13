@@ -576,11 +576,8 @@ describe("Profile", () => {
             }
           })
 
-          profile.vm.$emit = jest.fn();
           profile.vm.$options.watch.editing_fields[0].call(profile.vm)
-
-          expect(profile.vm.$emit).toHaveBeenCalledTimes(1)
-          expect(profile.vm.$emit.mock.calls[0][0]).toEqual('editing')
+          expect(profile.emitted().editing).toBeTruthy()
         })
       })
 
@@ -594,11 +591,8 @@ describe("Profile", () => {
             }
           })
 
-          profile.vm.$emit = jest.fn();
           profile.vm.$options.watch.editing_fields[0].call(profile.vm)
-
-          expect(profile.vm.$emit).toHaveBeenCalledTimes(1)
-          expect(profile.vm.$emit.mock.calls[0][0]).toEqual('not_editing')
+          expect(profile.emitted().not_editing).toBeTruthy();
         })
       })
     })
