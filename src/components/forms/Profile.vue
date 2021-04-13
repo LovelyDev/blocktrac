@@ -13,7 +13,8 @@
       </b-col>
     </b-row>
 
-    <b-row class="input_row">
+    <b-row id="email_row"
+           class="input_row">
       <b-col  class="label" cols=4>
         Email address
       </b-col>
