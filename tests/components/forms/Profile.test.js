@@ -347,33 +347,117 @@ describe("Profile", () => {
   describe("computed", () => {
     describe("#editing_fields", () => {
       describe("editing_email", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_email : true}
+            }
+          })
+
+          expect(profile.vm.editing_fields).toBe(true)
+        })
       })
 
       describe("editing_password", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_password : true}
+            }
+          })
+
+          expect(profile.vm.editing_fields).toBe(true)
+        })
       })
 
       describe("editing_credit_card", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_credit_card : true}
+            }
+          })
+
+          expect(profile.vm.editing_fields).toBe(true)
+        })
       })
 
       describe("!editing_email && !editing_password && !editing_credit_card", () => {
-        test.todo("is false")
+        it("is false", () => {
+          const profile = shallow_mount_vue(Profile)
+          expect(profile.vm.editing_fields).toBe(false);
+        })
       })
     })
 
     describe("#is_valid_email", () => {
       describe("!editing_email", () => {
-        test.todo("is true")
+        it("is true", () => {
+          const profile = shallow_mount_vue(Profile)
+          expect(profile.vm.is_valid_email).toBe(true)
+        })
       })
 
-      describe("have_email && !invalid_email", () => {
-        test.todo("is true")
+      describe("editing_email && have_email && !invalid_email", () => {
+        it("is true", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_email : true}
+            },
+
+            computed : {
+              have_email : function(){
+                return true;
+              },
+
+              invalid_email : function(){
+                return false
+              }
+            }
+          })
+
+          expect(profile.vm.is_valid_email).toBe(true)
+        })
       })
 
-      describe("editing_email && !have_email || invalid_email", () => {
-        test.todo("is false")
+      describe("editing_email && !have_email", () => {
+        it("is false", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_email : true}
+            },
+
+            computed : {
+              have_email : function(){
+                return false;
+              }
+            }
+          })
+
+          expect(profile.vm.is_valid_email).toBe(false)
+        })
+      })
+
+      describe("editing_email && have_email && invalid_email", () => {
+        it("is false", () => {
+          const profile = shallow_mount_vue(Profile, {
+            data : function(){
+              return {editing_email : true}
+            },
+
+            computed : {
+              have_email : function(){
+                return true;
+              },
+
+              invalid_email : function(){
+                return true;
+              }
+            }
+          })
+
+          expect(profile.vm.is_valid_email).toBe(false)
+        })
       })
     })
 
@@ -426,39 +510,144 @@ describe("Profile", () => {
 
   describe("watch", () => {
     describe("editing_email", () => {
-      test.todo("sets auth_email to ''")
+      it("sets auth_email to ''", async () => {
+        const profile = shallow_mount_vue(Profile)
+        profile.setData({auth_email : "auth@ema.il"})
+        expect(profile.vm.auth_email).toEqual('auth@ema.il')
+
+        profile.vm.editing_email = true;
+        await next_tick(profile)
+        expect(profile.vm.auth_email).toEqual('')
+      })
     })
 
     describe("editing_password", () => {
-      test.todo("sets auth_password to ''")
-      test.todo("sets auth_password_confirm to ''")
+      it("sets auth_password to ''", async () => {
+        const profile = shallow_mount_vue(Profile)
+        profile.setData({auth_password : "auth_password"})
+        expect(profile.vm.auth_password).toEqual('auth_password')
+
+        profile.vm.editing_password = true;
+        await next_tick(profile)
+        expect(profile.vm.auth_password).toEqual('')
+      })
+
+      it("sets auth_password_confirm to ''", async () => {
+        const profile = shallow_mount_vue(Profile)
+        profile.setData({auth_password_confirm : "auth_password_confirm"})
+        expect(profile.vm.auth_password_confirm).toEqual('auth_password_confirm')
+
+        profile.vm.editing_password = true;
+        await next_tick(profile)
+        expect(profile.vm.auth_password_confirm).toEqual('')
+      })
     })
 
     describe("editing_credit_card", () => {
-      test.todo("sets credit_card_number to ''")
-      test.todo("sets credit_card_cvc to ''")
+      it("sets credit_card_number to ''", async () => {
+        const profile = shallow_mount_vue(Profile)
+        profile.setData({credit_card_number : "12345"})
+        expect(profile.vm.credit_card_number).toEqual('12345')
+
+        profile.vm.editing_credit_card = true;
+        await next_tick(profile)
+        expect(profile.vm.credit_card_number).toEqual('')
+      })
+
+      it("sets credit_card_cvc to ''", async () => {
+        const profile = shallow_mount_vue(Profile)
+        profile.setData({credit_card_cvc : "12345"})
+        expect(profile.vm.credit_card_cvc).toEqual('12345')
+
+        profile.vm.editing_credit_card = true;
+        await next_tick(profile)
+        expect(profile.vm.credit_card_cvc).toEqual('')
+      })
     })
 
     describe("editing_fields", () => {
       describe("editing_fields", () => {
-        test.todo("emits 'editing'")
+        it("emits 'editing'", async () => {
+          const profile = shallow_mount_vue(Profile, {
+            computed : {
+              editing_fields : function(){
+                return true;
+              }
+            }
+          })
+
+          profile.vm.$emit = jest.fn();
+          profile.vm.$options.watch.editing_fields[0].call(profile.vm)
+
+          expect(profile.vm.$emit).toHaveBeenCalledTimes(1)
+          expect(profile.vm.$emit.mock.calls[0][0]).toEqual('editing')
+        })
       })
 
       describe("not editing_fields", () => {
-        test.todo("emits 'not_editing'")
+        it("emits 'not_editing'", async () => {
+          const profile = shallow_mount_vue(Profile, {
+            computed : {
+              editing_fields : function(){
+                return false;
+              }
+            }
+          })
+
+          profile.vm.$emit = jest.fn();
+          profile.vm.$options.watch.editing_fields[0].call(profile.vm)
+
+          expect(profile.vm.$emit).toHaveBeenCalledTimes(1)
+          expect(profile.vm.$emit.mock.calls[0][0]).toEqual('not_editing')
+        })
       })
     })
   })
 
   describe("methods", () => {
+    var profile;
+
+    beforeEach(function(){
+      profile = shallow_mount_vue(Profile, {
+        data : function(){
+          return {
+                  editing_email : true,
+               editing_password : true,
+            editing_credit_card : true
+          }
+        }
+      })
+    })
+
     describe("#reset", () => {
-      test.todo("sets editing_email to false")
-      test.todo("sets editing_password to false")
-      test.todo("sets editing_credit_card to false")
+      it("sets editing_email to false", () => {
+        profile.vm.reset();
+        expect(profile.vm.editing_email).toBe(false)
+      })
+
+      it("sets editing_password to false", () => {
+        profile.vm.reset();
+        expect(profile.vm.editing_password).toBe(false)
+      })
+
+      it("sets editing_credit_card to false", () => {
+        profile.vm.reset();
+        expect(profile.vm.editing_credit_card).toBe(false)
+      })
     })
   })
 
   describe("#created", () => {
-    test.todo("sets auth_email to ''")
+    it("sets auth_email to ''", () => {
+      const profile = shallow_mount_vue(Profile, {
+        data : function(){
+          return {
+            auth_email : 'auth@ema.il'
+          }
+        }
+      })
+
+      expect(profile.vm.auth_email).toEqual('')
+    })
   })
 })
