@@ -76,7 +76,7 @@ export default {
             const msg = util.capitalize(err.body.error)
             alert("Could not reset password: " + msg);
             this.$router.push("/txs")
-          })
+          }.bind(this))
     }
   },
 
