@@ -1,0 +1,64 @@
+=========================================
+Describes setting up a pool of databases
+=========================================
+
+- Deploy application as described in deploy document
+  - database server: ziti_db1
+- Setup second database server as described in deploy document
+  - database server: ziti_db2
+
+- On both ziti_db1:
+  - su - postgres
+  - createuser --interactive --pwprompt # answers: replica / <password> / <password> / n / n / n
+  - psql
+    - alter role replica with replication;
+  - As root
+  - edit postgresql.conf:
+    wal_level = replica
+    wal_keep_segments = 5000
+    archive_mode = on
+    archive_command = 'cp -i %p /var/lib/pgsql/archive/%f'
+  - mkdir /var/lib/pgsql/archive
+  - chown postgres.postgres /var/lib/pgsql/archive
+  - edit pg_hba.conf:
+    # comment existing replication lines
+    host    replication     replica          <ZITI_DB1 IP>/32      md5
+    host    replication     replica          <ZITI_DB2 IP>/32      md5
+  - # XXX: the following may need to be on one line (see note about CentOS 8 in deploy document)
+  - firewall-cmd --permanent --add-rich-rule='
+      rule family="ipv4"
+      source address="<ZITI_DB2 IP>/32"
+      port protocol="tcp" port="5432" accept'
+  - firewall-cmd --reload
+
+- On ziti_api, ziti_worker1, ziti_worker2:
+  - stop services
+
+- On ziti_db1:
+  - systemctl restart postgresql
+
+- On ziti_api, ziti_worker1, ziti_worker2:
+  - start services
+
+- On ziti_db2:
+  - firewall-cmd --permanent --add-rich-rule='
+      rule family="ipv4"
+      source address="<ZITI_DB1 IP>/32"
+      port protocol="tcp" port="5432" accept'
+  - firewall-cmd --reload
+  - su - postgres
+  - cd /var/lib/pgsql/
+  - mv data data.orig
+  - pg_basebackup -h <ZITI_DB1 IP> -p 5432 -U test -D /var/lib/pgsql/data/ -Fp -Xs -R
+    - enter ZITI_DB1 replica password
+  - edit postgresql.conf to set correct listen address
+
+- On ziti_db2:
+  - systemctl start postgresql
+
+
+==========================================
+Describes setting up a balance web cluster
+==========================================
+
+- ...

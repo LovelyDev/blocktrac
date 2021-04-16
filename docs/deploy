@@ -93,6 +93,7 @@ postgrsql setup:
   - both public and private IPs should be represented
 - systemctl enable postgresql.service
 - systemctl start postgresql.service
+- # XXX: on CentOS 8 - the newlines in the following firewall-cmd's aren't playing nicely do it all on one line
 - firewall-cmd --permanent --add-rich-rule='
     rule family="ipv4"
     source address="<ZITI_API IP>/32"
