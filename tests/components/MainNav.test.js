@@ -1,54 +1,133 @@
+import {shallow_mount_vue} from "../setup"
+
+import MainNav from '../../src/components/MainNav'
+
 describe("MainNav", () => {
   describe("dom", () => {
     describe("logged_in", () => {
+      var mn;
+
+      beforeEach(function(){
+        mn = shallow_mount_vue(MainNav, {
+          computed : {
+            logged_in : function(){ return true;  }
+          }
+        });
+      })
+
       describe("#main_nav", () => {
-        test.todo("is .logged_in")
+        it("is .logged_in", () => {
+          expect(mn.find("#main_nav").classes()).toContain("logged_in")
+        })
       })
 
       describe("#membership_level_link_container", () => {
-        test.todo("is rendered")
+        it("is rendered", () => {
+          expect(mn.find("#membership_level_link_container")).toExist()
+        })
       })
 
       describe("hamburger", () => {
+        var auth;
+
+        beforeEach(function(){
+          auth = {
+            methods : {
+              logout : jest.fn()
+            }
+          }
+
+          mn = shallow_mount_vue(MainNav, {
+            propsData : {hamburger : true},
+            mixins : [auth],
+            computed : {
+              logged_in : function(){ return true;  }
+            }
+          });
+        })
+
         describe("#profile_link", () => {
-          test.todo("is rendered")
+          it("is rendered", () => {
+            expect(mn.find("#profile_link")).toExist()
+          })
         })
 
         describe("#logout_link", () => {
-          test.todo("is rendered")
+          it("is rendered", () => {
+            expect(mn.find("#logout_link")).toExist()
+          })
+
+          describe("click event", () => {
+            it("emits nav event", async () => {
+              await mn.find("#logout_link").trigger('click')
+              expect(mn.emitted().nav).toBeTruthy()
+            })
+
+            it("calls logout", async () => {
+              await mn.find("#logout_link").trigger('click')
+              expect(auth.methods.logout).toHaveBeenCalledTimes(1)
+            })
+          })
         })
       })
 
       describe("!hamburger", () => {
+        beforeEach(function(){
+          mn = shallow_mount_vue(MainNav, {
+            propsData : {hamburger : false},
+            computed : {
+              logged_in : function(){ return true;  }
+            }
+          });
+        })
+
         describe("#my_account_container", () => {
-          test.todo("is rendered")
+          it("is rendered", () => {
+            expect(mn.find("#my_account_container")).toExist()
+          })
         })
       })
     })
 
     describe("!logged_in", () => {
+      var mn;
+
+      beforeEach(function(){
+        mn = shallow_mount_vue(MainNav, {
+          computed : {
+            logged_in : function(){ return false;  }
+          }
+        });
+      })
+
       describe("#login_link", () => {
-        test.todo("is rendered")
+        it("is rendered", () => {
+          expect(mn.find("#login_link")).toExist();
+        })
+
+        test.todo("launches login modal")
+
+        describe("click event", () => {
+          it("emits nav event", async () => {
+            await mn.find("#login_link").trigger('click')
+            expect(mn.emitted().nav).toBeTruthy()
+          })
+        })
       })
 
       describe("#register_link", () => {
-        test.todo("is rendered")
-      })
-    })
+        it("is rendered", () => {
+          expect(mn.find("#register_link")).toExist();
+        })
 
-    describe("#login_link", () => {
-      test.todo("it launches login modal")
+        test.todo("it launches register modal")
 
-      describe("click event", () => {
-        test.todo("emits nav event")
-      })
-    })
-
-    describe("#register_link", () => {
-      test.todo("it launches register modal")
-
-      describe("click event", () => {
-        test.todo("emits nav event")
+        describe("click event", () => {
+          it("emits nav event", async () => {
+            await mn.find("#register_link").trigger('click')
+            expect(mn.emitted().nav).toBeTruthy()
+          })
+        })
       })
     })
 
@@ -60,11 +139,6 @@ describe("MainNav", () => {
 
     describe("#membership_level_link", () => {
       test.todo("contains membership_level text")
-    })
-
-    describe("#logout_link", () => {
-      test.todo("emits nav event")
-      test.todo("calls logout")
     })
 
     describe("#my_account_link", () => {
@@ -96,12 +170,25 @@ describe("MainNav", () => {
   })
 
   describe("methods", () => {
+    var mn;
+
+    beforeEach(function(){
+      mn = shallow_mount_vue(MainNav);
+    })
+
     describe("my_account_show", () => {
-      test.todo("sets my_account_visisble to true")
+      it("sets my_account_visisble to true", () => {
+        mn.vm.my_account_show();
+        expect(mn.vm.my_account_visible).toBe(true);
+      })
     })
 
     describe("my_account_hide", () => {
-      test.todo("sets my_account_visisble to false")
+      it("sets my_account_visisble to false", () => {
+        mn.vm.my_account_visible = true;
+        mn.vm.my_account_hide();
+        expect(mn.vm.my_account_visible).toBe(false);
+      })
     })
   })
 })
