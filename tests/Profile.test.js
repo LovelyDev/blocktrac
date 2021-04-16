@@ -43,7 +43,6 @@ describe("Profile Page", () => {
             mixins : [validatable]
           })
 
-          const evnt = {ev : 'nt'}
           profile.find("#profile_form").vm.$emit('validated')
           expect(profile.vm.enable_controls).toBe(false)
           expect(validatable.methods.validate).toHaveBeenCalledTimes(1)
