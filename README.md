@@ -19,6 +19,15 @@ Zitui was developed and deployed in a *CentOS8* environment. Theoretically an en
 6. cd zitui
 7. yarn install
 
+## Prereqs:
+
+Before running the service you need to run a quick workaround required by the jsonpath / jsonpath complexity dependency:
+
+1. cd node_modules/jsonpath
+2. yarn prepublishOnly
+
+Copy the ziti.js config file from the backend project into the src/config directory
+
 ## Running Zitui
 
 You will need to copy the ziti.js configuration file to the src/ directory before the application can be run. If the Ziti backend is located on another machine be sure to edit the BACKEND_URL option in src/config.js appropriately.
