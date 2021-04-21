@@ -2,60 +2,220 @@
 Describes setting up a pool of databases
 =========================================
 
-- Deploy application as described in deploy document
-  - database server: ziti_db1
-- Setup second database server as described in deploy document
-  - database server: ziti_db2
+Following and adapting this guide:
+https://www.linode.com/docs/guides/create-a-highly-available-postgresql-cluster-using-patroni-and-haproxy/
 
-- On both ziti_db1:
-  - su - postgres
-  - createuser --interactive --pwprompt # answers: replica / <password> / <password> / n / n / n
-  - psql
-    - alter role replica with replication;
-  - As root
-  - edit postgresql.conf:
-    wal_level = replica
-    wal_keep_segments = 5000
-    archive_mode = on
-    archive_command = 'cp -i %p /var/lib/pgsql/archive/%f'
-  - mkdir /var/lib/pgsql/archive
-  - chown postgres.postgres /var/lib/pgsql/archive
-  - edit pg_hba.conf:
-    # comment existing replication lines
-    host    replication     replica          <ZITI_DB1 IP>/32      md5
-    host    replication     replica          <ZITI_DB2 IP>/32      md5
-  - # XXX: the following may need to be on one line (see note about CentOS 8 in deploy document)
-  - firewall-cmd --permanent --add-rich-rule='
-      rule family="ipv4"
-      source address="<ZITI_DB2 IP>/32"
-      port protocol="tcp" port="5432" accept'
+- ziti_db1:
+  - Deploy application as described in deploy document
+  - Edit pg_hba to add:
+    host    all         all             <DB1 IP>/32             md5
+    host    all         all             <DB2 IP>/32             md5
+    local   replication replica                                     md5
+    host    replication replica             <DB1 IP>/32             md5
+    host    replication replica             <DB2 IP>/32             md5
+    host    replication replica             127.0.0.1/32            md5
+    host    replication replica             ::1/128                 md5
+
+  - systemctl reload postgresql
+  - As postgres
+    - createuser --interactive --pwprompt # answers: replica / <password> / <password> / n / n / n
+    - psql
+      - alter user postgres with password 'postgres';
+      - alter role replica with replication;
+
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<DB2 IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<HAPROXY IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<HAPROXY IP>/32" port protocol="tcp" port="8008" accept'
   - firewall-cmd --reload
 
-- On ziti_api, ziti_worker1, ziti_worker2:
-  - stop services
+- ziti_db2:
+  - dnf install postgresql-server
+  - sudo postgresql-setup --initdb
+  - Edit postgresql.conf to listen on <DB2 IP>
+  - Edit pg_hba to add:
+    host    all         all             <DB1 IP>/32             md5
+    host    all         all             <DB2 IP>/32             md5
+    local   replication replica                                     md5
+    host    replication replica             <DB1 IP>/32             md5
+    host    replication replica             <DB2 IP>/32             md5
+    host    replication replica             127.0.0.1/32            md5
+    host    replication replica             ::1/128                 md5
 
-- On ziti_db1:
-  - systemctl restart postgresql
+  - sudo systemctl start postgresql
+  - As postgres
+    - createuser --interactive --pwprompt # answers: replica / <password> / <password> / n / n / n
+    - psql
+      - alter user postgres with password 'postgres';
+      - alter role replica with replication;
 
-- On ziti_api, ziti_worker1, ziti_worker2:
-  - start services
-
-- On ziti_db2:
-  - firewall-cmd --permanent --add-rich-rule='
-      rule family="ipv4"
-      source address="<ZITI_DB1 IP>/32"
-      port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<DB1 IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<HAPROXY IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<HAPROXY IP>/32" port protocol="tcp" port="8008" accept'
   - firewall-cmd --reload
-  - su - postgres
-  - cd /var/lib/pgsql/
-  - mv data data.orig
-  - pg_basebackup -h <ZITI_DB1 IP> -p 5432 -U test -D /var/lib/pgsql/data/ -Fp -Xs -R
-    - enter ZITI_DB1 replica password
-  - edit postgresql.conf to set correct listen address
+  - pg_basebackup -h <DB1 IP> -p 5432 -U replica -D /var/lib/pgsql/data/ -Fp -Xs -R
 
-- On ziti_db2:
-  - systemctl start postgresql
+- On config server:
+  - wget https://github.com/etcd-io/etcd/releases/download/v3.2.32/etcd-v3.2.32-linux-amd64.tar.gz
+  - mkdir /etcd
+  - sudo tar xzvf etcd-v3.2.32-linux-amd64.tar.gz -C /etcd --strip-components=1
+  - useradd etcd
+  - chown -R etcd.etcd /etcd
+  - Create /lib/systemd/system/etcd.service:
+    [Unit]
+    Description=ETCD Service
+    After=syslog.target network.target
 
+    [Service]
+    Type=simple
+
+    User=etcd
+    Group=etcd
+
+    EnvironmentFile=/etc/default/etcd
+    WorkingDirectory=/etcd
+    ExecStart=/etcd/etcd
+    KillMode=process
+    TimeoutSec=30
+    Restart=no
+
+    [Install]
+    WantedBy=multi-user.target
+
+  - Create /etc/default/etcd.conf
+  ETCD_LISTEN_PEER_URLS="http://<CONFIG IP>:2380"
+  ETCD_LISTEN_CLIENT_URLS="http://127.0.0.1:2379,http://<CONFIG IP>:2379"
+  ETCD_INITIAL_ADVERTISE_PEER_URLS="http://<CONFIG IP>:2380"
+  ETCD_INITIAL_CLUSTER="etcd0=http://<CONFIG IP>:2380,"
+  ETCD_ADVERTISE_CLIENT_URLS="http://<CONFIG IP>:2379"
+  ETCD_INITIAL_CLUSTER_TOKEN="cluster1"
+  ETCD_INITIAL_CLUSTER_STATE="new"
+
+  - chown  etcd.etcd /etc/etcd.conf
+
+  - systemctl daemon-reload
+  - disable selinux in /etc/selinux/config
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<DB1 IP>/32" port protocol="tcp" port="2379" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<DB2 IP>/32" port protocol="tcp" port="2379" accept'
+  - firewall-cmd --reload
+
+- ziti_db1 & ziti_db2:
+  - dnf install gcc python3-devel
+  - as postgres user:
+    - pip3 install --user patroni
+    - pip3 install --user psycopg2-binary
+    - pip3 install --user python-etcd
+  - Create /etc/patroni.yml:
+    scope: postgres
+    namespace: /ziti/
+    name: postgresqlN # where N is 1 on db1, 2 on db2, etc
+
+    restapi:
+        listen: <PRIVATE IP>:8008
+        connect_address: <PRIVATE IP>:8008
+
+    etcd:
+        host: <CONFIG IP>:2379
+
+    bootstrap:
+        dcs:
+            ttl: 30
+            loop_wait: 10
+            retry_timeout: 10
+            maximum_lag_on_failover: 1048576
+            postgresql:
+                use_pg_rewind: true
+
+        initdb:
+        - encoding: UTF8
+        - data-checksums
+
+        pg_hba:
+        - host replicata replicator 127.0.0.1/32 md5
+        - host  replicata replicator <ZITI_DB1 IP>/0 md5
+        - host  replicata replicator <ZITI_DB2 IP>/0 md5
+        - host  all all <HAPROXY1 IP>/0 md5
+
+    postgresql:
+        listen: <PRIVATE IP>:5432
+        connect_address: <PRIVATE IP>:5432
+        data_dir: /uar/lib/pgsql/data
+        pgpass: /var/lib/pgsql/.pgpass
+        authentication:
+            replication:
+                username: <replication user>
+                password: <replication pass>
+            superuser:
+                username: postgres
+                password: <postgres password>
+        parameters:
+            unix_socket_directories: '.'
+            wal_keep_segments: 5000
+            wal_keep_size: 80000
+
+    tags:
+        nofailover: false
+        noloadbalance: false
+        clonefrom: false
+        nosync: false
+
+  - chown postgres.postgres patroni.yml
+
+  - Create file /lib/systemd/system/patroni.service
+    [Unit]
+    Description=Runners to orchestrate a high-availability PostgreSQL
+    After=syslog.target network.target
+
+    [Service]
+    Type=simple
+
+    User=postgres
+    Group=postgres
+
+    ExecStart=/var/lib/pgsql/.local/bin/patroni /etc/patroni.yml
+
+    KillMode=process
+
+    TimeoutSec=30
+
+    Restart=no
+
+    [Install]
+    WantedBy=multi-user.targ
+
+  - systemctl enable patroni
+  - systemctl start  patroni
+  - systemctl status patroni
+
+- On haproxy server:
+  - disable selinux in /etc/selinux/config
+  - dnf install haproxy
+  - Edit /etc/haproxy/haproxy.cfg:
+    defaults
+      mode tcp
+
+    listen stats
+      mode http
+      bind *:7000
+      stats enable
+      stats uri /
+
+    # remove 'fontend main' section
+
+    listen postgres
+        bind *:5000
+        option httpchk
+        http-check expect status 200
+        default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
+        server postgresql_<DB1 IP>_5432 <DB1 IP>:5432 maxconn 100 check port 8008
+        server postgresql_<DB2 IP>_5432 <DB1 IP>:5432 maxconn 100 check port 8008
+
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<API IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<WORKER1 IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<WORKER2 IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="<BAK1 IP>/32" port protocol="tcp" port="5432" accept'
+  - firewall-cmd --reload
+  - systemctl enable haproxy
+  - systemctl start haproxy
 
 ==========================================
 Describes setting up a balance web cluster
