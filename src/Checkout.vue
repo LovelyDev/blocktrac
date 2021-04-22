@@ -137,7 +137,7 @@
 
           <tr>
             <td colspan="2" id="tos_agree">
-              <b-form-checkbox v-model="tos_agree">
+              <b-form-checkbox id="tos_agree_checkout" v-model="tos_agree">
               I agree to the <router-link to="/terms" target="_blank">Terms of Service</router-link>
               </b-form-checkbox>
             </td>
@@ -146,7 +146,7 @@
           <tr>
             <td v-if="mq_gte_md"></td>
             <td id="place_order_wrapper">
-              <b-spinner type="grow" v-if="order_submitted" />
+              <b-spinner id="bspinner" type="grow" v-if="order_submitted" />
 
               <b-button id="place_order"
                         :disabled="!is_valid || order_submitted"
