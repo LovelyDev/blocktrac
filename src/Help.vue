@@ -97,7 +97,7 @@ export default {
           topics : [
             {
               title : "What is " + this.app_name + "?",
-              value : this.app_name + " is a persistent Blockchain transaction tracker. It allows you to setup filters to notified you of ledger activity via any number of mechanisms."
+              value : this.app_name + " is a persistent Blockchain transaction tracker. It allows you to setup filters to notify you of ledger activity via any number of mechanisms."
             },
 
             {
