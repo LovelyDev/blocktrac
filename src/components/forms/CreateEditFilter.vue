@@ -73,6 +73,7 @@
           </td>
         </tr>
 
+        <!-- TODO: (?) Icon that when clicked, renders tooltip w/ template param description -->
         <tr v-for="p in template_params.length"
             :key="'param' + p">
           <td>

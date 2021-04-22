@@ -116,6 +116,9 @@ import Maintenance    from './mixins/maintenance'
 import config from './config/config'
 import ziti   from './config/ziti'
 
+// TODO consolidate Plans, Plan, and Checkout logic
+//      into a helper mixin
+
 export default {
   name: 'Plans',
 

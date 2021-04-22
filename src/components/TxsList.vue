@@ -12,6 +12,8 @@
 <!-- TODO slide control to connect txs list to testnet (and test filter against it) -->
 <template>
   <div>
+    <!-- TODO: graph components: tx type/operations by time, by percent of total) -->
+
     <TxsFilter />
     <TxsFilterExample />
 
