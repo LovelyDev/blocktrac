@@ -47,10 +47,10 @@
             </span>
           </b-list-group-item>
 
-          <b-list-group-item v-for="match in filter_matches"
-                             :key="match.transaction.hash"
+          <b-list-group-item v-for="tx in filter_match_txs"
+                             :key="tx.transaction.hash"
                              class="tx_summary_container">
-            <TxSummary :tx="match" />
+            <TxSummary :tx="tx" />
           </b-list-group-item>
         </b-list-group>
       </div>
@@ -102,6 +102,12 @@ export default {
 
     match_history : function(){
       return ziti.filter_match_history
+    },
+
+    filter_match_txs : function(){
+      return this.filter_matches.map((match) => {
+               return match.Transaction.raw;
+             });
     }
   },
 
