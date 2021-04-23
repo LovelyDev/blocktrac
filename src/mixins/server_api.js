@@ -131,17 +131,15 @@ export default {
                    }.bind(this))
     },
 
+    transform_sinks : function(sinks){
+    },
+
     // Loads sinks from server, storing the result
     load_sinks : function(){
       this.$htttp().get(this.backend_url + "/sinks", this.auth_header)
                   .then(function(response){
-                      // clear sinks
-                      this.sinks = [];
-
-                      // parse and populate
-                      response.body.forEach(function(sink){
-                        this.sinks.push(sink)
-                      }.bind(this));
+                      // set sinks
+                      this.sinks = response.body;
 
                   }.bind(this)).catch(function(err){
                     if(this.not_authenticated(err)) return; // XXX
@@ -170,6 +168,7 @@ export default {
     load_filter : function(id){
       this.$htttp().get(this.backend_url + "/filter/" + id, this.auth_header)
                    .then(function(response){
+                     // set active filter
                      this.active_filter = response.body;
 
                    }.bind(this)).catch(function(err){
@@ -180,19 +179,14 @@ export default {
                    }.bind(this))
     },
 
+
     // Loads filter matches from server, storing the result
     load_filter_matches : function(id){
       this.$htttp().get(this.backend_url + "/filter/" + id + "/matches",
                                                        this.auth_header)
                    .then(function(response){
-                     // clear matches
-                     this.filter_matches = []
-
-                     response.body.forEach(function(matched){
-                       var tx = matched.Transaction.raw
-                           tx.transaction.date = matched.Transaction.date;
-                       this.filter_matches.push(tx)
-                     }.bind(this))
+                     // set matches
+                     this.filter_matches = response.body;
 
                    }.bind(this)).catch(function(err){
                      if(this.not_authenticated(err)) return; // XXX

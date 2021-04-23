@@ -279,7 +279,7 @@ describe("server_api", () => {
       })
 
       describe("success result", () => {
-        it("sets converted filter_matches", async () => {
+        it("sets filter_matches", async () => {
           const matches = [
             {
               Transaction : {
@@ -302,24 +302,7 @@ describe("server_api", () => {
 
           component.vm.load_filter_matches(1);
           await flush_promises();
-
-          const expected = [
-            {
-              transaction : {
-                tx : 1,
-                date : 'date1'
-              },
-            },
-
-            {
-              transaction : {
-                tx : 2,
-                date : 'date2'
-              },
-            }
-          ]
-
-          expect(component.vm.filter_matches).toEqual(expected)
+          expect(component.vm.filter_matches).toEqual(matches)
         })
       })
 
