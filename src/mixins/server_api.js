@@ -131,9 +131,6 @@ export default {
                    }.bind(this))
     },
 
-    transform_sinks : function(sinks){
-    },
-
     // Loads sinks from server, storing the result
     load_sinks : function(){
       this.$htttp().get(this.backend_url + "/sinks", this.auth_header)
