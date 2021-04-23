@@ -42,7 +42,7 @@
             <span>
               The following are transactions which your filter has matched.
               <template v-if="active_filter.total_matches > match_history">
-                Only the last {{match_history}} matches are shown.
+                <span id="match_history">Only the last {{match_history}} matches are shown.</span>
               </template>
             </span>
           </b-list-group-item>
@@ -108,6 +108,7 @@ export default {
   watch : {
     // XXX: need to watch route incase switching between filters
     $route : function(){
+      console.log("route has been changed");
       this.load_filter(this.id)
       this.load_filter_matches(this.id)
     }

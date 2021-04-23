@@ -1,4 +1,7 @@
-import {mount_vue}    from './setup'
+import {
+  mount_vue,
+  flush_promises
+}    from './setup'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -9,6 +12,8 @@ import {
 } from './fixtures'
 
 import FilterDetails from '../src/FilterDetails.vue'
+
+import ziti from '../src/config/ziti'
 
 ///
 
@@ -54,18 +59,56 @@ describe("FilterDetails Page", () => {
 
       describe("#notifications_text", () => {
         describe("filter associated with sinks", () => {
-          test.todo("renders sinks")
+          it("renders sinks", () => {
+            const filter_details = mount_vue(FilterDetails, {mixins: [server_api]})
+            expect(filter_details.find("#get_notifications").text()).toBe("You will get notifications via email demo@blocktr.ac, sms 1112223333");
+          })
         })
       })
     })
 
     describe("#matched_txs_explanation", () => {
       describe("total_matches > match_history", () => {
-        test.todo("renders match_history text")
+        it("renders match_history text", () => {
+          const filter_details = mount_vue(FilterDetails, 
+            {
+              computed: {
+                match_history: function(){
+                  return 0
+                }
+              }, 
+              mixins: [{
+                methods : {
+                  load_filter : jest.fn(function() {
+                    this.active_filter = filters[0]
+                  }),
+                  load_filter_matches : jest.fn(function() {
+                    this.filter_matches = filter_matches;
+                  }),
+                }
+              }],
+            }
+          );
+          expect(filter_details.find("#match_history").text()).toBe("Only the last 0 matches are shown.");
+        })
       })
     })
 
-    test.todo("renders filter matches")
+    it("renders filter matches", () => {
+      const filter_details = mount_vue(FilterDetails, {
+        mixins: [{
+          methods : {
+            load_filter : jest.fn(function() {
+              this.active_filter = filters[0]
+            }),
+            load_filter_matches : jest.fn(function() {
+              this.filter_matches = filter_matches;
+            }),
+          }
+        }]
+      });
+      expect(filter_details.findAll('.tx_summary_container').length).toBe(filter_matches.length);
+    })
   })
 
   describe("computed", () => {
@@ -112,18 +155,35 @@ describe("FilterDetails Page", () => {
     })
 
     describe("sinks_text", () => {
-      test.todo("is comma seperated list of filter sinks' types/targets")
+      it("is comma seperated list of filter sinks' types/targets", () => {
+        const filter_details = mount_vue(FilterDetails, {mixins: [server_api]})
+        filter_details.setData({active_filter: filters_with_sinks[0]});
+        expect(filter_details.vm.sinks_text.split(',').length).toBe(filters_with_sinks[0].Sinks.length);
+      })
     })
 
     describe("match_history", () => {
-      test.todo("is config filter_match_history")
+      it("is config filter_match_history", () => {
+        const filter_details = mount_vue(FilterDetails, {mixins: [server_api]})
+        expect(filter_details.vm.match_history).toBe(ziti.filter_match_history)
+      })
     })
   })
 
   describe("watch", () => {
     describe("route", () => {
-      test.todo("loads filter")
-      test.todo("loads filter matches")
+      it("loads filter",  async() => {
+        const filter_details = mount_vue(FilterDetails, {mixins: [server_api]});
+        filter_details.vm.$router.push({path: "/filter/" + filters[1].id});
+        await flush_promises();
+        expect(server_api.methods.load_filter).toHaveBeenCalledTimes(2);
+      })
+      it("loads filter matches", async() => {
+        const filter_details = mount_vue(FilterDetails, {mixins: [server_api]});
+        filter_details.vm.$router.push({path: "/filter/" + filters[1].id});
+        await flush_promises();
+        expect(server_api.methods.load_filter_matches).toHaveBeenCalledTimes(2);
+      })
     })
   })
 
