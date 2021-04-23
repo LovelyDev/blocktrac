@@ -123,7 +123,9 @@ https://www.linode.com/docs/guides/create-a-highly-available-postgresql-cluster-
             retry_timeout: 10
             maximum_lag_on_failover: 1048576
             postgresql:
-                use_pg_rewind: true
+                parameters:
+                    wal_keep_segments: 100
+                    wal_keep_size: 16000
 
         initdb:
         - encoding: UTF8
@@ -147,10 +149,6 @@ https://www.linode.com/docs/guides/create-a-highly-available-postgresql-cluster-
             superuser:
                 username: postgres
                 password: <postgres password>
-        parameters:
-            unix_socket_directories: '.'
-            wal_keep_segments: 5000
-            wal_keep_size: 80000
 
     tags:
         nofailover: false
