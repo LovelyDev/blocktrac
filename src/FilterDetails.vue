@@ -87,11 +87,9 @@ export default {
 
   computed : {
     have_sinks : function(){
-      if(!this.active_filter ||
-         !this.active_filter.Sinks)
-         return false;
-
-      return this.active_filter.Sinks.length > 0
+      return !!this.active_filter &&
+             !!this.active_filter.Sinks &&
+               this.active_filter.Sinks.length > 0;
     },
 
     sinks_text : function(){
