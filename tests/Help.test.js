@@ -6,11 +6,15 @@ import {
 import Help from '../src/Help.vue'
 import {breakpoints} from '../src/mq'
 
+import ziti from '../src/config/ziti'
+
 describe("Help Page", () => {
+  let help;
+  beforeEach(function() {
+    help = mount_vue(Help)
+  })
   describe("dom", () => {
     it("renders categories", async () => {
-      const help = mount_vue(Help)
-
       await next_tick(help)
       const nav = help.findAll("#help_categories .list-group-item.help_category")
       expect(nav.length).toBe(help.vm.categories.length)
@@ -21,30 +25,49 @@ describe("Help Page", () => {
     })
 
     describe("category active", () => {
-      test.todo("sets active list-group-item")
+      it("sets active list-group-item", async() => {
+        await next_tick(help)
+        help.findAll("#help_categories .list-group-item.help_category").at(1).trigger("click")
+        expect(help.vm.active).toBe("Account");
+      })
     })
 
     describe("mq <= md", () => {
-      it("renders multiselect categories", async () => {
+      let help;
+      beforeEach(function() {
         global.innerWidth = breakpoints.md - 1;
-
-        const help = mount_vue(Help)
-        await next_tick(help)
+        help = mount_vue(Help);
+      })
+      it("renders multiselect categories", () => {
         expect(help.get(".multiselect"))
       })
 
       describe("category active", () => {
-        test.todo("selects category")
+        it("selects category", async () => {
+          help.find("#help_categories .multiselect").trigger("click");
+          help.findAll("#help_categories .multiselect .help_category").at(1).trigger("click");
+          expect(help.vm.active).toBe("Account");     
+        })
       })
     })
-
-    test.todo("renders help topics' title and content")
+    it("renders help topics' title and content", () => {
+      expect(help.find("#help_topics .topic_title").text()).toBe(help.vm.topics[0].title);
+    })
   })
 
   describe("computed", () => {
     describe("content", () => {
-      test.todo("maps icons and topics to categories")
-      test.todo("interpolates ziti config")
+      it("maps icons and topics to categories", () => {
+        let temp = Object.keys(help.vm.content);
+        for(let category of temp){
+          expect(help.vm.content[category]).not.toEqual("");
+          expect(help.vm.content[category]).not.toEqual({})
+        }
+      })
+      it("interpolates ziti config", () => {
+        help.setData({active: help.vm.categories[2]});
+        expect(help.vm.topics[5].value).toContain(ziti.filter_match_history);
+      })
     })
 
     describe("categories", () => {
@@ -82,14 +105,16 @@ describe("Help Page", () => {
 
     describe("#set_active", () => {
       it("sets active category", () => {
-        const help = mount_vue(Help)
         help.vm.set_active(help.vm.categories[1]);
         expect(help.vm.active).toEqual(help.vm.categories[1])
       })
     })
 
     describe("#icon_for", () => {
-      test.todo("requires & returns icon for category")
+      it("requires & returns icon for category", () => {
+        let category = help.vm.categories[1]
+        expect(help.vm.icon_for(category)).toEqual(require('./assets/' + help.vm.content[category].icon + '.svg'));
+      })
     })
   })
 
