@@ -113,7 +113,7 @@ describe("Help Page", () => {
     describe("#icon_for", () => {
       it("requires & returns icon for category", () => {
         let category = help.vm.categories[1]
-        expect(help.vm.icon_for(category)).toEqual(require('./assets/' + help.vm.content[category].icon + '.svg'));
+        expect(help.vm.icon_for(category)).toEqual(require(help.vm.content[category].icon + '.svg'));
       })
     })
   })
