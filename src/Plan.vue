@@ -15,7 +15,7 @@
           <div id="plan_details_subcontainer">
             <div id="plan_overview">
               <h4 id="plan_name">{{plan}}</h4>
-              <span>${{details.cost}} <span>/month</span></span>
+              <span id="plan_monthly_cost">${{details.cost}} <span>/month</span></span>
             </div>
 
             <div id="plan_specifics">
@@ -79,7 +79,7 @@
                    class="plan_period"
                    :class="{selected : (period == month)}"
                    @click="set_period(month)">
-                <div><b>{{month}} months</b></div>
+                <div class="plan_month"><b>{{month}} months</b></div>
                 <div class="plan_period_cost">
                   <span class="orig_cost">${{month * details.cost}}</span> <b>${{cost}}</b>
                 </div>
