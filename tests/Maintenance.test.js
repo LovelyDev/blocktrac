@@ -6,20 +6,31 @@ describe("Maintenance Page", () => {
     describe("img", () => {
       describe("no xrp configured", () => {
         it("is /asses/maintenance/blockchain.svg", () => {
-          const maintenance_test = mount_vue(Maintenance,{
+          const path = './assets/maintenance/blockchain.svg';
+          jest.doMock(path, () => {
+            return path;
+          })
+
+          const maintenance = mount_vue(Maintenance,{
             computed: {
               no_blockchain_configured: function() {
                 return true;
               }
             }
           });
-          expect(maintenance_test.vm.img).toEqual(require('./assets/maintenance/blockchain.svg'))
+
+          expect(maintenance.vm.img).toEqual(path);
         })
       })
 
       describe("blockchain configured", () => {
         it("is /assets/maintenance/configured_blockchain_upper.svg", () => {
-          const maintenance_test = mount_vue(Maintenance,{
+          const path = './assets/maintenance/xrp.svg';
+          jest.doMock(path, () => {
+            return path;
+          })
+
+          const maintenance = mount_vue(Maintenance,{
             computed: {
               no_blockchain_configured: function() {
                 return false;
@@ -29,7 +40,8 @@ describe("Maintenance Page", () => {
               }
             }
           });
-          expect(maintenance_test.vm.img).toEqual(require('./assets/maintenance/xrp.svg'))
+
+          expect(maintenance.vm.img).toEqual(path);
         })
       })
     })

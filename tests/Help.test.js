@@ -10,9 +10,11 @@ import ziti from '../src/config/ziti'
 
 describe("Help Page", () => {
   let help;
+
   beforeEach(function() {
     help = mount_vue(Help)
   })
+
   describe("dom", () => {
     it("renders categories", async () => {
       await next_tick(help)
@@ -28,7 +30,7 @@ describe("Help Page", () => {
       it("sets active list-group-item", async() => {
         await next_tick(help)
         help.findAll("#help_categories .list-group-item.help_category").at(1).trigger("click")
-        expect(help.vm.active).toBe("Account");
+        expect(help.vm.active).toBe(help.vm.categories[1]);
       })
     })
 
@@ -46,7 +48,7 @@ describe("Help Page", () => {
         it("selects category", async () => {
           help.find("#help_categories .multiselect").trigger("click");
           help.findAll("#help_categories .multiselect .help_category").at(1).trigger("click");
-          expect(help.vm.active).toBe("Account");     
+          expect(help.vm.active).toBe(help.vm.categories[1]);
         })
       })
     })
@@ -60,8 +62,9 @@ describe("Help Page", () => {
       it("maps icons and topics to categories", () => {
         let temp = Object.keys(help.vm.content);
         for(let category of temp){
-          expect(help.vm.content[category]).not.toEqual("");
-          expect(help.vm.content[category]).not.toEqual({})
+          expect(help.vm.content[category]).toBeTruthy()
+          expect(help.vm.content[category].icon).toBeTruthy()
+          expect(help.vm.content[category].topics).toBeTruthy()
         }
       })
       it("interpolates ziti config", () => {
@@ -112,8 +115,16 @@ describe("Help Page", () => {
 
     describe("#icon_for", () => {
       it("requires & returns icon for category", () => {
-        let category = help.vm.categories[1]
-        expect(help.vm.icon_for(category)).toEqual(require(help.vm.content[category].icon + '.svg'));
+        const category = help.vm.categories[1];
+        const icon = help.vm.content[category].icon;
+        const path = '../src/assets/' + icon + '.svg';
+
+        jest.doMock(path, () => {
+          return path;
+        })
+
+        help = mount_vue(Help)
+        expect(help.vm.icon_for(category)).toEqual(path)
       })
     })
   })
