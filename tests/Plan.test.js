@@ -9,11 +9,22 @@ import {
 
 import Plan from '../src/Plan.vue'
 
+///
+
 import ziti  from '../src/config/ziti'
-import { isString } from '../src/vendor/jsonpath'
+
+const periods = ziti.membership_months.slice().filter((p) => p != ziti.default_renewal_months);
+
+const instant_alerts_plan = Object.keys(ziti.membership_features)
+                                  .filter((k) => {
+                                    return ziti.membership_features[k].notification_times.includes(0)
+                                  })[0]
+
+///
 
 describe("Plan Page", () => {
   let plan_test
+
   beforeEach(function() {
     plan_test = mount_vue(Plan, {
       propsData: {
@@ -23,11 +34,13 @@ describe("Plan Page", () => {
       }
     })
   })
+
   describe("dom", () => {
     describe("#plan_name", () => {
       it("renders plan", () => {
         expect(plan_test.find("#plan_name").text()).toBe(plan_test.vm.plan)
       })
+
       it("monthly cost", () => {
         expect(plan_test.find("#plan_monthly_cost").text()).toBe('$' + plan_test.vm.details.cost + " /month")
       })
@@ -57,6 +70,10 @@ describe("Plan Page", () => {
       it("is tied to enable_additional", async () => {
         plan_test.setData({enable_additional: false})
         await next_tick(plan_test)
+        expect(plan_test.find("#enable_additional input")).not.toBeChecked()
+
+        plan_test.setData({enable_additional: true})
+        await next_tick(plan_test)
         expect(plan_test.find("#enable_additional input")).toBeChecked()
       })
     })
@@ -70,7 +87,9 @@ describe("Plan Page", () => {
     })
 
     describe("#additional_filters spinbutton", () => {
-      it("is tied to selected_additional_filters", () => {
+      it("is tied to selected_additional_filters", async () => {
+        plan_test.setData({selected_additional_filters: 3})
+        await next_tick(plan_test)
         expect(parseInt(plan_test.find("#additional_filters .b-form-spinbutton").text())).toBe(plan_test.vm.selected_additional_filters)
       })
 
@@ -83,7 +102,7 @@ describe("Plan Page", () => {
       })
 
       describe("max_filters == 0", () => {
-        it("is diabled", () => {
+        it("is disabled", () => {
           const plan_test = mount_vue(Plan, {
             propsData: {
               plan: "standard",
@@ -102,7 +121,9 @@ describe("Plan Page", () => {
     })
 
     describe("#additional_sinks spinbutton", () => {
-      it("is tied to selected_additional_sinks", () => {
+      it("is tied to selected_additional_sinks", async () => {
+        plan_test.setData({selected_additional_sinks: 3})
+        await next_tick(plan_test)
         expect(parseInt(plan_test.find("#additional_sinks .b-form-spinbutton").text())).toBe(plan_test.vm.selected_additional_sinks)
       })
 
@@ -151,9 +172,11 @@ describe("Plan Page", () => {
 
         describe("click", () => {
           it("set_period(1)", async () => {
+            plan_test.vm.set_period = jest.fn()
             plan_test.find('.plan_period').trigger('click')
             await next_tick(plan_test)
-            expect(plan_test.vm.period).toBeNull()
+            expect(plan_test.vm.set_period).toHaveBeenCalledTimes(1);
+            expect(plan_test.vm.set_period.mock.calls[0][0]).toEqual(1)
           })
         })
 
@@ -165,43 +188,45 @@ describe("Plan Page", () => {
       })
 
       describe("monthly plan_periods", () => {
-        describe("period == month", () => {
-          it("is selected", async () => {
-            plan_test.setData({period: 6})
-            await next_tick(plan_test)
-            expect(plan_test.findAll('.plan_period').at(Math.ceil(plan_test.vm.period / 3)).classes()).toContain('selected')
-          })
-        })
+        periods.forEach((period, p) => {
+          describe("period (" + period + ")== month", () => {
+            it("is selected", async () => {
+              plan_test.setData({period: period})
+              await next_tick(plan_test)
 
-        describe("click", () => {
-          it("set_period(month)", async () => {
-            plan_test.findAll('.plan_period').at(1).trigger("click");
-            await next_tick(plan_test)
-            expect(plan_test.vm.period).toBe(3);
+              expect(plan_test.findAll('.plan_period').at(p + 1).classes()).toContain('selected')
+            })
           })
-        })
 
-        it("renders month", async () => {
-          plan_test.setData({period: 3})
-          await next_tick(plan_test)
-          expect(plan_test.findAll(".plan_period .plan_month b").at(1).text()).toBe("6 months");
+          describe("click (" + period + ")", () => {
+            it("set_period(month)", async () => {
+              plan_test.vm.set_period = jest.fn()
+              plan_test.findAll('.plan_period').at(p + 1).trigger("click");
+              await next_tick(plan_test)
 
-        })
-
-        describe(".plan_period_cost", () => {
-          let monthly_costs;
-          beforeEach(function(){
-            monthly_costs = ziti.membership_features[plan_test.vm.plan].monthly_costs;
+              expect(plan_test.vm.set_period).toHaveBeenCalledTimes(1);
+              expect(plan_test.vm.set_period.mock.calls[0][0]).toEqual(period.toString())
+            })
           })
-          it("renders monthly cost * months crossed out", async () => {
-            for(let i=0; i<Object.keys(monthly_costs).length; i++){
-              expect(plan_test.findAll(".orig_cost").at(i).text()).toBe("$" + plan_test.vm.details.cost * Object.keys(monthly_costs)[i])
-            }
+
+          it("renders month (" + period + ")", async () => {
+            expect(plan_test.findAll(".plan_period .plan_month b").at(p).text()).toBe(period + " months");
           })
-          it("renders reduced cost", () => {
-            for(let i=0; i<Object.keys(monthly_costs).length; i++){
-              expect(plan_test.findAll(".plan_period_cost b").at(i + 1).text()).toBe("$" + monthly_costs[Object.keys(monthly_costs)[i]])
-            }
+
+          describe(".plan_period_cost (" + period + ")", () => {
+            beforeEach(async function(){
+              plan_test.setData({period : period})
+              await next_tick(plan_test)
+            })
+
+            it("renders monthly cost * months crossed out", async () => {
+              expect(plan_test.findAll(".orig_cost").at(p).text()).toBe("$" + period * plan_test.vm.details.cost)
+            })
+
+            it("renders reduced cost", () => {
+              const monthly_costs = ziti.membership_features[plan_test.vm.plan].monthly_costs;
+              expect(plan_test.findAll(".plan_period_cost b").at(p + 1).text()).toBe("$" + monthly_costs[period])
+            })
           })
         })
       })
@@ -270,6 +295,7 @@ describe("Plan Page", () => {
           expect(plan_test.vm.details).toEqual({})
         })
       })
+
       it("is membership_features for plan", () => {
         expect(plan_test.vm.details).toEqual(ziti.membership_features[plan_test.vm.plan])
       })
@@ -316,9 +342,10 @@ describe("Plan Page", () => {
         it("is true", () => {
           const plan_test = mount_vue(Plan, {
             propsData: {
-              plan: "premium"
+              plan: instant_alerts_plan
             }
           })
+
           expect(plan_test.vm.instant_alerts).toBe(true)
         })
       })
@@ -335,12 +362,13 @@ describe("Plan Page", () => {
         it("is 'Instant'", () => {
           const plan_test = mount_vue(Plan, {
             propsData: {
-              plan: "premium"
+              plan: instant_alerts_plan
             }
           })
           expect(plan_test.vm.alert_time_text).toBe("Instant")
         })
       })
+
       it("is minimum plan notification_time + 'min'", () => {
         expect(plan_test.vm.alert_time_text).toBe(plan_test.vm.details.notification_times[0] + " min")
       })
@@ -357,14 +385,14 @@ describe("Plan Page", () => {
 
       describe("!selected_additional_filters", () => {
         it("is details.filters", async () => {
-          plan_test.setData({selected_additional_filters: false})
+          plan_test.setData({selected_additional_filters: 0})
           await next_tick(plan_test)
           expect(plan_test.vm.total_filters).toBe(plan_test.vm.details.filters)
         })
       })
 
       it("is details.filters + selected_additional_filters", async () => {
-        plan_test.setData({enable_additional: true})
+        plan_test.setData({enable_additional: true, selected_additional_filters: 3})
         await next_tick(plan_test)
         expect(plan_test.vm.total_filters).toBe(plan_test.vm.details.filters + plan_test.vm.selected_additional_filters)
       })
@@ -381,14 +409,14 @@ describe("Plan Page", () => {
 
       describe("!selected_additional_sinks", () => {
         it("is details.sinks", async () => {
-          plan_test.setData({selected_additional_sinks: false})
+          plan_test.setData({selected_additional_sinks: 0})
           await next_tick(plan_test)
           expect(plan_test.vm.total_sinks).toBe(plan_test.vm.details.sinks)
         })
       })
 
       it("is details.sinks + selected_additional_sinks", async () => {
-        plan_test.setData({enable_additional: true})
+        plan_test.setData({enable_additional: true, selected_additional_sinks : 2})
         await next_tick(plan_test)
         expect(plan_test.vm.total_sinks).toBe(plan_test.vm.details.sinks + plan_test.vm.selected_additional_sinks)
       })

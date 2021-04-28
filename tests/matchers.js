@@ -41,7 +41,7 @@ expect.extend({
 
   // Checks if specified component is checked
   toBeChecked : function(received){
-    const pass = received.element.value == "true";
+    const pass = !!received.element.checked;
     const message = pass ? () => this.utils.printReceived(received) + " is checked" :
                             () => this.utils.printReceived(received) + " is not checked";
 
