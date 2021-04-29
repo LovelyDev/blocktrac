@@ -1,5 +1,10 @@
 import setup from './setup'
 import util  from '../src/util'
+const filters = load_fixture('filters');
+
+import {
+  load_fixture
+} from './fixtures'
 
 describe("util", () => {
   describe("#round_value", () => {
@@ -113,11 +118,15 @@ describe("util", () => {
   })
 
   describe("#ledger_time_to_unix", () => {
-    test.todo("coverts ledger time to unix time")
+    it("converts ledger time to unix time", () => {
+      expect(util.ledger_time_to_unix(1)).toEqual(946684801000)
+    })
   })
 
   describe("#hex_to_ascii", () => {
-    test.todo("converts hex integer value to ascii text")
+    it("converts hex integer value to ascii text", () => {
+      expect(util.hex_to_ascii("4C445A")).toBe("LDZ")
+    })
   })
 
   describe("#capitalize", () => {
@@ -127,16 +136,22 @@ describe("util", () => {
   })
 
   describe("#wrap_tx", () => {
-    test.todo("wraps tx in top level transaction object")
+    it("wraps tx in top level transaction object", () => {
+      expect(util.wrap_tx("tx")).toEqual({transaction: "tx"})
+    })
   })
 
   describe("#is_valid_jsonpath", () => {
     describe("jsonpath can be parsed", () => {
-      test.todo("returns true")
+      it("returns true", () => {
+        expect(util.is_valid_jsonpath(filters[0].jsonpath)).toBe(true)
+      })
     })
 
     describe("jsonpath cannot be parsed", () => {
-      test.todo("returns false")
+      it("returns false", () => {
+        expect(util.is_valid_jsonpath({})).toBe(false)
+      })
     })
   })
 
@@ -255,11 +270,16 @@ describe("util", () => {
 
   describe("#is_jsonpath_complex", () => {
     describe("jsonpath is complex", () => {
-      test.todo("returns true")
+      it("returns true", () => {
+        expect(util.is_jsonpath_complex(filters[1].jsonpath)).toBe(true)
+      })
     })
 
     describe("jsonpath is not complex", () => {
       test.todo("returns false")
+      it("returns false", () => {
+        expect(util.is_jsonpath_complex(filters[0].jsonpath)).toBe(false)
+      })
     })
   })
 
