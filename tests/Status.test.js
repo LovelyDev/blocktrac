@@ -195,7 +195,6 @@ describe("Status Page", () => {
         })
       })
       it("sets parsed on benchmarks", () => {
-        // for(let key in benchmark_meta){
           Object.keys(stat.vm.meta).forEach(function(m){
             const is_branch = m.match(/.*benchmark/)
             if(is_branch){
@@ -205,7 +204,6 @@ describe("Status Page", () => {
               }
             }
           })
-        // }
       })
       it("parses started and updated dates", () => {
         Object.keys(stat.vm.meta).forEach(function(m){
