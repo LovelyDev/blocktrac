@@ -17,7 +17,7 @@
     "fedora.notify_sinks.2.benchmark":"{\"started\":\"2021-04-01T20:13:31.158Z\",\"total\":14,\"avg\":5.27,\"updated\":\"2021-04-01T20:16:10.861Z\"}",
     "fedora.notify_sinks.cleanup_matches.benchmark":"{\"started\":\"2021-04-01T20:13:31.135Z\",\"updated\":\"2021-04-01T20:13:31.350Z\"}",
     "fedora.notify_sinks.cleanup_notifications.benchmark":"{\"started\":\"2021-04-01T20:13:31.025Z\",\"updated\":\"2021-04-01T20:13:31.202Z\"}",
-    "fedora.xrp_listen_to_txs.benchmark":"{\"started\":\"2021-04-01T20:12:18.894Z\",\"updated\":\"2021-04-01T20:19:00.952Z\",\"total\":null,\"avg\":\"1.43\"}",
+    "fedora.xrp_listen_to_txs.benchmark":"{\"started\":\"2021-04-01T20:12:18.894Z\",\"updated\":\"2021-04-01T20:19:00.952Z\",\"total\":644,\"avg\":\"1.43\"}",
     "fedora.xrp_run_filters.0.benchmark":"{\"started\":\"2021-04-01T20:16:58.859Z\",\"total\":644,\"avg\":60.98,\"updated\":\"2021-04-01T20:17:01.926Z\"}",
     "fedora.xrp_run_filters.1.benchmark":"{\"started\":\"2021-04-01T20:16:58.658Z\",\"total\":642,\"avg\":46.47,\"updated\":\"2021-04-01T20:17:01.929Z\"}",
     "fedora.xrp_run_filters.2.benchmark":"{\"started\":\"2021-04-01T20:16:58.617Z\",\"total\":612,\"avg\":36.08,\"updated\":\"2021-04-01T20:17:01.936Z\"}",

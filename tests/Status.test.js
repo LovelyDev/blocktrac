@@ -1,10 +1,15 @@
-import {mount_vue} from './setup'
+import {mount_vue, next_tick} from './setup'
 
 import {load_fixture} from './fixtures'
 
 import util from '../src/util'
 
 import Status from '../src/Status.vue'
+
+import ziti from '../src/config/ziti'
+import { mount } from '@vue/test-utils'
+
+import config from '../src/config/config'
 
 // Server Status 'retrieved' from the server
 const server_status = load_fixture('server_status');
@@ -18,6 +23,9 @@ describe("Status Page", () => {
         load_server_status : jest.fn(function(){
           this.server_status = server_status
         })
+        // benchmark_outage: function(){
+        //   return true
+        // }
       }
     }
 
@@ -78,19 +86,54 @@ describe("Status Page", () => {
       expect(stat.find("#notifications").text()).toEqual("Notifications: " + util.delim_value(server_status.notifications))
     })
 
-    test.todo("renders benchmarks")
-
-    describe("benchmark outage", () => {
-      test.todo("renders benchmark error")
+    it("renders benchmarks", () => {
+      let benchmarks = stat.findAll("#benchmarks")
+      for(let i = 0; i<benchmarks.length; i++){
+        expect(benchmarks.at(i).text()).toEqual(`${stat.vm.benchmarks[i]}: ${stat.vm.meta[stat.vm.benchmarks[i]].updated.toGMTString()}`)
+      }
     })
 
-    test.todo("renders meta")
+    describe("benchmark outage", () => {
+      it("renders benchmark error", () => {
+        server_api = {
+          methods : {
+            load_server_status : jest.fn(function(){
+              this.server_status = server_status
+            }),
+            benchmark_outage: function(){
+              return true
+            }
+          }
+        }
+        stat = mount_vue(Status, {
+          mixins: [server_api]
+        })
+        let benchmarks = stat.findAll("#benchmarks")
+        for(let i = 0; i<benchmarks.length; i++){
+          expect(benchmarks.at(i).classes()).toContain('error')
+        }
+      })
+    })
 
-    test.todo("renders transactions being processed")
+    it("renders meta", () => {
+      let meta = stat.findAll("#meta")
+      for(let i=0; i<meta.length; i++){
+        expect(meta.at(i).findAll("div").at(1).text()).toEqual(`${stat.vm.other_meta[i]}:`)
+        expect(meta.at(i).findAll("div").at(2).text()).toEqual(stat.vm.meta[stat.vm.other_meta[i]])
+      }
+    })
 
-    test.todo("renders filters being notified")
+    it("renders transactions being processed", () => {
+      expect(stat.find("#txs_being_processed").text()).toEqual("Transactions being processed" + stat.vm.txs_being_processed_str)
+    })
 
-    test.todo("renders filters exceeding batch size")
+    it("renders filters being notified", () => {
+      expect(stat.find("#filters_being_notified").text()).toEqual("Filters being notified" + stat.vm.filters_being_notified_str)
+    })
+
+    it("renders filters exceeding batch size", () => {
+      expect(stat.find("#filters_exceeding_batch_size").text()).toContain(stat.vm.filters_exceeding_batch_size_str)
+    })
   })
 
   describe("computed", () => {
@@ -123,44 +166,130 @@ describe("Status Page", () => {
     })
 
     describe("meta", () => {
-      test.todo("is server_status.meta")
-      test.todo("sets benchmark flag on benchmarks")
-      test.todo("sets parsed on benchmarks")
-      test.todo("parses started and updated dates")
+      // let no_benchmark_meta = {}, benchmark_meta = {}
+      // beforeEach(function(){
+      //   for(let key in stat.vm.meta){
+      //     if(key.match(/.*benchmark/)) benchmark_meta[key] = stat.vm.meta[key]
+      //     else no_benchmark_meta[key] = stat.vm.meta[key]
+      //   }
+      // })
+      it("is server_status.meta", () => {
+        var meta = Object.assign({}, server_status.meta);
+        Object.keys(meta).forEach(function(m){
+          const is_benchmark = m.match(/.*benchmark/);
+          if(is_benchmark){
+            meta[m] = JSON.parse(meta[m]);
+            meta[m].benchmark = true;
+            if(meta[m].started)
+              meta[m].started = new Date(Date.parse(meta[m].started))
+            if(meta[m].updated)
+              meta[m].updated = new Date(Date.parse(meta[m].updated))
+          }
+        })
+        expect(stat.vm.meta).toEqual(meta)
+      })
+      it("sets benchmark flag on benchmarks", () => {
+        Object.keys(stat.vm.meta).forEach(function(m){
+          const is_branch = m.match(/.*benchmark/)
+          if(is_branch) expect(stat.vm.meta[m].benchmark).toBe(true)
+        })
+      })
+      it("sets parsed on benchmarks", () => {
+        // for(let key in benchmark_meta){
+          Object.keys(stat.vm.meta).forEach(function(m){
+            const is_branch = m.match(/.*benchmark/)
+            if(is_branch){
+              let meta = JSON.parse(server_status.meta[m])
+              for(let key in meta){
+                expect(stat.vm.meta[m][key]).toBeTruthy()
+              }
+            }
+          })
+        // }
+      })
+      it("parses started and updated dates", () => {
+        Object.keys(stat.vm.meta).forEach(function(m){
+          const is_branch = m.match(/.*benchmark/)
+          if(is_branch){
+            for(let key in stat.vm.meta[m]){
+              if(key == 'updated') 
+                expect(Object.prototype.toString.call(stat.vm.meta[m][key]) === "[object Date]").toBe(true)
+              if(key == 'started')
+                expect(Object.prototype.toString.call(stat.vm.meta[m][key]) === "[object Date]").toBe(true)
+            }
+          }
+        })
+      })
     })
 
     describe("meta_keys", () => {
-      test.todo("is metadata keys")
+      // it("is metadata keys", () => {
+      //   expect(stat.vm.meta_keys).toEqual(Object.keys(stat.vm.meta))
+      // })
     })
 
     describe("benchmarks", () => {
-      test.todo("is benchmark metadata keys")
+      it("is benchmark metadata keys", () => {
+        expect(stat.vm.benchmarks).toEqual(stat.vm.meta_keys.filter((m) => stat.vm.meta[m].benchmark))
+      })
     })
 
     describe("other_meta", () => {
-      test.todo("is non-benchmark metadata keys")
+      it("is non-benchmark metadata keys", () => {
+        expect(stat.vm.other_meta).toEqual(stat.vm.meta_keys.filter((m) => !stat.vm.meta[m].benchmark))
+      })
     })
 
     describe("txs_being_processed_str", () => {
-      test.todo("formatted txs_being_processed string")
+      it("fromatted txs_being_processed string", () => {
+        expect(stat.vm.txs_being_processed_str).toEqual(server_status.txs_being_processed.join(", "))
+      })
     })
 
     describe("filters_being_notified_str", () => {
-      test.todo("formatted filters_being_notified string")
+      it("formatted filters_being_notified string", () => {
+        expect(stat.vm.filters_being_notified_str).toEqual(server_status.filters_being_notified.join(", "))
+      })
     })
 
     describe("filters_exceeding_batch_size_str", () => {
-      test.todo("formatted filters_violating_batch_size string")
+      it("formatted filters_violating_batch_size string", () => {
+        expect(stat.vm.filters_exceeding_batch_size_str).toEqual(server_status
+          .filters_violating_batch_sizes
+          .map(function(f) {
+            return f.id + "(" + f.num + ")"
+          }).join(", "))
+      })
     })
 
     describe("outages", () => {
       describe("txs_to_process", () => {
         describe("txs_to_process > outage threshold", () => {
-          test.todo("is true")
+          it("is true", () => {
+            let stat = mount_vue(Status, {
+              mixins: [server_api],
+              computed: {
+                txs_to_process: function(){
+                  return ziti.outage_thresholds.txs_not_processed + 1
+                }
+              }
+            })
+            expect(stat.vm.outages).toEqual({txs_to_process: true})
+          })
         })
 
         describe("txs_to_process <= outage threshold", () => {
-          test.todo("is false")
+          it("is false", () => {
+            let stat = mount_vue(Status, {
+              mixins: [server_api],
+              computed: {
+                txs_to_process: function(){
+                  return ziti.outage_thresholds.txs_not_processed - 1
+                }
+              }
+            })
+            expect(stat.vm.outages).toEqual({txs_to_process: false})
+          })
         })
       })
     })
@@ -169,11 +298,41 @@ describe("Status Page", () => {
   describe("methods", () => {
     describe("#benchmark_outage", () => {
       describe("benchmark exceeded outage threshold", () => {
-        test.todo("returns true")
+        it("returns true", () => {
+          server_api = {
+            methods : {
+              load_server_status : jest.fn(function(){
+                this.server_status = server_status
+              }),
+              benchmark_outage_timeout: function(branchmark){
+                return new Date() - this.meta[branchmark].updated - 1
+              }
+            }
+          }
+          stat = mount_vue(Status, {
+            mixins: [server_api]
+          })
+          expect((stat.vm.benchmark_outage(stat.vm.benchmarks[0]))).toBe(true)
+        })
       })
 
       describe("benchmark did not exceed outage threshold", () => {
-        test.todo("returns false")
+        it("returns false", () => {
+          server_api = {
+            methods : {
+              load_server_status : jest.fn(function(){
+                this.server_status = server_status
+              }),
+              benchmark_outage_timeout: function(branchmark){
+                return new Date()
+              }
+            }
+          }
+          stat = mount_vue(Status, {
+            mixins: [server_api]
+          })
+          expect((stat.vm.benchmark_outage(stat.vm.benchmarks[0]))).toBe(false)
+        })
       })
     })
   })
@@ -183,10 +342,20 @@ describe("Status Page", () => {
       expect(server_api.methods.load_server_status).toHaveBeenCalledTimes(1);
     })
 
-    test.todo("starts periodic loading of server status")
+    it("starts periodic loading of server status", () => {
+      let times = 3;
+      expect(server_api.methods.load_server_status).toHaveBeenCalledTimes(1);
+      jest.advanceTimersByTime(config.STATUS_REFRESH * times)
+      expect(server_api.methods.load_server_status).toHaveBeenCalledTimes(1 + times);
+    })
   })
 
   describe("#destroyed", () => {
-    test.todo("stops periodic loading of server status")
+    it("stops periodic loading of server status", () => {
+      expect(server_api.methods.load_server_status).toHaveBeenCalledTimes(1);
+      stat.destroy()
+      jest.advanceTimersByTime(config.STATUS_REFRESH)
+      expect(server_api.methods.load_server_status).toHaveBeenCalledTimes(1);
+    })
   })
 })
