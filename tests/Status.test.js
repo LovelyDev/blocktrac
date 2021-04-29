@@ -7,7 +7,6 @@ import util from '../src/util'
 import Status from '../src/Status.vue'
 
 import ziti from '../src/config/ziti'
-import { mount } from '@vue/test-utils'
 
 import config from '../src/config/config'
 
@@ -23,9 +22,6 @@ describe("Status Page", () => {
         load_server_status : jest.fn(function(){
           this.server_status = server_status
         })
-        // benchmark_outage: function(){
-        //   return true
-        // }
       }
     }
 
@@ -87,7 +83,7 @@ describe("Status Page", () => {
     })
 
     it("renders benchmarks", () => {
-      let benchmarks = stat.findAll("#benchmarks")
+      let benchmarks = stat.findAll(".benchmarks")
       for(let i = 0; i<benchmarks.length; i++){
         expect(benchmarks.at(i).text()).toEqual(`${stat.vm.benchmarks[i]}: ${stat.vm.meta[stat.vm.benchmarks[i]].updated.toGMTString()}`)
       }
@@ -100,17 +96,20 @@ describe("Status Page", () => {
             load_server_status : jest.fn(function(){
               this.server_status = server_status
             }),
-            benchmark_outage: function(){
-              return true
+            benchmark_outage: function(benchmark){
+              return benchmark == stat.vm.benchmarks[1];
             }
           }
         }
         stat = mount_vue(Status, {
           mixins: [server_api]
         })
-        let benchmarks = stat.findAll("#benchmarks")
+        let benchmarks = stat.findAll(".benchmarks")
         for(let i = 0; i<benchmarks.length; i++){
-          expect(benchmarks.at(i).classes()).toContain('error')
+          if(i == 1)
+            expect(benchmarks.at(i).classes()).toContain('error')
+          else
+            expect(benchmarks.at(i).classes()).not.toContain('error')
         }
       })
     })
@@ -166,13 +165,6 @@ describe("Status Page", () => {
     })
 
     describe("meta", () => {
-      // let no_benchmark_meta = {}, benchmark_meta = {}
-      // beforeEach(function(){
-      //   for(let key in stat.vm.meta){
-      //     if(key.match(/.*benchmark/)) benchmark_meta[key] = stat.vm.meta[key]
-      //     else no_benchmark_meta[key] = stat.vm.meta[key]
-      //   }
-      // })
       it("is server_status.meta", () => {
         var meta = Object.assign({}, server_status.meta);
         Object.keys(meta).forEach(function(m){
@@ -188,12 +180,14 @@ describe("Status Page", () => {
         })
         expect(stat.vm.meta).toEqual(meta)
       })
+
       it("sets benchmark flag on benchmarks", () => {
         Object.keys(stat.vm.meta).forEach(function(m){
           const is_branch = m.match(/.*benchmark/)
           if(is_branch) expect(stat.vm.meta[m].benchmark).toBe(true)
         })
       })
+
       it("sets parsed on benchmarks", () => {
           Object.keys(stat.vm.meta).forEach(function(m){
             const is_branch = m.match(/.*benchmark/)
@@ -205,16 +199,15 @@ describe("Status Page", () => {
             }
           })
       })
+
       it("parses started and updated dates", () => {
         Object.keys(stat.vm.meta).forEach(function(m){
           const is_branch = m.match(/.*benchmark/)
           if(is_branch){
-            for(let key in stat.vm.meta[m]){
-              if(key == 'updated') 
-                expect(Object.prototype.toString.call(stat.vm.meta[m][key]) === "[object Date]").toBe(true)
-              if(key == 'started')
-                expect(Object.prototype.toString.call(stat.vm.meta[m][key]) === "[object Date]").toBe(true)
-            }
+            if(stat.vm.meta[m].updated)
+              expect(stat.vm.meta[m].updated).toBeA(Date)
+            if(stat.vm.meta[m].started)
+              expect(stat.vm.meta[m].started).toBeA(Date)
           }
         })
       })
@@ -252,11 +245,13 @@ describe("Status Page", () => {
 
     describe("filters_exceeding_batch_size_str", () => {
       it("formatted filters_violating_batch_size string", () => {
-        expect(stat.vm.filters_exceeding_batch_size_str).toEqual(server_status
-          .filters_violating_batch_sizes
-          .map(function(f) {
-            return f.id + "(" + f.num + ")"
-          }).join(", "))
+        const expected = server_status
+                           .filters_violating_batch_sizes
+                           .map(function(f) {
+                             return f.id + "(" + f.num + ")"
+                           }).join(", ")
+
+        expect(stat.vm.filters_exceeding_batch_size_str).toEqual(expected)
       })
     })
 
@@ -302,8 +297,8 @@ describe("Status Page", () => {
               load_server_status : jest.fn(function(){
                 this.server_status = server_status
               }),
-              benchmark_outage_timeout: function(branchmark){
-                return new Date() - this.meta[branchmark].updated - 1
+              benchmark_outage_timeout: function(benchmark){
+                return new Date() - this.meta[benchmark].updated - 1
               }
             }
           }

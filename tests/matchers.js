@@ -61,5 +61,17 @@ expect.extend({
       message,
       pass
     }
+  },
+
+  // Checks if specified object is of give type
+  toBeA : function(received, type){
+    const pass = received.constructor == type;
+    const message = pass ? () => received.toString() + " is a " + type :
+                           () => received.toString() + " is not a " + type;
+
+    return {
+      message,
+      pass
+    }
   }
 })

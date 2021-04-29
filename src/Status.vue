@@ -63,10 +63,10 @@
         <b-col>
           <h3>Benchmarks</h3>
           <b-list-group>
-            <b-list-group-item id="benchmarks"
-                            v-for="benchmark in benchmarks"
-                             :key="benchmark"
-                           :class="{error : benchmark_outage(benchmark)}">
+            <b-list-group-item v-for="benchmark in benchmarks"
+                                :key="benchmark"
+                               class="benchmarks"
+                              :class="{error : benchmark_outage(benchmark)}">
               <div style="float: left">{{benchmark}}:</div>
               <div style="float: right">{{meta[benchmark].updated.toGMTString()}}</div>
             </b-list-group-item>
