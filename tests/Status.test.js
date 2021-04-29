@@ -221,9 +221,9 @@ describe("Status Page", () => {
     })
 
     describe("meta_keys", () => {
-      // it("is metadata keys", () => {
-      //   expect(stat.vm.meta_keys).toEqual(Object.keys(stat.vm.meta))
-      // })
+      it("is metadata keys", () => {
+        expect(stat.vm.meta_keys).toEqual(Object.keys(stat.vm.meta))
+      })
     })
 
     describe("benchmarks", () => {
