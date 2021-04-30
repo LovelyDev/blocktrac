@@ -1,11 +1,6 @@
 import setup from './setup'
 import util  from '../src/util'
-const filters = load_fixture('filters');
 import ziti  from '../src/config/ziti'
-
-import {
-  load_fixture
-} from './fixtures'
 
 describe("util", () => {
   describe("#round_value", () => {
@@ -100,7 +95,7 @@ describe("util", () => {
     })
 
     it("returns empty object", () => {
-      expect(util.why_jsonpath_unsafe(filters[0].jsonpath)).toEqual({})
+      expect(util.why_jsonpath_unsafe('$.foo.bar')).toEqual({})
     })
   })
 
@@ -147,7 +142,7 @@ describe("util", () => {
   describe("#is_valid_jsonpath", () => {
     describe("jsonpath can be parsed", () => {
       it("returns true", () => {
-        expect(util.is_valid_jsonpath(filters[0].jsonpath)).toBe(true)
+        expect(util.is_valid_jsonpath('$.foo.bar')).toBe(true)
       })
     })
 
@@ -161,7 +156,7 @@ describe("util", () => {
   describe("#is_valid_jsonpath_length", () => {
     describe("jsonpath <= ziti.max_jsonpath_length", () => {
       it("returns true", () => {
-        expect(util.is_valid_jsonpath_length(filters[0].jsonpath)).toBe(true)
+        expect(util.is_valid_jsonpath_length('$.foo.bar')).toBe(true)
       })
     })
 
@@ -299,7 +294,7 @@ describe("util", () => {
 
     describe("jsonpath is safe", () => {
       it("returns false", () => {
-        expect(util.is_jsonpath_unsafe(filters[0].jsonpath)).toBe(false)
+        expect(util.is_jsonpath_unsafe('$.foo.bar')).toBe(false)
       })
     })
   })
@@ -311,7 +306,7 @@ describe("util", () => {
 
     describe("jsonpath is not complex", () => {
       it("returns false", () => {
-        expect(util.is_jsonpath_complex(filters[0].jsonpath)).toBe(false)
+        expect(util.is_jsonpath_complex('$.foo.bar')).toBe(false)
       })
     })
   })
