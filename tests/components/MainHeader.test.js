@@ -1,6 +1,4 @@
-
 import {
-  mount_vue,
   shallow_mount_vue,
   flush_promises
 } from '../setup'
@@ -16,7 +14,7 @@ describe("MainHeader", () => {
   describe("dom", () => {
     describe("landing page", () => {
       it("does not render BlockchainSelector", () => {
-        const header_test = mount_vue(MainHeader, {
+        const header_test = shallow_mount_vue(MainHeader, {
           computed: {
             is_landing: function(){
               return true
@@ -26,13 +24,13 @@ describe("MainHeader", () => {
             }
           }
         })
-        expect(header_test.findComponent(BlockchainSelector).exists()).toBe(false)
+        expect(header_test.findComponent(BlockchainSelector)).not.toExist()
       })
     })
 
     describe("blockchain is configured", () => {
       it("does not render BlockchainSelector", () => {
-        const header_test = mount_vue(MainHeader, {
+        const header_test = shallow_mount_vue(MainHeader, {
           computed: {
             is_landing: function() {
               return false
@@ -42,13 +40,13 @@ describe("MainHeader", () => {
             }
           }
         })
-        expect(header_test.findComponent(BlockchainSelector).exists()).toBe(false)
+        expect(header_test.findComponent(BlockchainSelector)).not.toExist()
       })
     })
 
     describe("not landing page and blockchain is not configured", () => {
       it("renders BlockchainSelector", () => {
-        const header_test = mount_vue(MainHeader, {
+        const header_test = shallow_mount_vue(MainHeader, {
           computed: {
             is_landing: function() {
               return false
@@ -58,7 +56,7 @@ describe("MainHeader", () => {
             }
           }
         })
-        expect(header_test.findComponent(BlockchainSelector).exists()).toBe(true)
+        expect(header_test.findComponent(BlockchainSelector)).toExist()
       })
     })
 
@@ -68,11 +66,13 @@ describe("MainHeader", () => {
         global.innerWidth = breakpoints.md - 1;
         header_test = shallow_mount_vue(MainHeader);
       })
+
       it("renders hamburger nav", () => {
-        expect(header_test.findComponent(HamburgerNav).exists()).toBe(true)
+        expect(header_test.findComponent(HamburgerNav)).toExist()
       })
+
       it("does not render main nav", () => {
-        expect(header_test.findComponent(MainNav).exists()).toBe(false)
+        expect(header_test.findComponent(MainNav)).not.toExist()
       })
     })
 
@@ -82,11 +82,13 @@ describe("MainHeader", () => {
         global.innerWidth = breakpoints.lg + 1;
         header_test = shallow_mount_vue(MainHeader)
       })
+
       it("does not render hamburger menu", () => {
-        expect(header_test.findComponent(HamburgerNav).exists()).toBe(false)
+        expect(header_test.findComponent(HamburgerNav)).not.toExist()
       })
+
       it("renders main nav", () => {
-        expect(header_test.findComponent(MainNav).exists()).toBe(true)
+        expect(header_test.findComponent(MainNav)).toExist()
       })
     })
   })
@@ -94,8 +96,9 @@ describe("MainHeader", () => {
   describe("computed", () => {
     let header_test
     beforeEach(function(){
-      header_test = mount_vue(MainHeader)
+      header_test = shallow_mount_vue(MainHeader)
     })
+
     describe("#is_landing", () => {
       describe("path == '/'", () => {
         it("is true", () => {
