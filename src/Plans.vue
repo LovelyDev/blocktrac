@@ -112,6 +112,7 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 import Maintenance    from './mixins/maintenance'
+import TotalCost from './mixins/cost_calculator'
 
 import config from './config/config'
 import ziti   from './config/ziti'
@@ -122,7 +123,7 @@ import ziti   from './config/ziti'
 export default {
   name: 'Plans',
 
-  mixins : [Authentication, Maintenance],
+  mixins : [Authentication, TotalCost, Maintenance],
 
   components: {
     MainLayout
@@ -158,26 +159,7 @@ export default {
     max_sinks : function(){
       return ziti.max_additions.sinks - this.additional_sinks;
     },
-
-    total_cost : function(){
-      return this.levels.reduce(function(cost, level){
-               if(level == this.membership_level)
-                 cost[level] = 0;
-               else
-                 cost[level] = this.plans[level].cost;
-
-               if(this.enable_additional[level] && this.selected_additional_filters[level])
-                 cost[level] += this.selected_additional_filters[level] * this.additions_cost.filters;
-
-               if(this.enable_additional[level] && this.selected_additional_sinks[level])
-                 cost[level] += this.selected_additional_sinks[level] * this.additions_cost.sinks;
-
-              cost[level] = parseFloat(cost[level].toFixed(2))
-
-               return cost;
-             }.bind(this), {});
-    },
-
+    
     upgrade_enabled : function(){
       var enabled = {};
 

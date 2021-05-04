@@ -121,13 +121,13 @@
           <div id="order_overview">
             <div class="order_detail">
               <span class="order_detail_label">Total:</span>
-              <span class="order_detail_value">${{total_cost}}</span>
+              <span class="order_detail_value">${{total_cost[plan]}}</span>
             </div>
 
             <router-link :to="{name : 'checkout',
                                params : {plan : plan,
-                                         specified_filters : selected_additional_filters,
-                                         specified_sinks   : selected_additional_sinks,
+                                         selected_additional_filters,
+                                         selected_additional_sinks,
                                          period : period}}">
               <b-button id="checkout_button" variant="light">
                 Checkout
@@ -144,6 +144,7 @@
 import MainLayout     from './components/MainLayout'
 import Authentication from './mixins/authentication'
 import Maintenance    from './mixins/maintenance'
+import TotalCost from './mixins/cost_calculator'
 
 import config from './config/config'
 import ziti   from './config/ziti'
@@ -151,7 +152,7 @@ import ziti   from './config/ziti'
 export default {
   name: 'Plan',
 
-  mixins : [Authentication, Maintenance],
+  mixins : [Authentication, TotalCost, Maintenance],
 
   components: {
     MainLayout
@@ -213,28 +214,7 @@ export default {
       if(!this.enable_additional || !this.selected_additional_sinks)
         return this.details.sinks;
       return this.details.sinks + this.selected_additional_sinks;
-    },
-
-    total_cost : function(){
-      var cost = 0;
-
-      if(this.upgrading_plan)
-        cost += this.period ?
-                this.details.monthly_costs[this.period] :
-                this.details.cost;
-
-      var period = this.period ? this.period : 1;
-
-      if(this.enable_additional && this.selected_additional_filters)
-        cost += this.selected_additional_filters * ziti.additions_cost.filters * period;
-
-      if(this.enable_additional && this.selected_additional_sinks)
-        cost += this.selected_additional_sinks * ziti.additions_cost.sinks * period;
-
-      cost = parseFloat(cost.toFixed(2))
-
-      return cost;
-    },
+    }
   },
 
   watch : {

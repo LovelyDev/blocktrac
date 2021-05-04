@@ -31,7 +31,7 @@
         </h4>
 
         <h5>
-          <b>Total Due: ${{total_cost}}</b>
+          <b>Total Due: ${{total_cost[plan]}}</b>
         </h5>
 
         <div id="next_payment">
@@ -168,6 +168,7 @@ import Authentication from './mixins/authentication'
 import HasCreditCard  from './mixins/has_credit_card'
 import ServerAPI      from './mixins/server_api'
 import Maintenance    from './mixins/maintenance'
+import TotalCost from './mixins/cost_calculator'
 
 import MainLayout     from './components/MainLayout'
 
@@ -182,7 +183,8 @@ export default {
     Authentication,
     HasCreditCard,
     ServerAPI,
-    Maintenance
+    Maintenance,
+    TotalCost
   ],
 
   components: {
@@ -191,8 +193,8 @@ export default {
 
   props : {
     plan : String,
-    specified_filters : Number,
-    specified_sinks : Number,
+    selected_additional_filters : Number,
+    selected_additional_sinks : Number,
     period : Number
   },
 
@@ -204,7 +206,8 @@ export default {
       expiration_date : '',
       security_code : '',
       tos_agree : false,
-      order_submitted : false
+      order_submitted : false,
+      enable_additional: false
     }
   },
 
@@ -219,30 +222,30 @@ export default {
       return this.plan != this.membership_level
     },
 
-    total_cost : function(){
-      var cost = 0
+    // total_cost : function(){
+    //   var cost = 0
 
-      if(this.upgrading_plan)
-        cost += this.period ?
-                this.details.monthly_costs[this.period] :
-                this.details.cost;
+    //   if(this.upgrading_plan)
+    //     cost += this.period ?
+    //             this.details.monthly_costs[this.period] :
+    //             this.details.cost;
 
-      var period = this.period ? this.period : 1;
+    //   var period = this.period ? this.period : 1;
 
-      if(this.specified_filters)
-        cost += this.specified_filters *
-                ziti.additions_cost.filters *
-                period;
+    //   if(this.selected_additional_filters)
+    //     cost += this.selected_additional_filters *
+    //             ziti.additions_cost.filters *
+    //             period;
 
-      if(this.specified_sinks)
-        cost += this.specified_sinks *
-                ziti.additions_cost.sinks *
-                period;
+    //   if(this.selected_additional_sinks)
+    //     cost += this.selected_additional_sinks *
+    //             ziti.additions_cost.sinks *
+    //             period;
 
-      cost = parseFloat(cost.toFixed(2))
+    //   cost = parseFloat(cost.toFixed(2))
 
-      return cost;
-    },
+    //   return cost;
+    // },
 
     next_payment : function(){
       var period = this.period ? this.period : 1;
@@ -270,11 +273,11 @@ export default {
         params.membership_months = this.period || 1
       }
 
-      if(this.specified_filters)
-        params.additional_filters = this.specified_filters
+      if(this.selected_additional_filters)
+        params.additional_filters = this.selected_additional_filters
 
-      if(this.specified_sinks)
-        params.additional_sinks = this.specified_sinks
+      if(this.selected_additional_sinks)
+        params.additional_sinks = this.selected_additional_sinks
 
       return params;
     }
@@ -325,6 +328,9 @@ export default {
     if(!this.plan)
       this.$router.push({path : '/plans'});
 
+    if(this.selected_additional_sinks || this.selected_additional_filters)
+      this.enable_additional = true;
+    
     this.use_existing_credit_card = this.has_credit_card
   }
 }
