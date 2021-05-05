@@ -8,7 +8,8 @@
 <template>
   <span>
     <span v-if="is_native">
-      <b v-if="have_amount && !no_amount">
+      <b v-if="have_amount && !no_amount"
+         class="amount">
         {{amount | abbrev}}
       </b>
 
@@ -18,7 +19,8 @@
     </span>
 
     <span v-else>
-      <b v-if="have_amount && !no_amount">
+      <b v-if="have_amount && !no_amount"
+         class="amount">
         {{amount | abbrev}}
       </b>
 
