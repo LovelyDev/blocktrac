@@ -24,12 +24,14 @@ export default {
 
   computed : {
     text : function(){
-      if(this.shorten){
-        if(Number.isInteger(this.shorten))
-          return this.account.substr(0, this.shorten) + "...";
-
-        else
-          return this.account.substr(0, 7) + "...";
+      if (this.shorten) {
+        let length;
+        if (Number.isInteger(this.shorten)) {
+          length = this.shorten;
+        } else {
+          length = 7;
+        }
+        return this.account.substr(0, length) + "...";
       }
       return this.account;
     },
