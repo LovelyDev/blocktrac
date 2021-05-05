@@ -29,8 +29,8 @@ describe("Plan Page", () => {
     plan_test = mount_vue(Plan, {
       propsData: {
         plan: "standard",
-        filters: 1,
-        sinks: 1
+        specified_filters: 1,
+        specified_sinks: 1
       }
     })
   })
@@ -68,11 +68,11 @@ describe("Plan Page", () => {
 
     describe("#enable_additional checkbox", () => {
       it("is tied to enable_additional", async () => {
-        plan_test.setData({enable_additional: false})
+        plan_test.vm.enable_additional = false;
         await next_tick(plan_test)
         expect(plan_test.find("#enable_additional input")).not.toBeChecked()
 
-        plan_test.setData({enable_additional: true})
+        plan_test.vm.enable_additional = true;
         await next_tick(plan_test)
         expect(plan_test.find("#enable_additional input")).toBeChecked()
       })
@@ -88,14 +88,14 @@ describe("Plan Page", () => {
 
     describe("#additional_filters spinbutton", () => {
       it("is tied to selected_additional_filters", async () => {
-        plan_test.setData({selected_additional_filters: 3})
+        plan_test.vm.selected_additional_filters = 3;
         await next_tick(plan_test)
         expect(parseInt(plan_test.find("#additional_filters .b-form-spinbutton").text())).toBe(plan_test.vm.selected_additional_filters)
       })
 
       describe("!enable_additional", () => {
         it("is disabled", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.find("#additional_filters .b-form-spinbutton").classes()).toContain('disabled')
         })
@@ -106,8 +106,8 @@ describe("Plan Page", () => {
           const plan_test = mount_vue(Plan, {
             propsData: {
               plan: "standard",
-              filters: 1,
-              sinks: 1
+              specified_filters: 1,
+              specified_sinks: 1
             },
             computed: {
               max_filters: function() {
@@ -122,14 +122,14 @@ describe("Plan Page", () => {
 
     describe("#additional_sinks spinbutton", () => {
       it("is tied to selected_additional_sinks", async () => {
-        plan_test.setData({selected_additional_sinks: 3})
+        plan_test.vm.selected_additional_sinks = 3;
         await next_tick(plan_test)
         expect(parseInt(plan_test.find("#additional_sinks .b-form-spinbutton").text())).toBe(plan_test.vm.selected_additional_sinks)
       })
 
       describe("!enable_additional", () => {
         it("is disabled", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.find("#additional_sinks .b-form-spinbutton").classes()).toContain('disabled')
         })
@@ -140,8 +140,8 @@ describe("Plan Page", () => {
           const plan_test = mount_vue(Plan, {
             propsData: {
               plan: "standard",
-              filters: 1,
-              sinks: 1
+              specified_filters: 1,
+              specified_sinks: 1
             },
             computed: {
               max_sinks: function() {
@@ -164,7 +164,7 @@ describe("Plan Page", () => {
 
         describe("period == 1", () => {
           it("is selected", async () => {
-            plan_test.setData({period: 1})
+            plan_test.vm.period = 1;
             await next_tick(plan_test)
             expect(plan_test.find('.plan_period').classes()).toContain('selected')
           })
@@ -191,7 +191,7 @@ describe("Plan Page", () => {
         periods.forEach((period, p) => {
           describe("period (" + period + ")== month", () => {
             it("is selected", async () => {
-              plan_test.setData({period: period})
+              plan_test.vm.period = period;
               await next_tick(plan_test)
 
               expect(plan_test.findAll('.plan_period').at(p + 1).classes()).toContain('selected')
@@ -215,7 +215,7 @@ describe("Plan Page", () => {
 
           describe(".plan_period_cost (" + period + ")", () => {
             beforeEach(async function(){
-              plan_test.setData({period : period})
+              plan_test.vm.period = period;
               await next_tick(plan_test)
             })
 
@@ -276,8 +276,8 @@ describe("Plan Page", () => {
         let testing_params = {
           period,
           plan,
-          specified_filters:selected_additional_filters,
-          specified_sinks:selected_additional_sinks
+          specified_filters : selected_additional_filters,
+          specified_sinks : selected_additional_sinks
         }
         plan_test.find("#checkout_button").trigger("click")
         next_tick(plan_test)
@@ -377,7 +377,7 @@ describe("Plan Page", () => {
     describe("#total_filters", () => {
       describe("!enable_additional", () => {
         it("is details.filters", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.vm.total_filters).toBe(plan_test.vm.details.filters)
         })
@@ -385,14 +385,15 @@ describe("Plan Page", () => {
 
       describe("!selected_additional_filters", () => {
         it("is details.filters", async () => {
-          plan_test.setData({selected_additional_filters: 0})
+          plan_test.vm.selected_additional_filters = 0;
           await next_tick(plan_test)
           expect(plan_test.vm.total_filters).toBe(plan_test.vm.details.filters)
         })
       })
 
       it("is details.filters + selected_additional_filters", async () => {
-        plan_test.setData({enable_additional: true, selected_additional_filters: 3})
+        plan_test.vm.enable_additional = true;
+        plan_test.vm.selected_additional_filters = 3;
         await next_tick(plan_test)
         expect(plan_test.vm.total_filters).toBe(plan_test.vm.details.filters + plan_test.vm.selected_additional_filters)
       })
@@ -401,7 +402,7 @@ describe("Plan Page", () => {
     describe("#total_sinks", () => {
       describe("!enable_additional", () => {
         it("is details.sinks", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.vm.total_sinks).toBe(plan_test.vm.details.sinks)
         })
@@ -409,113 +410,32 @@ describe("Plan Page", () => {
 
       describe("!selected_additional_sinks", () => {
         it("is details.sinks", async () => {
-          plan_test.setData({selected_additional_sinks: 0})
+          plan_test.vm.selected_additional_sinks = 0;
           await next_tick(plan_test)
           expect(plan_test.vm.total_sinks).toBe(plan_test.vm.details.sinks)
         })
       })
 
       it("is details.sinks + selected_additional_sinks", async () => {
-        plan_test.setData({enable_additional: true, selected_additional_sinks : 2})
+        plan_test.vm.enable_additional = true;
+        plan_test.vm.selected_additional_sinks = 2;
         await next_tick(plan_test)
         expect(plan_test.vm.total_sinks).toBe(plan_test.vm.details.sinks + plan_test.vm.selected_additional_sinks)
-      })
-    })
-
-    describe("#total_cost", () => {
-      describe("upgrading_plan", () => {
-        it("includes monthly plan cost", () => {
-          const plan_test = mount_vue(Plan, {
-            propsData: {
-              plan: "standard"
-            },
-            computed: {
-              membership_level: function(){
-                return "basic"
-              }
-            },
-            data: function(){
-              return {
-                enable_additional: false
-              }
-            }
-          })
-          expect(plan_test.vm.total_cost).toBe(plan_test.vm.details.cost)
-        })
-      })
-
-      describe("selected_additional_filters", () => {
-        it("includes monthly costs for filters", () => {
-          const plan_test = mount_vue(Plan, {
-            propsData: {
-              plan: "standard"
-            },
-            computed: {
-              membership_level: function(){
-                return "standard"
-              }
-            },
-            data: function(){
-              return {
-                enable_additional: true,
-                selected_additional_filters: 2
-              }
-            }
-          })
-          expect(plan_test.vm.total_cost).toBe(plan_test.vm.selected_additional_filters * ziti.additions_cost.filters)
-        })
-      })
-
-      describe("selected_additional_sinks", () => {
-        it("includes monthly costs for sinks", () => {
-          const plan_test = mount_vue(Plan, {
-            propsData: {
-              plan: "standard"
-            },
-            computed: {
-              membership_level: function(){
-                return "standard"
-              }
-            },
-            data: function(){
-              return {
-                enable_additional: true,
-                selected_additional_sinks: 2
-              }
-            }
-          })
-          expect(plan_test.vm.total_cost).toBe(plan_test.vm.selected_additional_sinks * ziti.additions_cost.sinks)
-        })
-      })
-
-      it("rounds cost to two decimal places", () => {
-        expect(plan_test.vm.total_cost).toBeRoundedTo(2)
       })
     })
   })
 
   describe("watch", () => {
     describe("enable_additional", () => {
-      let plan_test
-      beforeEach(function(){
-        plan_test = mount_vue(Plan, {
-          data: function(){
-            return {
-              enable_additional: true,
-              selected_additional_filters: 1,
-              selected_additional_sinks: 1
-            }
-          }
-        })
-      })
       describe("!enable_additional", () => {
         it("sets selected_additional_filters to null", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.vm.selected_additional_filters).toBeNull()
         })
+
         it("sets selected_additional_sinks to null", async () => {
-          plan_test.setData({enable_additional: false})
+          plan_test.vm.enable_additional = false;
           await next_tick(plan_test)
           expect(plan_test.vm.selected_additional_sinks).toBeNull()
         })
@@ -531,6 +451,7 @@ describe("Plan Page", () => {
           expect(plan_test.vm.period).toBeNull()
         })
       })
+
       it("sets period = integer month", () => {
         let month = 2
         plan_test.vm.set_period(month)
@@ -555,23 +476,23 @@ describe("Plan Page", () => {
       })
     })
 
-    describe("filters set", () => {
+    describe("specified_filters set", () => {
       it("sets enable_additional to true", () => {
         const plan = mount_vue(Plan, {
           propsData : {
             plan : ziti.membership_levels[1],
-            filters : 2
+            specified_filters : 2
           }
         })
 
         expect(plan.vm.enable_additional).toBe(true)
       })
 
-      it("sets selected_additional_filters from filters", () => {
+      it("sets selected_additional_filters from specified_filters", () => {
         const plan = mount_vue(Plan, {
           propsData : {
             plan : ziti.membership_levels[1],
-            filters : 2
+            specified_filters : 2
           }
         })
 
@@ -579,23 +500,23 @@ describe("Plan Page", () => {
       })
     })
 
-    describe("sinks set", () => {
+    describe("specified_sinks set", () => {
       it("sets enable_additional to true", () => {
         const plan = mount_vue(Plan, {
           propsData : {
             plan : ziti.membership_levels[1],
-            sinks : 2
+            specified_sinks : 2
           }
         })
 
         expect(plan.vm.enable_additional).toBe(true)
       })
 
-      it("sets selected_additional_sinks from sinks", () => {
+      it("sets selected_additional_sinks from specified_sinks", () => {
         const plan = mount_vue(Plan, {
           propsData : {
             plan : ziti.membership_levels[1],
-            sinks : 2
+            specified_sinks : 2
           }
         })
 

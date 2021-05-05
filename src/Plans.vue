@@ -56,10 +56,10 @@
 
           <div class="plan_additions">
             <div class="buy_additional">
-              <b-form-checkbox v-model="enable_additional[name]"
+              <b-form-checkbox v-model="enable_additional_by_plan[name]"
                                class="form_switch" switch>
                 <span class="enable_additional"
-                     :class="{active : enable_additional[name]}">Buy additional</span>
+                     :class="{active : enable_additional_by_plan[name]}">Buy additional</span>
               </b-form-checkbox>
             </div>
 
@@ -68,23 +68,23 @@
                 <td>Filters:</td>
                 <td><b-form-spinbutton class="additional_item" inline
                                        :max="max_filters"
-                                       v-model="selected_additional_filters[name]"
-                                       :disabled="!enable_additional[name] || max_filters == 0"/></td>
+                                       v-model="selected_additional_filters_by_plan[name]"
+                                       :disabled="!enable_additional_by_plan[name] || max_filters == 0"/></td>
               </tr>
 
               <tr>
                 <td>Sinks:</td>
                 <td><b-form-spinbutton class="additional_item" inline
                                        :max="max_sinks"
-                                       v-model="selected_additional_sinks[name]"
-                                       :disabled="!enable_additional[name] || max_sinks == 0"/></td>
+                                       v-model="selected_additional_sinks_by_plan[name]"
+                                       :disabled="!enable_additional_by_plan[name] || max_sinks == 0"/></td>
               </tr>
             </table>
 
             <router-link :to="{name: 'plan',
                                params: {plan : name,
-                                     filters : selected_additional_filters[name],
-                                       sinks : selected_additional_sinks[name]}}"
+                           specified_filters : selected_additional_filters_by_plan[name],
+                             specified_sinks : selected_additional_sinks_by_plan[name]}}"
                          v-if="upgrade_enabled[name]">
               <b-button class="upgrade">
                 Upgrade ${{total_cost[name]}}
@@ -117,9 +117,6 @@ import TotalCost from './mixins/cost_calculator'
 import config from './config/config'
 import ziti   from './config/ziti'
 
-// TODO consolidate Plans, Plan, and Checkout logic
-//      into a helper mixin
-
 export default {
   name: 'Plans',
 
@@ -132,11 +129,7 @@ export default {
   data : function(){
     return {
       levels : ziti.membership_levels,
-      plans : ziti.membership_features,
-      additions_cost : ziti.additions_cost,
-      enable_additional : {},
-      selected_additional_filters : {},
-      selected_additional_sinks : {}
+      plans : ziti.membership_features
     }
   },
 
@@ -197,12 +190,12 @@ export default {
   },
 
   watch : {
-    enable_additional : {
+    enable_additional_by_plan : {
       handler : function(){
         Object.keys(this.plans).forEach(function(plan){
-          if(!this.enable_additional[plan]){
-            delete this.selected_additional_filters[plan];
-            delete this.selected_additional_sinks[plan];
+          if(!this.enable_additional_by_plan[plan]){
+            this.selected_additional_filters_by_plan[plan] = 0;
+            this.selected_additional_sinks_by_plan[plan] = 0;
           }
         }.bind(this))
       },

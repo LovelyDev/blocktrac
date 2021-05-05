@@ -72,17 +72,17 @@ describe("Plans Page", () => {
       })
 
       describe(".buy_additional checkbox", () => {
-        test.todo("is tied to enable_additional")
+        test.todo("is tied to enable_additional_by_plan")
 
         describe("enable_additional", () => {
-          describe("enable_additional is true", () => {
+          describe("enable_additional_by_plan is true", () => {
             test.todo("is active")
           })
         })
       })
 
       describe(".additional_items tr:nth-child(0) spinbutton", () => {
-        test.todo("is tied to selected_additional_filters")
+        test.todo("is tied to selected_additional_filters_by_plan")
 
         describe("!enable_additional", () => {
           test.todo("is disabled")
@@ -94,7 +94,7 @@ describe("Plans Page", () => {
       })
 
       describe(".additional_items tr:nth-child(1) spinbutton", () => {
-        test.todo("is tied to selected_additional_sinks")
+        test.todo("is tied to selected_additional_sinks_by_plan")
 
         describe("!enable_additional", () => {
           test.todo("is disabled")
@@ -228,7 +228,7 @@ describe("Plans Page", () => {
   })
 
   describe("watch", () => {
-    describe("enable_additional", () => {
+    describe("enable_additional_by_plan", () => {
       describe("!enable_additional", () => {
         test.todo("deletes selected_additional_filters")
         test.todo("deletes selected_additional_sinks")

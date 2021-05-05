@@ -121,14 +121,14 @@
           <div id="order_overview">
             <div class="order_detail">
               <span class="order_detail_label">Total:</span>
-              <span class="order_detail_value">${{total_cost[plan]}}</span>
+              <span class="order_detail_value">${{total_cost}}</span>
             </div>
 
             <router-link :to="{name : 'checkout',
                                params : {plan : plan,
-                                         selected_additional_filters,
-                                         selected_additional_sinks,
-                                         period : period}}">
+                            specified_filters : selected_additional_filters,
+                              specified_sinks : selected_additional_sinks,
+                                       period : period}}">
               <b-button id="checkout_button" variant="light">
                 Checkout
               </b-button>
@@ -159,16 +159,12 @@ export default {
   },
 
   props : {
-       plan : String,
-    filters : Number,
-      sinks : Number
+    specified_filters : Number,
+      specified_sinks : Number
   },
 
   data : function(){
     return {
-      enable_additional : false,
-      selected_additional_filters : null,
-      selected_additional_sinks : null,
       period : null
     }
   },
@@ -247,14 +243,14 @@ export default {
       return;
     }
 
-    if(this.filters || this.sinks)
+    if(this.specified_filters || this.specified_sinks)
       this.enable_additional = true;
 
-    if(this.filters)
-      this.selected_additional_filters = this.filters;
+    if(this.specified_filters)
+      this.selected_additional_filters = this.specified_filters;
 
-    if(this.sinks)
-      this.selected_additional_sinks = this.sinks;
+    if(this.specified_sinks)
+      this.selected_additional_sinks = this.specified_sinks;
   }
 }
 </script>

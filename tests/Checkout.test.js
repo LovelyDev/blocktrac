@@ -59,7 +59,7 @@ describe("Checkout Page", () => {
     describe("#checkout_subcontainer > h5", () => {
       it("contains total cost", () => {
         const total_cost = checkout.find("#checkout_subcontainer > h5")
-        expect(total_cost.text()).toMatch("Total Due: $31.99");
+        expect(total_cost.text()).toMatch("Total Due: $" + checkout.vm.total_cost);
       })
     })
 
@@ -243,81 +243,6 @@ describe("Checkout Page", () => {
           })
 
           expect(ch.vm.upgrading_plan).toBe(true);
-        })
-      })
-
-      describe("#total_cost", () => {
-        describe("upgrading_plan", () => {
-          it("includes monthly plan cost", () => {
-            const ch = mount_vue(Checkout, {
-              propsData: {
-                plan: 'standard'
-              },
-
-              computed: {
-                membership_level: function(){
-                  return 'basic'
-                }
-              }
-            })
-
-            expect(ch.vm.total_cost).toBe(ziti.membership_features.standard.cost);
-          })
-        })
-
-        describe("specified_filters", () => {
-          it("includes monthly costs for filters", () => {
-            const ch = mount_vue(Checkout, {
-              propsData: {
-                plan: 'standard',
-                specified_filters: 1
-              },
-
-              computed: {
-                membership_level: function(){
-                  return 'basic'
-                }
-              }
-            })
-
-            expect(ch.vm.total_cost).toBe(ziti.membership_features.standard.cost + ziti.additions_cost.filters);
-          })
-        })
-
-        describe("specified_sinks", () => {
-          it("includes monthly costs for sinks", () => {
-            const ch = mount_vue(Checkout, {
-              propsData: {
-                plan: 'standard',
-                specified_sinks: 1
-              },
-
-              computed: {
-                membership_level: function(){
-                  return 'basic'
-                }
-              }
-            })
-
-            expect(ch.vm.total_cost).toBe(ziti.membership_features.standard.cost + ziti.additions_cost.sinks);
-          })
-        })
-
-        it("rounds cost to two decimal places", () => {
-          const ch = mount_vue(Checkout, {
-            propsData: {
-              plan: 'standard',
-              specified_filters: 1
-            },
-
-            computed: {
-              membership_level: function(){
-                return 'basic'
-              }
-            }
-          })
-
-          expect(ch.vm.total_cost).toBeRoundedTo(2);
         })
       })
 
@@ -689,6 +614,54 @@ describe("Checkout Page", () => {
         });
 
         expect(ch.vm.$route.path).toEqual("/plans")
+      })
+    })
+
+    describe("specified_filters set", () => {
+      it("sets enable_additional to true", () => {
+        const ch = mount_vue(Checkout, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            specified_filters : 2
+          }
+        })
+
+        expect(ch.vm.enable_additional).toBe(true)
+      })
+
+      it("sets selected_additional_filters from specified_filters", () => {
+        const ch = mount_vue(Checkout, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            specified_filters : 2
+          }
+        })
+
+        expect(ch.vm.selected_additional_filters).toBe(2)
+      })
+    })
+
+    describe("specified_sinks set", () => {
+      it("sets enable_additional to true", () => {
+        const ch = mount_vue(Checkout, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            specified_sinks : 2
+          }
+        })
+
+        expect(ch.vm.enable_additional).toBe(true)
+      })
+
+      it("sets selected_additional_sinks from specified_sinks", () => {
+        const ch = mount_vue(Checkout, {
+          propsData : {
+            plan : ziti.membership_levels[1],
+            specified_sinks : 2
+          }
+        })
+
+        expect(ch.vm.selected_additional_sinks).toBe(2)
       })
     })
 

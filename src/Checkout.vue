@@ -31,7 +31,7 @@
         </h4>
 
         <h5>
-          <b>Total Due: ${{total_cost[plan]}}</b>
+          <b>Total Due: ${{total_cost}}</b>
         </h5>
 
         <div id="next_payment">
@@ -192,10 +192,9 @@ export default {
   },
 
   props : {
-    plan : String,
-    selected_additional_filters : Number,
-    selected_additional_sinks : Number,
-    period : Number
+               period : Number,
+    specified_filters : Number,
+      specified_sinks : Number
   },
 
   data : function(){
@@ -206,8 +205,7 @@ export default {
       expiration_date : '',
       security_code : '',
       tos_agree : false,
-      order_submitted : false,
-      enable_additional: false
+      order_submitted : false
     }
   },
 
@@ -221,31 +219,6 @@ export default {
     upgrading_plan : function(){
       return this.plan != this.membership_level
     },
-
-    // total_cost : function(){
-    //   var cost = 0
-
-    //   if(this.upgrading_plan)
-    //     cost += this.period ?
-    //             this.details.monthly_costs[this.period] :
-    //             this.details.cost;
-
-    //   var period = this.period ? this.period : 1;
-
-    //   if(this.selected_additional_filters)
-    //     cost += this.selected_additional_filters *
-    //             ziti.additions_cost.filters *
-    //             period;
-
-    //   if(this.selected_additional_sinks)
-    //     cost += this.selected_additional_sinks *
-    //             ziti.additions_cost.sinks *
-    //             period;
-
-    //   cost = parseFloat(cost.toFixed(2))
-
-    //   return cost;
-    // },
 
     next_payment : function(){
       var period = this.period ? this.period : 1;
@@ -328,8 +301,14 @@ export default {
     if(!this.plan)
       this.$router.push({path : '/plans'});
 
-    if(this.selected_additional_sinks || this.selected_additional_filters)
+    if(this.specified_filters || this.specified_sinks)
       this.enable_additional = true;
+
+    if(this.specified_filters)
+      this.selected_additional_filters = this.specified_filters;
+
+    if(this.specified_sinks)
+      this.selected_additional_sinks = this.specified_sinks;
     
     this.use_existing_credit_card = this.has_credit_card
   }
