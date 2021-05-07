@@ -47,7 +47,10 @@
       </tr>
     </table>
 
-    <button style="display: none" type="submit">Submit</button>
+    <button ref="submit" type="submit"
+            style="display: none">
+      Submit
+    </button>
   </form>
 </template>
 
@@ -67,6 +70,14 @@ export default {
     is_valid : function(){
       return this.have_email &&
              this.have_password;
+    }
+  },
+
+  methods : {
+    submit : function(){
+      // XXX: need to click the button to register the autocomplete
+      this.$refs.submit.click();
+      this.login();
     }
   },
 

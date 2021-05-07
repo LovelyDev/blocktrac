@@ -13,7 +13,7 @@
            header-class="modal_header"
            centered
            @shown="shown"
-           @ok="login"
+           @ok="submit"
            :ok-disabled="!is_valid"
            no-stacking>
     <LoginForm ref="form"
@@ -36,13 +36,9 @@ export default {
   },
 
   methods : {
-    login : function(){
-      this.$refs.form.login();
-    },
-
     submit : function(){
       if(this.is_valid){
-        this.login()
+        this.$refs.form.submit()
         this.$refs.login_modal.hide()
       }
     },
