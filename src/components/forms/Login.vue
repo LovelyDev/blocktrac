@@ -5,7 +5,6 @@
   * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <form>
   <table class="form_table">
     <tr>
       <td class="form_text">Email address:</td>
@@ -13,16 +12,12 @@
         <input ref="email"
                class="form_input"
                type="text"
-               id="email"
                name="email"
-               autocapitalize="none"
-               autoComplete="email"
                @keyup.enter="$emit('submit')"
                :value="auth_email"
                @input="evnt=> auth_email = evnt.target.value" />
       </td>
     </tr>
-
     <tr>
       <td class="form_text">Password:</td>
       <td>
@@ -43,7 +38,6 @@
       </td>
     </tr>
   </table>
-  </form>
 </template>
 
 <script>
