@@ -5,44 +5,53 @@
   * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <table class="form_table">
-    <tr>
-      <td class="form_text">Email address:</td>
-      <td>
-        <input ref="email"
-               class="form_input"
-               type="text"
-               name="email"
-               @keyup.enter="$emit('submit')"
-               :value="auth_email"
-               @input="evnt=> auth_email = evnt.target.value" />
-      </td>
-    </tr>
-    <tr>
-      <td class="form_text">Password:</td>
-      <td>
-        <input class="form_input"
-               type="password"
-               @keyup.enter="$emit('submit')"
-               :value="auth_password"
-               @input="evnt=> auth_password = evnt.target.value" />
-      </td>
-    </tr>
+  <!-- XXX: For email autocomplete to work, we need a form and submit button:
+            https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
 
-    <tr>
-      <td></td>
-      <td id="forgot_password"
-          class="form_text"
-          v-b-modal.forgot_password_modal>
-        Forgot Password?
-      </td>
-    </tr>
-  </table>
+            Add those below (hiding the submit button) w/ a noop action so that we
+            can autocomplete email while handling the login via vuejs events. -->
+  <form action="javascript:void(0)">
+    <table class="form_table">
+      <tr>
+        <td class="form_text">Email address:</td>
+        <td>
+          <input ref="email"
+                 class="form_input"
+                 type="text"
+                 name="email"
+                 autocomplete="on"
+                 @keyup.enter="$emit('submit')"
+                 :value="auth_email"
+                 @input="evnt=> auth_email = evnt.target.value" />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="form_text">Password:</td>
+        <td>
+          <input class="form_input"
+                 type="password"
+                 @keyup.enter="$emit('submit')"
+                 :value="auth_password"
+                 @input="evnt=> auth_password = evnt.target.value" />
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td id="forgot_password"
+            class="form_text"
+            v-b-modal.forgot_password_modal>
+          Forgot Password?
+        </td>
+      </tr>
+    </table>
+
+    <button style="display: none" type="submit">Submit</button>
+  </form>
 </template>
 
 <script>
-// TODO autofill email suggestion
-
 import Authentication from '../../mixins/authentication'
 import Validator      from '../../mixins/validator'
 import Maintenance    from '../../mixins/maintenance'

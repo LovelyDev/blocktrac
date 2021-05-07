@@ -16,12 +16,9 @@
            @ok="login"
            :ok-disabled="!is_valid"
            no-stacking>
-    <form autocomplete="on" method="POST" action="javascript:void(0)">
-      <LoginForm ref="form"
-          @validated="validate($event)"
-            @submit="submit" />
-     <button style="display: none" ref="submit_btn" type="submit">Submit</button>
-    </form>
+    <LoginForm ref="form"
+        @validated="validate($event)"
+          @submit="submit" />
   </b-modal>
 </template>
 
@@ -41,7 +38,6 @@ export default {
   methods : {
     login : function(){
       this.$refs.form.login();
-      this.$refs.submit_btn.click()
     },
 
     submit : function(){
