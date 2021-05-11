@@ -27,10 +27,6 @@ export default {
     shorten : [Boolean, Number],
   },
 
-  components : {
-    Blockchain
-  },
-
   computed : {
     text : function(){
       if (this.shorten) {
