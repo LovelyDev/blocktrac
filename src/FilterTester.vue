@@ -53,6 +53,7 @@
 <script>
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
+import Blockchain     from './mixins/blockchain'
 import Maintenance    from './mixins/maintenance'
 
 import TxsLayout      from './components/TxsLayout'
@@ -65,18 +66,17 @@ import config         from './config/config'
 var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
-// FIXME: captured assets for other blockchains
-
-const captured_txs =
-  require("./assets/captured_txs.json").reduce(function(ct, ctx){
-    ct[ctx.replace(".json", "")] = Object.freeze({ transaction : require("./assets/captured_txs/" + ctx)})
-    return ct;
-  }, {});
+// FIXME: captured assets for xlm,btc,eth blockchains
 
 export default {
   name: 'FilterTester',
 
-  mixins : [Authentication, ServerAPI, Maintenance],
+  mixins : [
+    Authentication,
+    ServerAPI,
+    Blockchain,
+    Maintenance
+  ],
 
   components: {
     TxsLayout,
@@ -94,12 +94,28 @@ export default {
     }
   },
 
+  computed : {
+    list : function(){
+      return require('./assets/captured_txs/' + this.active_blockchain + '/captured_txs.json')
+    },
+
+    txs : function(){
+      return this.list.reduce(function(ct, ctx){
+        const key = ctx.replace(".json", "");
+        const tx  = require("./assets/captured_txs/" + this.active_blockchain + "/" + ctx)
+
+        ct[key] = Object.freeze(util.wrap_tx(tx))
+        return ct;
+      }.bind(this), {});
+    }
+  },
+
   watch : {
     active_filter : function(){
       var jp = util.filter_matcher(this.active_filter);
 
-      Object.keys(captured_txs).forEach(function(ctx){
-        const json = captured_txs[ctx];
+      Object.keys(this.txs).forEach(function(ctx){
+        const json = this.txs[ctx];
         if(jsonpath.query(json, jp).length != 0)
           this.matched_tests.push(json);
       }.bind(this));
