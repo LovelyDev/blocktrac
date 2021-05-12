@@ -7,10 +7,14 @@
 
 import xrp from './network-connection/xrp'
 import xlm from './network-connection/xlm'
+import btc from './network-connection/btc'
+import eth from './network-connection/eth'
 
 const modules = {
   xrp : xrp,
-  xlm : xlm
+  xlm : xlm,
+  btc : btc,
+  eth : eth
 };
 
 ///

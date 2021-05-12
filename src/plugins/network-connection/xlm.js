@@ -14,7 +14,7 @@ const txs_config = require("../../config/txs")
 // XXX: import XLM operations helper for use below
 const XLMOperations = require("../../components/tx_summaries/xlm/operations").default;
 
-// XXX: XLM conversion function copied from ziti/workers/listen_to_txs/*
+// XXX: XLM conversion function copied from ziti/workers/listen_to_txs/xlm
 function convert_tx(tx){
   return simplify(tx);
 }

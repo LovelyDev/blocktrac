@@ -8,6 +8,14 @@ module.exports = {
   // Number of TXs to retain in history
   TX_HISTORY : 75,
 
+  // Whether Blockchain TXs fall into categories
+  ENABLE_TX_CATEGORIES : {
+    'xrp' : true,
+    'xlm' : true,
+    'btc' : false,
+    'eth' : false
+  },
+
   // Categories TXs fall in to
   TX_CATEGORIES : [
     'ALL',

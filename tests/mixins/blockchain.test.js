@@ -142,6 +142,66 @@ describe("network mixin", () => {
       })
     })
 
+    describe("btc_configured", () => {
+      describe("configured_blockchain == 'btc'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'btc';
+              }
+            }
+          })
+
+          expect(component.vm.btc_configured).toBe(true);
+        })
+      })
+
+      describe("configured_blockchain != 'btc'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.btc_configured).toBe(false);
+        })
+      })
+    })
+
+    describe("eth_configured", () => {
+      describe("configured_blockchain == 'eth'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'eth';
+              }
+            }
+          })
+
+          expect(component.vm.eth_configured).toBe(true);
+        })
+      })
+
+      describe("configured_blockchain != 'eth'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              configured_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.eth_configured).toBe(false);
+        })
+      })
+    })
+
     ///
 
     describe("selected_blockchain", () => {
@@ -192,6 +252,42 @@ describe("network mixin", () => {
           const component = shallow_mount_vue(Component)
           component.vm.$store.commit('set_selected_blockchain', 'xrp')
           expect(component.vm.xlm_selected).toEqual(false)
+        })
+      })
+    })
+
+    describe("btc_selected", () => {
+      describe("selected_blockchain == 'btc'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'btc')
+          expect(component.vm.btc_selected).toEqual(true)
+        })
+      })
+
+      describe("selected_blockchain != 'btc'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xlm')
+          expect(component.vm.btc_selected).toEqual(false)
+        })
+      })
+    })
+
+    describe("eth_selected", () => {
+      describe("selected_blockchain == 'eth'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'eth')
+          expect(component.vm.eth_selected).toEqual(true)
+        })
+      })
+
+      describe("selected_blockchain != 'eth'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component)
+          component.vm.$store.commit('set_selected_blockchain', 'xlm')
+          expect(component.vm.eth_selected).toEqual(false)
         })
       })
     })
@@ -296,6 +392,66 @@ describe("network mixin", () => {
       })
     })
 
+    describe("btc_active", () => {
+      describe("active_blockchain == 'btc'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'btc';
+              }
+            }
+          })
+
+          expect(component.vm.btc_active).toEqual(true);
+        })
+      })
+
+      describe("active_blockchain != 'btc'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.btc_active).toEqual(false);
+        })
+      })
+    })
+
+    describe("eth_active", () => {
+      describe("active_blockchain == 'eth'", () => {
+        it("is true", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'eth';
+              }
+            }
+          })
+
+          expect(component.vm.eth_active).toEqual(true);
+        })
+      })
+
+      describe("active_blockchain != 'eth'", () => {
+        it("is false", () => {
+          const component = shallow_mount_vue(Component, {
+            computed : {
+              active_blockchain : function(){
+                return 'xlm';
+              }
+            }
+          })
+
+          expect(component.vm.eth_active).toEqual(false);
+        })
+      })
+    })
+
     ///
 
     describe("blockchain_icon", () => {
@@ -308,6 +464,50 @@ describe("network mixin", () => {
 
     describe("blockchain_jsonpath_example", () => {
       test.todo("is first jsonpath_example for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_help_examples", () => {
+      test.todo("is jsonpath_help_examples for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_dot_notation_example", () => {
+      test.todo("is jsonpath_dot_notation_example for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_bracket_notation_example", () => {
+      test.todo("is jsonpath_bracket_notation_example for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_script_expression_example", () => {
+      test.todo("is jsonpath_script_expression_example for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_filter_expression_example", () => {
+      test.todo("is jsonpath_filter_expression_example for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example1", () => {
+      test.todo("is jsonpath_expression_example1 for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example1_explanation", () => {
+      test.todo("is jsonpath_expression_example1_explanation for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example2", () => {
+      test.todo("is jsonpath_expression_example2 for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example2_explanation", () => {
+      test.todo("is jsonpath_expression_example2_explanation for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example3", () => {
+      test.todo("is jsonpath_expression_example3 for active_blockchain")
+    })
+
+    describe("blockchain_jsonpath_expression_example3_explanation", () => {
+      test.todo("is jsonpath_expression_example3_explanation for active_blockchain")
     })
 
     describe("blockchain_description", () => {

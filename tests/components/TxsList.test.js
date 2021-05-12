@@ -26,12 +26,19 @@ describe("TxsList", () => {
       })
     })
 
-    describe("mq < md", () => {
-      test.todo("renders TxsCategoriesDropdown")
+    describe("categories_enabled", () => {
+      describe("mq < md", () => {
+        test.todo("renders TxsCategoriesDropdown")
+      })
+
+      describe("mq >= md", () => {
+        test.todo("renders TxsCategories")
+      })
     })
 
-    describe("mq >= md", () => {
-      test.todo("renders TxsCategories")
+    describe("!categories_enabled", () => {
+      test.todo("does not render TxsCategoriesDropdown")
+      test.todo("does not render TxsCategories")
     })
 
     describe("have_txs", () => {
@@ -44,8 +51,8 @@ describe("TxsList", () => {
   })
 
   describe("computed", () => {
-    describe("loading_txs", () => {
-      test.todo("is store.loading_txs")
+    describe("categories_enabled", () => {
+      test.todo("is txs_config.ENABLE_TX_CATEGORIES for active_blockchain")
     })
 
     describe("txs", () => {

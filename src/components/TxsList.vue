@@ -39,10 +39,10 @@
       <CreateFilterModal @created="$refs.my_filters.load_filters()" />
     </template>
 
-    <TxsCategoriesDropdown v-if="mq_lt_md" />
+    <TxsCategoriesDropdown v-if="mq_lt_md && categories_enabled" />
 
     <div id="txs_list">
-      <TxsCategories v-if="mq_gte_md" />
+      <TxsCategories v-if="mq_gte_md && categories_enabled" />
 
       <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
@@ -73,6 +73,8 @@ import Authentication        from '../mixins/authentication'
 import HasFilters            from '../mixins/has_filters'
 import Blockchain            from '../mixins/blockchain'
 
+import txs_config            from '../config/txs'
+
 export default {
   name: 'TxsList',
 
@@ -90,6 +92,10 @@ export default {
   },
 
   computed : {
+    categories_enabled : function(){
+      return txs_config.ENABLE_TX_CATEGORIES[this.active_blockchain]
+    },
+
     txs : function(){
       return this.$store.state.txs;
     },

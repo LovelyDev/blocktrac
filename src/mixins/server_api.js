@@ -226,6 +226,12 @@ export default {
 
     // Return promise, handle these methods callbacks in invoker
 
+    // Load transactions from server, storing the result
+    load_txs : function(blockchain){
+      return this.$htttp().get(this.backend_url + "/txs?blockchain=" + blockchain)
+    },
+
+
     update_user : function(user){
       return this.$htttp().put(this.backend_url + "/user",
                                    user, this.auth_header)

@@ -34,6 +34,14 @@ export default {
       return this.configured_blockchain == 'xlm';
     },
 
+    btc_configured : function(){
+      return this.configured_blockchain == 'btc';
+    },
+
+    eth_configured : function(){
+      return this.configured_blockchain == 'eth';
+    },
+
     ///
 
     selected_blockchain : function(){
@@ -50,6 +58,14 @@ export default {
 
     xlm_selected : function(){
       return this.selected_blockchain == 'xlm';
+    },
+
+    btc_selected : function(){
+      return this.selected_blockchain == 'btc';
+    },
+
+    eth_selected : function(){
+      return this.selected_blockchain == 'eth';
     },
 
     ///
@@ -72,6 +88,14 @@ export default {
       return this.active_blockchain == 'xlm';
     },
 
+    btc_active : function(){
+      return this.active_blockchain == 'btc';
+    },
+
+    eth_active : function(){
+      return this.active_blockchain == 'eth';
+    },
+
     ///
 
     blockchain_icon : function(){
@@ -86,12 +110,60 @@ export default {
       return this.blockchain_jsonpath_examples[0];
     },
 
+    blockchain_jsonpath_help_examples : function(){
+      return blockchain_assets.jsonpath_help_examples[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_dot_notation_example : function(){
+      return blockchain_assets.jsonpath_dot_notation_example[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_bracket_notation_example : function(){
+      return blockchain_assets.jsonpath_bracket_notation_example[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_script_expression_example : function(){
+      return blockchain_assets.jsonpath_script_expression_example[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_filter_expression_example : function(){
+      return blockchain_assets.jsonpath_filter_expression_example[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example1 : function(){
+      return blockchain_assets.jsonpath_expression_example1[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example1_explanation : function(){
+      return blockchain_assets.jsonpath_expression_example1_explanation[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example2 : function(){
+      return blockchain_assets.jsonpath_expression_example2[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example2_explanation : function(){
+      return blockchain_assets.jsonpath_expression_example2_explanation[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example3 : function(){
+      return blockchain_assets.jsonpath_expression_example3[this.active_blockchain];
+    },
+
+    blockchain_jsonpath_expression_example3_explanation : function(){
+      return blockchain_assets.jsonpath_expression_example3_explanation[this.active_blockchain];
+    },
+
     blockchain_description : function(){
       return blockchain_assets.descriptions[this.active_blockchain];
     },
 
     blockchain_moreinfo : function(){
       return blockchain_assets.moreinfo_links[this.active_blockchain];
+    },
+
+    blockchain_example_transaction : function(){
+      return blockchain_assets.example_transaction[this.active_blockchain];
     },
 
     ///

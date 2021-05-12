@@ -9,17 +9,32 @@
 const NETWORK = null;
 //const NETWORK = 'xrp_mainnet';
 //const NETWORK = 'xlm_mainnet';
+//const NETWORK = 'btc_mainnet';
+//const NETWORK = 'eth_mainnet';
 
 // Network Endpoints
 const NETWORK_URIS = {
   'xrp_mainnet' : "wss://s2.ripple.com:443",
-  'xlm_mainnet' : "https://horizon.stellar.org"
+  'xlm_mainnet' : "https://horizon.stellar.org",
+
+  btc_mainnet : {
+    // Blockchain API: https://www.blockchain.com/api/blockchain_api
+    latest_block : "https://blockchain.info/latestblock",
+         block_n : "https://blockchain.info/rawblock/HASH",
+         account : "https://blockchain.info/rawaddr/ADDR",
+              tx : "https://blockchain.info/rawtx/HASH"
+  },
+
+  // ETH Wrapper: https://docs.linkpool.io/docs/public_rpc
+  eth_mainnet : "https://main-light.eth.linkpool.io/"
 };
 
 // Default networks
 const DEFAULT_NETWORKS = {
   'xrp' : 'xrp_mainnet',
-  'xlm' : 'xlm_mainnet'
+  'xlm' : 'xlm_mainnet',
+  'btc' : 'btc_mainnet',
+  'eth' : 'eth_mainnet'
 }
 
 ///
@@ -30,7 +45,7 @@ const BLOCKCHAIN = NETWORK ?
                        null;
 
 // Supported blockchains
-const BLOCKCHAINS = ['xrp', 'xlm'];
+const BLOCKCHAINS = ['xrp', 'xlm', 'btc', 'eth'];
 
 // Default blockchain
 const DEFAULT_BLOCKCHAIN = BLOCKCHAINS[0];
@@ -42,6 +57,8 @@ const DEFAULT_BLOCKCHAIN = BLOCKCHAINS[0];
 const APP_NAMES = {
   'xrp' : 'Zerp Tracker',
   'xlm' : 'Stracker',
+  'btc' : '???',
+  'eth' : '???',
    null : 'Block Trac'
 }
 
@@ -50,6 +67,8 @@ const APP_NAMES = {
 const APP_NAME_EMPHASISES = {
   'xrp' : 4,
   'xlm' : 1,
+  'btc' : 0,
+  'eth' : 0,
    null : 5
 };
 

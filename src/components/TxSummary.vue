@@ -8,12 +8,16 @@
   <div>
     <XRPTxSummary :tx="tx" v-if="xrp_active" />
     <XLMTxSummary :tx="tx" v-if="xlm_active" />
+    <BTCTxSummary :tx="tx" v-if="btc_active" />
+    <ETHTxSummary :tx="tx" v-if="eth_active" />
   </div>
 </template>
 
 <script>
 import XRPTxSummary from './tx_summaries/XRP'
 import XLMTxSummary from './tx_summaries/XLM'
+import BTCTxSummary from './tx_summaries/BTC'
+import ETHTxSummary from './tx_summaries/ETH'
 
 import Blockchain   from '../mixins/blockchain'
 
@@ -24,7 +28,9 @@ export default {
 
   components : {
     XRPTxSummary,
-    XLMTxSummary
+    XLMTxSummary,
+    BTCTxSummary,
+    ETHTxSummary
   },
 
   props : {
@@ -32,6 +38,6 @@ export default {
       type : Object,
       required : true
     }
-  },
+  }
 }
 </script>

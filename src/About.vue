@@ -31,7 +31,7 @@
                     v-if="xrp_active">
             </iframe>
 
-            <!-- TODO: xlm video -->
+            <!-- TODO: replace this video w/ generic blocktr.ac video -->
           </div>
         </div>
 
@@ -69,16 +69,13 @@
           </p>
 
           <p>
-            For example to only inspect {{active_blockchain_upper}} transactions that create offers,
+            For example to only inspect {{active_blockchain_upper}}
+            {{blockchain_jsonpath_example1_explanation}},
             the following expression can be used:
           </p>
 
-          <div id="expression_example1" class="expression_example" v-if="xrp_active">
-            $..[?(@.TransactionType == 'OfferCreate')]
-          </div>
-
-          <div id="expression_example2" class="expression_example" v-else-if="xlm_active">
-            $..operations..[?(@._type == 'manageBuyOffer' || @._type == 'manageSellOffer')]
+          <div id="expression_example1" class="expression_example">
+            {{blockchain_jsonpath_expression_example1}}
           </div>
 
           <p>
@@ -86,36 +83,20 @@
             <i>500 {{active_blockchain_upper}}</i>, you can use:
           </p>
 
-          <div id="expression_example2" class="expression_example" v-if="xrp_active">
-            $..[?(@.TransactionType == 'Payment' && parseInt(@.Amount) > 500000000)]
+          <div id="expression_example2" class="expression_example">
+            {{blockchain_jsonpath_expression_example2}}
           </div>
 
-          <div id="expression_example2" class="expression_example" v-else-if="xlm_active">
-            $..operations..[?(@._type == 'payment' && parseInt(@.paymentOp.amount > 5000000000))]
-          </div>
-
-          <p id="xrp_drops" v-if="xrp_active">
-            On the ledger XRP is expressed in drops,
-            units equal to 1-millionth of an XRP,
-            hence 500 XRP = 500Million drops, which we see above
-          </p>
-
-          <p id="xlm_stoops" v-if="xlm_active">
-            On the ledger XLM is expressed in stoops,
-            units equal to 10-millionth of an XLM,
-            hence 500 XLM = 5Billion stoops, which we see above
+          <p id="expression_example2_explanation">
+            {{blockchain_jsonpath_expression_example2_explanation}}
           </p>
 
           <p>
-          Or to only inspect transactions that create new accounts:
+          Or to only inspect {{blockchain_jsonpath_expression_example3_explanation}}:
           </p>
 
-          <div id="expression_example3" class="expression_example" v-if="xrp_active">
-            $.meta.AffectedNodes[?(@.CreatedNode.LedgerEntryType == 'AccountRoot')]
-          </div>
-
-          <div id="expression_example3" class="expression_example" v-else-if="xlm_active">
-            $..operations..[?(@._type == 'createAccount')]
+          <div id="expression_example3" class="expression_example">
+            {{blockchain_jsonpath_expression_example3}}
           </div>
 
           <p>
@@ -257,7 +238,7 @@ export default {
   margin-bottom: 3px;
 }
 
-#xrp_drops{
+#expression_example2_explanation{
   text-align: center;
   font-size: 0.8rem;
   margin-bottom: 25px;

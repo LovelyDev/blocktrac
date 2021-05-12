@@ -25,5 +25,11 @@ module.exports = {
   DROPS_PER_XRP : 1000000,
 
   // From the XLM Protocol
-  STROOPS_PER_XLM : 10000000
+  STROOPS_PER_XLM : 10000000,
+
+  // From the BTC Protocol
+  SATOSHIS_PER_BTC : 100000000,
+
+  // From the ETH Protocol
+  WEI_PER_ETH : 1000000000000000000
 }
