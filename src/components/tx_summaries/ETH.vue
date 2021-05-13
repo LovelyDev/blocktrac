@@ -5,17 +5,41 @@
   -->
 <template>
   <div class="eth_tx_summary" :title="title">
-    ETH TODO
+    <div class="from">
+      <AccountLink :account="to" :text="to" />
+    </div>
+
+    <div class="data" v-if="smart_contract">
+      <img src="../../assets/gear.png" />
+      <div>Executed Smart Contract</div>
+    </div>
+
+    <div class="value" v-else>
+      <img src="../../assets/right-arrow-black.svg" />
+      <ETHCurrencyAmount :amount="value" />
+    </div>
+
+    <div class="to">
+      <AccountLink :account="to" :text="to" />
+    </div>
   </div>
 </template>
 
 <script>
 import Meta from './eth/meta'
 
+import AccountLink from '../AccountLink'
+import ETHCurrencyAmount from '../currency_amount/ETH'
+
 export default {
   name: 'ETHTxSummary',
 
   mixins : [Meta],
+
+  components : {
+    AccountLink,
+    ETHCurrencyAmount
+  },
 
   computed : {
     title : function(){
@@ -24,3 +48,48 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.eth_tx_summary{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.data img{
+  width: 18px;
+  height: 18px;
+}
+
+.data div{
+  font-size: 0.5rem;
+}
+
+.value{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 22%;
+  cursor: pointer;
+  font-family: var(--theme-font4);
+}
+
+.from,
+.to{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-basis: 39%;
+}
+
+.to{
+  text-align: right;
+}
+</style>

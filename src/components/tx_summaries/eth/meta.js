@@ -14,5 +14,24 @@ export default {
   },
 
   computed : {
+    from : function(){
+      return this.tx.from;
+    },
+
+    to : function(){
+      return this.tx.to;
+    },
+
+    value : function(){
+      return parseInt(this.tx.value._hex);
+    },
+
+    data : function(){
+      return this.tx.data;
+    },
+
+    smart_contract : function(){
+      return this.value == 0;
+    }
   }
 }
