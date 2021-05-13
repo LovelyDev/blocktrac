@@ -140,9 +140,6 @@ function sync_block_interval(){
                    })
 }
 
-// Block time polling interval
-var block_interval_poll_interval = null;
-
 function get_latest_txs(cb){
   current_block.transactions.forEach(function(tx){
     tx.date = new Date(current_block.timestamp * 1000);
@@ -172,12 +169,15 @@ function sync_network(cb){
          })
 }
 
+// Block time polling interval
+var block_interval_poll_interval = null;
+
 // Stream ETH transactions
 function stream_txs(cb){
   subscribe_to_blocks.bind(this)(cb);
   //sync_block_interval.bind(this)();
 
-  //block_time_poll_interval = setInterval(function(){
+  //block_interval_poll_interval = setInterval(function(){
   //  sync_block_interval.bind(this)();
   //}, ziti.worker_delays.pow_block)
 }
@@ -186,9 +186,9 @@ function stream_txs(cb){
 // Stop streaming ETH transactions
 function stop_streaming_txs(){
   this.provider.off("block");
-  if(block_time_poll_interval){
-    clearInterval(block_time_poll_interval)
-    block_time_poll_interval = null;
+  if(block_interval_poll_interval){
+    clearInterval(block_interval_poll_interval)
+    block_interval_poll_interval = null;
   }
 }
 
