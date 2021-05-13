@@ -231,7 +231,6 @@ export default {
       return this.$htttp().get(this.backend_url + "/" + blockchain + "/txs")
     },
 
-
     update_user : function(user){
       return this.$htttp().put(this.backend_url + "/user",
                                    user, this.auth_header)

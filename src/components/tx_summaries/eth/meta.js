@@ -14,6 +14,14 @@ export default {
   },
 
   computed : {
+    hash : function(){
+      return this.tx.hash;
+    },
+
+    formatted_date : function(){
+      return this.$options.filters.moment(this.tx.date, "YYYY-MM-DD HH:mm:ss");
+    },
+
     from : function(){
       return this.tx.from;
     },

@@ -21,7 +21,7 @@ module.exports = {
     'xrp' : false,
     'xlm' : false,
     'btc' : true,
-    'eth' : true
+    'eth' : false
   },
 
   // Categories TXs fall in to

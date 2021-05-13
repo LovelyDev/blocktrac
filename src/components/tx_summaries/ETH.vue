@@ -9,12 +9,16 @@
       <AccountLink :account="to" :text="to" />
     </div>
 
-    <div class="data" v-if="smart_contract">
+    <div class="data"
+         @click="nav_to_tx"
+         v-if="smart_contract">
       <img src="../../assets/gear.png" />
       <div>Executed Smart Contract</div>
     </div>
 
-    <div class="value" v-else>
+    <div class="value"
+         @click="nav_to_tx"
+         v-else>
       <img src="../../assets/right-arrow-black.svg" />
       <ETHCurrencyAmount :amount="value" />
     </div>
@@ -43,7 +47,13 @@ export default {
 
   computed : {
     title : function(){
-      return 'TODO';
+      return this.formatted_date;
+    }
+  },
+
+  methods : {
+    nav_to_tx : function(){
+      this.$router.push("/tx/" + this.hash);
     }
   }
 }

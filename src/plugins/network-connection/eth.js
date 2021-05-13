@@ -60,15 +60,6 @@ function connect(){
     this._call_disconnected_callbacks();
     throttle_connection.bind(this)();
   }.bind(this))
-
-  // Clear txs and then load initial batch
-  this.vue.$store.commit('clear_txs')
-  this.vue.load_txs(this.vue.active_blockchain)
-          .then(function(txs){
-            txs.body.forEach(function(tx){
-              this.vue.$store.commit('add_tx', wrap_tx(tx.raw))
-            }.bind(this))
-          }.bind(this))
 }
 
 // Throttle XRP Connection Initialization
@@ -129,6 +120,7 @@ function stream_txs(cb){
     this.provider.getBlockWithTransactions(number)
                  .then(function(block){
                     block.transactions.forEach(function(tx){
+                      tx.date = new Date(block.timestamp * 1000);
                       const prepared = prepare_streamed_tx(tx);
 
                       // Freeze transaction objects to improve performance
