@@ -77,9 +77,9 @@ function retrieve_account(id, cb){
   this.vue.$htttp().get(uri, {timeout : ziti.timeouts.request})
                    .then(function(account){
                      var obj = {};
-                     obj.balance = account.final_balance;
-                     obj.sequence = account.n_tx;
-                     obj.previous_txn = account.txs[0].hash;
+                     obj.balance = account.body.final_balance;
+                     obj.sequence = account.body.n_tx;
+                     obj.previous_txn = account.body.txs[0].hash;
                      cb(obj)
                    })
 }
@@ -89,7 +89,7 @@ function retrieve_tx(id, cb){
   const uri = this.vue.active_network_uri.tx.replace("HASH", id)
   this.vue.$htttp().get(uri, {timeout : ziti.timeouts.request})
                    .then(function(tx){
-                     cb(prepare_static_tx(tx))
+                     cb(prepare_static_tx(tx.body))
                    })
 }
 
