@@ -8,7 +8,7 @@
 <template>
   <span>
     <span v-if="is_drops">
-      <b v-if="!no_amount">{{xrp_amount | abbrev}}</b>
+      <b v-if="!no_amount" class="amount">{{xrp_amount | abbrev}}</b>
 
       <span class="currency">
         <CurrencyIcon currency="XRP" />
@@ -16,7 +16,7 @@
     </span>
 
     <span v-else>
-      <b v-if="!no_amount">{{amount["value"] | abbrev}}</b>
+      <b v-if="!no_amount" class="amount">{{amount["value"] | abbrev}}</b>
 
       <CurrencyIcon :currency="amount['currency']" />
 
@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import AccountLink  from '../AccountLink'
-import CurrencyIcon from '../CurrencyIcon'
+import AccountLink  from '../AccountLink.vue'
+import CurrencyIcon from '../CurrencyIcon.vue'
 
-import config       from '../../config/config.js'
+import config       from '../../config/config'
 
 export default {
   name: 'XRPCurrencyAmount',
@@ -58,7 +58,7 @@ export default {
     },
 
     is_iou : function(){
-      return !this.is_drops();
+      return !this.is_drops;
     },
 
     xrp_amount : function(){
