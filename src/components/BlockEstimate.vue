@@ -9,8 +9,9 @@
     <span >The latest {{txs.length}} {{active_blockchain_upper}} transactions are displayed.</span>&nbsp;
     <span>Next block @ (approx)
       <span id="block_estimated_time"
-        :class="{elapsed : estimated_time_elapsed}">
-          {{formatted_estimated_time || '...'}}
+        :class="{elapsed : estimated_time_elapsed,
+                    soon : estimated_time_soon}">
+          {{(estimated_time_remaining / 1000) | round(0)}} seconds
       </span>
     </span>
   </div>
@@ -26,8 +27,9 @@ export default {
 
   data : function(){
     return {
-      estimated_timer : null,
-       estimated_time : null
+               estimated_timer : null,
+                estimated_time : null,
+      estimated_time_remaining : 0
     }
   },
 
@@ -36,23 +38,32 @@ export default {
       return this.$store.state.txs;
     },
 
-    formatted_estimated_time : function(){
-      if(!this.estimated_time) return null;
-      return this.$options.filters.moment(this.estimated_time.getTime(),"YYYY-MM-DD HH:mm:ss");
+    estimated_time_elapsed : function(){
+      if(!this.estimated_time) return false;
+      return this.estimated_time_remaining < 0;
     },
 
-    estimated_time_elapsed : function(){
-      return new Date() > this.estimated_time;
+    estimated_time_soon : function(){
+      if(!this.estimated_time) return false;
+
+      // < one minute is considered 'soon'
+      return this.estimated_time_remaining < 60000;
     }
   },
 
   created : function(){
     this.estimated_time = this.network.next_block_time();
 
+    if(this.estimated_time)
+      this.estimated_time_remaining = this.estimated_time.getTime() - new Date().getTime();
+
     this.estimated_timer =
       setInterval(function(){
         this.estimated_time = this.network.next_block_time();
-      }.bind(this), 500);
+
+        if(this.estimated_time)
+          this.estimated_time_remaining = this.estimated_time.getTime() - new Date().getTime();
+      }.bind(this), 1000);
   },
 
   destroyed : function(){
@@ -69,11 +80,12 @@ export default {
   justify-content: space-between;
 }
 
-#block_estimated_time{
-  animation: blinker 1s linear infinite;
-}
-
 #block_estimated_time.elapsed{
   color: red;
 }
+
+#block_estimated_time.soon{
+  animation: blinker 2s linear infinite;
+}
+
 </style>
