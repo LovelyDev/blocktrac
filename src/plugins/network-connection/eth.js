@@ -43,7 +43,7 @@ function reset(){
 // Initiate ETH Connection
 function connect(){
   this.provider = new ethers.providers.JsonRpcProvider({
-    url : this.vue.active_network_uri,
+    url : this.vue.active_network_uri.provider,
     timeout : ziti.timeouts.request
   });
 
@@ -114,27 +114,82 @@ function retrieve_tx(id, cb){
                })
 }
 
-// Stream ETH transactions
-function stream_txs(cb){
+// Current block
+var current_block = null;
+
+// Average time between blocks
+var block_inverval = null;
+
+// Estimated next block time
+var _next_block_time = null;
+
+// Return next block time
+function next_block_time(){
+  return _next_block_time;
+}
+
+// Sync blocktime from network
+function sync_block_interval(){
+  this.vue.$htttp().get(this.vue.active_network_uri.block_time)
+                   .then(function(block_time){
+                     const times = network_block_time.body.split("\n")
+                     block_interval = parseFloat(times[times.length-1].split(",")[2]) // in seconds
+
+                     if(current_block)
+                       _next_block_time = new Date(current_block.timestamp * 1000 + block_interval * 1000)
+                   })
+}
+
+// Block time polling interval
+var block_interval_poll_interval = null;
+
+function get_latest_txs(cb){
+  current_block.transactions.forEach(function(tx){
+    tx.date = new Date(current_block.timestamp * 1000);
+    const prepared = prepare_streamed_tx(tx);
+
+    // Freeze transaction objects to improve performance
+    Object.freeze(prepared);
+    cb(prepared)
+  })
+}
+
+function subscribe_to_blocks(cb){
   this.provider.on("block", function(number){
     this.provider.getBlockWithTransactions(number)
                  .then(function(block){
-                    block.transactions.forEach(function(tx){
-                      tx.date = new Date(block.timestamp * 1000);
-                      const prepared = prepare_streamed_tx(tx);
-
-                      // Freeze transaction objects to improve performance
-                      Object.freeze(prepared);
-
-                      cb(prepared)
-                    })
+                   current_block = block;
+                   get_latest_txs.bind(this)(cb);
                   }.bind(this))
   }.bind(this));
 }
 
+// Sync w/ network
+function sync_network(cb){
+  const bi = get_block_interval.bind(this)();
+  Promise.all([lb, bi])
+         .then(function(){
+         })
+}
+
+// Stream ETH transactions
+function stream_txs(cb){
+  subscribe_to_blocks.bind(this)(cb);
+  //sync_block_interval.bind(this)();
+
+  //block_time_poll_interval = setInterval(function(){
+  //  sync_block_interval.bind(this)();
+  //}, ziti.worker_delays.pow_block)
+}
+
+
 // Stop streaming ETH transactions
 function stop_streaming_txs(){
   this.provider.off("block");
+  if(block_time_poll_interval){
+    clearInterval(block_time_poll_interval)
+    block_time_poll_interval = null;
+  }
 }
 
 ///
@@ -149,6 +204,7 @@ module.exports = {
   validate_address,
   retrieve_account,
   retrieve_tx,
+  next_block_time,
   stream_txs,
   stop_streaming_txs
 }

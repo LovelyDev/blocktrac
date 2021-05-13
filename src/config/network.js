@@ -27,7 +27,10 @@ const NETWORK_URIS = {
   },
 
   // ETH Wrapper: https://docs.linkpool.io/docs/public_rpc
-  eth_mainnet : "https://main-light.eth.linkpool.io/"
+  eth_mainnet : {
+      provider : "https://main-light.eth.linkpool.io/",
+    block_time : "https://etherscan.io/chart/blocktime?output=csv"
+  }
 };
 
 // Default networks
