@@ -22,7 +22,8 @@ const NETWORK_URIS = {
     latest_block : "https://blockchain.info/latestblock",
          block_n : "https://blockchain.info/rawblock/HASH",
          account : "https://blockchain.info/rawaddr/ADDR",
-              tx : "https://blockchain.info/rawtx/HASH"
+              tx : "https://blockchain.info/rawtx/HASH",
+      block_time : "https://blockchain.info/q/interval"
   },
 
   // ETH Wrapper: https://docs.linkpool.io/docs/public_rpc
@@ -45,10 +46,10 @@ const BLOCKCHAIN = NETWORK ?
                        null;
 
 // Supported blockchains
-const BLOCKCHAINS = ['xrp', 'xlm', 'btc', 'eth'];
+const BLOCKCHAINS = ['btc', 'eth', 'xrp', 'xlm', ];
 
 // Default blockchain
-const DEFAULT_BLOCKCHAIN = BLOCKCHAINS[0];
+const DEFAULT_BLOCKCHAIN = BLOCKCHAINS[2];
 
 ///
 

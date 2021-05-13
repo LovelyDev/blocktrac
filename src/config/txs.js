@@ -17,12 +17,11 @@ module.exports = {
   },
 
   // Whether Blockchain close estimate should be displayed
-  // TODO handle (requires server side logic)
   ENABLE_BLOCK_ESTIMATE : {
     'xrp' : false,
     'xlm' : false,
     'btc' : true,
-    'eth' : false
+    'eth' : true
   },
 
   // Categories TXs fall in to

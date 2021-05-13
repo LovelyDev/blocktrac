@@ -63,14 +63,7 @@ function reset(){
 
 // Initiate BTC Connection
 function connect(){
-  // Clear txs and then load initial batch
-  this.vue.$store.commit('clear_txs')
-  this.vue.load_txs(this.vue.active_blockchain)
-          .then(function(txs){
-            txs.forEach(function(tx){
-              this.vue.$store.commit('add_tx', wrap_tx(tx))
-            }.bind(this))
-          }.bind(this))
+  this.connected = true;
 }
 
 // Validate BTC Address
@@ -100,38 +93,92 @@ function retrieve_tx(id, cb){
                    })
 }
 
+// Current block
+var current_block = null;
+
+// Average time between blocks
+var block_interval = null;
+
+// Estimated next block time
+var _next_block_time = null;
+
+// Return next block time
+function next_block_time(){
+  return _next_block_time;
+}
+
+// Handle latest txs
+function handle_latest_txs(block, cb){
+  // Iterate over txs, prepare, and invoke callback
+  block.tx.reverse().forEach(function(tx){
+    const prepared = prepare_streamed_tx(tx);
+
+    // Freeze transaction objects to improve performance
+    Object.freeze(prepared);
+
+    cb(prepared)
+  }.bind(this))
+}
+
+// Retrieve latest transactions
+function get_latest_txs(cb){
+  // Retrieve block w/ transactions
+  const uri = this.vue.active_network_uri.block_n.replace("HASH", current_block.hash)
+  return this.vue.$htttp().get(uri, {timeout : ziti.timeouts.request})
+                          .then(function(block){
+                            handle_latest_txs.bind(this)(block.body, cb)
+                          }.bind(this))
+}
+
+// Retreive latest block and handle
+function get_latest_block(cb){
+  // Get latest block
+  return this.vue.$htttp().get(this.vue.active_network_uri.latest_block,
+                             {timeout : ziti.timeouts.request})
+                          .then(function(current){
+                            if(current_block && current_block.hash == current.body.hash)
+                              return;
+
+                            current_block = current.body;
+                            get_latest_txs.bind(this)(cb);
+                          }.bind(this))
+}
+
+// Retreive average block interval
+function get_block_interval(){
+  return this.vue.$htttp().get(this.vue.active_network_uri.block_time,
+                                    {timeout : ziti.timeouts.request})
+                          .then(function(interval){
+                            block_interval = parseFloat(interval.body) * 1000; // seconds to ms
+                          }.bind(this))
+}
+
+// Sync w/ network
+function sync_network(cb){
+  const lb = get_latest_block.bind(this)(cb);
+  const bi = get_block_interval.bind(this)();
+  Promise.all([lb, bi])
+         .then(function(){
+           _next_block_time = new Date(current_block.time * 1000 + block_interval)
+         })
+}
+
 // TXs streaming interval
 var txs_interval = null;
 
 // Stream BTC transactions
 function stream_txs(cb){
+  sync_network.bind(this)(cb)
+
   txs_interval = setInterval(function(){
-    // Get latest block
-    this.vue.$htttp().get(this.vue.active_network_uri.latest_block, 
-                               {timeout : config.timeouts.request})
-                     .then(function(current){
-                       // Retrieve block w/ transactions
-                       const uri = this.vue.active_netwokr_uri.block_n.replace("HASH", current.hash)
-                       this.$htttp().get(uri, {timeout : config.timeouts.request})
-                                    .then(function(block){
-                                      // Iterate over txs, prepare, and invoke callback
-                                      block.tx.forEach(function(tx){
-                                        const prepared = prepare_streamed_tx(tx);
-
-                                        // Freeze transaction objects to improve performance
-                                        Object.freeze(prepared);
-
-                                        cb(prepared)
-                                      }.bind(this))
-                                    })
-                     }.bind(this))
+    sync_network.bind(this)(cb)
   }.bind(this), ziti.worker_delays.pow_block)
 }
 
 // Stop streaming BTC transactions
 function stop_streaming_txs(){
   if(txs_interval){
-    clearInteval(txs_interval);
+    clearInterval(txs_interval);
     txs_interval = null;
   }
 }
@@ -148,6 +195,7 @@ module.exports = {
   validate_address,
   retrieve_account,
   retrieve_tx,
+  next_block_time,
   stream_txs,
   stop_streaming_txs
 }

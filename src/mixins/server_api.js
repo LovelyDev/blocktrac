@@ -228,7 +228,7 @@ export default {
 
     // Load transactions from server, storing the result
     load_txs : function(blockchain){
-      return this.$htttp().get(this.backend_url + "/txs?blockchain=" + blockchain)
+      return this.$htttp().get(this.backend_url + "/" + blockchain + "/txs")
     },
 
 

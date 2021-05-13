@@ -10,7 +10,17 @@
 </template>
 
 <script>
+import Meta from './eth/meta'
+
 export default {
-  name: 'ETHTxSummary'
+  name: 'ETHTxSummary',
+
+  mixins : [Meta],
+
+  computed : {
+    title : function(){
+      return 'TODO';
+    }
+  }
 }
 </script>

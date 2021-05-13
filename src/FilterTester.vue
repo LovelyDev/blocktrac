@@ -53,7 +53,6 @@
 <script>
 import Authentication from './mixins/authentication'
 import ServerAPI      from './mixins/server_api'
-import Blockchain     from './mixins/blockchain'
 import Maintenance    from './mixins/maintenance'
 
 import TxsLayout      from './components/TxsLayout'
@@ -74,7 +73,6 @@ export default {
   mixins : [
     Authentication,
     ServerAPI,
-    Blockchain,
     Maintenance
   ],
 
@@ -96,13 +94,13 @@ export default {
 
   computed : {
     list : function(){
-      return require('./assets/captured_txs/' + this.active_blockchain + '/captured_txs.json')
+      return require('./assets/captured_txs/' + this.active_filter.blockchain + '/captured_txs.json')
     },
 
     txs : function(){
       return this.list.reduce(function(ct, ctx){
         const key = ctx.replace(".json", "");
-        const tx  = require("./assets/captured_txs/" + this.active_blockchain + "/" + ctx)
+        const tx  = require("./assets/captured_txs/" + this.active_filter.blockchain + "/" + ctx)
 
         ct[key] = Object.freeze(util.wrap_tx(tx))
         return ct;

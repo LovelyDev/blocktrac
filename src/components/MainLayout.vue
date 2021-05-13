@@ -37,13 +37,19 @@ import ConnectionStatus from './ConnectionStatus'
 import Authentication   from '../mixins/authentication'
 import Blockchain       from '../mixins/blockchain'
 import Network          from '../mixins/network'
+import ServerAPI        from '../mixins/server_api'
 
 import network_config   from '../config/network'
 
 export default {
   name: 'MainLayout',
 
-  mixins : [Authentication, Blockchain, Network],
+  mixins : [
+    Authentication,
+    Blockchain,
+    Network,
+    ServerAPI
+  ],
 
   components : {
     MainHeader,

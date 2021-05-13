@@ -70,7 +70,7 @@
 
           <p>
             For example to only inspect {{active_blockchain_upper}}
-            {{blockchain_jsonpath_example1_explanation}},
+            {{blockchain_jsonpath_expression_example1_explanation}},
             the following expression can be used:
           </p>
 

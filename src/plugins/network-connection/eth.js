@@ -8,6 +8,7 @@
 const ethers = require("ethers");
 
 const {wrap_tx} = require("../../util").default
+const ziti = require('../../config/ziti')
 
 // Prepare statically received tx for internal processing
 function prepare_static_tx(tx){
@@ -42,9 +43,11 @@ function reset(){
 // Initiate ETH Connection
 function connect(){
   this.provider = new ethers.providers.JsonRpcProvider({
-    url : network_config.network_uri,
-    timeout : config.timeouts.request
+    url : this.vue.active_network_uri,
+    timeout : ziti.timeouts.request
   });
+
+  this.connected = true;
 
   this.provider.on("error", async function(err){
     this.connected = false;
@@ -62,8 +65,8 @@ function connect(){
   this.vue.$store.commit('clear_txs')
   this.vue.load_txs(this.vue.active_blockchain)
           .then(function(txs){
-            txs.forEach(function(tx){
-              this.vue.$store.commit('add_tx', wrap_tx(tx))
+            txs.body.forEach(function(tx){
+              this.vue.$store.commit('add_tx', wrap_tx(tx.raw))
             }.bind(this))
           }.bind(this))
 }
@@ -122,23 +125,24 @@ function retrieve_tx(id, cb){
 
 // Stream ETH transactions
 function stream_txs(cb){
-  this.provider.off("block");
+  this.provider.on("block", function(number){
+    this.provider.getBlockWithTransactions(number)
+                 .then(function(block){
+                    block.transactions.forEach(function(tx){
+                      const prepared = prepare_streamed_tx(tx);
+
+                      // Freeze transaction objects to improve performance
+                      Object.freeze(prepared);
+
+                      cb(prepared)
+                    })
+                  }.bind(this))
+  }.bind(this));
 }
 
 // Stop streaming ETH transactions
 function stop_streaming_txs(){
-  this.provider.on("block", function(number){
-    this.provider.getBlockWithTransaction(function(block){
-      block.transactions.forEach(function(tx){
-        const prepared = prepare_streamed_tx(tx);
-
-        // Freeze transaction objects to improve performance
-        Object.freeze(prepared);
-
-        cb(prepared)
-      })
-    })
-  }.bind(this));
+  this.provider.off("block");
 }
 
 ///

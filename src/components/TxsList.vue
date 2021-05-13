@@ -44,6 +44,8 @@
     <div id="txs_list">
       <TxsCategories v-if="mq_gte_md && categories_enabled" />
 
+      <BlockEstimate v-if="block_estimate_enabled" />
+
       <b-list-group v-if="have_txs">
         <b-list-group-item v-for="tx in txs"
                             :key="tx.hash"
@@ -65,6 +67,7 @@ import TxsFilterExample      from './TxsFilterExample'
 import TxsFilterControls     from './TxsFilterControls'
 import TxsCategories         from './TxsCategories'
 import TxsCategoriesDropdown from './TxsCategoriesDropdown'
+import BlockEstimate         from './BlockEstimate'
 import TxSummary             from './TxSummary'
 import FilterListDropdown    from './FilterListDropdown'
 import CreateFilterModal     from './modals/CreateFilter'
@@ -86,6 +89,7 @@ export default {
     TxsFilterControls,
     TxsCategories,
     TxsCategoriesDropdown,
+    BlockEstimate,
     TxSummary,
     FilterListDropdown,
     CreateFilterModal
@@ -94,6 +98,10 @@ export default {
   computed : {
     categories_enabled : function(){
       return txs_config.ENABLE_TX_CATEGORIES[this.active_blockchain]
+    },
+
+    block_estimate_enabled : function(){
+      return txs_config.ENABLE_BLOCK_ESTIMATE[this.active_blockchain]
     },
 
     txs : function(){
@@ -128,7 +136,6 @@ export default {
   },
 
   destroyed : function(){
-    this.$store.commit('clear_txs');
     this.network.off_connection(this.stream_txs);
     this.network.stop_streaming_txs();
   }

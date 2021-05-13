@@ -133,6 +133,12 @@ export default {
       this.on_connection(connection_cb)
     }
 
+    // Retrieve next block time
+    // XXX: blockchain dependent, not defined on all blockchains
+    Vue.prototype.network.next_block_time = function(){
+      return this._module().next_block_time();
+    }
+
     // Stream transactions
     Vue.prototype.network.stream_txs = function(cb){
       const connection_cb = function(){

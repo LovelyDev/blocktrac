@@ -38,7 +38,7 @@
                                   class="blockchain_select_option"
                                   :key="blockchain"
                                   :value="blockchain">
-              {{blockchain}}
+              {{blockchain.toUpperCase()}}
             </b-form-select-option>
           </b-form-select>
         </td>

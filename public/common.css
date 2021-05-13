@@ -105,3 +105,9 @@ body{
 .fade-enter, .fade-leave-to{
   opacity: 0;
 }
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

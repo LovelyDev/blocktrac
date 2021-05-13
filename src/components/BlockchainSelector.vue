@@ -9,7 +9,7 @@
     <b-form-select-option v-for="blockchain in blockchains"
                           :key="blockchain"
                           :value="blockchain">
-      {{blockchain}}
+      {{blockchain.toUpperCase()}}
     </b-form-select-option>
   </b-form-select>
 </template>
