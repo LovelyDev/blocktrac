@@ -65,7 +65,7 @@ import config         from './config/config'
 var jsonpath = require('./vendor/jsonpath')
 jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
 
-// FIXME: captured assets for xlm,btc,eth blockchains
+// FIXME: more captured assets for xlm,btc,eth blockchains
 
 export default {
   name: 'FilterTester',

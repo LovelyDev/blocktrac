@@ -8,14 +8,14 @@ describe("XRPCurrencyAmount", () => {
 
   describe("dom", () => {
     describe("drops", () => {
-      it('renders xrp amount', () => { // TODO this seems to be an unexpected failure 111 / 1000000 = 0.000111 ! .amount = 0.00011
+      it('renders xrp amount', () => {
         component = shallow_mount_vue(XRPCurrencyAmount, {
           propsData: {
             amount: 111,
             no_amount: false
           }
         });
-        expect(component.find(".amount").text()).toBe('0.00011'); // abbrev util limits this small number to 5 decimals
+        expect(component.find(".amount").text()).toBe('0.00011');
       });
 
       describe("no amount", () => {
@@ -71,7 +71,7 @@ describe("XRPCurrencyAmount", () => {
           }
         });
         const currencyIconComponent = component.findComponent({ name: 'CurrencyIcon' });
-        expect(currencyIconComponent.exists()).toBe(true);
+        expect(currencyIconComponent).toExist();
         expect(currencyIconComponent.props('currency')).toBe(currencyString);
       });
 
@@ -87,7 +87,7 @@ describe("XRPCurrencyAmount", () => {
           }
         });
         const accountLinkComponent = component.findComponent({ name: 'AccountLink' });
-        expect(accountLinkComponent.exists()).toBe(true);
+        expect(accountLinkComponent).toExist();
         expect(accountLinkComponent.props('account')).toBe(issuerString);
       });
 
@@ -103,7 +103,7 @@ describe("XRPCurrencyAmount", () => {
             }
           });
           const accountLinkComponent = component.findComponent({ name: 'AccountLink' });
-          expect(accountLinkComponent.exists()).toBe(false);
+          expect(accountLinkComponent).not.toExist();
         });
       })
     })
