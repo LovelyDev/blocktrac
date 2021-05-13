@@ -5,21 +5,36 @@
   * Copyright (c) 2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
-  <b-form-select v-model="selected">
-    <b-form-select-option v-for="blockchain in blockchains"
-                          :key="blockchain"
-                          :value="blockchain">
-      {{blockchain.toUpperCase()}}
-    </b-form-select-option>
-  </b-form-select>
+  <multiselect v-model="selected"
+               :options="blockchains"
+               :allow-empty="false"
+               :multiple="false"
+               :searchable="false"
+               selectLabel=""
+               deselectLabel="">
+    <template slot="singleLabel" slot-scope="props">
+      <CurrencyIcon :currency="props.option.toUpperCase()" />
+      {{props.option.toUpperCase()}}
+    </template>
+
+    <template slot="option" slot-scope="props">
+      <CurrencyIcon :currency="props.option.toUpperCase()" />
+      {{props.option.toUpperCase()}}
+    </template>
+  </multiselect>
 </template>
 
 <script>
+import CurrencyIcon   from '../components/CurrencyIcon'
 import config         from '../config/config'
 import network_config from '../config/network'
 
 export default {
   name: 'BlockchainSelector',
+
+  components : {
+    CurrencyIcon
+  },
 
   data : function(){
     return {
@@ -46,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-select{
+.multiselect{
   width: unset;
   margin-left: 10px;
 }
