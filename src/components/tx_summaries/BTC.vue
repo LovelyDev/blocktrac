@@ -12,7 +12,9 @@
     <div class="inputs" v-else>
       <div v-for="(input, index) in input_addresses"
            :key="hash + '-input-' + index">
-        <AccountLink :account="input" :text="input" />
+        <AccountLink :account="input"
+                     :text="input"
+                     :shorten="mq_lte_sm" />
       </div>
     </div>
 
@@ -24,7 +26,9 @@
     <div class="outputs">
       <div v-for="(output, index) in output_addresses"
            :key="hash + '-output-' + index">
-        <AccountLink :account="output" :text="output" />
+        <AccountLink :account="output"
+                     :text="output"
+                     :shorten="mq_lte_sm" />
       </div>
     </div>
   </div>
@@ -81,6 +85,11 @@ export default {
   font-family: var(--theme-font4);
 }
 
+#main_layout.sm .total_out,
+#main_layout.xs .total_out{
+  flex-basis:40%;
+}
+
 .mined,
 .inputs,
 .outputs{
@@ -88,6 +97,15 @@ export default {
   flex-direction: column;
   justify-content: center;
   flex-basis: 39%;
+}
+
+#main_layout.sm .mined,
+#main_layout.xs .mined,
+#main_layout.sm .inputs,
+#main_layout.xs .inputs,
+#main_layout.sm .outputs,
+#main_layout.xs .outputs{
+  flex-basis: 30%;
 }
 
 .mined{

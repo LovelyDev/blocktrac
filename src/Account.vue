@@ -38,7 +38,9 @@
           <tr>
             <td class="label">Last TX</td>
             <td class="value">
-              <router-link :to="`/${active_blockchain}/tx/` + previous_txn">{{previous_txn}}</router-link>
+              <router-link :to="`/${active_blockchain}/tx/` + previous_txn">
+                {{previous_txn | ellipsis(mq_lte_sm ? 20 : null)}}
+              </router-link>
             </td>
           </tr>
         </table>

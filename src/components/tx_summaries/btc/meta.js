@@ -44,7 +44,8 @@ export default {
     },
 
     output_addresses : function(){
-      return this.outputs.map((i) => i.addr)
+      return this.outputs.map((o) => o.addr)
+                         .filter((a) => {return a != null})
     },
 
     total_out : function(){

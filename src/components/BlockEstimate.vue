@@ -6,12 +6,21 @@
   -->
 <template>
   <div id="block_estimate">
-    <span >The latest {{txs.length}} {{active_blockchain_upper}} transactions are displayed.</span>&nbsp;
-    <span>Next block @ (approx)
+    <span v-if="mq_gt_sm">
+      The latest {{txs.length}} {{active_blockchain_upper}} transactions are displayed.
+    </span>
+
+    <span v-else>
+      {{txs.length}} {{active_blockchain_upper}} TXs
+    </span>
+
+    <span>
+      Next block <span v-if="mq_gt_sm">@ (approx)</span><span v-else>: ~</span>
+
       <span id="block_estimated_time"
         :class="{elapsed : estimated_time_elapsed,
                     soon : estimated_time_soon}">
-          {{(estimated_time_remaining / 1000) | round(0)}} seconds
+          {{(estimated_time_remaining / 1000) | round(0)}} sec<span v-if="mq_gt_sm">ond</span>s
       </span>
     </span>
   </div>
@@ -78,6 +87,12 @@ export default {
   font-family: var(--theme-font2);
   display: flex;
   justify-content: space-between;
+}
+
+#main_layout.sm #block_estimate,
+#main_layout.xs #block_estimate{
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 #block_estimated_time.elapsed{

@@ -6,7 +6,10 @@
 <template>
   <div class="eth_tx_summary" :title="title">
     <div class="from">
-      <AccountLink :account="to" :text="to" />
+      <AccountLink :account="from"
+                   :text="from"
+                   :shorten="mq_lte_sm"
+                   v-if="from" />
     </div>
 
     <div class="data"
@@ -24,7 +27,10 @@
     </div>
 
     <div class="to">
-      <AccountLink :account="to" :text="to" />
+      <AccountLink :account="to"
+                   :text="to"
+                   :shorten="mq_lte_sm"
+                   v-if="to" />
     </div>
   </div>
 </template>
@@ -74,6 +80,14 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-basis: 22%;
+  cursor: pointer;
+  font-family: var(--theme-font4);
+}
+
+#main_layout.sm .data,
+#main_layout.xs .data{
+  flex-basis: 40%;
 }
 
 .data img{
@@ -95,12 +109,24 @@ export default {
   font-family: var(--theme-font4);
 }
 
+#main_layout.sm .value,
+#main_layout.xs .value{
+  flex-basis: 40%;
+}
+
 .from,
 .to{
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-basis: 39%;
+}
+
+#main_layout.sm .from,
+#main_layout.xs .from,
+#main_layout.sm .to,
+#main_layout.xs .to{
+  flex-basis: 30%;
 }
 
 .to{

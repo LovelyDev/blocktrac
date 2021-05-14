@@ -5,7 +5,7 @@
   -->
 <template>
   <span>
-    <b v-if="!no_amount">{{btc_amount | abbrev}}</b>
+    <b v-if="!no_amount">{{btc_amount | abbrev(mq_lte_sm ? 3 : null)}}</b>
 
     <span class="currency">
       <CurrencyIcon currency="BTC" />

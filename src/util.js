@@ -103,7 +103,7 @@ export default {
   // B for Billion
   // M for Million
   // K for Kilo (thousand)
-  abbrev : function(value){
+  abbrev : function(value, decimals){
     if(value > 1000000000000)
       return round_value(value/1000000000000, 2) + "T"
 
@@ -116,7 +116,7 @@ export default {
     else if(value > 1000)
       return round_value(value/1000, 2) + "K"
 
-    return round_value(value) + "";
+    return round_value(value, decimals) + "";
   },
 
   // Convert rippled time to unix time

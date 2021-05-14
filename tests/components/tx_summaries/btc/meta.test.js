@@ -39,7 +39,7 @@ describe("tx_summaries btc meta mixin", () => {
     })
 
     describe("output_addresses", () => {
-      test.todo("extracts addr from outputs")
+      test.todo("extracts non null addr from outputs")
     })
 
     describe("total_out", () => {

@@ -21,8 +21,8 @@ export function vue_init(Vue){
   });
 
   // Returns abbreviated numeric representation
-  Vue.filter('abbrev', function(value){
-    return util.abbrev(value)
+  Vue.filter('abbrev', function(value, decimals){
+    return util.abbrev(value, decimals)
   })
 
   // Return string as is if < length, else truncate and add ellipsis
