@@ -161,14 +161,6 @@ function subscribe_to_blocks(cb){
   }.bind(this));
 }
 
-// Sync w/ network
-function sync_network(cb){
-  const bi = get_block_interval.bind(this)();
-  Promise.all([lb, bi])
-         .then(function(){
-         })
-}
-
 // Block time polling interval
 var block_interval_poll_interval = null;
 
