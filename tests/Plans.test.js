@@ -84,7 +84,8 @@ describe("Plans Page", () => {
 
           describe("plan_cost != 0", () => {
             it("renders $cost /month", () => {
-              expect(dom_plans.at(1).find('.plan_cost').text()).toBe(`$${ziti.membership_features[config_plans[1]].cost}  /month`)
+              const expected = `$${ziti.membership_features[config_plans[1]].cost}  /month`;
+              expect(dom_plans.at(1).find('.plan_cost').text()).toBe(expected)
             })
           })
         })
@@ -92,7 +93,9 @@ describe("Plans Page", () => {
         describe(".plan_detail:nth-child(0)", () => {
           it("renders number of plan filters", () => {
             for(var p = 0; p < dom_plans.length; p += 1){
-              expect(dom_plans.at(p).findAll('.plan_detail').at(0).find('.plan_detail .value').text()).toEqual(ziti.membership_features[config_plans[p]].filters.toString())
+              const text = dom_plans.at(p).findAll('.plan_detail').at(0).find('.plan_detail .value').text();
+              const expected = ziti.membership_features[config_plans[p]].filters.toString();
+              expect(text).toEqual(expected)
             }
           })
         })
@@ -100,7 +103,9 @@ describe("Plans Page", () => {
         describe(".plan_detail:nth-child(1)", () => {
           it("renders number of plan sinks", () => {
             for(var p = 0; p < dom_plans.length; p += 1){
-              expect(dom_plans.at(p).findAll('.plan_detail').at(1).find('.plan_detail .value').text()).toEqual(ziti.membership_features[config_plans[p]].sinks.toString())
+              const text = dom_plans.at(p).findAll('.plan_detail').at(1).find('.plan_detail .value').text();
+              const expected = ziti.membership_features[config_plans[p]].sinks.toString();
+              expect(text).toEqual(expected)
             }
           })
         })
@@ -108,9 +113,14 @@ describe("Plans Page", () => {
         describe(".plan_detail:nth-child(2)", () => {
           it("renders plan alert time", () => {
             for(var p = 0; p < dom_plans.length; p += 1){
+              const text = dom_plans.at(p).findAll('.plan_detail').at(2).find('.plan_detail .value').text();
               if(ziti.membership_features[config_plans[p]].notification_times.includes(0))
-                expect(dom_plans.at(p).findAll('.plan_detail').at(2).find('.plan_detail .value').text()).toBe('Instant')
-              else expect(dom_plans.at(p).findAll('.plan_detail').at(2).find('.plan_detail .value').text()).toMatch(ziti.membership_features[config_plans[p]].notification_times[0].toString())
+                expect(text).toBe('Instant')
+
+              else{
+                const expected = ziti.membership_features[config_plans[p]].notification_times[0].toString();
+                expect(text).toMatch(expected)
+              }
             }
           })
         })
@@ -123,6 +133,7 @@ describe("Plans Page", () => {
             t[config_plans[p]] = true;
           }
         })
+
         it("is tied to enable_additional_by_plan", async () => {  
           plans.setData({enable_additional_by_plan: t})
           await next_tick(plans);
@@ -130,6 +141,7 @@ describe("Plans Page", () => {
             expect(dom_plans.at(p).find('.buy_additional input')).toBeChecked()
           }
         })
+
         describe("enable_additional", () => {
           describe("enable_additional_by_plan is true", () => {
             it("is active", async () => {
@@ -154,24 +166,34 @@ describe("Plans Page", () => {
         it("is tied to selected_additional_filters_by_plan", async () => {
           let s = {}
           for(var p = 0; p < config_plans.length; p += 1){
-            s[config_plans[p]] = 1;
+            s[config_plans[p]] = p % ziti.max_additions.filters;
           }
           plans.setData({enable_additional_by_plan: t})
           plans.setData({selected_additional_filters_by_plan: s})
           await next_tick(plans)
-          for(var p = 0; p < config_plans.length; p += 1)
-            expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).text()).toBe('1')
+
+          for(var p = 0; p < config_plans.length; p += 1){
+            const text = dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).text();
+            const expected = (p % ziti.max_additions.filters).toString();
+            expect(text).toBe(expected)
+          }
         })
+
         describe("!enable_additional", () => {
           it("is disabled", async () => {
             let t_f = {}
             for(var p = 0; p < config_plans.length; p += 1){
-              t_f[config_plans[p]] = false;
+              t_f[config_plans[p]] = (p % 2 == 0);
             }
             plans.setData({enable_additional_by_plan: t_f})
             await next_tick(plans)
-            for(var p = 0; p < config_plans.length; p += 1)
-              expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).classes()).toContain('disabled')
+            for(var p = 0; p < config_plans.length; p += 1){
+              const classes = dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).classes();
+              if(p % 2 == 0)
+                expect(classes).not.toContain('disabled')
+              else
+                expect(classes).toContain('disabled')
+            }
           })
         })
 
@@ -202,25 +224,34 @@ describe("Plans Page", () => {
         it("is tied to selected_additional_sinks_by_plan", async () => {
           let s = {}
           for(var p = 0; p < config_plans.length; p += 1){
-            s[config_plans[p]] = 1;
+            s[config_plans[p]] = p % ziti.max_additions.sinks;
           }
           plans.setData({enable_additional_by_plan: t})
           plans.setData({selected_additional_sinks_by_plan: s})
           await next_tick(plans)
-          for(var p = 0; p < config_plans.length; p += 1)
-            expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).text()).toBe('1')
+
+          for(var p = 0; p < config_plans.length; p += 1){
+            const text = dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).text();
+            const expected = p % ziti.max_additions.sinks;
+            expect(text).toBe(expected.toString());
+          }
         })
 
         describe("!enable_additional", () => {
           it("is disabled", async() => {
             let t_f = {}
             for(var p = 0; p < config_plans.length; p += 1){
-              t_f[config_plans[p]] = false;
+              t_f[config_plans[p]] = (p % 2 == 0);
             }
             plans.setData({enable_additional_by_plan: t_f})
             await next_tick(plans)
-            for(var p = 0; p < config_plans.length; p += 1)
-              expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).classes()).toContain('disabled')
+            for(var p = 0; p < config_plans.length; p += 1){
+              const classes = dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).classes();
+              if(p % 2 == 0)
+                expect(classes).not.toContain('disabled')
+              else
+                expect(classes).toContain('disabled')
+            }
           })
         })
 
@@ -266,10 +297,12 @@ describe("Plans Page", () => {
             expect(u_p.vm.$route.params).toEqual(t_param)
           })
         })
+
         it("does not render login button", () => {
           for(var p = 0; p < config_plans.length; p += 1)
             expect(dom_plans.at(p).find('.upgrade').text()).not.toBe('Login to Upgrade')
         })
+
         it("does not render disabled upgrade button", () => {
           for(var p = 0; p < config_plans.length; p += 1)
             expect(dom_plans.at(p).find('.upgrade').classes).not.toContain('disabled')
@@ -288,6 +321,7 @@ describe("Plans Page", () => {
           })
           dom_plans = u_p.findAll('.plan')
         })
+
         describe("login button", () => {
           it("is rendered", () => {
             for(var p = 0; p < config_plans.length; p += 1)
@@ -534,7 +568,8 @@ describe("Plans Page", () => {
           m_levels = ziti.membership_levels
           for(let level of m_levels) t_f[level] = false
         })
-        it("deletes selected_additional_filters", () => {
+
+        it("sets selected_additional_filters to 0", () => {
           plans = mount_vue(Plans)
           plans.setData({enable_additional_by_plan: t_f})
           next_tick(plans)
@@ -542,7 +577,8 @@ describe("Plans Page", () => {
             expect(plans.vm.selected_additional_filters_by_plan[level]).toBe(0)
           }
         })
-        it("deletes selected_additional_sinks", () => {
+
+        it("sets selected_additional_sinks to 0", () => {
           plans = mount_vue(Plans)
           plans.setData({enable_additional_by_plan: t_f})
           next_tick(plans)
