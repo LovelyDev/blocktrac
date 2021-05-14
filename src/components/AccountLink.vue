@@ -13,9 +13,14 @@
 
 <script>
 import config from '../config/config'
+import Blockchain     from '../mixins/blockchain'
 
 export default {
   name: 'AccountLink',
+
+  mixins: [
+    Blockchain
+  ],
 
   props : {
     account : String,
@@ -39,7 +44,7 @@ export default {
 
   methods : {
     nav_to_account : function(){
-      this.$router.push("/account/" + this.account);
+      this.$router.push(`/${this.active_blockchain}/account/` + this.account);
     }
   }
 }

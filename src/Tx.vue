@@ -24,9 +24,13 @@
           <TxSummary :tx="tx.transaction" />
         </div>
 
-        <div id="rendered_tx">
+        <div v-if="tx" id="rendered_tx">
           <renderjson :data="tx" level="2" />
         </div>
+      </div>
+
+      <div id="no_transaction" v-else>
+        Transaction not found
       </div>
     </div>
   </TxsLayout>
@@ -48,7 +52,8 @@ export default {
   },
 
   props : {
-    hash : String
+    hash : String,
+    blockchain: String
   },
 
   data : function(){
@@ -70,6 +75,7 @@ export default {
   },
 
   created : function(){
+    if(this.blockchain) this.$store.commit('set_selected_blockchain', this.blockchain);
     this.network.tx(this.hash, this.on_tx)
   }
 }
@@ -80,6 +86,14 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+}
+
+#no_transaction {
+  color: red;
+  font-family: var(--theme-font2);
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 #back_icon{

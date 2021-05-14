@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <div id="account_details">
+      <div v-if="has_account" id="account_details">
         <table id="account_table">
           <tr>
             <td class="label">Balance</td>
@@ -38,10 +38,14 @@
           <tr>
             <td class="label">Last TX</td>
             <td class="value">
-              <router-link :to="'/tx/' + previous_txn">{{previous_txn}}</router-link>
+              <router-link :to="`/${active_blockchain}/tx/` + previous_txn">{{previous_txn}}</router-link>
             </td>
           </tr>
         </table>
+      </div>
+
+      <div id="no_account" v-else>
+        Account not found
       </div>
     </div>
   </TxsLayout>
@@ -63,14 +67,21 @@ export default {
   },
 
   props : {
-    id : String
+    id : String,
+    blockchain: String
   },
 
   data : function(){
     return {
-       balance : 0,
+      balance : 0,
       sequence : 0,
       previous_txn : ''
+    }
+  },
+
+  computed : {
+    has_account : function(){
+      return !!this.previous_txn;
     }
   },
 
@@ -83,6 +94,7 @@ export default {
   },
 
   created : function(){
+    if(this.blockchain) this.$store.commit('set_selected_blockchain', this.blockchain);
     this.network.account(this.id, this.on_account)
   }
 }
@@ -99,6 +111,14 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+}
+
+#no_account {
+  color: red;
+  font-family: var(--theme-font2);
+  font-style: italic;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 #back_icon{
