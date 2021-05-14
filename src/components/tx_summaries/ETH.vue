@@ -30,15 +30,19 @@
 </template>
 
 <script>
-import Meta from './eth/meta'
+import Meta       from './eth/meta'
+import Blockchain from '../../mixins/blockchain'
 
-import AccountLink from '../AccountLink'
+import AccountLink       from '../AccountLink'
 import ETHCurrencyAmount from '../currency_amount/ETH'
 
 export default {
   name: 'ETHTxSummary',
 
-  mixins : [Meta],
+  mixins : [
+    Meta,
+    Blockchain
+  ],
 
   components : {
     AccountLink,
@@ -53,7 +57,7 @@ export default {
 
   methods : {
     nav_to_tx : function(){
-      this.$router.push("/tx/" + this.hash);
+      this.$router.push(`/${this.active_blockchain}/tx/` + this.hash);
     }
   }
 }

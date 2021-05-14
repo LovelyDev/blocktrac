@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <div v-if="has_account" id="account_details">
+      <div v-if="have_account" id="account_details">
         <table id="account_table">
           <tr>
             <td class="label">Balance</td>
@@ -52,41 +52,40 @@
 </template>
 
 <script>
-import TxsLayout  from './components/TxsLayout'
-import Blockchain from './mixins/blockchain'
+import TxsLayout       from './components/TxsLayout'
+import Blockchain      from './mixins/blockchain'
+import MultiBlockchain from './mixins/multi_blockchain'
 
 import config     from "./config/config"
 
 export default {
   name: 'Account',
 
-  mixins : [Blockchain],
+  mixins : [
+    Blockchain,
+    MultiBlockchain
+  ],
 
   components: {
     TxsLayout
   },
 
   props : {
-    id : String,
-    blockchain: String
+    id : String
   },
 
   data : function(){
     return {
+      have_account : false,
       balance : 0,
       sequence : 0,
       previous_txn : ''
     }
   },
 
-  computed : {
-    has_account : function(){
-      return !!this.previous_txn;
-    }
-  },
-
   methods : {
     on_account : function(account){
+      this.have_account = true;
       this.balance      = account.balance;
       this.sequence     = account.sequence;
       this.previous_txn = account.previous_txn;
@@ -94,7 +93,7 @@ export default {
   },
 
   created : function(){
-    if(this.blockchain) this.$store.commit('set_selected_blockchain', this.blockchain);
+    this.persist_blockchain();
     this.network.account(this.id, this.on_account)
   }
 }

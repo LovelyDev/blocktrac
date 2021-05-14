@@ -24,7 +24,7 @@
           <TxSummary :tx="tx.transaction" />
         </div>
 
-        <div v-if="tx" id="rendered_tx">
+        <div id="rendered_tx">
           <renderjson :data="tx" level="2" />
         </div>
       </div>
@@ -37,13 +37,18 @@
 </template>
 
 <script>
-import TxsLayout         from './components/TxsLayout'
-import TxSummary         from './components/TxSummary'
+import TxsLayout       from './components/TxsLayout'
+import TxSummary       from './components/TxSummary'
+import MultiBlockchain from './mixins/multi_blockchain'
 
 import renderjson from './vendor/renderjson/renderjson.vue'
 
 export default {
   name: 'Tx',
+
+  mixins : [
+    MultiBlockchain
+  ],
 
   components: {
     TxsLayout,
@@ -52,8 +57,7 @@ export default {
   },
 
   props : {
-    hash : String,
-    blockchain: String
+    hash : String
   },
 
   data : function(){
@@ -75,7 +79,7 @@ export default {
   },
 
   created : function(){
-    if(this.blockchain) this.$store.commit('set_selected_blockchain', this.blockchain);
+    this.persist_blockchain();
     this.network.tx(this.hash, this.on_tx)
   }
 }

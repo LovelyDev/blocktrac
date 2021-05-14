@@ -36,11 +36,15 @@
 <script>
 import AccountDetail from '../../AccountDetail'
 import Meta          from './meta'
+import Blockchain    from '../../../mixins/blockchain'
 
 export default {
   name: 'XRPTxContainer',
 
-  mixins : [Meta],
+  mixins : [
+    Meta,
+    Blockchain
+  ],
 
   components : {
     AccountDetail
@@ -60,7 +64,7 @@ export default {
 
   methods : {
     nav_to_tx : function(){
-      this.$router.push("/tx/" + this.hash);
+      this.$router.push(`/${this.active_blockchain}/tx/` + this.hash);
     }
   }
 }

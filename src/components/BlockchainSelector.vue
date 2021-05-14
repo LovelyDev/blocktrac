@@ -25,37 +25,40 @@
 </template>
 
 <script>
-import CurrencyIcon   from '../components/CurrencyIcon'
-import config         from '../config/config'
-import network_config from '../config/network'
+import CurrencyIcon    from '../components/CurrencyIcon'
+import config          from '../config/config'
+import network_config  from '../config/network'
+import MultiBlockchain from '../mixins/multi_blockchain'
 
 export default {
   name: 'BlockchainSelector',
+
+  mixins : [
+    MultiBlockchain
+  ],
 
   components : {
     CurrencyIcon
   },
 
-  data : function(){
-    return {
-      selected : null
-    }
-  },
-
   computed : {
     blockchains : function(){
       return network_config.BLOCKCHAINS;
-    }
-  },
+    },
 
-  watch : {
-    selected : function(){
-      this.$store.commit('set_selected_blockchain', this.selected);
-    }
+    selected : {
+      get : function(){
+        return this.$store.state.selected_blockchain;
+      },
+
+      set : function(selected){
+        this.$store.commit('set_selected_blockchain', selected);
+      }
+   }
   },
 
   created : function(){
-    this.selected = this.$store.state.selected_blockchain;
+    this.persist_blockchain();
   }
 }
 </script>

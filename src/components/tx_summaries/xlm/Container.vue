@@ -40,7 +40,7 @@
 <script>
 import AccountDetail from '../../AccountDetail'
 import Meta          from './meta'
-import Blockchain from '../../../mixins/blockchain'
+import Blockchain    from '../../../mixins/blockchain'
 
 export default {
   name: 'XLMTxContainer',
