@@ -353,6 +353,11 @@ describe("server_api", () => {
       })
     })
 
+    describe("#load_txs", () => {
+      test.todo("submits txs request")
+      test.todo("returns request promise")
+    })
+
     describe("#update_user", () => {
       it("submits user request", () => {
         const user = {us : 'er'}

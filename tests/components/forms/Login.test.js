@@ -1,5 +1,9 @@
 describe("Login", () => {
   describe("dom", () => {
+    describe("form", () => {
+      test.todo("defaults to a noop")
+    });
+
     describe("email input", () => {
       describe("enter event", () => {
         test.todo("emits submit")
@@ -34,6 +38,13 @@ describe("Login", () => {
       describe("have_email && have_password", () => {
         test.todo("is true")
       })
+    })
+  })
+
+  describe("methods", () => {
+    describe("#submit", () => {
+      test.todo("clicks submit button")
+      test.todo("logs in")
     })
   })
 

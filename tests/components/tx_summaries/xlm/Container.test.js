@@ -24,7 +24,7 @@ describe("XLMTxContainer", () => {
 
   describe("methods", () => {
     describe("#nav_to_tx", () => {
-      test.todo("redirects to /tx/:hash")
+      test.todo("redirects to /:active_blockchain/tx/:hash")
     })
   })
 })

@@ -7,5 +7,13 @@ describe("TxSummary", () => {
     describe("xlm_active", () => {
       test.todo("renders XLMTxSummary")
     })
+
+    describe("btc_active", () => {
+      test.todo("renders BTCTxSummary")
+    })
+
+    describe("eth_active", () => {
+      test.todo("renders ETHTxSummary")
+    })
   })
 })

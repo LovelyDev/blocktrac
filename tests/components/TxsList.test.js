@@ -41,6 +41,14 @@ describe("TxsList", () => {
       test.todo("does not render TxsCategories")
     })
 
+    describe("block_estimate_enabled", () => {
+      test.todo("renders BlockEstimate")
+    })
+
+    describe("!block_estimate_enabled", () => {
+      test.todo("does not render BlockEstimate")
+    })
+
     describe("have_txs", () => {
       test.todo("renders list-group")
     })
@@ -53,6 +61,10 @@ describe("TxsList", () => {
   describe("computed", () => {
     describe("categories_enabled", () => {
       test.todo("is txs_config.ENABLE_TX_CATEGORIES for active_blockchain")
+    })
+
+    describe("block_estimate_enabled", () => {
+      test.todo("is txs_config.ENABLE_BLOCK_ESTIMATE for active_blockchain")
     })
 
     describe("txs", () => {

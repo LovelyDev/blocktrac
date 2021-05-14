@@ -35,6 +35,15 @@ describe("Tx Page", () => {
         expect(tx.find("#tx_hash").text()).toEqual(hash)
       })
     })
+
+    describe("has_tx", () => {
+      test.todo("renders TxSummary")
+      test.todo("renders json tx")
+    })
+
+    describe("!has_tx", () => {
+      test.todo("renders 'Transaction not found'")
+    })
   })
 
   describe("computed", () => {
@@ -64,6 +73,8 @@ describe("Tx Page", () => {
   })
 
   describe("#created", () => {
+    test.todo("persists blockchain")
+
     it("retrieves network tx", () => {
       expect(tx.vm.network.tx).toHaveBeenCalledTimes(1)
       expect(tx.vm.network.tx.mock.calls[0][0]).toEqual(hash)

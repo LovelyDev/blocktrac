@@ -164,7 +164,7 @@ describe("CreateEditFilter", () => {
             const blockchain = blockchains[o];
             const option = options.at(o);
             expect(option.attributes('value')).toEqual(blockchain);
-            expect(option.text()).toEqual(blockchain);
+            expect(option.text()).toEqual(blockchain.toUpperCase());
           }
         })
       })
@@ -248,28 +248,33 @@ describe("CreateEditFilter", () => {
           test.todo("renders placeholder")
         })
       })
+    })
 
-      describe("name input", () => {
-        test.todo("is tied to name")
+    describe("blockchain input", () => {
+      test.todo("is tied to blockchain")
+      test.todo("is upper case blockchain")
+    })
+
+    describe("name input", () => {
+      test.todo("is tied to name")
+    })
+
+    describe("name error", () => {
+      describe("!has_name", () => {
+        test.todo("renders 'Name required'")
+      })
+    })
+
+    describe("disable checkbox", () => {
+      describe("editing_filter", () => {
+        test.todo("is rendered")
       })
 
-      describe("name error", () => {
-        describe("!has_name", () => {
-          test.todo("renders 'Name required'")
-        })
-      })
+      test.todo("is tied to disable")
+    })
 
-      describe("disable checkbox", () => {
-        describe("editing_filter", () => {
-          test.todo("is rendered")
-        })
-
-        test.todo("is tied to disable")
-      })
-
-      describe("logged_in", () => {
-        test.todo("renders SinksInputs")
-      })
+    describe("logged_in", () => {
+      test.todo("renders SinksInputs")
     })
   })
 

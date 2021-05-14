@@ -1,15 +1,24 @@
 describe("BlockchainSelector", () => {
   describe("dom", () => {
-    test.todo("renders blockchains dropdown")
+    test.todo("renders blockchains multiselect dropdown")
+    test.todo("renders blockchain singleLabel icon")
+    test.todo("renders upper case blockchain singleLabel")
+
+    test.todo("renders blockchain option icons")
+    test.todo("renders upper case blockchain options")
   })
 
-  describe("watch", () => {
+  describe("computed", () => {
+    describe("blockchains", () => {
+      test.todo("is network_config.BLOCKCHAINS")
+    })
+
     describe("selected", () => {
-      test.todo("commits set_selected_blockchain to store")
+      test.todo("gets/sets $store.state.selected_blockchains")
     })
   })
 
   describe("#created", () => {
-    test.todo("sets selected from selected_blockchain")
+    test.todo("persists blockchain")
   })
 })

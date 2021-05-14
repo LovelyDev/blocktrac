@@ -45,9 +45,19 @@ describe("FilterTester Page", () => {
     test.todo("renders matched tests")
   })
 
+  describe("computed", () => {
+    describe("list", () => {
+      test.todo("returns list of captured_txs for active_filter")
+    })
+
+    describe("txs", () => {
+      test.todo("returns captured_txs for active_filter")
+    })
+  })
+
   describe("watch", () => {
     describe("active_filter", () => {
-      test.todo("applies filter jsonpath to tests and populates matched_tests")
+      test.todo("applies filter jsonpath to txs and populates matched_tests")
     })
   })
 

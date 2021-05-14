@@ -25,7 +25,7 @@ describe("AccountLink", () => {
             }
           });
           await component.find("span.account_link").trigger('click');
-          expect(component.vm.$route.path).toEqual("/account/1123");
+          expect(component.vm.$route.path).toEqual("/" + component.vm.active_blockchain + "/account/1123");
         });
       })
     })
@@ -78,7 +78,7 @@ describe("AccountLink", () => {
           }
         });
         component.vm.nav_to_account();
-        expect(component.vm.$route.path).toEqual("/account/1123");
+        expect(component.vm.$route.path).toEqual("/" + component.vm.active_blockchain + "/account/1123");
       });
     })
   })

@@ -17,17 +17,13 @@ describe("Login", () => {
 
   describe("methods", () => {
     describe("login", () => {
-      test.todo("calls login on form")
-    })
-
-    describe("submit", () => {
       describe("is_valid", () => {
-        test.todo("logs in")
+        test.todo("calls submit on form")
         test.todo("hides login modal")
       })
     })
 
-    describe("show", () => {
+    describe("shown", () => {
       test.todo("resets validity")
       test.todo("focuses on form email input")
     })

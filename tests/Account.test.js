@@ -14,6 +14,7 @@ describe("Account Page", () => {
 
       data : function(){
         return {
+          have_account : true,
                balance : 1001.23456789,
               sequence : 2002,
           previous_txn : 'tx0'
@@ -44,25 +45,31 @@ describe("Account Page", () => {
       })
     })
 
-    describe("#account_table > tr:nth-child(1) > .value", () => {
-      it("contains rounded, deliminated balance", () => {
-        const balance = account.find("#account_table > tr:nth-child(1) > .value")
-        expect(balance.text()).toEqual("1,001.23457")
+    describe("have_account", () => {
+      describe("#account_table > tr:nth-child(1) > .value", () => {
+        it("contains rounded, deliminated balance", () => {
+          const balance = account.find("#account_table > tr:nth-child(1) > .value")
+          expect(balance.text()).toEqual("1,001.23457")
+        })
+      })
+
+      describe("#account_table > tr:nth-child(2) > .value", () => {
+        it("contains sequence", () => {
+          const sequence = account.find("#account_table > tr:nth-child(2) > .value")
+          expect(sequence.text()).toEqual("2002")
+        })
+      })
+
+      describe("#account_table > tr:nth-child(3) > .value", () => {
+        it("contains link to previous txn", () => {
+          const txn = account.find("#account_table > tr:nth-child(3) > .value")
+          expect(txn.text()).toEqual("tx0")
+        })
       })
     })
 
-    describe("#account_table > tr:nth-child(2) > .value", () => {
-      it("contains sequence", () => {
-        const sequence = account.find("#account_table > tr:nth-child(2) > .value")
-        expect(sequence.text()).toEqual("2002")
-      })
-    })
-
-    describe("#account_table > tr:nth-child(3) > .value", () => {
-      it("contains link to previous txn", () => {
-        const txn = account.find("#account_table > tr:nth-child(3) > .value")
-        expect(txn.text()).toEqual("tx0")
-      })
+    describe("!have_account", () => {
+      test.todo("renders 'Account not found'")
     })
   })
 
@@ -74,6 +81,10 @@ describe("Account Page", () => {
               sequence : 200,
           previous_txn : 'tx1'
         })
+      })
+
+      it("sets have_account", () => {
+        expect(account.vm.have_account).toBe(true)
       })
 
       it("sets balance", () => {
@@ -91,6 +102,8 @@ describe("Account Page", () => {
   })
 
   describe("#created", () => {
+    test.todo("persists blockchain")
+
     it("retrieves network account", () => {
       expect(account.vm.network.account).toHaveBeenCalledTimes(1)
     })
