@@ -11,15 +11,18 @@
                :multiple="false"
                :searchable="false"
                selectLabel=""
-               deselectLabel="">
+               deselectLabel=""
+               selectedLabel="">
     <template slot="singleLabel" slot-scope="props">
       <CurrencyIcon :currency="props.option.toUpperCase()" />
       {{props.option.toUpperCase()}}
     </template>
 
     <template slot="option" slot-scope="props">
+      <div class="option">
       <CurrencyIcon :currency="props.option.toUpperCase()" />
       {{props.option.toUpperCase()}}
+      </div>
     </template>
   </multiselect>
 </template>
@@ -67,5 +70,13 @@ export default {
 .multiselect{
   width: unset;
   margin-left: 10px;
+}
+
+.multiselect__option--selected .option{
+  background-color: #f3f3f3;
+}
+
+.multiselect__option--selected.multiselect__option--highlight .option{
+  background-color: #ff6a6a;
 }
 </style>
