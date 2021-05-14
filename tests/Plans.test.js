@@ -1,4 +1,8 @@
-import {mount_vue} from './setup'
+import {
+  mount_vue,
+  next_tick,
+  flush_promises
+} from './setup'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -7,6 +11,8 @@ import {
 import Plans from '../src/Plans.vue'
 
 import ziti  from '../src/config/ziti'
+
+import moment from 'moment'
 
 describe("Plans Page", () => {
   var plans;
@@ -17,10 +23,14 @@ describe("Plans Page", () => {
 
   describe("dom", () => {
     describe("#plan_container", () => {
+      let config_plans, dom_plans;
+      beforeEach(() => { 
+        config_plans = Object.keys(ziti.membership_features)
+        dom_plans = plans.findAll('.plan')
+      })
+
       it("renders .plan for each plan", () => {
-        const config_plans = Object.keys(ziti.membership_features);
-        const dom_plans = plans.findAll('.plan')
-        expect(dom_plans.length).toBe(config_plans.length);
+        expect(dom_plans.length).toBe(config_plans.length)
 
         for(var p = 0; p < dom_plans.length; p += 1){
           expect(dom_plans.at(p).find(".plan_name").text()).toEqual(config_plans[p])
@@ -29,111 +39,312 @@ describe("Plans Page", () => {
 
       describe(".plan", () => {
         describe("plan is suggested", () => {
-          test.todo("it is .suggested")
+          it("it is .suggested", () => {
+            for(var p = 0; p < dom_plans.length; p += 1){
+              if(plans.vm.is_suggested_plan(config_plans[p])) 
+                expect(dom_plans.at(p).classes()).toContain('suggested')
+            }
+          })
         })
 
         describe("plan is top plan", () => {
-          test.todo("it is .top_level")
+          it("it is .top_level", () => {
+            for(var p = 0; p < dom_plans.length; p += 1){
+              if(plans.vm.is_top_plan(config_plans[p])) 
+                expect(dom_plans.at(p).classes()).toContain('top_level')
+            }
+          })
         })
 
         describe(".plan_name", () => {
-          test.todo("renders plan name")
-
           describe("plan is current plan", () => {
-            test.todo("renders 'Current Plan'")
+            it("renders 'Current Plan'", () => {
+              const m_plans = mount_vue(Plans, {
+                computed: {
+                  membership_level: function(){
+                    return config_plans[0]
+                  }
+                }
+              })
+              const m_dom_plans = m_plans.findAll('.plan')
+              for(var p = 0; p < m_dom_plans.length; p += 1){
+                if(m_plans.vm.is_current_plan(config_plans[p])) 
+                  expect(m_dom_plans.at(p).find('.plan_name span').text()).toBe('(Current Plan)')
+              }
+            })
           })
         })
 
         describe(".plan_cost", () => {
           describe("plan_cost == 0", () => {
-            test.todo("renders 'Free'")
+            it("renders 'Free'", () => {
+              expect(dom_plans.at(0).find('.plan_cost').text()).toBe('Free')
+            })
           })
 
           describe("plan_cost != 0", () => {
-            test.todo("renders $cost /month")
+            it("renders $cost /month", () => {
+              expect(dom_plans.at(1).find('.plan_cost').text()).toBe(`$${ziti.membership_features[config_plans[1]].cost}  /month`)
+            })
           })
         })
 
         describe(".plan_detail:nth-child(0)", () => {
-          test.todo("renders number of plan filters")
+          it("renders number of plan filters", () => {
+            for(var p = 0; p < dom_plans.length; p += 1){
+              expect(dom_plans.at(p).findAll('.plan_detail').at(0).find('.plan_detail .value').text()).toEqual(ziti.membership_features[config_plans[p]].filters.toString())
+            }
+          })
         })
 
         describe(".plan_detail:nth-child(1)", () => {
-          test.todo("renders number of plan sinks")
+          it("renders number of plan sinks", () => {
+            for(var p = 0; p < dom_plans.length; p += 1){
+              expect(dom_plans.at(p).findAll('.plan_detail').at(1).find('.plan_detail .value').text()).toEqual(ziti.membership_features[config_plans[p]].sinks.toString())
+            }
+          })
         })
 
         describe(".plan_detail:nth-child(2)", () => {
-          test.todo("renders plan alert time")
-
-          describe("plan alert time includes 0", () => {
-            test.todo("renders 'Instant'")
+          it("renders plan alert time", () => {
+            for(var p = 0; p < dom_plans.length; p += 1){
+              if(ziti.membership_features[config_plans[p]].notification_times.includes(0))
+                expect(dom_plans.at(p).findAll('.plan_detail').at(2).find('.plan_detail .value').text()).toBe('Instant')
+              else expect(dom_plans.at(p).findAll('.plan_detail').at(2).find('.plan_detail .value').text()).toMatch(ziti.membership_features[config_plans[p]].notification_times[0].toString())
+            }
           })
         })
       })
 
       describe(".buy_additional checkbox", () => {
-        test.todo("is tied to enable_additional_by_plan")
-
+        let t = {}
+        beforeEach(() => {
+          for(var p = 0; p < config_plans.length; p += 1){
+            t[config_plans[p]] = true;
+          }
+        })
+        it("is tied to enable_additional_by_plan", async () => {  
+          plans.setData({enable_additional_by_plan: t})
+          await next_tick(plans);
+          for(var p = 0; p < config_plans.length; p += 1){
+            expect(dom_plans.at(p).find('.buy_additional input')).toBeChecked()
+          }
+        })
         describe("enable_additional", () => {
           describe("enable_additional_by_plan is true", () => {
-            test.todo("is active")
+            it("is active", async () => {
+              plans.setData({enable_additional_by_plan: t})
+              await next_tick(plans);
+              for(var p = 0; p < config_plans.length; p += 1){
+                expect(dom_plans.at(p).find('.buy_additional .enable_additional').classes()).toContain('active')
+              }
+            })
           })
         })
       })
 
       describe(".additional_items tr:nth-child(0) spinbutton", () => {
-        test.todo("is tied to selected_additional_filters_by_plan")
+        let t = {}
+        beforeEach(() => {
+          for(var p = 0; p < config_plans.length; p += 1){
+            t[config_plans[p]] = true;
+          }
+        })
 
+        it("is tied to selected_additional_filters_by_plan", async () => {
+          let s = {}
+          for(var p = 0; p < config_plans.length; p += 1){
+            s[config_plans[p]] = 1;
+          }
+          plans.setData({enable_additional_by_plan: t})
+          plans.setData({selected_additional_filters_by_plan: s})
+          await next_tick(plans)
+          for(var p = 0; p < config_plans.length; p += 1)
+            expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).text()).toBe('1')
+        })
         describe("!enable_additional", () => {
-          test.todo("is disabled")
+          it("is disabled", async () => {
+            let t_f = {}
+            for(var p = 0; p < config_plans.length; p += 1){
+              t_f[config_plans[p]] = false;
+            }
+            plans.setData({enable_additional_by_plan: t_f})
+            await next_tick(plans)
+            for(var p = 0; p < config_plans.length; p += 1)
+              expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(0).classes()).toContain('disabled')
+          })
         })
 
         describe("max_filters == 0", () => {
-          test.todo("is disabled")
+          it("is disabled", () => {
+            let m_p = mount_vue(Plans, {
+              computed: {
+                max_filters: function(){
+                  return 0
+                }
+              }
+            })
+            let f_d_plan = m_p.findAll('.plan').at(0)
+            m_p.setData({enable_additional_by_plan: t})
+            expect(f_d_plan.find('.additional_items .b-form-spinbutton').classes()).toContain('disabled')
+          })
         })
       })
 
       describe(".additional_items tr:nth-child(1) spinbutton", () => {
-        test.todo("is tied to selected_additional_sinks_by_plan")
+        let t = {}
+        beforeEach(() => {
+          for(var p = 0; p < config_plans.length; p += 1){
+            t[config_plans[p]] = true;
+          }
+        })
+
+        it("is tied to selected_additional_sinks_by_plan", async () => {
+          let s = {}
+          for(var p = 0; p < config_plans.length; p += 1){
+            s[config_plans[p]] = 1;
+          }
+          plans.setData({enable_additional_by_plan: t})
+          plans.setData({selected_additional_sinks_by_plan: s})
+          await next_tick(plans)
+          for(var p = 0; p < config_plans.length; p += 1)
+            expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).text()).toBe('1')
+        })
 
         describe("!enable_additional", () => {
-          test.todo("is disabled")
+          it("is disabled", async() => {
+            let t_f = {}
+            for(var p = 0; p < config_plans.length; p += 1){
+              t_f[config_plans[p]] = false;
+            }
+            plans.setData({enable_additional_by_plan: t_f})
+            await next_tick(plans)
+            for(var p = 0; p < config_plans.length; p += 1)
+              expect(dom_plans.at(p).findAll('.additional_items .b-form-spinbutton').at(1).classes()).toContain('disabled')
+          })
         })
 
         describe("max_sinks == 0", () => {
-          test.todo("is disabled")
+          it("is disabled", () => {
+            let m_p = mount_vue(Plans, {
+              computed: {
+                max_sinks: function(){
+                  return 0
+                }
+              }
+            })
+            let f_d_plan = m_p.findAll('.plan').at(0)
+            m_p.setData({enable_additional_by_plan: t})
+            expect(f_d_plan.find('.additional_items .b-form-spinbutton').classes()).toContain('disabled')
+          })
         })
       })
 
       describe("upgrade enabled", () => {
-        describe(".upgrade", () => {
-          test.todo("navigates to /plan with specified params")
+        let u_p, dom_plans;
+        beforeEach(() => {
+          u_p = mount_vue(Plans, {
+            computed: {
+              logged_in: function(){
+                return true
+              }
+            }
+          })
+          dom_plans = u_p.findAll('.plan')
         })
-
-        test.todo("does not render login button")
-        test.todo("does not render disabled upgrade button")
+        describe(".upgrade", () => {
+          it("navigates to /plan with specified params", () => {
+            let {selected_additional_filters_by_plan, selected_additional_sinks_by_plan} = u_p.vm
+            let t_param = {
+              plan: config_plans[0],
+              specified_filters: selected_additional_filters_by_plan[config_plans[0]],
+              specified_sinks: selected_additional_sinks_by_plan[config_plans[0]]
+            }
+            dom_plans.at(0).find('.upgrade').trigger("click")
+            next_tick(u_p)
+            expect(u_p.vm.$route.path).toBe('/plan')
+            expect(u_p.vm.$route.params).toEqual(t_param)
+          })
+        })
+        it("does not render login button", () => {
+          for(var p = 0; p < config_plans.length; p += 1)
+            expect(dom_plans.at(p).find('.upgrade').text()).not.toBe('Login to Upgrade')
+        })
+        it("does not render disabled upgrade button", () => {
+          for(var p = 0; p < config_plans.length; p += 1)
+            expect(dom_plans.at(p).find('.upgrade').classes).not.toContain('disabled')
+        })
       })
 
       describe("!logged_in", () => {
+        let u_p, dom_plans;
+        beforeEach(() => {
+          u_p = mount_vue(Plans, {
+            computed: {
+              logged_in: function(){
+                return false
+              }
+            }
+          })
+          dom_plans = u_p.findAll('.plan')
+        })
         describe("login button", () => {
-          test.todo("is rendered")
+          it("is rendered", () => {
+            for(var p = 0; p < config_plans.length; p += 1)
+              expect(dom_plans.at(p).find('.upgrade').text()).toBe('Login to Upgrade')
+          })
         })
 
         describe("clicked", () => {
           test.todo("launches login modal")
         })
 
-        test.todo("does not render disabled upgrade button")
+        it("does not render diabled upgrade button", () => {
+          for(var p = 0; p < config_plans.length; p += 1)
+            expect(dom_plans.at(p).find('.upgrade').classes).not.toContain('disabled')
+        })
       })
 
       describe("upgrade not enabled and logged in", () => {
         describe("disabled upgrade button", () => {
           describe("current plan", () => {
-            test.todo("renders 'Current Plan'")
+            it("renders 'Current Plan'", () => {
+              let u_p = mount_vue(Plans, {
+                computed: {
+                  logged_in: function() {
+                    return true
+                  },
+                  membership_level: function() {
+                    return config_plans[0]
+                  }
+                }
+              })
+              let dom_plans = u_p.findAll('.plan')
+              expect(dom_plans.at(0).find('.upgrade').text()).toBe('Current Plan')
+            })
           })
         })
 
-        test.todo("renders subscription end")
+        it("renders subscription end", () => {
+          let t = {};
+          for(var p = 0; p < config_plans.length; p += 1)
+            t[config_plans[p]] = false
+          let u_p = mount_vue(Plans, {
+            computed: {
+              logged_in: function() {
+                return true
+              },
+              membership_level: function() {
+                return config_plans[1]
+              },
+              upgrade_enabled: function() {
+                return t
+              }
+            }
+          })
+          let dom_plans = u_p.findAll('.plan')
+          expect(dom_plans.at(0).find('.upgrade').text()).toMatch(/Subscription Ends in/)
+        })
       })
     })
   })
@@ -176,62 +387,169 @@ describe("Plans Page", () => {
     })
 
     describe("max_filters", () => {
-      test.todo("is max_additions.filters - additional_filters")
+      it("is max_additions.filters - additional_filters", () => {
+        plans = mount_vue(Plans, {
+          computed: {
+            additional_filters: function(){
+              return 1
+            }
+          }
+        })
+        
+        expect(plans.vm.max_filters).toBe(ziti.max_additions.filters - plans.vm.additional_filters)
+      })
     })
 
     describe("max_sinks", () => {
-      test.todo("is max_additions.sinks - additional_sinks")
-    })
-
-    describe("total_cost", () => {
-      test.todo("is cost for each membership level")
-      test.todo("includes base monthly plan cost")
-
-      describe("selected_additional_filters", () => {
-        test.todo("includes cost for additional_filters")
+      it("is max_additions.sinks - additional_sinks", () => {
+        plans = mount_vue(Plans, {
+          computed: {
+            additional_sinks: function(){
+              return 1
+            }
+          }
+        })
+        
+        expect(plans.vm.max_sinks).toBe(ziti.max_additions.sinks - plans.vm.additional_sinks)
       })
-
-      describe("selected_additional_sinks", () => {
-        test.todo("includes cost for additional_sinks")
-      })
-
-      test.todo("rounds cost to two decimal places")
     })
 
     describe("upgrade_enabled", () => {
-      test.todo("returns upgrade_enabled bool for each membership level")
+      let config_plans
+      beforeEach(() => {
+        config_plans = Object.keys(ziti.membership_features)
+      })
+      it("returns upgrade_enabled bool for each membership level", () => {
+        plans = mount_vue(Plans)
+        for (let plan of config_plans){
+          expect(plans.vm.upgrade_enabled[plan]).not.toBeUndefined();
+        }
+      })
 
       describe("not logged_in", () => {
-        test.todo("is false")
+        it("is false", () => {
+          plans = mount_vue(Plans, {
+            computed: {
+              logged_in: function() {
+                return false
+              }
+            }
+          })
+          for (let plan of config_plans){
+            expect(plans.vm.upgrade_enabled[plan]).toBe(false);
+          }
+        })
       })
 
       describe("current membership level", () => {
         describe("purchasing additional options", () => {
-          test.todo("is true")
+          it("is true", () => {
+            const t = {}
+            for(let plan of config_plans)
+              t[plan] = 100
+            plans = mount_vue(Plans, {
+              computed: {
+                membership_level: function(){
+                  return config_plans[1]
+                },
+                logged_in: function () {
+                  return true
+                },
+                enable_additional: function() {
+                  return true
+                }
+              }
+            })
+            plans.setData({total_cost: t})
+            next_tick(plans)
+            expect(plans.vm.upgrade_enabled[config_plans[1]]).toBe(true)
+          })
         })
 
-        test.todo("is false")
+        it("is false", () => {
+          plans = mount_vue(Plans, {
+            computed: {
+              membership_level: function(){
+                return config_plans[1]
+              },
+              logged_in: function() {
+                return true
+              }
+            }
+          })
+          expect(plans.vm.upgrade_enabled[config_plans[1]]).toBe(false)
+        })
       })
 
       describe("lower membership levels", () => {
-        test.todo("is false")
+        const m_levels = ziti.membership_levels
+        it("is false", () => {
+          plans = mount_vue(Plans, {
+            membership_level: function() {
+              return config_plans[1]
+            },
+            logged_in: function() {
+              return true
+            }
+          })
+          expect(plans.vm.upgrade_enabled[m_levels[0]]).toBe(false)
+        })
       })
 
       describe("higher membership levels", () => {
-        test.todo("is false")
+        const m_levels = ziti.membership_levels
+        it("is false", () => {
+          plans = mount_vue(Plans, {
+            membership_level: function() {
+              return config_plans[1]
+            },
+            logged_in: function() {
+              return true
+            }
+          })
+          expect(plans.vm.upgrade_enabled[m_levels[2]]).toBe(false)
+        })
       })
     })
 
     describe("expires", () => {
-      test.todo("is number of days until current plan renewal date")
+      it("is number of days until current plan renewal date", () => {
+        plans = mount_vue(Plans, {
+          computed: {
+            renewal_date: function(){
+              return moment().add(1, 'days').toString()
+            }
+          }
+        })
+        expect(plans.vm.expires).toBe("1")
+      })
     })
   })
 
   describe("watch", () => {
     describe("enable_additional_by_plan", () => {
       describe("!enable_additional", () => {
-        test.todo("deletes selected_additional_filters")
-        test.todo("deletes selected_additional_sinks")
+        let m_levels, t_f = {}
+        beforeEach(() => {
+          m_levels = ziti.membership_levels
+          for(let level of m_levels) t_f[level] = false
+        })
+        it("deletes selected_additional_filters", () => {
+          plans = mount_vue(Plans)
+          plans.setData({enable_additional_by_plan: t_f})
+          next_tick(plans)
+          for(let level of m_levels){
+            expect(plans.vm.selected_additional_filters_by_plan[level]).toBe(0)
+          }
+        })
+        it("deletes selected_additional_sinks", () => {
+          plans = mount_vue(Plans)
+          plans.setData({enable_additional_by_plan: t_f})
+          next_tick(plans)
+          for(let level of m_levels){
+            expect(plans.vm.selected_additional_sinks_by_plan[level]).toBe(0)
+          }
+        })
       })
     })
   })
