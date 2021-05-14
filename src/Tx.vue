@@ -3,7 +3,7 @@
   * Renders information about a single transaction,
   * specified by hash
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <TxsLayout section="tx">

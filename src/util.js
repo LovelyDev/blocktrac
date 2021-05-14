@@ -1,7 +1,7 @@
 /*
  * Misc helper logic used throughout the application
  *
- * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+ * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
  */
 
 var estraverse = require('estraverse')

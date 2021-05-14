@@ -1,7 +1,7 @@
 <!--
   * BTC Currency Amount Component
   *
-  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <span>

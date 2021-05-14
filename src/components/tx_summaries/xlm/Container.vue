@@ -3,7 +3,7 @@
   * Wrapping container encapsulation every transaction, providing
   * slot for tx-type specific rendering.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <div class="xlm_tx_container">

@@ -3,7 +3,7 @@
   * High level user account settings and options. Here the user
   * can change their email, password, and billing information.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <b-container id="profile_form">

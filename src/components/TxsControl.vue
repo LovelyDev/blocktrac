@@ -3,7 +3,7 @@
   * Controls which affect the contents/rendering of the
   * LiveTxs stream.
   *
-  * Copyright (c) 2020 Dev Null Productions - All Rights Reserved
+  * Copyright (c) 2020-2021 Dev Null Productions - All Rights Reserved
   -->
 <template>
   <span id="txs_controls">
