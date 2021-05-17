@@ -45,6 +45,10 @@ function init(){
 // Reset module
 function reset(){
   stop_streaming_txs.bind(this)();
+  if(this.heartbeat){
+    clearInterval(this.heartbeat);
+    this.heartbeat = null;
+  }
   this.connected = false;
 }
 
@@ -55,7 +59,7 @@ function connect(){
 
   // Start testing XLM connection
   test_connection.bind(this)();
-  setInterval(test_connection.bind(this), 5000);
+  this.heartbeat = setInterval(test_connection.bind(this), 5000);
 }
 
 // Periodically poll XLM server, handle connection failures
@@ -124,6 +128,8 @@ var txs_cb = null;
 
 // Stream XLM transactions
 function stream_txs(cb){
+  if(!this.vue.xlm_active) return;
+
   if(txs_cb)
     txs_cb();
 

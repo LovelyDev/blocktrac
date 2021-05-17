@@ -77,7 +77,12 @@ export default {
   },
 
   created : function(){
-    this.persist_blockchain(this.stored);
+    // XXX: Invoke on next tick so that if stored blockchain
+    // is different than default watchers / handlers can be
+    // registered before we switch over.
+    this.$nextTick(function(){
+      this.persist_blockchain(this.stored);
+    }.bind(this))
   }
 }
 </script>

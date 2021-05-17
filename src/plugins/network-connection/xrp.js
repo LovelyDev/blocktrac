@@ -124,6 +124,8 @@ var txs_cb = null;
 
 // Stream XRP transactions
 function stream_txs(cb){
+  if(!this.vue.xrp_active) return;
+
   if(txs_cb)
     this.ripple_api
         .connection

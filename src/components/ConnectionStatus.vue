@@ -19,8 +19,21 @@
 </template>
 
 <script>
+import Blockchain from '../mixins/blockchain'
+
 export default {
   name: 'ConnectionStatus',
+
+  mixins : [Blockchain],
+
+  watch : {
+    active_blockchain : function(){
+      this.unregister_connection();
+      this.unregister_disconnection();
+      this.register_connection();
+      this.register_disconnection();
+    }
+  },
 
   methods : {
     on_connection : function(){
