@@ -49,7 +49,7 @@ const BLOCKCHAIN = NETWORK ?
                        null;
 
 // Supported blockchains
-const BLOCKCHAINS = ['btc', 'eth', 'xrp', 'xlm', ];
+const BLOCKCHAINS = ['btc', 'eth', 'xlm', 'xrp'];
 
 // Default blockchain
 const DEFAULT_BLOCKCHAIN = BLOCKCHAINS[2];
