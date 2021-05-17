@@ -6,9 +6,8 @@
  */
 
 function all(tx){
-  return tx.envelope
-           .tx
-           .operations || [];
+  return (tx.envelope.tx || {})
+             .operations || [];
 }
 
 function types(operations){

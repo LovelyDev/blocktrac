@@ -30,7 +30,7 @@ function prepare_streamed_tx(tx){
   var prepared = wrap_tx(convert_tx(tx));
 
   // Set fields used internally in zitui
-  const operation = XLMOperations.prioritized(XLMOperations.all(prepared.transaction))._type;
+  const operation = (XLMOperations.prioritized(XLMOperations.all(prepared.transaction)) || {})._type;
   prepared.category = txs_config.tx_category_for_type(operation);
   prepared.hash = prepared.transaction.hash;
 

@@ -59,7 +59,7 @@ export default {
     },
 
     operation_type : function(){
-      return this.operation._type;
+      return (this.operation || {})._type;
     },
 
     short_operation_type : function(){
