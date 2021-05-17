@@ -163,9 +163,8 @@ ziti setup:
 - NODE_ENV='production' yarn db:migrate
 - NODE_ENV='production' yarn db:seed
 - <as root>
-- cp /home/ziti/ziti/config/*.service /lib/systemd/system/
-  - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
-  - if monitoring multiple blockchains cp ziti-txs to ziti-txs-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately
+- ln /home/ziti/ziti/config/*.service /lib/systemd/system/
+  - modify User, WorkingDirectory, and ExecStart to reflect username (if not ziti)
 - systemctl daemon-reload
 - systemctl start ziti-api
 - systemctl enable ziti-api
@@ -262,9 +261,8 @@ ziti setup:
 - edit config/auth.js to set email and twilio credentials (production, worker2 only)
 - edit config/network.js to set network
 - <as root>
-- cp /home/ziti/ziti/config/*.service /lib/systemd/system/
-  - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
-  - if monitoring multiple blockchains cp ziti-filters to ziti-filters-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately (worker1 only)
+- ln /home/ziti/ziti/config/*.service /lib/systemd/system/
+  - modify User, WorkingDirectory, and ExecStart to reflect username (if not ziti)
 - systemctl daemon-reload
 - worker1:
   - systemctl start ziti-filters

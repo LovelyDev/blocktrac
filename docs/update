@@ -70,9 +70,6 @@ Ziti:
     - NODE_ENV='production' yarn db:migrate
       - Verify db
   - If service files updated
-    - cp /home/ziti/ziti/config/*.service /lib/systemd/system/
-    - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
-    - if monitoring multiple blockchains cp ziti-txs to ziti-txs-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately
     - systemctl daemon-reload
   - Start services
   - Verify
@@ -115,9 +112,6 @@ Ziti:
   - If dependencies added:
     - yarn install
   - If service files updated
-    - cp /home/ziti/ziti/config/*.service /lib/systemd/system/
-    - modify WorkingDirectory and ExecStart to reflect username (if not ziti)
-    - if monitoring multiple blockchains cp ziti-filters to ziti-filters-<blockchain> for each blockchain and set ZITI_NETWORK approrpriately (worker1 only)
     - systemctl daemon-reload
   - Start services
   - Verify
