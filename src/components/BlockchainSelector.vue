@@ -49,6 +49,16 @@ export default {
       return network_config.BLOCKCHAINS;
     },
 
+    stored : {
+      get : function(){
+        return this.$cookies.selected_blockchain;
+      },
+
+      set : function(s){
+        this.$setCookie('selected_blockchain', s);
+      }
+    },
+
     selected : {
       get : function(){
         return this.$store.state.selected_blockchain;
@@ -60,8 +70,14 @@ export default {
    }
   },
 
+  watch : {
+    selected : function(){
+      this.stored = this.selected;
+    }
+  },
+
   created : function(){
-    this.persist_blockchain();
+    this.persist_blockchain(this.stored);
   }
 }
 </script>

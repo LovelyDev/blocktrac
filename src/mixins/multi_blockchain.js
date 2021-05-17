@@ -11,9 +11,11 @@ export default {
   },
 
   methods : {
-    persist_blockchain : function(){
-      if(this.blockchain)
-        this.$store.commit('set_selected_blockchain', this.blockchain);
+    persist_blockchain : function(blockchain){
+      if(!blockchain) blockchain = this.blockchain;
+
+      if(blockchain)
+        this.$store.commit('set_selected_blockchain', blockchain);
     }
   }
 }
