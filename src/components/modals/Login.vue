@@ -26,6 +26,8 @@
 import LoginForm   from '../forms/Login'
 import Validatable from '../../mixins/validatable'
 
+// TODO: Style modal title (and other modals)
+
 export default {
   name: 'LoginModal',
 
