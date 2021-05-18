@@ -48,7 +48,7 @@
           </b-list-group-item>
 
           <b-list-group-item v-for="tx in filter_match_txs"
-                             :key="tx.transaction.hash"
+                             :key="tx.hash"
                              class="tx_summary_container">
             <TxSummary :tx="tx" />
           </b-list-group-item>
@@ -59,9 +59,10 @@
 </template>
 
 <script>
-import Authentication from './mixins/authentication'
-import ServerAPI      from './mixins/server_api'
-import Maintenance    from './mixins/server_api'
+import Authentication  from './mixins/authentication'
+import ServerAPI       from './mixins/server_api'
+import MultiBlockchain from './mixins/multi_blockchain'
+import Maintenance     from './mixins/server_api'
 
 import TxsLayout      from './components/TxsLayout'
 import FilterHeader   from './components/FilterHeader'
@@ -73,7 +74,12 @@ import ziti           from './config/ziti'
 export default {
   name: 'FilterDetails',
 
-  mixins : [Authentication, ServerAPI, Maintenance],
+  mixins : [
+    Authentication,
+    ServerAPI,
+    MultiBlockchain,
+    Maintenance
+  ],
 
   components: {
     TxsLayout,
@@ -112,9 +118,22 @@ export default {
   watch : {
     // XXX: need to watch route incase switching between filters
     $route : function(){
-      console.log("route has been changed");
+      this.load();
+    }
+  },
+
+  methods : {
+    load : function(){
+      // XXX: clear filter matches before persisting blockchain
+      this.filter_matches = [];
+
       this.load_filter(this.id)
-      this.load_filter_matches(this.id)
+          .then(function(){
+            this.persist_blockchain(this.active_filter.blockchain);
+            this.$nextTick(function(){
+              this.load_filter_matches(this.id)
+            }.bind(this))
+          }.bind(this))
     }
   },
 
@@ -124,8 +143,7 @@ export default {
       return;
     }
 
-    this.load_filter(this.id)
-    this.load_filter_matches(this.id)
+    this.load();
   }
 }
 </script>
