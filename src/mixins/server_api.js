@@ -163,17 +163,18 @@ export default {
 
     // Loads filter from server, storing the result
     load_filter : function(id){
-      this.$htttp().get(this.backend_url + "/filter/" + id, this.auth_header)
-                   .then(function(response){
-                     // set active filter
-                     this.active_filter = response.body;
+      return this.$htttp()
+                 .get(this.backend_url + "/filter/" + id, this.auth_header)
+                 .then(function(response){
+                   // set active filter
+                   this.active_filter = response.body;
 
-                   }.bind(this)).catch(function(err){
-                     if(this.not_authenticated(err)) return; // XXX
+                 }.bind(this)).catch(function(err){
+                   if(this.not_authenticated(err)) return; // XXX
 
-                     const msg = util.capitalize(err.body.error)
-                     alert("Could not retrieve filter: " + msg)
-                   }.bind(this))
+                   const msg = util.capitalize(err.body.error)
+                   alert("Could not retrieve filter: " + msg)
+                 }.bind(this))
     },
 
 
