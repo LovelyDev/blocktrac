@@ -160,10 +160,13 @@ function stop_streaming_txs(){
   // Reset callback
   txs_cb = null;
 
-  return this.ripple_api
-             .request('unsubscribe', {
-               'stream' : ['transactions']
-             })
+  if(this.connected)
+    return this.ripple_api
+               .request('unsubscribe', {
+                 'stream' : ['transactions']
+               })
+
+  return new Promise((resolve, reject) => resolve());
 }
 
 ///
