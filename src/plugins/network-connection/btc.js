@@ -159,7 +159,7 @@ function sync_network(cb){
   const bi = get_block_interval.bind(this)();
   Promise.all([lb, bi])
          .then(function(){
-           _next_block_time = new Date(current_block.time * 1000 + block_interval)
+           _next_block_time = new Date(Date.parse(current_block.time) + block_interval)
          })
 }
 

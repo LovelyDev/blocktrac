@@ -19,11 +19,13 @@ const NETWORK_URIS = {
 
   btc_mainnet : {
     // Blockchain API: https://www.blockchain.com/api/blockchain_api
-    latest_block : "https://blockchain.info/latestblock",
-         block_n : "https://blockchain.info/rawblock/HASH",
-         account : "https://blockchain.info/rawaddr/ADDR",
-              tx : "https://blockchain.info/rawtx/HASH",
-      block_time : "https://blockchain.info/q/interval"
+    //latest_block : "https://blockchain.info/latestblock?cors=true",
+    //latest_block : "https://chain.api.btc.com/v3/block/latest",
+    latest_block : "https://api.blockcypher.com/v1/btc/main",
+         block_n : "https://blockchain.info/rawblock/HASH?cors=true",
+         account : "https://blockchain.info/rawaddr/ADDR?cors=true",
+              tx : "https://blockchain.info/rawtx/HASH?cors=true",
+      block_time : "https://blockchain.info/q/interval?cors=true"
   },
 
   // ETH Wrapper: https://docs.linkpool.io/docs/public_rpc
