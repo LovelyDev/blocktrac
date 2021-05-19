@@ -1,4 +1,7 @@
-import {mount_vue}    from './setup'
+import {
+  mount_vue,
+  next_tick
+}    from './setup'
 
 import {
   stubbed_maintenance_mode as maintenance_mode
@@ -9,11 +12,15 @@ import {
 } from './fixtures'
 
 import FilterTester from '../src/FilterTester.vue'
+import TxSummary from '../src/components/TxSummary.vue'
+import captured_txs from '../src/assets/captured_txs/xrp/captured_txs.json'
+import util from '../src/util'
 
 ///
 
 // Filter 'retrieved' from the server
 const filters = load_fixture('filters');
+const matched_tests = load_fixture('matched_tests');
 
 ///
 
@@ -42,22 +49,49 @@ describe("FilterTester Page", () => {
       })
     })
 
-    test.todo("renders matched tests")
+    it("renders matched tests", async () => {
+      const filter_tester = mount_vue(FilterTester, {mixins: [server_api]})
+      filter_tester.setData({matched_tests: matched_tests})
+      await next_tick(filter_tester)
+      expect(filter_tester.findAllComponents(TxSummary).length).toBe(matched_tests.length)
+    })
   })
 
   describe("computed", () => {
     describe("list", () => {
-      test.todo("returns list of captured_txs for active_filter")
+      it("returns list of captured_txs for active_filter", () => {        
+        const filter_tester = mount_vue(FilterTester, {mixins: [server_api]})
+        expect(filter_tester.vm.list).toEqual(captured_txs)
+      })
     })
 
     describe("txs", () => {
-      test.todo("returns captured_txs for active_filter")
+      it("returns captured_txs for active_filter", () => {
+        const filter_tester = mount_vue(FilterTester, {mixins: [server_api]})
+        let txs = filter_tester.vm.txs;
+        let key_values = Object.keys(txs)
+        for(let i = 0; i < key_values.length; i++) {
+          let tx  = require("../src/assets/captured_txs/" + filter_tester.vm.active_filter.blockchain + "/" + key_values[i])
+          expect(captured_txs[i]).toContain(key_values[i])
+          expect(txs[key_values[i]]).toEqual({transaction: tx})
+        }
+      })
     })
   })
 
   describe("watch", () => {
     describe("active_filter", () => {
-      test.todo("applies filter jsonpath to txs and populates matched_tests")
+      it("applies filter jsonpath to txs and populates matched_tests", () => {
+        var jsonpath = require('../src/vendor/jsonpath')
+        jsonpath.scope({parseInt: parseInt, parseFloat: parseFloat})
+        const filter_tester = mount_vue(FilterTester, {mixins: [server_api]})
+        var jp = util.filter_matcher(filter_tester.vm.active_filter)
+        Object.keys(filter_tester.vm.txs).forEach(function(ctx){
+          const json = filter_tester.vm.txs[ctx];
+          if(jsonpath.query(json, jp).length != 0)
+            expect(filter_tester.vm.matched_tests).toContain(json)
+        })
+      })
     })
   })
 

@@ -1,4 +1,7 @@
-import {mount_vue}       from './setup'
+import {
+  mount_vue,
+  next_tick
+}       from './setup'
 import {stubbed_network} from './stubs'
 
 import Account from '../src/Account.vue'
@@ -69,7 +72,11 @@ describe("Account Page", () => {
     })
 
     describe("!have_account", () => {
-      test.todo("renders 'Account not found'")
+      it("renders Account not found", async () => {
+        account.setData({have_account: false});
+        await next_tick(account);
+        expect(account.find("#no_account").text()).toBe('Account not found')
+      })
     })
   })
 
@@ -102,7 +109,17 @@ describe("Account Page", () => {
   })
 
   describe("#created", () => {
-    test.todo("persists blockchain")
+    it("persists blockchain", () => {
+      let server_api = {
+        methods: {
+          persist_blockchain: jest.fn()
+        }
+      }
+      let account = mount_vue(Account, {
+        mixins: [server_api]
+      })
+      expect(server_api.methods.persist_blockchain).toHaveBeenCalledTimes(1)
+    })
 
     it("retrieves network account", () => {
       expect(account.vm.network.account).toHaveBeenCalledTimes(1)
