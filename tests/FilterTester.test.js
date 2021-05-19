@@ -13,14 +13,17 @@ import {
 
 import FilterTester from '../src/FilterTester.vue'
 import TxSummary from '../src/components/TxSummary.vue'
-import captured_txs from '../src/assets/captured_txs/xrp/captured_txs.json'
 import util from '../src/util'
 
 ///
 
 // Filter 'retrieved' from the server
 const filters = load_fixture('filters');
+const filter = filters[0];
+
+// Stub matched_tests and captured_txs
 const matched_tests = load_fixture('matched_tests');
+const captured_txs = require('../src/assets/captured_txs/' + filter.blockchain + '/captured_txs.json');
 
 ///
 
@@ -31,7 +34,7 @@ describe("FilterTester Page", () => {
     server_api = {
       methods : {
         load_filter : jest.fn(function(){
-          this.active_filter = filters[0]
+          this.active_filter = filter
         })
       }
     }
@@ -90,6 +93,8 @@ describe("FilterTester Page", () => {
           const json = filter_tester.vm.txs[ctx];
           if(jsonpath.query(json, jp).length != 0)
             expect(filter_tester.vm.matched_tests).toContain(json)
+          else
+            expect(filter_tester.vm.matched_tests).not.toContain(json)
         })
       })
     })

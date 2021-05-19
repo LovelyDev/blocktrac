@@ -110,15 +110,15 @@ describe("Account Page", () => {
 
   describe("#created", () => {
     it("persists blockchain", () => {
-      let server_api = {
+      let multi_blockchain = {
         methods: {
           persist_blockchain: jest.fn()
         }
       }
       let account = mount_vue(Account, {
-        mixins: [server_api]
+        mixins: [multi_blockchain]
       })
-      expect(server_api.methods.persist_blockchain).toHaveBeenCalledTimes(1)
+      expect(multi_blockchain.methods.persist_blockchain).toHaveBeenCalledTimes(1)
     })
 
     it("retrieves network account", () => {
