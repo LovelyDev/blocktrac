@@ -119,6 +119,11 @@ export default {
     // XXX: need to watch route incase switching between filters
     $route : function(){
       this.load();
+    },
+    sinks: function(){
+      if(this.active_filter) {
+        this.load_filter(this.active_filter.id)
+      }
     }
   },
 

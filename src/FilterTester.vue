@@ -117,6 +117,11 @@ export default {
         if(jsonpath.query(json, jp).length != 0)
           this.matched_tests.push(json);
       }.bind(this));
+    },
+    sinks: function(){
+      if(this.active_filter) {
+        this.load_filter(this.active_filter.id)
+      }
     }
   },
 
