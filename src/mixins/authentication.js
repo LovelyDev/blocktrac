@@ -98,6 +98,13 @@ export default {
              this.privilege('additional_sinks', 'integer');
     },
 
+    authorized_sinks_per_filter: function() {
+      if(!this.membership_level) return 0;
+
+      return this.membership_features.sinks_per_filter +
+             this.privilege('additional_filter_sinks', 'integer');
+    },
+
     advanced_sinks : function(){
       if(!this.membership_level) return false;
 

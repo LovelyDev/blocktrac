@@ -106,7 +106,7 @@
 
     <tr id="sinks_footer">
       <td colspan="2">
-        <div>{{remaining_sinks_msg}}</div>
+        <div>{{remaining_msg}}</div>
         <div>To create more, <router-link to="/plans" class="pro">upgrade</router-link> your plan.</div>
       </td>
     </tr>
@@ -132,11 +132,6 @@ import ServerAPI       from '../../mixins/server_api'
 
 import util from '../../util'
 
-// FIXME: limit sinks created by sinks_per_filter (incorporating privileges)
-// FIXME: need to refresh filters associated with sink on various events:
-//        - delete_sink
-//        - add/remove sink to/from filter
-
 export default {
   name: 'SinksInputs',
 
@@ -152,6 +147,9 @@ export default {
 
     // tie selected sinks to sink lifecycle
     selected_lifecycle : Boolean,
+
+    // ignore sinks_per_filter restrictions
+    ignore_sinks_per_filter : Boolean,
 
     // sinks to preselect
     preselected : Array
@@ -176,14 +174,30 @@ export default {
       return this.authorized_sinks - this.sinks.length;
     },
 
-    remaining_sinks_msg : function(){
-      const remaining = this.remaining_sinks;
+   remaining_msg : function(){
+      const remaining = this.ignore_sinks_per_filter ? this.remaining_sinks :
+                                                       this.remaining_sinks_per_filter;
 
       if(remaining == 1)
         return "1 available sink is left"
 
       return remaining + " available sinks are left"
     },
+
+    no_remaining_sinks_per_filter : function(){
+      return this.remaining_sinks_per_filter == 0;
+    },
+
+    remaining_sinks_per_filter : function() {
+      return this.authorized_sinks_per_filter - this.number_selected_sinks_filter
+    },
+
+    number_selected_sinks_filter: function() {
+      return Object.keys(this.selected)
+                   .map((s) => this.selected[s].length)
+                   .reduce((s1, s2) => s1 + s2, 0);
+    },
+
 
     ///
 
@@ -213,18 +227,33 @@ export default {
       }
     },
 
+    selected_ids : function(){
+      return {
+          email : this.selected.email.map((e) => e.value),
+            sms : this.selected.sms.map((s) => s.value),
+        webhook : this.selected.webhook.map((w) => w.value),
+      }
+    },
+
     ///
 
     email_options : function(){
       return this.email_sinks.map(function(email){
-        return {text : email.target, value: email.id}
-      });
+        if(!this.ignore_sinks_per_filter &&
+            this.no_remaining_sinks_per_filter &&
+           !this.selected_ids.email.includes(email.id))
+          return null;
+
+        return {text : email.target, value: email.id};
+      }.bind(this)).filter((o) => !!o);
     },
 
     email_options_plus : function(){
       var options = this.email_options.slice();
 
-      if(this.remaining_sinks > 0)
+      if(this.remaining_sinks > 0     &&
+        (this.ignore_sinks_per_filter ||
+         this.remaining_sinks_per_filter > 0))
         options.push({text : "+ Add Email", value : -1})
 
       return options;
@@ -232,14 +261,21 @@ export default {
 
     sms_options : function(){
       return this.sms_sinks.map(function(sms){
+        if(!this.ignore_sinks_per_filter &&
+            this.no_remaining_sinks_per_filter &&
+           !this.selected_ids.sms.includes(sms.id))
+          return null;
+
         return {text : sms.target, value: sms.id}
-      });
+      }.bind(this)).filter((o) => !!o);
     },
 
     sms_options_plus : function(){
       var options = this.sms_options.slice();
 
-      if(this.remaining_sinks > 0)
+      if(this.remaining_sinks > 0     &&
+        (this.ignore_sinks_per_filter ||
+         this.remaining_sinks_per_filter > 0))
         options.push({text : "+ Add Phone Number", value : -1})
 
       return options;
@@ -247,14 +283,21 @@ export default {
 
     webhook_options : function(){
       return this.webhook_sinks.map(function(webhook){
+        if(!this.ignore_sinks_per_filter &&
+            this.no_remaining_sinks_per_filter &&
+           !this.selected_ids.webhook.includes(webhook.id))
+          return null;
+
         return {text : webhook.target, value: webhook.id}
-      });
+      }.bind(this)).filter((o) => !!o);
     },
 
     webhook_options_plus : function(){
       var options = this.webhook_options.slice();
 
-      if(this.remaining_sinks > 0)
+      if(this.remaining_sinks > 0     &&
+        (this.ignore_sinks_per_filter ||
+         this.remaining_sinks_per_filter > 0))
         options.push({text : "+ Add URL", value : -1})
 
       return options;
@@ -289,7 +332,7 @@ export default {
       // Add newly created sink to selected
       if(!this.selected_lifecycle){
         this.selected[sink.type].push({
-           text : sink.target,
+          text : sink.target,
           value : sink.id
         })
       }
@@ -343,7 +386,7 @@ export default {
     if(this.preselected){
       this.preselected.forEach(function(preselected){
         this.selected[preselected.type].push({
-          text : preselected.target,
+           text : preselected.target,
           value : preselected.id
         })
       }.bind(this))

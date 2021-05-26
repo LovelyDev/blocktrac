@@ -12,7 +12,9 @@
     Send me notifications via
     </div>
 
-    <SinksInputs no_toggle selected_lifecycle />
+    <SinksInputs no_toggle
+                 selected_lifecycle
+                 ignore_sinks_per_filter />
   </div>
 </template>
 
