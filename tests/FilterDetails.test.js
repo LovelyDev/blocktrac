@@ -46,11 +46,7 @@ describe("FilterDetails Page", () => {
 
         load_filter_matches : jest.fn(function() {
           this.filter_matches = []
-        }),
-
-        sinks: function(param){
-          return param;
-        }
+        })
       }
     };
 
@@ -177,19 +173,28 @@ describe("FilterDetails Page", () => {
 
     describe("filter_match_txs", () => {
       it("is raw transactions corresponding to filter matches", async () => {
-        filter_details = mount_vue(FilterDetails, {
-          mixins: [{
-            methods : {
-              load_filter : jest.fn(function() {
-                return Promise.resolve();
-              }),
+        filter_details = mount_vue(FilterDetails,
+          {
+            computed: {
+              match_history: function(){
+                return 0
+              }
+            },
+            mixins: [{
+              methods : {
+                load_filter : jest.fn(function() {
+                  this.active_filter = filters[0]
+                  return Promise.resolve();
+                }),
 
-              load_filter_matches : function() {
-                this.filter_matches = filter_matches;
-              },
-            }
-          }],
-        });
+                load_filter_matches : function() {
+                  this.filter_matches = filter_matches;
+                },
+              }
+            }],
+          }
+        );
+     
         filter_details.vm.load_filter_matches()
         await next_tick(filter_details)
         const expected = filter_matches.map((match) => {
@@ -214,29 +219,34 @@ describe("FilterDetails Page", () => {
         expect(server_api.methods.load_filter_matches).toHaveBeenCalledTimes(2);
       })
     })
-    describe("sinks", () => {
-      it("if sinks changed, and active filter is set, load filter function will be called", async () => {
-        filter_details.vm.sinks = filters_with_sinks[0].Sinks;
-        await flush_promises();
-        expect(server_api.methods.load_filter).toHaveBeenCalledTimes(2);
-      })
-      it("if sinks changed but active filter is not set, won't call load_filter function", async () => {
-        filter_details = mount_vue(FilterDetails, {
-          mixins: [{
-            methods : {
-              load_filter : jest.fn(function() {
-                return Promise.resolve();
-              }),
 
-              load_filter_matches : function() {
-                this.filter_matches = filter_matches;
-              },
-            }
-          }],
-        });
-        filter_details.vm.sinks = filters_with_sinks[0].Sinks;
-        await flush_promises();
-        expect(server_api.methods.load_filter).toHaveBeenCalledTimes(1);
+    describe("sinks", () => {
+      describe("active filter is set", () => {
+        it("calls load_filter", async() => {
+          filter_details.vm.sinks = filters_with_sinks[0].Sinks;
+          await flush_promises();
+          expect(server_api.methods.load_filter).toHaveBeenCalledTimes(2);
+        })
+      })
+      describe("active filter is not set", () => {
+        it("does not call load_filter", async() => {
+          filter_details = mount_vue(FilterDetails, {
+            mixins: [{
+              methods: {
+                load_filter: jest.fn(function(){
+                  this.active_filter = filters[0]
+                  return Promise.resolve();
+                }),
+                load_filter_matches: function(){
+                  this.filter_matches = filter_matches;
+                }
+              }
+            }]
+          })
+          filter_details.vm.sinks = filters_with_sinks[0].Sinks;
+          await flush_promises();
+          expect(server_api.methods.load_filter).toHaveBeenCalledTimes(1);
+        })
       })
     })
   })
