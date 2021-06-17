@@ -1,5 +1,6 @@
 import {
   mount_vue,
+  shallow_mount_vue,
   next_tick
 }    from './setup'
 
@@ -32,6 +33,11 @@ describe("FilterTester Page", () => {
 
   beforeEach(function(){
     server_api = {
+      computed : {
+        active_blockchain : function(){
+          return 'xrp'
+        }
+      },
       methods : {
         load_filter : jest.fn(function(){
           this.active_filter = filter
@@ -51,10 +57,10 @@ describe("FilterTester Page", () => {
         test.todo("launches duplicate_filter modal")
       })
     })
-
+    
     it("renders matched tests", async () => {
-      const filter_tester = mount_vue(FilterTester, {mixins: [server_api]})
-      filter_tester.setData({matched_tests: matched_tests})
+      const filter_tester = shallow_mount_vue(FilterTester, {mixins: [server_api]})
+      filter_tester.setData({matched_tests})
       await next_tick(filter_tester)
       expect(filter_tester.findAllComponents(TxSummary).length).toBe(matched_tests.length)
     })
